@@ -1,4 +1,4 @@
-function [X,W,d] = orig_palm_clustering(A, v, m, k, max_iters, gamma, nu, beta, mu)
+function [X,W,d] = orig_palm_clustering(A, v, m, k, iters, gamma, nu, beta, mu)
 
     rand_vector_ind = randperm(m);
     for l = 1:k
@@ -9,7 +9,7 @@ function [X,W,d] = orig_palm_clustering(A, v, m, k, max_iters, gamma, nu, beta, 
         W(:,i) = projection_onto_simplex(rand(1,k)');
     end
     
-    for t = 1:max_iters
+    for t = 1:iters
         for l = 1:k
             mean_a = (W(l,:).*v')*A';
             mean_a_sum_weight = W(l,:)*v;
