@@ -23,7 +23,7 @@ function [X,W,Psi] = palm_clustering(A,n,m,k,iters)
         % W update
         alpha = min(W(:,:,t)*ones_vec);
         if alpha < 0.0000001
-            print('alpha close to zero: ',alpha);
+            disp(['alpha close to zero: ', num2str(alpha)]);
         end
         for i = 1:m
             d = distance_like(X(:,:,t), A(:,i), k);
