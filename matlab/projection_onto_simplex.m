@@ -1,7 +1,6 @@
+% Computes the projection of a given vector @x if R^n
+% onto the n-dimensional simplex.
 function [p] = projection_onto_simplex(x)
-% projection_onto_simplex computes the projection of a given vector @x of
-% size 'n' onto the n-dimensional simplex
-    
     if x >= 0
         if sum(x) == 1 % x is inside the simplex
             p = x;
@@ -14,7 +13,7 @@ function [p] = projection_onto_simplex(x)
     elem_sum = 0;
     delta = 0;
 
-    % find delta:
+    % compute delta
     for i = 1:n
         elem_sum = elem_sum + sorted_x(i);
         delta = (1 - elem_sum)/i;
