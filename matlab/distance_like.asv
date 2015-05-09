@@ -1,5 +1,0 @@
-function [d] = distance_like(X,a)
-    k = size(X)[2]
-    for l = 1:k
-end
-

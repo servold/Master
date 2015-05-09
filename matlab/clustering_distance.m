@@ -1,12 +1,13 @@
-function [d] = clustering_distance(X, A, v, m, k)
-   d_vec = zeros(1,m);
+function [d,D,I] = clustering_distance(X, A, v, m, k)
+   D = zeros(1,m);
+   I = zeros(1,m);
    
    for i = 1:m
        a = A(:,i);
-       d_vec(i) = min(distance_like(X,a,k));
+       [D(i),I(i)] = min(distance_like(X,a,k));
    end
    
-   d = d_vec*v;
+   d = D*v;
 return;
 
        
