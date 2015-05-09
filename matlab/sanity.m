@@ -8,7 +8,7 @@ function [A,S_palm,C_palm,I_palm,Psi,C_kmeans,I_kmeans] = sanity(points_in_clust
     n = 2;
     m = k*points_in_cluster;
     A = zeros(n,m);
-    cluster_center - [1,1];
+    cluster_center = cluster_center - [1,1];
     plot_styles = {'b+'; 'g+'; 'r+'; 'c+'};
     
     for i = 1:points_in_cluster

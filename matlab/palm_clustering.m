@@ -10,8 +10,9 @@ function [X,W,Psi] = palm_clustering(A,n,m,k,iters)
     Psi = zeros(1,iters);
     
     % X init
-    rand_vector_ind = randperm(m);
-    X(:,:,1) = A(:, rand_vector_ind(1:k));
+    %rand_vector_ind = randperm(m);
+    %X(:,:,1) = A(:, rand_vector_ind(1:k));
+    X(:,:,1) = clustering_init(A,n,m,k);
     
     % W init
     for i = 1:m
