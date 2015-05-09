@@ -1,4 +1,9 @@
-function [A,S,C,I,Psi] = sanity(points_in_cluster, cluster_center, iters)
+% Sanity check for PALM clustering and comparison with KMEANS clustering.
+% Generates 4 clusters in R^2, with centers in @cluster_center, and the
+% reflected points over the axes. Each cluster has @points_in_cluster.
+% PALM algorithm runs for @iters iterations. The results are returned in
+% C_palm and I_palm, S_palm is the starting point of the algorithm.
+function [A,S_palm,C_palm,I_palm,Psi,C_kmeans,I_kmeans] = sanity(points_in_cluster, cluster_center, iters)
     k = 4;
     n = 2;
     m = k*points_in_cluster;
@@ -19,15 +24,16 @@ function [A,S,C,I,Psi] = sanity(points_in_cluster, cluster_center, iters)
     
     %PALM clustering
     [X,W,Psi] = palm_clustering(A,n,m,k,iters);
-    S = X(:,:,1);
-    C = X(:,:,iters+1);
-    [d,D,I] = clustering_distance(C, A, ones(m,1), m, k);
+    S_palm = X(:,:,1);
+    C_palm = X(:,:,iters+1);
+    [d,D,I_palm] = clustering_distance(C_palm, A, ones(m,1), m, k);
     
     figure();
     for i = 1:m
-        plot(A(1,i), A(2,i), char(plot_styles(I(i))));
+        plot(A(1,i), A(2,i), char(plot_styles(I_palm(i))));
         hold on;
     end
+    title('PALM clustering');
     hold off;
     
     %KMEANS clustering
@@ -37,6 +43,7 @@ function [A,S,C,I,Psi] = sanity(points_in_cluster, cluster_center, iters)
         plot(A(1,i), A(2,i), char(plot_styles(I_kmeans(i))));
         hold on;
     end
+    title('KMEANS clustering');
     hold off;
 end
 
