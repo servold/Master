@@ -1,4 +1,4 @@
-function [ ] = plot_clusters( B, I, m)
+function [ ] = plot_clusters(B, I, m)
     plot_styles = {'b+'; 'g+'; 'r+'; 'c+'};
     figure();
     for i = 1:m

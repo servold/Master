@@ -1,9 +1,9 @@
 % Sanity check for PALM clustering and comparison with KMEANS clustering.
 % Generates 4 clusters in R^2, with centers in @cluster_center, and the
 % reflected points over the axes. Each cluster has @points_in_cluster.
-% PALM algorithm runs for @iters iterations. The results are returned in
-% C_palm and I_palm, S_palm is the starting point of the algorithm.
-function [A,S_palm,C_palm,I_palm,Psi,C_kmeans,I_kmeans] = sanity(points_in_cluster, cluster_center, iters)
+% PALM algorithm runs at most @max_iters iterations. The results are 
+% returned in C_palm and I_palm.
+function [A,C_palm,I_palm,palm_iters,C_kmeans,I_kmeans,kmeans_iters] = sanity(points_in_cluster, cluster_center, max_iters, tol)
     k = 4;
     n = 2;
     m = k*points_in_cluster;
@@ -22,11 +22,14 @@ function [A,S_palm,C_palm,I_palm,Psi,C_kmeans,I_kmeans] = sanity(points_in_clust
         A(:, (i-1)*k + 4) = p4';
     end
     
+    disp('finished precomputing');
+    
     %PALM clustering
-    [X,W,Psi] = palm_clustering(A,n,m,k,iters);
-    S_palm = X(:,:,1);
-    C_palm = X(:,:,iters+1);
-    [d,D,I_palm] = clustering_distance(C_palm, A, ones(m,1), m, k);
+    tic;
+    [X, I, palm_iters] = palm_clustering(A,n,m,k,max_iters,tol);
+    C_palm = X(:,:,palm_iters+1);
+    I_palm = I(:,palm_iters+1);
+    disp(['PALM clustering time: ', num2str(toc), ', # iterations: ', num2str(palm_iters)]);
     
     figure();
     for i = 1:m
@@ -37,7 +40,10 @@ function [A,S_palm,C_palm,I_palm,Psi,C_kmeans,I_kmeans] = sanity(points_in_clust
     hold off;
     
     %KMEANS clustering
-    [I_kmeans, C_kmeans] = kmeans(A', k);
+    tic;
+    [C_kmeans, I_kmeans, kmeans_iters] = kmeans_clustering(A,n,m,k,max_iters,tol);
+    disp(['KMEANS clustering time: ', num2str(toc), ', # iterations: ', num2str(kmeans_iters)]);
+    
     figure();
     for i = 1:m
         plot(A(1,i), A(2,i), char(plot_styles(I_kmeans(i))));
@@ -45,5 +51,6 @@ function [A,S_palm,C_palm,I_palm,Psi,C_kmeans,I_kmeans] = sanity(points_in_clust
     end
     title('KMEANS clustering');
     hold off;
+    
 end
 

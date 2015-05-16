@@ -11,8 +11,8 @@ function [X] = clustering_init(A,n,m,k)
             a = A(:,i);
             D(i) = min(distance_like(partial_X,a,(l-1)));
         end
-        [m,i]= max(D);
-        X(:,l) = A(:,i);
+        [~,j]= max(D);
+        X(:,l) = A(:,j);
     end
 end
 

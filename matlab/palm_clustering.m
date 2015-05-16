@@ -1,25 +1,27 @@
 % Performs clustering based on PALM approach over columns of @A.
-% Does exactly @iters iterations, searches for @k number of centers,
+% Does at most @max_iters iterations, searches for @k number of centers,
 % assumes the data matrix @A is in R^(n x m).
 % Returns @X, where for each iteration t, X(:,:,t) are the calculated
-% centers, W(:,:,t) are the coefficients, and Psi(t) is the value of Psi.
-function [X,W,Psi] = palm_clustering(A,n,m,k,iters)
-    X = zeros(n,k,(iters+1));
-    W = zeros(k,m,(iters+1));
+% centers, W(:,:,t) are the coefficients, Psi(t) is the value of Psi, I(t)
+% are the clusters, and t is the number of iterations actual done.
+function [X,I,t] = palm_clustering(A,n,m,k,max_iters,tol)
+    X = zeros(n,k,(max_iters+1));
+    W = zeros(k,m,(max_iters+1));
+    I = zeros(m,(max_iters+1));
+    Psi = zeros(1,max_iters);
     ones_vec = ones(m,1);
-    Psi = zeros(1,iters);
     
-    % X init
-    %rand_vector_ind = randperm(m);
-    %X(:,:,1) = A(:, rand_vector_ind(1:k));
+    % X init & init clustering
     X(:,:,1) = clustering_init(A,n,m,k);
+    [~,CIDX] = clustering_distance(X(:,:,1), A, m, k);
+    I(:,1) = CIDX';
     
     % W init
     for i = 1:m
         W(:,i,1) = projection_onto_simplex(rand(k,1));
     end
 
-    for t = 1:iters
+    for t = 1:max_iters
         
         % W update
         alpha = min(W(:,:,t)*ones_vec);
@@ -40,6 +42,14 @@ function [X,W,Psi] = palm_clustering(A,n,m,k,iters)
         % Psi computations
         for i = 1:m
             Psi(t) = Psi(t) + distance_like(X(:,:,t+1), A(:,i), k)'*W(:,i,t+1);
+        end
+        
+        % clustering update
+        [~,CIDX] = clustering_distance(X(:,:,t+1), A, m, k);
+        I(:,t+1) = CIDX';
+        
+        if ((sum(I(:,t+1) == I(:,t)) == m) && t>1 && (Psi(t-1)-Psi(t))<tol)
+            break;
         end
     end
     
