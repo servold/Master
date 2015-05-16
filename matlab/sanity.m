@@ -3,7 +3,7 @@
 % reflected points over the axes. Each cluster has @points_in_cluster.
 % PALM algorithm runs at most @max_iters iterations. The results are 
 % returned in C_palm and I_palm.
-function [A,C_palm,I_palm,palm_iters,C_kmeans,I_kmeans,kmeans_iters] = sanity(points_in_cluster, cluster_center, max_iters, tol)
+function [A,C_palm,I_palm,C_kmeans,I_kmeans] = sanity(points_in_cluster, cluster_center, max_iters, tol)
     k = 4;
     n = 2;
     m = k*points_in_cluster;
@@ -32,8 +32,9 @@ function [A,C_palm,I_palm,palm_iters,C_kmeans,I_kmeans,kmeans_iters] = sanity(po
     disp(['PALM clustering time: ', num2str(toc), ', # iterations: ', num2str(palm_iters)]);
     
     figure();
-    for i = 1:m
-        plot(A(1,i), A(2,i), char(plot_styles(I_palm(i))));
+    for l = 1:k
+        CIDX_labeled_l = (I_palm==l);
+        plot(A(1,CIDX_labeled_l), A(2,CIDX_labeled_l), char(plot_styles(l)));
         hold on;
     end
     title('PALM clustering');
@@ -41,12 +42,15 @@ function [A,C_palm,I_palm,palm_iters,C_kmeans,I_kmeans,kmeans_iters] = sanity(po
     
     %KMEANS clustering
     tic;
-    [C_kmeans, I_kmeans, kmeans_iters] = kmeans_clustering(A,n,m,k,max_iters,tol);
+    [X, I, kmeans_iters] = kmeans_clustering(A,n,m,k,max_iters,tol);
+    C_kmeans = X(:,:,kmeans_iters+1);
+    I_kmeans = I(:,kmeans_iters+1);
     disp(['KMEANS clustering time: ', num2str(toc), ', # iterations: ', num2str(kmeans_iters)]);
     
     figure();
-    for i = 1:m
-        plot(A(1,i), A(2,i), char(plot_styles(I_kmeans(i))));
+    for l = 1:k
+        CIDX_labeled_l = (I_kmeans==l);
+        plot(A(1,CIDX_labeled_l), A(2,CIDX_labeled_l), char(plot_styles(l)));
         hold on;
     end
     title('KMEANS clustering');

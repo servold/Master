@@ -1,8 +1,9 @@
-function [ ] = plot_clusters(B, I, m)
+function [ ] = plot_clusters(B, I, k)
     plot_styles = {'b+'; 'g+'; 'r+'; 'c+'};
     figure();
-    for i = 1:m
-        plot(B(1,i), B(2,i), char(plot_styles(I(i))));
+    for l = 1:k
+        CIDX_labeled_l = (I==l);
+        plot(B(1,CIDX_labeled_l), B(2,CIDX_labeled_l), char(plot_styles(l)));
         hold on;
     end
     hold off;
