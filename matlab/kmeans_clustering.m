@@ -3,14 +3,14 @@
 % assumes the data matrix @A is in R^(n x m).
 % Returns @X, where for each iteration t, X(:,:,t) are the calculated
 % centers, and I(t) are the clusters indeces.
-function [X,I,t] = kmeans_clustering(A,n,m,k,max_iters,tol)
+function [X,I,t] = kmeans_clustering(A,n,m,k,max_iters,tol,X_0)
     X = zeros(n,k,(max_iters+1));
     I = zeros(m,(max_iters+1));
     Phi = zeros(1,(max_iters+1));
     ones_vec = ones(m,1);
     
     % X init & init clustering
-    X(:,:,1) = clustering_init(A,n,m,k);
+    X(:,:,1) = X_0;
     [D,CIDX] = clustering_distance(X(:,:,1), A, m, k);
     I(:,1) = CIDX';
     Phi(1) = D*ones_vec;

@@ -4,7 +4,7 @@
 % Returns @X, where for each iteration t, X(:,:,t) are the calculated
 % centers, W(:,:,t) are the coefficients, Psi(t) is the value of Psi, I(t)
 % are the clusters, and t is the number of iterations actual done.
-function [X,I,t] = palm_clustering(A,n,m,k,max_iters,tol)
+function [X,I,t] = palm_clustering(A,n,m,k,max_iters,tol,X_0)
     X = zeros(n,k,(max_iters+1));
     W = zeros(k,m,(max_iters+1));
     I = zeros(m,(max_iters+1));
@@ -13,7 +13,7 @@ function [X,I,t] = palm_clustering(A,n,m,k,max_iters,tol)
     u = 0.000001; % alpha multiplier
     
     % X init & init clustering
-    X(:,:,1) = clustering_init(A,n,m,k);
+    X(:,:,1) = X_0;
     [~,CIDX] = clustering_distance(X(:,:,1), A, m, k);
     I(:,1) = CIDX';
     
