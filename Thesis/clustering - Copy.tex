@@ -9,6 +9,7 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{enumerate}
+%\usepackage{MnSymbol}
 
 \oddsidemargin= -12pt \evensidemargin= -12pt
 \topmargin=-45pt
@@ -82,76 +83,89 @@
 %
 %To-do...
 %
-%\newpage
-%
-%
-%Hi Shoham, \\
-%
-%I Added the PALM steps for the clustering problem, and also reformulated parts of document according to the notes you wrote me. \\
-%
-%Regarding note (4), it implicitly suggests that $\sum\limits_{i=1}^m w^i_l = 1$, how come? {\bf You are right. I modified item (4).}\\
-%
-%I started formulating Lagrangians as part of ADMM algorithm. If I omit some of the constrains, and don't take them into the Lagrangian, then when I compute for instance $x^{k+1} = argmin_{x} L_{\rho}(x,z^k,y^k)$, should it be solved subjected to the omitted constrain? {\bf If you write  constraint in the Lagrangian with corresponding multiplier then, of course, you can omit it from the constraint set.} \\
-%
-%
-%\newpage
-%
-%{\bf Hi Sergei, \\
-%
-%First of all, the file you sent me looks good and mostly correct. Few remarks: \\
-%
-%(1) For simplicity, I will introduce some notations like ${\bf x} = (x^1, x^{2} , \ldots ,x^{m})$ and similarly ${\bf w} = (w^1, w^{2} , \ldots ,w^{m})$. \\
-%
-%(2) The first observation that you had to do here is that you $H$ is a quadratic function with respect to ${\bf x}$ while it is linear function with respect to ${\bf w}$. \\
-%
-%(3) In your item (ii) you say that the Lipschitz moduli is $2$. This is not correct. Using the terms that we have used in the PALM paper, the Lipschitz moduli of $\nabla_{x^l}H$ should be written as a function of all the other involved variables, i.e., in this case (of the clustering) of the variables $x^{n}$ for $n \neq l$ and ${\bf w}$. But as can be seen from what you showed, in this case, there is no dependence on $x^{n}$ for $n \neq l$ but only ${\bf w}$. This is important fact that should be noted. \\
-%
-%(4) In addition to the previous comment. You may get a better upper bound for the Lipschitz constant, for example, if we define $w_{l}^{max} = \max_{1 \leq i \leq m} w_{l}^{i}$ then we get that $2\sum\limits_{i=1}^{m} v_i w_l^i \leq 2w_{l}^{max}\sum\limits_{i=1}^{m} v_i = 2w_{l}^{max}$. It is clear that $w_{l}^{max} \geq 1$. So we might get a better constant which could be important in the implementation of the algorithm.\\
-%
-%(5) It is also important to note that $H$ is strongly convex function with respect to each variable $x^{l}$ with strong convexity parameter $\rho_{l} = 2\sum\limits_{i=1}^{m} v_i w_l^i$ (and also strongly convex with respect to whole ${\bf x}$).
-%
-%(6) Since with respect to ${\bf w}$ the function $H$ is linear it is obvious that the Lipschitz constant of the gradient is zero. This is not really a problem and we can deal with it quite easily. You can find in the PALM paper a discussion about it!
-%
-%(7) Please proceed and formulate the PALM algorithm in this case. Verify the steps of the algorithm!}
 
 \newpage
 
 \section{The Clustering Problem}
 
-Let $\mathcal{A}= \left\lbrace a^1, \dots ,a^m \right\rbrace$ be a given set of point in the subset $\textit{S} \subset \mathbb{R}^n$, and let $1 < k < m$ be a fixed given number of clusters. The clustering problem consists of partitioning the data $\mathcal{A}$ into $k$ subsets $\left\lbrace A^1, \dots ,A^k \right\rbrace$, called clusters. For each $l=1, \cdots ,k$, the cluster $A_l$ is represented by its center $x^l$, and we want to determine $k$ cluster centers $\left\lbrace x_1, \cdots ,x_k \right\rbrace$ such that the sum of proximity measures from each point $a^i$ to a nearest cluster center $x^l$ is minimized. In hard clustering problem, we demand the clusters are mutually exclusive, and in soft clustering case, non-empty intersection of clusters is allowed.
-
-\section{Clustering via PALM approach }
+Let $\mathcal{A}= \left\lbrace a^1, \dots ,a^m \right\rbrace$ be a given set of points in $\mathbb{R}^n$, and let $1 < k < m$ be a fixed given number of clusters. The clustering problem consists of partitioning the data $\mathcal{A}$ into $k$ subsets $\left\lbrace A^1, \dots ,A^k \right\rbrace$, called clusters. For each $l=1, \cdots ,k$, the cluster $A_l$ is represented by its center $x^l$, and we want to determine $k$ cluster centers $\left\lbrace x_1, \cdots ,x_k \right\rbrace$ such that the sum of proximity measures from each point $a^i$ to a nearest cluster center $x^l$ is minimized.
 
 The clustering problem formulation is given by
 
 \begin{equation}
-	\min\limits_{x^1, \dots ,x^k \in S} F(x^1, \dots ,x^k) := \sum\limits_{i=1}^{m} v_i \min\limits_{1 \le l \le k} d(x^l,a^i), \label{StateEq1}
+	\min\limits_{x^1, \dots ,x^k \in \mathbb{R}^n} \sum\limits_{i=1}^{m} \min\limits_{1 \le l \le k} d(x^l,a^i) , \label{StateEq1}
 \end{equation}
 
-\noindent with $\textit{d}(\cdot ,\cdot)$ being a distance-like function, and $v_i$ are positive weights such that $\sum\limits_{i=1}^{m} v_i = 1$. 
+\noindent with $\textit{d}(\cdot ,\cdot)$ being a distance-like function.
+
+\section{Problem Reformulation and Notations}
+
+We introduce some notations that will be used throughout this document.
+
+\noindent $A = (a^1, \cdots , a^m) \in \left(\mathbb{R}^n\right)^m$, where $a^i \in \mathbb{R}^n,\smallskip i=1, \cdots , m$
+
+\noindent $W = (w^1, \cdots , w^m) \in \left(\mathbb{R}^k\right)^m$, where $w^i \in \mathbb{R}^k,\smallskip i=1, \cdots , m$
+
+\noindent $X = (x^1, \cdots , x^k) \in \left(\mathbb{R}^n\right)^k$, where $x^l \in \mathbb{R}^n,\smallskip l=1, \cdots , k$
+
+\noindent $d^{i}(X) = (d(x^1,a^i), \cdots , d(x^k,a^i)) \in \mathbb{R}^k,\smallskip i=1, \cdots , m$
+
+\noindent $\Delta = \left\lbrace u \in \mathbb{R}^k \mid \sum\limits_{l=1}^{k} u_l = 1, u_l \geq 0 , l=1, \dots ,k \right\rbrace$
+
+\noindent For some $S \subseteq \mathbb{R}^n$, $\delta_S(p) = \begin{cases} 0 &\mbox{if } p \in S \\ 
+\infty &\mbox{if } p \not\in S \end{cases}$
+
+\noindent $\langle u,v \rangle = \sum\limits_{l=1}^{k} u_l \cdot v_l$, for $u,v \in \mathbb{R}^k$
+
+Using the functional optimization representation of minimum of $k$ values, i.e. $\min\limits_{1 \leq l \leq k} u_l = \newline \min \left\lbrace \langle u,v \rangle \mid v \in \Delta \right\rbrace$, and applying it over $\left(\ref{StateEq1}\right)$, gives a smooth reformulation of the clustering problem
+
+\begin{equation}
+	\min\limits_{X \in \left(\mathbb{R}^n\right)^k} \sum\limits_{i=1}^{m} \min\limits_{w^i \in \Delta} \langle w^i , d^i(X) \rangle \label{StateEq2}
+\end{equation}
+
+Further replacing the constrain over $w^i$ with $\delta(\cdot)$ function results in a equivalent formulation
+
+\begin{equation}
+	\min\limits_{X \in \left(\mathbb{R}^n\right)^k , W \in \left(\mathbb{R}^k\right)^m} \left\lbrace \sum\limits_{i=1}^{m} \langle w^i , d^i(X) \rangle + \delta_{\Delta}(w^i) \right\rbrace \label{StateEq3}
+\end{equation}
+
+Finally, introducing few more useful definitions, for each $i=1, \cdots , m$
+
+\begin{center}
+$H_i(W,X) = \langle w^i , d^i(X) \rangle$
+\\ \smallskip
+$G(w^i) = \delta_{\Delta}(w^i)$
+\\ \smallskip
+$H(W,X) = \sum\limits_{i=1}^{m} H_i(W,X)$
+\\ \smallskip
+ $G(W) = \sum\limits_{i=1}^{m} G(w^i)$
+\\
+\end{center}
+
+Replacing the terms in (\ref{StateEq2}) with the function above gives final equivalent clustering problem formulation
+
+\begin{equation}
+	\min \left\lbrace H(W,X) + G(W) \mid X \in (\mathbb{R}^n)^k , W \in (\mathbb{R}^k)^m \right\rbrace \label{StateEq4}
+\end{equation}
+
+
+
+
+\section{Clustering via PALM approach }
 
 An equivalent smooth formulation to the clustering problem
 
-\begin{equation}
-	\min\limits_{x^1, \dots ,x^k \in S} \min\limits_{w^1, \dots ,w^m \in \mathbb{R}^k} \left\lbrace \sum\limits_{i=1}^{m} v_i \sum\limits_{l=1}^{k} w^i_l d(x^l , a^i) \mid w^i \in \Delta^i , i=1, \dots ,m \right\rbrace , \label{StateEq2}
-\end{equation}
-
-\noindent where $\Delta^i$ is the unit simplex in $\mathbb{R}^k$ given by
-
-\begin{equation}
-	\Delta^i = \left\lbrace w^i \in \mathbb{R}^k \mid \sum\limits_{l=1}^{k} w^i_l =1, w^i_l \geq 0 , l=1, \dots ,k \right\rbrace .
-\end{equation}
 
 PALM algorithms addresses nonconvex-nonsmooth problems of the form
 
 \begin{equation}
-	minimize_{x,y} \Psi(x,y):=f(x)+g(y)+H(x,y) , \label{StateEq3}
+	minimize_{x,y} \Psi(x,y):=f(x)+g(y)+H(x,y) , \label{StateEq13}
 \end{equation}
 
 \noindent and in the extended form for \textit{p} blocks
 
 \begin{equation}
-	minimize\left\lbrace \Psi(x_1, \dots ,x_p):= \sum\limits_{i=1}^{p}f_i(x_i)+H(x_1, \dots ,x_p) : x_i \in \mathbb{R}^{n_i} \right\rbrace , \label{StateEq4}
+	minimize\left\lbrace \Psi(x_1, \dots ,x_p):= \sum\limits_{i=1}^{p}f_i(x_i)+H(x_1, \dots ,x_p) : x_i \in \mathbb{R}^{n_i} \right\rbrace , \label{StateEq14}
 \end{equation}
 
 \noindent where $H : \mathbb{R}^N \rightarrow \mathbb{R}$ with $N= \sum^{p}_{i=1} n_i$ is assumed to be $C^1$ and each $f_i , i= 1, \dots ,p$, is proper and lower-semicontinuous function.

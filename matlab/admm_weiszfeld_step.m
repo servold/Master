@@ -4,6 +4,11 @@ function [u] = admm_weiszfeld_step(A,w,z,y,rho,m,max_iters,tol,u_0)
     
     for t = 1:max_iters
         for i = 1:m
+            if (norm(u - A(:,i)) == 0)
+                wa = zeros(m,1);
+                wa(i) = 1;
+                break;
+            end
             wa(i) = w(i)/norm(u - A(:,i));
         end
         
