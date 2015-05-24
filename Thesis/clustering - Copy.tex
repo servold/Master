@@ -21,7 +21,7 @@
 
 \newtheorem{proposition}{Proposition}[section]
 \newtheorem{lemma}{Lemma}[proposition]
-
+\newtheorem{remark}{Remark}
 
 \begin{document}
 
@@ -123,13 +123,13 @@ Using the functional optimization representation of minimum of $k$ values, i.e. 
 	\min\limits_{X \in \left(\mathbb{R}^n\right)^k} \sum\limits_{i=1}^{m} \min\limits_{w^i \in \Delta} \langle w^i , d^i(X) \rangle \label{StateEq2}
 \end{equation}
 
-Further replacing the constrain over $w^i$ with $\delta(\cdot)$ function results in a equivalent formulation
+Further replacing the constrain over $w^i$ with $\delta_{\Delta}(\cdot)$ function results in a equivalent formulation
 
 \begin{equation}
 	\min\limits_{X \in \left(\mathbb{R}^n\right)^k , W \in \left(\mathbb{R}^k\right)^m} \left\lbrace \sum\limits_{i=1}^{m} \langle w^i , d^i(X) \rangle + \delta_{\Delta}(w^i) \right\rbrace \label{StateEq3}
 \end{equation}
 
-Finally, introducing few more useful definitions, for each $i=1, \cdots , m$
+Finally, introducing several more useful definitions, for each $i=1, \cdots , m$
 
 \begin{center}
 $H_i(W,X) = \langle w^i , d^i(X) \rangle$
@@ -142,79 +142,216 @@ $H(W,X) = \sum\limits_{i=1}^{m} H_i(W,X)$
 \\
 \end{center}
 
-Replacing the terms in (\ref{StateEq2}) with the function above gives final equivalent clustering problem formulation
+Replacing the terms in (\ref{StateEq2}) with the functions above gives a compact form that is equivalent to the original clustering problem
 
 \begin{equation}
-	\min \left\lbrace H(W,X) + G(W) \mid X \in (\mathbb{R}^n)^k , W \in (\mathbb{R}^k)^m \right\rbrace \label{StateEq4}
+	\min \left\lbrace \Psi(Z) := H(W,X) + G(W) \mid Z := (W,X) \in (\mathbb{R}^k)^m \times (\mathbb{R}^n)^k \right\rbrace \label{StateEq4}
 \end{equation}
 
 
+\section{Clustering via PALM Approach}
 
+\subsection{Introduction to PALM Theory}
 
-\section{Clustering via PALM approach }
+Presentation of PALM's requirements and of the algorithm steps  $\cdots$
 
-An equivalent smooth formulation to the clustering problem
+\subsection{Clustering with PALM for $d(u,v) = \|u-v\|^2$}
 
+In this section we tackle the clustering problem with distance-like function $d(u,v) = \|u-v\|^2$. Using the discussion about PALM, we will construct a semi-PALM algorithm.
+Since the clustering problem has a specific structure, we are ought to exploit it in the following manner.
+First we notice that the map 
+$W \mapsto H(W,X)=\sum\limits_{i=1}^{m} \langle w^i , d^i(X) \rangle$ is linear in $W$, so there is no need to linearize it. In addition, the map 
+$X \mapsto H(W,X) = \sum\limits_{i=1}^{m} \langle w^i , d^i(X) \rangle = 
+\sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} w^i_l \|x^l - a^i\|^2 =
+\sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \|x^l - a^i\|^2$ is convex in $X$, hence we can drop the proximal term in PALM algorithm.
 
-PALM algorithms addresses nonconvex-nonsmooth problems of the form
-
-\begin{equation}
-	minimize_{x,y} \Psi(x,y):=f(x)+g(y)+H(x,y) , \label{StateEq13}
-\end{equation}
-
-\noindent and in the extended form for \textit{p} blocks
-
-\begin{equation}
-	minimize\left\lbrace \Psi(x_1, \dots ,x_p):= \sum\limits_{i=1}^{p}f_i(x_i)+H(x_1, \dots ,x_p) : x_i \in \mathbb{R}^{n_i} \right\rbrace , \label{StateEq14}
-\end{equation}
-
-\noindent where $H : \mathbb{R}^N \rightarrow \mathbb{R}$ with $N= \sum^{p}_{i=1} n_i$ is assumed to be $C^1$ and each $f_i , i= 1, \dots ,p$, is proper and lower-semicontinuous function.
-
-Applying the PALM notations to the clustering problem formulation (1.2), with distance-like function $d(u,v)= \| u-v \|^2$, setting $f_l(x^l)= \delta_S(x^l)$, $l=1, \dots ,k $, $g_i(w^i)= \delta_{\Delta^i}(w^i)$, $i=1, \dots ,m$ and $H(x^1, \dots ,x^k,w^1, \dots ,w^m)= \sum\limits_{i=1}^{m} v_i \sum\limits_{l=1}^{k} w^i_l d(x^l , a^i)$.
-
-Next, we confirm all requirements of $f_l$, $g_i$ and $H$ as listed in Assumptions 1 and 2 at (reference to PALM article). For simplicity, we introduce some notations ${\bf x} = (x^1, x^{2} , \ldots ,x^{k})$ and similarly ${\bf w} = (w^1, w^{2} , \ldots ,w^{m})$. Also ${\bf x}^{-l} = (x^1, \ldots ,x^{l-1}, x^{l+1}, \ldots ,x^{k})$ and similarly \\ ${\bf w}^{-i} = (w^1, \ldots ,w^{i-1}, w^{i+1}, \ldots ,w^{m})$.
-\begin{enumerate}[(i)]
-  \item Since $f_l,g_i,H \geq 0$ they all are proper. $g_i$ and $H$ are lower semicontinuous since $\Delta_i$ is closed and $H$ in $C^2$. As for lower semicontinuity of $f_l$ it requires $S$ to be closed.
-  \item The partial gradient $\nabla_{x^l}H(\textbf{x}, \textbf{w})$ is globally Lipschitz with moduli $L_{x^l}({\bf x}^{-l}, {\bf w})=2\sum\limits_{i=1}^{m} v_i w_l^i \leq \\ \leq 2w_{l}^{max}\sum\limits_{i=1}^{m} v_i = 2w_{l}^{max}$, for $l=1, \dots ,k$, where $w^{max}_l:=\max\limits_{i=1, \cdots ,m} w^i_l$.
-  \item $H$ is linear with respect to ${\bf w}$ thus $\nabla_{x^l}H(\textbf{x}, \textbf{w})$ is globally Lipschitz with moduli $L_{w^i}({\bf x}, {\bf w}^{-i})=0$, for $i=1, \dots ,m$. For PALM's proximal steps remain always well-defined, we set \\ $L_{w^i}({\bf x}, {\bf w}^{-i})= \mu_i > 0$, for $i=1, \dots ,m$ (see Remark 3 (iii)). Similarly, in case $L_{x^l}({\bf x}^{-l}, {\bf w})$ is too close to $0$, we set $L_{x^l}({\bf x}^{-l}, {\bf w}) = \nu_l >0$, for $l=1, \cdots ,k$.
-%  \item $\| \nabla_{x^l}H(x^1, \dots ,x^{l-1},s,x^{l+1}, \dots ,x^k, \textbf{w}) - \nabla_{x^l}H(x^1, \dots ,x^{l-1},t,x^{l+1}, \dots ,x^k, \textbf{w}) \| = \\ \| \sum\limits_{i=1}^{m} v_i w_l^i \cdot 2(s-a^i) - \sum\limits_{i=1}^{m} v_i w_l^i \cdot 2(s-a^i) \| = 2\sum\limits_{i=1}^{m} v_i w_l^i \| s-t \| \leq 2 \| s-t \|$, thus the partial gradient $\nabla_{x^l}H$ is globally Lipschitz with moduli $L_{x^l}(\cdot)=2$, for $l=1, \dots ,k$.\\
-%  Also, $\| \nabla_{w^i}H(\textbf{x},w^1, \dots ,w^{i-1},s,w^{l+1}, \dots ,w^m) - \nabla_{w^i}H(\textbf{x},w^1, \dots ,w^{i-1},t,w^{l+1}, \dots ,w^m) \| = \\ \| (v_i \|x^1 - a^i \|, \dots ,v_i\|x^k - a^i\|)^T - (v_i \|x^1 - a^i \|, \dots ,v_i\|x^k - a^i\|)^T \| = 0$, thus the partial gradient $\nabla_{w^i}H$ is globally Lipschitz with moduli $L_{w^i}(\cdot)=0$, for $i=1, \dots ,m$.
-%  \item $\inf \left\lbrace L_{x^l}(\cdot) \right\rbrace = \inf \left\lbrace L_{w^i}(\cdot) \right\rbrace =0 \ngtr 0$ (this is a problem) 
-%  and $\sup \left\lbrace L_{x^l}(\cdot) \right\rbrace = \sup \left\lbrace L_{w^i}(\cdot) \right\rbrace =2.$
-  \item $\inf \left\lbrace L_{w^i}({\bf x}, {\bf w}^{-i}) \right\rbrace = \sup \left\lbrace L_{w^i}({\bf x}, {\bf w}^{-i}) \right\rbrace = \mu_i, i=1, \cdots ,m$ \\ and $\sup \left\lbrace L_{x^l}({\bf x}^{-l}, {\bf w}) \right\rbrace \leq 2w^{max}_l$, $\inf \left\lbrace L_{x^l}({\bf x}^{-l}, {\bf w}) \right\rbrace\geq \nu_l, l=1, \cdots ,k$.
-  \item $\nabla H$ is Lipschitz continuous on bounded subset, since $H$ in $C^2$ (see Remark 3 (iv)).
-  \item PALM requires $\Psi$ to be KL function. $H$ is real polynomial function, thus satisfies the KL property. $\Delta_i$ is semi-algebraic set, and we require $S$ to be semi-algebraic set.
-\end{enumerate}
-
-Next, we formulate PALM's steps for the clustering problem, and explicitly compute the proximal formulas.
-
-{\bf PALM-Clustering}
+Now we propose the semi-PALM algorithm for clustering.
 \begin{enumerate}[(1)]
-  \item Initialization: Select random vectors $x^{l,0} \in S, l=1, \cdots ,k$ and $w^{i,0} \in \Delta^i, i=1 \cdots ,m$.
-  \item For each $t=0,1, \cdots$ generate a sequence $\left\lbrace (x^{1,t}, \cdots , x^{k,t}, w^{1,t}, \cdots ,w^{m,t}) \right\rbrace_{t \in \mathbb{N}}$ as follows:
-  \begin{enumerate}[(2.1)]
-  	\item For each $l=1, \cdots ,k $ compute:
-  	\begin{enumerate}[(2.1.1)]
-  		\item Take $\gamma_l>1$, set $c^t_l = \gamma_l L_{x^l}(x^{1,t+1}, \cdots, x^{l-1,t+1}, x^{l+1,t}, \cdots ,x^{k,t}, w^{1,t}, \cdots ,w^{m,t})$ and compute
-  		\begin{center}
-  			$x^{l,t+1} \in prox^{f_l}_{c^t_l}(x^{l,t} - \frac{1}{c^t_l}\nabla_{x^l}H(x^{1,t+1}, \cdots, x^{l-1,t+1}, x^{l,t}, x^{l+1,t}, \cdots ,x^{k,t}, w^{1,t}, \cdots ,w^{m,t}))$ \\ $= \Pi_S \left( x^{l,t} - \frac{\sum\limits_{i=1}^m v_iw^{i,t}_l 2(x^{l,t}-a^i)}{\gamma_l \max \left\lbrace \nu_l, 2\sum\limits_{i=1}^m v_iw^{i,t}_l \right\rbrace}\right) = \Pi_S \left( x^{l,t}\left(1- \frac{\sum\limits_{i=1}^m v_iw^{i,t}_l}{\gamma_l \max \left\lbrace \frac{\nu_l}{2}, \sum\limits_{i=1}^m v_iw^{i,t}_l \right\rbrace}\right) + \frac{\sum\limits_{i=1}^m v_iw^{i,t}_l a^i}{\gamma_l \max \left\lbrace \frac{\nu_l}{2}, \sum\limits_{i=1}^m v_iw^{i,t}_l \right\rbrace} \right)$
-  		\end{center}
-  	\end{enumerate}
-  \end{enumerate}
-  \begin{enumerate}[(2.2)]
-  	\item For each $i=1, \cdots ,m $ compute:
-  	\begin{enumerate}[(2.2.1)]
-  		\item Take $\beta_i>1$, set $d^t_i = \beta_i L_{w^i}(x^{1,t+1}, \cdots ,x^{k,t+1}, w^{1,t+1}, \cdots ,w^{i-1,t+1}, w^{i+1,t}, \cdots ,w^{m,t})$ and compute
-  		\begin{center}
-  			$w^{i,t+1} \in prox^{g_i}_{d^t_i}(w^{i,t} - \frac{1}{d^t_i}\nabla_{w^i}H(x^{1,t+1}, \cdots ,x^{k,t+1}, w^{1,t+1}, \cdots ,w^{i-1,t+1}, w^{i,t}, w^{i+1,t}, \cdots ,w^{m,t})$ \\ $= \Pi_{\Delta^i}(w^{i,t} - \frac{v_i}{\beta_i \mu_i} (w^{i,t}_1 \| x^{1,t+1} - a^i \|^2, \cdots , w^{i,t}_k \| x^{k,t+1} - a^i \|^2 )^T)$ \\ $ = \Pi_{\Delta^i}((w^{i,t}_l (1 - \frac{v_i \| x^{l,t+1} - a^i \|^2}{\beta_i \mu_i} ))_{1 \leq l \leq k})$
-  		\end{center}
-  	\end{enumerate}
-  \end{enumerate}
+	\item Initialization: Set $t=0$, and pick random vectors $(W(0),X(0)) \in \Delta^m \times (\mathbb{R}^n)^k$
+
+	\item For each $t=0,1, \cdots$ generate a sequence $\left\lbrace(W(t),X(t))\right\rbrace_{t \in \mathbb{N}}$ as follows:
+	\begin{enumerate}[(2.1)]
+		\item Cluster Assignment: Take $\nu \in \left(0,1\right]$, compute $\beta(t) = \min\limits_{1 \leq l \leq k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l(t)\right \rbrace$, set
+		$\alpha(t)=\nu \beta(t) $ and for $i=1, \cdots ,m$ compute
+		\begin{equation}
+			w^i(t+1) = \arg\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(X(t)) \rangle + \frac{\alpha(t)}{2} \|w^i - w^i(t)\|^2 \right\rbrace \label{StateEq5}
+		\end{equation}
+		
+		\item Centers Update: For $l=1, \cdots ,k$ compute $x^l \in \mathbb{R}^n$ via
+		\begin{equation}
+			X(t+1) = \arg\min \left\lbrace H(W(t+1), X) \mid X \in (\mathbb{R}^n)^k \right\rbrace \label{StateEq6}
+		\end{equation}
+	\end{enumerate}
 \end{enumerate}
 
 \newpage
 
-\section{Clustering via ADMM approach }
+At each step $t$, the PALM-Clustering algorithm alternates between cluster assignment and centers update. The explicit formulas for step $t$ are given below
+
+\begin{equation}
+w^i(t+1) = \Pi_{\Delta} \left(w^i(t) - \frac{d^i(X(t))}{\alpha(t)}\right) \quad i=1, \cdots ,m \label{StateEq7}
+\end{equation}
+
+\begin{equation}
+x^l(t+1) = \frac{\sum_{i=1}^{m} w^i_l(t+1) a^i}{\sum_{i=1}^{m} w^i_l(t+1)} \quad l=1, \cdots ,k \label{StateEq8}
+\end{equation}
+
+\begin{remark} 
+	\begin{enumerate}[(i)]
+		\item $\alpha(t)$ is the step-size, and it must be positive. If for some step $t \in \mathbb{N}$ $\alpha(t)=0$ then $\exists l' \in \left[ 1,k \right]$ such that $\beta(t) = \sum\limits_{i=1}^{m} w^i_{l'} = 0$, since $\forall l \in \left[ 1,k \right] ,\forall i \in \left[ 1,m \right] : w^i_l \geq 0$ then $\forall i \in \left[ 1,m \right] w^i_{l'}=0$. Thus, none of the points in $\mathcal{A}$ belong to cluster $l'$, in that case the algorithm can halt. Hence from now on we assume that $\forall t \in \mathbb{N}$, $\beta(t) = \min\limits_{1 \leq l \leq k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l(t)\right \rbrace > 0$, and it follows that $\alpha(t) > 0 $.
+		\item $\forall t \in \mathbb{N} \quad W(t) \in \Delta^m \Rightarrow \Psi(Z(t)) = H(W(t),X(t)) + G(W(t)) = H(W(t),X(t))$.
+	\end{enumerate}
+\end{remark}
+
+\begin{lemma}[Strong convexity of $H(W,X)$ in $X$] 
+At step $t$, the mapping $X \mapsto H(W(t),X)$ is strongly convex $\Leftrightarrow \beta(t) > 0$.
+\end{lemma}
+
+\begin{proof}
+Since the mapping $X \mapsto H(W(t),X) = 
+\sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \|x^l - a^i\|^2$ is $C^2$, it is strongly convex $\Leftrightarrow$  its Hessian matrix smallest eigenvalue is positive.
+
+\begin{center}
+$\nabla_{x^j} \nabla_{x^l} H(W(t),X) = 
+\begin{cases} 0 &\mbox{if } j \neq l, \quad j,l \in \left[ 1,k \right] 
+\\ 2\sum\limits_{i=1}^{m} w^i_l(t) &\mbox{if } j = l, \quad j,l \in \left[ 1,k \right] \end{cases}$
+\end{center}
+
+Since the Hessian is diagonal, the smallest eigenvalue is $\min\limits_{1 \leq l \leq k} 2\sum\limits_{i=1}^{m} w^i_l(t) = 
+\min\limits_{1 \leq l \leq k} 2\beta(t)$, and the result follows.
+\end{proof}
+
+Now we are ready to prove the decrease property of the PALM-Clustering algorithm.
+
+\begin{proposition}[Sufficient decrease property]\ \\
+$\exists \rho_1 > 0$ such that $\rho_1 \|Z(t+1) - Z(t)\|^2 \leq \Psi(Z(t)) - \Psi(Z(t+1)), \quad \forall t \in \mathbb{N} $.
+\end{proposition}
+
+\begin{proof}
+From (\ref{StateEq5}) we derive the following inequality
+\begin{equation*}
+	\begin{split}
+	H_i(W(t+1),X(t)) + \frac{\alpha(t)}{2} \|w^i(t+1) - w^i(t)\|^2 \\
+	= \langle w^i(t+1) , d^i(X(t)) \rangle + \frac{\alpha(t)}{2} \|w^i(t+1) - w^i(t)\|^2 \\
+	\leq \langle w^i(t) , d^i(X(t)) \rangle + \frac{\alpha(t)}{2} \|w^i(t) - w^i(t)\|^2 \\
+	= \langle w^i(t) , d^i(X(t)) \rangle \\
+	= H_i(W(t),X(t))
+	\end{split}
+\end{equation*}
+
+Hence, we obtain
+\begin{equation*}
+	\frac{\alpha(t)}{2} \|w^i(t+1) - w^i(t)\|^2 
+	\leq H_i(W(t),X(t)) - H_i(W(t+1),X(t))
+\end{equation*}
+Summing this inequality over $i=1, \cdots ,m$ gives
+\begin{equation*}
+	\begin{split}
+	\frac{\alpha(t)}{2} \|W(t+1) - W(t)\|^2 
+	= \frac{\alpha(t)}{2} \sum\limits_{i=1}^{m} \|w^i(t+1) - w^i(t)\|^2 \\
+	\leq \sum\limits_{i=1}^{m} H_i(W(t),X(t)) - \sum\limits_{i=1}^{m} H_i(W(t+1),X(t)) \\
+	= H(W(t),X(t)) - H(W(t+1),X(t)) \\
+	\end{split}
+\end{equation*}
+
+Recall that the mapping $X \mapsto H(W(t),X)$ is strongly convex with parameter $2 \beta(t) > 0$, hence we have
+
+\begin{equation*}
+	\begin{split}
+	H(W(t+1),X(t)) - H(W(t+1),X(t+1)) \\
+	\geq \nabla_X H(W(t+1),X(t+1))^{T}(X(t)-X(t+1)) + \frac{2\beta(t)}{2} \|X(t) - X(t+1)\|^2 \\
+	= \beta(t) \|X(t) - X(t+1)\|^2 \\
+	\end{split}
+\end{equation*}
+where the last equality follows from (\ref{StateEq6}). \\
+Set $\rho_1 = \min\left\lbrace \alpha(t) , \beta(t) \right\rbrace = \alpha(t)$, combined with the previous inequalities, we have
+
+\begin{equation*}
+	\begin{split}
+	\rho_1 \|Z(t+1) - Z(t)\|^2 
+	= \rho_1 \left( \|W(t+1) - W(t)\|^2 + \|X(t+1) - X(t)\|^2 \right) \\
+	\leq \left[ H(W(t),X(t)) - H(W(t+1),X(t)) \right] + \left[ H(W(t+1),X(t)) - H(W(t+1),X(t+1)) \right] \\
+	= H(Z(t)) - H(Z(t+1)) = \Psi(Z(t)) - \Psi(Z(t+1)).
+	\end{split}
+\end{equation*}
+\end{proof}
+
+Next, we aim to prove the subgradient lower bound for iterates property. We start with few preliminary results.
+
+\begin{proposition}[Sufficient Lipschitz continuity condition]
+Let $f:\mathbb{R}^n \to \mathbb{R}$ be $C^1$ function, if $\|\nabla f(z)\|$ is bounded on $z \in \Omega$, then $\exists M > 0$ such that $\forall x,y \in \Omega$ $\|f(x) - f(y)\| \leq M \|x - y\|$, where $M = \sup\limits_{z \in \Omega} \| \nabla f(z)\|$.
+\end{proposition}
+
+\begin{lemma}
+$\left\lbrace \| \nabla_X d^i(X(t+1))\| \right\rbrace_{t \in \mathbb{N}}$ is bounded set.
+\end{lemma}
+
+\begin{proof}
+\begin{equation*}
+	\begin{split}
+	\| \nabla_X d^i(X(t+1))\| = 2\| \left( x^1(t+1)-a^i, \cdots , x^k(t+1)-a^i \right)\| \\
+	\leq 2\sum\limits_{l=1}^{k} \|x^l(t+1)-a^i\|
+	\leq 2\sum\limits_{l=1}^{k} \| \frac{\sum\limits_{j=1}^{m} w^j_l(t+1) a^j}{\sum\limits_{j=1}^{m} w^j_l(t+1)} - a^i \| \\
+	\leq 2\left(\left( \sum\limits_{l=1}^{k} \sum\limits_{j=1}^{m} \frac{w^j_l(t+1)}{\sum\limits_{j=1}^{m} w^j_l(t+1)} \|a^j\| \right) + k\|a^i\| \right) 
+	\leq 2k \left(\|a^i\| + \sum\limits_{j=1}^{m} \|a^j\| \right)
+	\end{split}
+\end{equation*}
+\end{proof}
+
+From the last two results it follows that
+\begin{equation}
+\exists M > 0 \quad \| d^i(X(t+1) - d^i(X(t))\| \leq M \| X(t+1) - X(t) \| , \quad \forall t \in \mathbb{N}. \label{StateEq11}
+\end{equation}
+
+\begin{proposition}[Subgradient lower bound for iterates property]\ \\
+$\exists \rho_2 > 0$ and $\gamma(t+1) \in \partial \Psi(Z(t+1))$ such that $\| \gamma(t+1)\| \leq \rho_2 \|Z(t+1) - Z(t)\|^2 , \quad \forall t \in \mathbb{N} $.
+\end{proposition}
+
+\begin{proof}
+$\Psi = H + G$, then
+\begin{equation*}
+	\begin{split}
+	\partial \Psi = \nabla H + \partial G  
+	= \left( \nabla_{W}H, \nabla_{X}H \right) + \left( \left( \partial_{w^i}\delta_{\Delta} \right)_{i=1, \cdots ,m}, \left( \vec{0} \right)_{l=1, \cdots ,k} \right) \\
+	= \left( \left( \nabla_{w^i} H_i + \partial_{w^i} \delta_{\Delta} \right)_{i=1, \cdots ,m} , \nabla_X H \right)
+	\end{split}
+\end{equation*}
+Evaluating the last relation at $Z(t+1)$ yields
+\begin{equation*}
+	\begin{split}
+	\partial \Psi(Z(t+1)) 
+	= \left( \left( \nabla_{w^i} H_i(W(t+1),X(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \right)_{i=1, \cdots ,m} , \nabla_X H(W(t+1),X(t+1)) \right) \\
+	= \left( \left( d^i(X(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \right)_{i=1, \cdots ,m} , \nabla_X H(W(t+1),X(t+1)) \right) \\
+	= \left( \left( d^i(X(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \right)_{i=1, \cdots ,m} , \vec{0} \right) \\
+	\end{split}
+\end{equation*}
+where the last equality follows from (\ref{StateEq6}), that is the optimality condition of $X(t+1)$. \\
+Taking the norm of the last equation yields
+\begin{equation}
+	\| \partial \Psi(Z(t+1))\| 
+	\leq \sum\limits_{i=1}^{m} \| d^i(X(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \|. \label{StateEq9}
+\end{equation}
+The optimality condition of $w^i(t+1)$ that is derived from (\ref{StateEq5}), yields $\forall i=1, \cdots ,m$ that there $\exists u^i(t+1) \in \partial \delta_{\Delta}(w^i(t+1))$ such that
+\begin{equation}
+	d^i(X(t+1)) + \alpha(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) = 0 \label{StateEq10}
+\end{equation}
+Setting $\gamma(t+1) = \left( \left( d^i(X(t+1)) + u^i(t+1) \right)_{i=1, \cdots ,m}, \vec{0} \right) \in \partial \Psi(Z(t+1))$, and plugging (\ref{StateEq10}) into (\ref{StateEq9}) we have
+\begin{equation*}
+	\begin{split}
+	\| \gamma(t+1) \|
+	\leq \sum\limits_{i=1}^{m} \| d^i(X(t+1)) - d^i(X(t)) - \alpha(t) \left( w^i(t+1) - w^i(t) \right) \| \\
+	\leq \sum\limits_{i=1}^{m} \| d^i(X(t+1)) - d^i(X(t)) \| + m \alpha(t) \|Z(t+1) - Z(t)\| \\
+	\leq \sum\limits_{i=1}^{m} M \| X(t+1)) - d^i(X(t)) \| + m \alpha(t) \|Z(t+1) - Z(t)\| \\
+	\leq m \left( M + \alpha(t) \right) \|Z(t+1) - Z(t)\| \\
+	\end{split}
+\end{equation*}
+where the third inequality follows from (\ref{StateEq11}). \\
+Define $\rho_2 = m \left( M + \alpha(t) \right)$ and the result follows.
+\end{proof}
+
+\newpage
+
+\section{Clustering via ADMM Approach }
 
 First we add new variables $z^l, l=1, \cdots ,k$, and formulate an equivalent problem to the clustering problem (see (1.2)):
 
@@ -239,8 +376,6 @@ We present the augmented Lagrangian associated with the clustering problem
 \end{center}
 
 \newpage
-
-\noindent
 
 
 %\begin{thebibliography}{99}
