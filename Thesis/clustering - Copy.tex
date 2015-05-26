@@ -333,7 +333,7 @@ Taking the norm of the last equation yields
 \end{equation}
 The optimality condition of $w^i(t+1)$ that is derived from (\ref{StateEq5}), yields $\forall i=1, \cdots ,m$ that there $\exists u^i(t+1) \in \partial \delta_{\Delta}(w^i(t+1))$ such that
 \begin{equation}
-	d^i(X(t+1)) + \alpha(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) = 0 \label{StateEq10}
+	d^i(X(t)) + \alpha(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) = 0 \label{StateEq10}
 \end{equation}
 Setting $\gamma(t+1) = \left( \left( d^i(X(t+1)) + u^i(t+1) \right)_{i=1, \cdots ,m}, \vec{0} \right) \in \partial \Psi(Z(t+1))$, and plugging (\ref{StateEq10}) into (\ref{StateEq9}) we have
 \begin{equation*}
@@ -349,33 +349,60 @@ where the third inequality follows from (\ref{StateEq11}). \\
 Define $\rho_2 = m \left( M + \alpha(t) \right)$ and the result follows.
 \end{proof}
 
+\subsection{Similarity to KMEANS}
+The famous KMEANS algorithm has close proximity to PALM-clustering algorithm. KMEANS alternates between cluster assignments and center updates as well. In detail, we can write its steps in the following manner
+
+\begin{enumerate}[(1)]
+	\item Initialization: Set $t=0$, and pick random centers $Y(0) \in (\mathbb{R}^n)^k$
+
+	\item For each $t=0,1, \cdots$ generate a sequence $\left\lbrace(V(t),Y(t))\right\rbrace_{t \in \mathbb{N}}$ as follows:
+	\begin{enumerate}[(2.1)]
+		\item Cluster Assignment: For $i=1, \cdots ,m$ compute
+		\begin{equation}
+			v^i(t+1) = \arg\min\limits_{v^i \in \Delta} \left\lbrace \langle v^i , d^i(Y(t)) \rangle\right\rbrace \label{StateEq12}
+		\end{equation}
+		
+		\item Centers Update: For $l=1, \cdots ,k$ compute
+		\begin{equation}
+			y^l(t+1) = \frac{\sum_{i=1}^{m} v^i_l(t+1) a^i}{\sum_{i=1}^{m} v^i_l(t+1)} \label{StateEq13}
+		\end{equation}
+	\end{enumerate}
+\end{enumerate}
+The KMEANS algorithm obviously resemble PALM-clustering algorithm. Assuming same starting point $X(0) = Y(0)$ and by taking $\nu \to 0$, we have
+\begin{equation*}
+	\begin{split}
+	V(t) = \lim_{\nu \to 0} W(t) \\
+	Y(t) = \lim_{\nu \to 0} X(t)
+	\end{split}
+\end{equation*}
+
 \newpage
 
-\section{Clustering via ADMM Approach }
-
-First we add new variables $z^l, l=1, \cdots ,k$, and formulate an equivalent problem to the clustering problem (see (1.2)):
-
-\begin{equation}
-	\min\limits_{x^1, \dots ,x^k \in \mathbb{R}^n} \min\limits_{w^1, \dots ,w^m \in \mathbb{R}^k} \min\limits_{z^1, \dots ,z^k \in S} \left\lbrace \sum\limits_{i=1}^{m} v_i \sum\limits_{l=1}^{k} w^i_l d(x^l , a^i) \mid w^i \in \Delta^i , i=1, \dots ,m , x^l = z^l, l=1, \dots ,k \right\rbrace
-\end{equation}
-
-We present the augmented Lagrangian associated with the clustering problem
-
-\begin{equation}
-	L_\rho({\bf x},{\bf z},{\bf y},{\bf w}) = H({\bf x},{\bf w}) + \sum\limits_{l=1}^k (y^l)^T (x^l -z^l) + \frac{\rho}{2} \sum\limits_{l=1}^k \| x^l -z^l \|^2
-\end{equation}
-
-\noindent ADMM update:
-\begin{center}
-	$x^{l,t+1} := \frac{\rho z^{l,t} - y^{l,t} + 2\sum\limits_{i=1}^m {v_i w^{i,t}_l a^i} }{\rho + 2\sum\limits_{i=1}^m v_i w^{i,t}_l}$ \\ \bigskip
-	$z^{l,t+1} := \Pi_S(x^{l,t+1} + \frac{y^{l,t}}{\rho} )$ \\ \bigskip
-	$y^{l,t+1} := y^{l.t} + \rho (x^{l,t+1} - z^{l,t+1})$ \\ \bigskip
-	$w^{i,t+1} \in \left\lbrace w \in \mathbb{R}^k \mid w \in \Delta^i,\text{ such that if }l \not\in Nearest({\bf x}^{t+1} ,a^i) \text{ then } w^i_l=0 \right\rbrace $
-\smallskip
-	$\text{where } Nearest({\bf x} ,a^i) := \left\lbrace 1 \leq l \leq k \mid \|x^l -a^i\|= \min\limits_{1 \leq j \leq k} \|x^j - a^i\| \right\rbrace$
-\end{center}
-
-\newpage
+%\section{Clustering via ADMM Approach }
+%
+%First we add new variables $z^l, l=1, \cdots ,k$, and formulate an equivalent problem to the clustering problem (see (1.2)):
+%
+%\begin{equation}
+%	\min\limits_{x^1, \dots ,x^k \in \mathbb{R}^n} \min\limits_{w^1, \dots ,w^m \in \mathbb{R}^k} \min\limits_{z^1, \dots ,z^k \in S} \left\lbrace \sum\limits_{i=1}^{m} v_i \sum\limits_{l=1}^{k} w^i_l d(x^l , a^i) \mid w^i \in \Delta^i , i=1, \dots ,m , x^l = z^l, l=1, \dots ,k \right\rbrace
+%\end{equation}
+%
+%We present the augmented Lagrangian associated with the clustering problem
+%
+%\begin{equation}
+%	L_\rho({\bf x},{\bf z},{\bf y},{\bf w}) = H({\bf x},{\bf w}) + \sum\limits_{l=1}^k (y^l)^T (x^l -z^l) + \frac{\rho}{2} \sum\limits_{l=1}^k \| x^l -z^l \|^2
+%\end{equation}
+%
+%\noindent ADMM update:
+%\begin{center}
+%	$x^{l,t+1} := \frac{\rho z^{l,t} - y^{l,t} + 2\sum\limits_{i=1}^m {v_i w^{i,t}_l a^i} }{\rho + 2\sum\limits_{i=1}^m v_i w^{i,t}_l}$ \\ \bigskip
+%	$z^{l,t+1} := \Pi_S(x^{l,t+1} + \frac{y^{l,t}}{\rho} )$ \\ \bigskip
+%	$y^{l,t+1} := y^{l.t} + \rho (x^{l,t+1} - z^{l,t+1})$ \\ \bigskip
+%	$w^{i,t+1} \in \left\lbrace w \in \mathbb{R}^k \mid w \in \Delta^i,\text{ such that if }l \not\in Nearest({\bf x}^{t+1} ,a^i) \text{ then } w^i_l=0 \right\rbrace $
+%\smallskip
+%	$\text{where } Nearest({\bf x} ,a^i) := \left\lbrace 1 \leq l \leq k \mid \|x^l -a^i\|= \min\limits_{1 \leq j \leq k} \|x^j - a^i\| \right\rbrace$
+%\end{center}
+%
+%\newpage
 
 
 %\begin{thebibliography}{99}
