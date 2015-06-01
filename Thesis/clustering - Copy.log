@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.4)  31 MAY 2015 15:06
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.4)  1 JUN 2015 00:00
 entering extended mode
 **clustering*-*Copy.tex
 
@@ -497,8 +497,20 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 93.
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 ) [1
 
-{C:/Users/servold/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] [3] [
-4] [5]
+{C:/Users/servold/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
+Overfull \hbox (11.51256pt too wide) in paragraph at lines 198--199
+\OT1/cmr/m/it/10.95 up-date step can be done in par-al-lel over all cen-ters, t
+hat is, $\OML/cmm/m/it/10.95 x[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t \OT1/
+cmr/m/n/10.95 + 1) = [] [] [] \OML/cmm/m/it/10.95 ; [] $
+ []
+
+[3] [4] [5]
+Overfull \hbox (30.83084pt too wide) in paragraph at lines 328--329
+\OT1/cmr/bx/n/10.95 Proposition 3.2 \OT1/cmr/m/n/10.95 (Sub-gra-di-ent lower bo
+und for it-er-ates gap prop-erty)\OT1/cmr/bx/n/10.95 . \OT1/cmr/m/it/10.95 Let 
+$[][] \OT1/cmr/m/n/10.95 = [][]$
+ []
+
 [6] [7]
 ("C:\Users\servold\Documents\Graduate Studies\TAU\Master\Thesis\clustering - Co
 py.aux") ) 
@@ -525,7 +537,7 @@ es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files
 (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files (x8
 6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)
 /MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "clustering - Copy.pdf" (7 pages, 201922 bytes).
+Output written on "clustering - Copy.pdf" (7 pages, 201082 bytes).
 PDF statistics:
  86 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

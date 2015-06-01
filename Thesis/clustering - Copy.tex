@@ -90,9 +90,9 @@
 
 \section{The Clustering Problem}
 
-Let $\mathcal{A}= \left\lbrace a^1, a^2, \ldots ,a^m \right\rbrace$ be a given set of points in $\mathbb{R}^n$, and let $1 < k < m$ be a fixed given number of clusters. The clustering problem consists of partitioning the data $\mathcal{A}$ into $k$ subsets $\left\lbrace A^1, A^2, \ldots ,A^k \right\rbrace$, called clusters. For each $l=1, 2, \ldots ,k$, the cluster $A_l$ is represented by its center $x^l$, and we want to determine $k$ cluster centers $\left\lbrace x^1, x^2 \ldots ,x^k \right\rbrace$ such that the sum of proximity measures from each point $a^i, i=1, 2, \ldots ,m$, to a nearest cluster center $x^l$ is minimized.
+Let $\mathcal{A}= \left\lbrace a^1, a^2, \ldots ,a^m \right\rbrace$ be a given set of points in $\mathbb{R}^n$, and let $1 < k < m$ be a fixed given number of clusters. The clustering problem consists of partitioning the data $\mathcal{A}$ into $k$ subsets $\left\lbrace A^1, A^2, \ldots ,A^k \right\rbrace$, called clusters. For each $l=1, 2, \ldots ,k$, the cluster $A_l$ is represented by its center $x^l$, and we want to determine $k$ cluster centers $\left\lbrace x^1, x^2, \ldots ,x^k \right\rbrace$ such that the sum of proximity measures from each point $a^i, i=1, 2, \ldots ,m$, to a nearest cluster center $x^l$ is minimized.
 
-The clustering problem formulation is given by
+The clustering problem is given by
 
 \begin{equation}
 	\min\limits_{x^1, \ldots ,x^k \in \mathbb{R}^n} \sum\limits_{i=1}^{m} \min\limits_{1 \le l \le k} d(x^l,a^i) , \label{StateEq1}
@@ -105,18 +105,18 @@ The clustering problem formulation is given by
 
 We introduce some notations that will be used throughout this document.
 
-\noindent $A = (a^1, \ldots , a^m) \in \left(\mathbb{R}^n\right)^m$, where $a^i \in \mathbb{R}^n,\smallskip i=1, 2, \ldots , m$
+\noindent $A = (a^1, \ldots , a^m) \in \left(\mathbb{R}^n\right)^m$, where $a^i \in \mathbb{R}^n,\smallskip i=1, 2, \ldots , m$,
 
-\noindent $W = (w^1, \ldots , w^m) \in \left(\mathbb{R}^k\right)^m$, where $w^i \in \mathbb{R}^k,\smallskip i=1, 2, \ldots , m$
+\noindent $W = (w^1, \ldots , w^m) \in \left(\mathbb{R}^k\right)^m$, where $w^i \in \mathbb{R}^k,\smallskip i=1, 2, \ldots , m$,
 
-\noindent $X = (x^1, \ldots , x^k) \in \left(\mathbb{R}^n\right)^k$, where $x^l \in \mathbb{R}^n,\smallskip l=1, 2, \ldots , k$
+\noindent $X = (x^1, \ldots , x^k) \in \left(\mathbb{R}^n\right)^k$, where $x^l \in \mathbb{R}^n,\smallskip l=1, 2, \ldots , k$,
 
-\noindent $d^{i}(X) = (d(x^1,a^i), \ldots , d(x^k,a^i)) \in \mathbb{R}^k,\smallskip i=1, 2, \ldots , m$
+\noindent $d^{i}(X) = (d(x^1,a^i), \ldots , d(x^k,a^i)) \in \mathbb{R}^k,\smallskip i=1, 2, \ldots , m$,
 
-\noindent $\Delta = \left\lbrace u \in \mathbb{R}^k \mid \sum\limits_{l=1}^{k} u_l = 1, u_l \geq 0 , l=1, 2, \ldots ,k \right\rbrace$
+\noindent $\Delta = \left\lbrace u \in \mathbb{R}^k \mid \sum\limits_{l=1}^{k} u_l = 1, u_l \geq 0 , l=1, 2, \ldots ,k \right\rbrace$.
 
-\noindent For some $S \subseteq \mathbb{R}^n$, the indicator function of the set$s$ is defined and denoted as follows \\ $\delta_S(p) = \begin{cases} 0 &\mbox{if } p \in S \\ 
-\infty &\mbox{if } p \not\in S \end{cases}.$
+\noindent Let $S \subseteq \mathbb{R}^n$, the indicator function of set $S$ is defined and denoted as follows \\ $\delta_S(p) = \begin{cases} 0, &\mbox{if } p \in S \\ 
+\infty, &\mbox{if } p \not\in S \end{cases}.$
 
 Using the fact that $\min\limits_{1 \leq l \leq k} u_l = \min \left\lbrace \langle u,v \rangle \mid v \in \Delta \right\rbrace$, and applying it over $\left(\ref{StateEq1}\right)$, gives a smooth reformulation of the clustering problem
 
@@ -124,25 +124,22 @@ Using the fact that $\min\limits_{1 \leq l \leq k} u_l = \min \left\lbrace \lang
 	\min\limits_{X \in \left(\mathbb{R}^n\right)^k} \sum\limits_{i=1}^{m} \min\limits_{w^i \in \Delta} \langle w^i , d^i(X) \rangle. \label{StateEq2}
 \end{equation}
 
-Further replacing the constrain over $w^i \in \Delta$ by adding the indicator function $\delta_{\Delta}(\cdot)$ to the objective function, results in a equivalent formulation
+Replacing further the constrain $w^i \in \Delta$ by adding the indicator function $\delta_{\Delta}(\cdot)$ to the objective function, results in a equivalent formulation
 
 \begin{equation}
-	\min\limits_{X \in \left(\mathbb{R}^n\right)^k , W \in \left(\mathbb{R}^k\right)^m} \left\lbrace \sum\limits_{i=1}^{m} \langle w^i , d^i(X) \rangle + \delta_{\Delta}(w^i) \right\rbrace \label{StateEq3}
+	\min\limits_{X \in \left(\mathbb{R}^n\right)^k , W \in \left(\mathbb{R}^k\right)^m} \left\lbrace \sum\limits_{i=1}^{m} \langle w^i , d^i(X) \rangle + \delta_{\Delta}(w^i) \right\rbrace . \label{StateEq3}
 \end{equation}
 
-Finally, introducing several more useful definitions, for each $i=1, 2, \ldots , m$
-
+Finally, introducing several more useful notations, for each $i=1, 2, \ldots , m$
 \begin{center}
-$H_i(W,X) = \langle w^i , d^i(X) \rangle \quad G(w^i) = \delta_{\Delta}(w^i)$
-\\ \smallskip
-$H(W,X) = \sum\limits_{i=1}^{m} H_i(W,X)\quad G(W) = \sum\limits_{i=1}^{m} G(w^i)$
+$H(W,X) := \sum\limits_{i=1}^{m} H_i(W,X) = \sum\limits_{i=1}^{m} \langle w^i , d^i(X) \rangle$ and $G(W) = \sum\limits_{i=1}^{m} G(w^i) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i) .$
 \\
 \end{center}
 
-Replacing the terms in (\ref{StateEq2}) with the functions above gives a compact form that is equivalent to the original clustering problem
+Replacing the terms in (\ref{StateEq2}) with the functions defined above gives a compact form that is equivalent to the original clustering problem
 
 \begin{equation}
-	\min \left\lbrace \Psi(Z) := H(W,X) + G(W) \mid Z := (W,X) \in (\mathbb{R}^k)^m \times (\mathbb{R}^n)^k \right\rbrace \label{StateEq4}
+	\min \left\lbrace \Psi(Z) := H(W,X) + G(W) \mid Z := (W,X) \in (\mathbb{R}^k)^m \times (\mathbb{R}^n)^k \right\rbrace . \label{StateEq4}
 \end{equation}
 
 
@@ -153,38 +150,38 @@ Replacing the terms in (\ref{StateEq2}) with the functions above gives a compact
 Presentation of PALM's requirements and of the algorithm steps  $\ldots$
 
 
-\subsection{Clustering with PALM for Squared Euclidean Norm Distance-Like Function}
+\subsection{Clustering with PALM for Squared Euclidean Norm Distance Function}
 
-In this section we tackle the clustering problem with distance-like function $d(u,v) = \|u-v\|^2$. We devise a PALM-like algorithm, based on the discussion about PALM in the previous subsection.
+In this section we tackle the clustering problem with the classical distance function defined by $d(u,v) = \|u-v\|^2$. We devise a PALM-like algorithm, based on the discussion about PALM in the previous subsection.
 Since the clustering problem has a specific structure, we are ought to exploit it in the following manner.
-First we notice that the map 
-$W \mapsto H(W,X)$ is linear in $W$, so there is no need to linearize it. In addition, the map 
+First we notice that the function 
+$W \mapsto H(W,X)$ is linear in $W$, so there is no need to linearize it. In addition, the function 
 $X \mapsto H(W,X) = 
 \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} w^i_l \|x^l - a^i\|^2 =
-\sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \|x^l - a^i\|^2$ is convex and quadratic in $X$, hence we do not need to add a proximal term as in PALM algorithm.
+\\ \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \|x^l - a^i\|^2$ is convex and quadratic in $X$, hence we do not need to add a proximal term as in PALM algorithm.
 
-Now we propose the PALM-like algorithm for clustering, we name it KPALM.
+Now we propose a PALM-like algorithm for clustering, which we call KPALM.
 \begin{enumerate}[(1)]
-	\item Initialization: Set $t=0$, and pick random vectors $(W(0),X(0)) \in \Delta^m \times (\mathbb{R}^n)^k$
+	\item Initialization: Set $t=0$, and pick random vectors $(W(0),X(0)) \in \Delta^m \times (\mathbb{R}^n)^k .$
 
 	\item For each $t=0,1, \ldots$ generate a sequence $\left\lbrace(W(t),X(t))\right\rbrace_{t \in \mathbb{N}}$ as follows:
 	\begin{enumerate}[(2.1)]
 		\item Cluster Assignment: Take $\nu \in \left(0,1\right]$, compute $\beta(t) = \min\limits_{1 \leq l \leq k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l(t)\right \rbrace$, set
 		$\alpha(t)=\nu \beta(t) $ and for each $i=1, 2, \ldots ,m$ compute
 		\begin{equation}
-			w^i(t+1) = \arg\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(X(t)) \rangle + \frac{\alpha(t)}{2} \|w^i - w^i(t)\|^2 \right\rbrace \label{StateEq5}
+			w^i(t+1) = \arg\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(X(t)) \rangle + \frac{\alpha(t)}{2} \|w^i - w^i(t)\|^2 \right\rbrace . \label{StateEq5}
 		\end{equation}
 		
 		\item Centers Update: For each $l=1, 2, \ldots ,k$ compute $x^l \in \mathbb{R}^n$ via
 		\begin{equation}
-			X(t+1) = \arg\min \left\lbrace H(W(t+1), X) \mid X \in (\mathbb{R}^n)^k \right\rbrace \label{StateEq6}
+			X(t+1) = \arg\min \left\lbrace H(W(t+1), X) \mid X \in (\mathbb{R}^n)^k \right\rbrace . \label{StateEq6}
 		\end{equation}
 	\end{enumerate}
 \end{enumerate}
 
 \newpage
 
-At each step $t \in \mathbb{N}$, the KPALM algorithm alternates between cluster assignment and centers update. The explicit formulas for step $t$ are given below
+At each step $t \in \mathbb{N}$, the KPALM algorithm alternates between cluster assignment and centers update. The explicit formulas, at step $t$, are given below
 
 \begin{equation}
 w^i(t+1) = \Pi_{\Delta} \left(w^i(t) - \frac{d^i(X(t))}{\alpha(t)}\right) , \quad i=1, 2, \ldots ,m , \label{StateEq7}
@@ -196,18 +193,18 @@ x^l(t+1) = \frac{\sum_{i=1}^{m} w^i_l(t+1) a^i}{\sum_{i=1}^{m} w^i_l(t+1)} , \qu
 
 \begin{remark} 
 	\begin{enumerate}[(i)] \label{StateEq15}
-		\item $\alpha(t)$ is the step-size, and it must be positive. If for some step $t \in \mathbb{N}$ $\alpha(t)=0$ then there exists $1 \leq l' \leq k$ such that $\beta(t) = \sum\limits_{i=1}^{m} w^i_{l'} = 0$, since for all $1 \leq l \leq k$, and for all $1 \leq i \leq m$ such that $w^i_l \geq 0$ then for all $1 \leq i \leq m, \quad w^i_{l'}=0$. Thus, none of the points in $\mathcal{A}$ belong to cluster $l'$, in that case the algorithm can halt. Hence from now on we assume that for all $t \in \mathbb{N}$, $\beta(t) = \min\limits_{1 \leq l \leq k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l(t)\right \rbrace > 0$, and it follows that $\alpha(t) > 0 $.
+		\item $\alpha(t)$ is the step-size, and it must be positive. If at some step $t \in \mathbb{N}$, $\alpha(t)=0$, then there exists $1 \leq l' \leq k$ such that $\beta(t) = \sum\limits_{i=1}^{m} w^i_{l'}(t) = 0$. Since for all $1 \leq l \leq k$ and $1 \leq i \leq m$ we know that $w^i_l(t) \geq 0$ then $w^i_{l'}(t)=0$ for each $1 \leq i \leq m$. Thus, none of the points in $\mathcal{A}$ belong to cluster $l'$, in that case the algorithm can halt. Hence from now on we assume that for all $t \in \mathbb{N}$, $\beta(t) = \min\limits_{1 \leq l \leq k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l(t)\right \rbrace > 0$, and thus $\alpha(t) > 0 $.
 		\item Since for all $t \in \mathbb{N} \quad W(t) \in \Delta^m$ then $\Psi(Z(t)) = H(W(t),X(t)) + G(W(t)) = H(W(t),X(t))$. \label{StateEq16}
-		\item Note that the function $X \mapsto H(W,X)$ is separable in $x^l$ for all $l = 1, 2, \ldots, k$. Thus, regardless of the specific distance-like function $d(\cdot, \cdot)$, the centers update step is $x^l(t+1) = \\ \arg\min\limits_{x^l \in \mathbb{R}^k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l d(x^l , a^i) \right\rbrace, l = 1, 2, \ldots, k$, and in the case of squared Euclidean norm the result is as in (\ref{StateEq8}).
+		\item For any choice of distance-like function $d(\cdot, \cdot)$, the function $X \mapsto H(W,X)$ is separable in $x^l$ for all $l = 1, 2, \ldots, k$. Thus, regardless the choice of distance-like function $d(\cdot, \cdot)$, the centers update step can be done in parallel over all centers, that is, $x^l(t+1) = \arg\min\limits_{x^l \in \mathbb{R}^k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l d(x^l , a^i) \right\rbrace, \\ l = 1, 2, \ldots, k$, and in the case of squared Euclidean norm the result is as in (\ref{StateEq8}).
 	\end{enumerate}
 \end{remark}
 
-\begin{lemma}[Boundedness of KPALM sequence] \ \\
-Let $\left\lbrace Z(t) \right\rbrace_{t \in \mathbb{N}} = \left\lbrace W(t) , X(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM. Then 
+\begin{lemma}[Boundedness of KPALM sequence]
+Let $\left\lbrace Z(t) \right\rbrace_{t \in \mathbb{N}} = \left\lbrace (W(t) , X(t)) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM. Then, the following statements hold true
 \begin{enumerate}[(i)]
 	\item $x^l(t) \in Conv(\mathcal{A})$ for all $l=1, 2, \ldots ,k$ and $t \in \mathbb{N}$, where $Conv(\mathcal{A})$ is the convex hull of $\mathcal{A}$.
 	\item For all $l=1, 2, \ldots ,k$ and $t \in \mathbb{N}$, $\| x^l(t) \|$ is bounded by $M = \max\limits_{1 \leq i \leq m} \| a^i \|$.
-	\item $\left\lbrace Z(t) \right\rbrace_{t \in \mathbb{N}}$ is a bounded sequence in $(\mathbb{R}^k)^m \times (\mathbb{R}^n)^k$.
+	\item The sequence $\left\lbrace Z(t) \right\rbrace_{t \in \mathbb{N}}$ is bounded in $(\mathbb{R}^k)^m \times (\mathbb{R}^n)^k$.
 \end{enumerate}
 \end{lemma}
 
@@ -219,16 +216,16 @@ Let $\left\lbrace Z(t) \right\rbrace_{t \in \mathbb{N}} = \left\lbrace W(t) , X(
 		= \sum_{i=1}^{m} \left( \frac{ w^i_l(t)}{\sum_{j=1}^{m} w^j_l(t)} \right) a^i 
 		= \sum\limits_{i=1}^{m} \alpha_i a^i \in Conv(\mathcal{A}).
 	\end{equation*}
-	Hence $x^l(t)$ is in the convex hull of $\mathcal{A}$, for all $l = 1, 2, \ldots, k$, and $t \in \mathbb{N}$.
+	Hence $x^l(t)$ is in the convex hull of $\mathcal{A}$, for all $l = 1, 2, \ldots, k$ and $t \in \mathbb{N}$.
 
 	\item
-	Taking the norm of $x^l(t)$ yields 
+	Taking the norm of $x^l(t)$ yields again from (\ref{StateEq8}) that
 	\begin{equation*}
 		\| x^l(t) \| = \left\lVert \sum_{i=1}^{m} \left( \frac{ w^i_l(t)}{\sum_{j=1}^{m} w^j_l(t)} \right) a^i \right\lVert
 		\leq \sum_{i=1}^{m} \left( \frac{ w^i_l(t)}{\sum_{j=1}^{m} w^j_l(t)} \right) \| a^i \|
 		\leq \sum_{i=1}^{m} \alpha_i \max\limits_{1 \leq i \leq m} \| a^i \| = M .
 	\end{equation*}
-	\item $w^i(t)$ is bounded, since $w^i(t) \in \Delta$ for all $i=1, 2, \ldots ,m$ and $t \in \mathbb{N}$. Combined with the previous item, the result follows. 
+	\item The sequence $\left\lbrace W(t) \right\rbrace_{t \in \mathbb{N}}$ is bounded, since $w^i(t) \in \Delta$ for all $i=1, 2, \ldots ,m$ and $t \in \mathbb{N}$. Combined with the previous item, the result follows. 
 \end{enumerate}
 \end{proof}
 
@@ -251,7 +248,7 @@ Since the Hessian is diagonal, the smallest eigenvalue is $\min\limits_{1 \leq l
 
 Now we are ready to prove the decrease property of KPALM algorithm.
 
-\begin{proposition}[Sufficient decrease property]\ \\
+\begin{proposition}[Sufficient decrease property]
 Let $\left\lbrace Z(t) \right\rbrace_{t \in \mathbb{N}} = \left\lbrace W(t) , X(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM, then there exists $\rho_1 > 0$ such that $\rho_1 \|Z(t+1) - Z(t)\|^2 \leq \Psi(Z(t)) - \Psi(Z(t+1))$ for all $t \in \mathbb{N}$ .
 \end{proposition}
 
@@ -263,7 +260,7 @@ From (\ref{StateEq5}) we derive the following inequality
 	& = \langle w^i(t+1) , d^i(X(t)) \rangle + \frac{\alpha(t)}{2} \|w^i(t+1) - w^i(t)\|^2 \\
 	& \leq \langle w^i(t) , d^i(X(t)) \rangle + \frac{\alpha(t)}{2} \|w^i(t) - w^i(t)\|^2 \\
 	& = \langle w^i(t) , d^i(X(t)) \rangle \\
-	& = H_i(W(t),X(t))
+	& = H_i(W(t),X(t)) .
 \end{aligned}
 \end{equation*}
 Hence, we obtain
@@ -277,7 +274,7 @@ Summing this inequality over $i=1, 2, \ldots ,m$ yields
 	\frac{\alpha(t)}{2} \|W(t+1) - W(t)\|^2 
 	& = \frac{\alpha(t)}{2} \sum\limits_{i=1}^{m} \|w^i(t+1) - w^i(t)\|^2 \\
 	& \leq \sum\limits_{i=1}^{m} H_i(W(t),X(t)) - \sum\limits_{i=1}^{m} H_i(W(t+1),X(t)) \\
-	& = H(W(t),X(t)) - H(W(t+1),X(t)) \\
+	& = H(W(t),X(t)) - H(W(t+1),X(t)) . \\
 \end{aligned}
 \end{equation*}
 
@@ -304,39 +301,38 @@ Set $\rho_1 = \min\left\lbrace \alpha(t) , \beta(t) \right\rbrace = \alpha(t)$, 
 where the last equality follows from \cref{StateEq15}(\ref{StateEq16}).
 \end{proof}
 
-Next, we aim to prove the subgradient lower bound for iterates gap property. The following lemma will be handy in our proof.
+Next, we aim to prove the subgradient lower bound for iterates gap property. The following lemma will be essential in our proof.
 
-\begin{lemma} \label{StateEq11} \ \\
-Let $\left\lbrace Z(t) \right\rbrace_{t \in \mathbb{N}} = \left\lbrace W(t) , X(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM, then \\ $\| d^i(X(t+1) - d^i(X(t)) \| \leq 4M \| X(t+1) - X(t)\|$ for all $i=1, 2, \ldots ,m$ and $t \in \mathbb{N}$, where $M = \max\limits_{1 \leq i \leq m} \|a^i\|$.
+\begin{lemma} \label{StateEq11}
+Let $\left\lbrace Z(t) \right\rbrace_{t \in \mathbb{N}} = \left\lbrace (W(t) , X(t)) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM, then \\ $\| d^i(X(t+1) - d^i(X(t)) \| \leq 4M \| X(t+1) - X(t)\|$ for all $i=1, 2, \ldots ,m$ and $t \in \mathbb{N}$, where $M = \max\limits_{1 \leq i \leq m} \|a^i\|$.
 \end{lemma}
 
 \begin{proof}
+Since $d(u,v) = \| u-v \|^2$, we get that
 \begin{equation*}
 \begin{aligned}
 	\| d^i(X(t+1) - d^i(X(t)) \| 
 	& = \left[ \sum\limits_{l=1}^{k} \abs{ \|x^l(t+1) - a^i\|^2 - \| x^l(t) -a^i\|^2 }^2 \right]^{\frac{1}{2}} \\
 	& = \left[ \sum\limits_{l=1}^{k} \left\lvert \|x^l(t+1)\|^2 - 2\left\langle x^l(t+1),a^i \right\rangle + \|a^i\|^2 \right.\right. \\ & \qquad - \left.\left. \|x^l(t)\|^2 + 2\left\langle x^l(t),a^i \right\rangle - \|a^i\|^2 \right\rvert ^2 \right]^{\frac{1}{2}} \\
 	& \leq \left[ \sum\limits_{l=1}^{k} \left( \abs{ \|x^l(t+1)\|^2 - \|x^l(t)\|^2 } + \abs{ 2\left\langle x^l(t) - x^l(t+1) , a^i \right\rangle } \right)^2 \right]^{\frac{1}{2}} \\
-	& \leq \left[ \sum\limits_{l=1}^{k} \left( \abs{ \|x^l(t+1)\| - \|x^l(t)\| } \abs{ \|x^l(t+1)\| + \|x^l(t)\| } \right.\right. \\ & \qquad + \left.\left. 2 \| x^l(t) - x^l(t+1) \| \|a^i\| \right)^2 \right]^{\frac{1}{2}} \\
+	& \leq \left[ \sum\limits_{l=1}^{k} \left( \abs{ \|x^l(t+1)\| - \|x^l(t)\| } \abs{ \|x^l(t+1)\| + \|x^l(t)\| } \right.\right. \\ & \qquad + \left.\left. 2 \| x^l(t) - x^l(t+1) \| \cdot \|a^i\| \right)^2 \right]^{\frac{1}{2}} \\
 	& \leq \left[ \sum\limits_{l=1}^{k} \left( \|x^l(t+1) - x^l(t)\| \cdot 2M + 2 \| x^l(t+1) - x^l(t) \| M \right)^2 \right]^{\frac{1}{2}} \\
 	& = \left[ \sum\limits_{l=1}^{k} (4M)^2 \|x^l(t+1) - x^l(t)\|^2 \right]^{\frac{1}{2}} 
-	= 4M \| X(t+1) - X(t)\|
+	= 4M \| X(t+1) - X(t)\| ,
 \end{aligned}
 \end{equation*}
+this proves the desired results.
 \end{proof}
 
-\begin{proposition}[Subgradient lower bound for iterates gap property]\ \\
-Let $\left\lbrace Z(t) \right\rbrace_{t \in \mathbb{N}} = \left\lbrace W(t) , X(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM, then there exists $\rho_2 > 0$ and $\gamma(t+1) \in \partial \Psi(Z(t+1))$ such that $\| \gamma(t+1)\| \leq \rho_2 \|Z(t+1) - Z(t)\|^2$, for all $t \in \mathbb{N} $.
+\begin{proposition}[Subgradient lower bound for iterates gap property]
+Let $\left\lbrace Z(t) \right\rbrace_{t \in \mathbb{N}} = \left\lbrace (W(t) , X(t)) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM, then there exists $\rho_2 > 0$ and $\gamma(t+1) \in \partial \Psi(Z(t+1))$ such that $\| \gamma(t+1)\| \leq \rho_2 \|Z(t+1) - Z(t)\|^2$ for all $t \in \mathbb{N} $.
 \end{proposition}
 
 \begin{proof}
-$\Psi = H + G$, then
+By the definition of $\Psi$ (see (\ref{StateEq4})) we get
 \begin{equation*}
-\begin{aligned}
 	\partial \Psi = \nabla H + \partial G  
-	& = \left( \nabla_{W}H, \nabla_{X}H \right) + \left( \left( \partial_{w^i}\delta_{\Delta} \right)_{i=1, \ldots ,m}, \bf{0} \right) \\
-	& = \left( \left( \nabla_{w^i} H_i + \partial_{w^i} \delta_{\Delta} \right)_{i=1, \ldots ,m} , \nabla_X H \right) .
-\end{aligned}
+= \left( \left( \nabla_{w^i} H_i + \partial_{w^i} \delta_{\Delta} \right)_{i=1, \ldots ,m} , \nabla_X H \right) .
 \end{equation*}
 Evaluating the last relation at $Z(t+1)$ yields
 \begin{equation*}
@@ -347,15 +343,14 @@ Evaluating the last relation at $Z(t+1)$ yields
 	& = \left( \left( d^i(X(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \right)_{i=1, \ldots ,m} , \bf{0} \right) ,
 \end{aligned}
 \end{equation*}
-where the last equality follows from (\ref{StateEq6}), that is the optimality condition of $X(t+1)$. \\
-Taking the norm of the last equation yields
+where the last equality follows from (\ref{StateEq6}), that is, the optimality condition of $X(t+1)$. Taking the norm of the last equality yields
 \begin{equation}
 	\| \partial \Psi(Z(t+1))\| 
 	\leq \sum\limits_{i=1}^{m} \| d^i(X(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \|. \label{StateEq9}
 \end{equation}
 The optimality condition of $w^i(t+1)$ that is derived from (\ref{StateEq5}), yields that for all $i=1, 2, \ldots ,m$ there exists $u^i(t+1) \in \partial \delta_{\Delta}(w^i(t+1))$ such that
 \begin{equation}
-	d^i(X(t)) + \alpha(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) = 0 . \label{StateEq10}
+	d^i(X(t)) + \alpha(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) = \bf{0} . \label{StateEq10}
 \end{equation}
 Setting $\gamma(t+1) := \left( \left( d^i(X(t+1)) + u^i(t+1) \right)_{i=1, \ldots ,m}, \bf{0} \right) \in \partial \Psi(Z(t+1))$, and plugging (\ref{StateEq10}) into (\ref{StateEq9}) we have
 \begin{equation*}
@@ -363,12 +358,11 @@ Setting $\gamma(t+1) := \left( \left( d^i(X(t+1)) + u^i(t+1) \right)_{i=1, \ldot
 	\| \gamma(t+1) \|
 	& \leq \sum\limits_{i=1}^{m} \| d^i(X(t+1)) - d^i(X(t)) - \alpha(t) \left( w^i(t+1) - w^i(t) \right) \| \\
 	& \leq \sum\limits_{i=1}^{m} \| d^i(X(t+1)) - d^i(X(t)) \| + \sum\limits_{i=1}^{m} \alpha(t) \| w^i(t+1) - w^i(t) \| \\
-	& \leq \sum\limits_{i=1}^{m} 4M \| X(t+1)) - X(t) \| + m \alpha(t) \|Z(t+1) - Z(t)\| \\
-	& \leq m \left( 4M + \alpha(t) \right) \|Z(t+1) - Z(t)\| \\
+	& \leq \sum\limits_{i=1}^{m} 4M \| X(t+1) - X(t) \| + m \alpha(t) \|Z(t+1) - Z(t)\| \\
+	& \leq m \left( 4M + \alpha(t) \right) \|Z(t+1) - Z(t)\| , \\
 \end{aligned}
 \end{equation*}
-where the third inequality follows from \cref{StateEq11}. \\
-Define $\rho_2 = m \left( 4M + \alpha(t) \right)$ and the result follows.
+where the third inequality follows from \cref{StateEq11}. Define $\rho_2 = m \left( 4M + \alpha(t) \right)$ and the result follows.
 \end{proof}
 
 
