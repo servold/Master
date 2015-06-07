@@ -403,6 +403,28 @@ meaning, both algorithms converge to the same result.
 
 \newpage
 
+\section{KMEANS with Weiszfeld step }
+
+Solving clustering problem with distance function $d(\cdot,\cdot) = \| u - v \|$
+\begin{equation*}
+	\min_{x^1, \ldots, x^k \in \mathbb{R}^n} \left\lbrace \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \|x^l -a^i \| \mid w^i \in \Delta, \: i=1,2, \ldots, m \right\rbrace
+\end{equation*}
+similarly to KMEANS it leads to the following alternation steps: \\
+\begin{enumerate}[(1)]
+	\item Clusters Assignment: For $i=1, 2, \ldots ,m$ compute
+		\begin{equation}
+			w^i(t+1) = \arg\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(x(t)) \rangle\right\rbrace \label{StateEq21}
+		\end{equation}
+		
+	\item Centers Update: For $l=1, 2, \ldots ,k$ compute
+		\begin{equation}
+			x^l(t+1) = \arg\min\limits_{x^l \in \mathbb{R}^n} \sum\limits_{i=1}^{m} w^i_l(t+1) \| x^l -a^i \| \label{StateEq22}
+		\end{equation}
+\end{enumerate}
+The center update step could be computed via Weiszfeld algorithm.
+
+\newpage
+
 %\section{Clustering via ADMM Approach }
 %
 %First we add new variables $z^l, l=1, \ldots ,k$, and formulate an equivalent problem to the clustering problem (see (1.2)):
