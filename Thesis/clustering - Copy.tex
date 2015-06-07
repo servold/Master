@@ -208,7 +208,7 @@ Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}} = \left\lbrace (w(t) , x
 \begin{enumerate}[(i)]
 	\item For all $l=1, 2, \ldots ,k$, the sequence $\left\lbrace x^l(t) \right\rbrace_{t \in \mathbb{N}}$ is contained in $Conv(\mathcal{A})$, where $Conv(\mathcal{A})$ is the convex hull of $\mathcal{A}$.
 	\item For all $l=1, 2, \ldots ,k$, the sequence $\left\lbrace x^l(t) \right\rbrace_{t \in \mathbb{N}}$ is bounded by $M = \max\limits_{1 \leq i \leq m} \| a^i \|$.
-	\item The sequence $\left\lbrace Z(t) \right\rbrace_{t \in \mathbb{N}}$ is bounded in $\mathbb{R}^{km} \times \mathbb{R}^{nk}$.
+	\item The sequence $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ is bounded in $\mathbb{R}^{km} \times \mathbb{R}^{nk}$.
 \end{enumerate}
 \end{lemma}
 
@@ -229,8 +229,8 @@ Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}} = \left\lbrace (w(t) , x
 		\leq \sum_{i=1}^{m} \left( \frac{ w^i_l(t)}{\sum_{j=1}^{m} w^j_l(t)} \right) \| a^i \|
 		\leq \sum_{i=1}^{m} \lambda_i \max\limits_{1 \leq i \leq m} \| a^i \| = M .
 	\end{equation*}
-	\item The sequence $\left\lbrace W(t) \right\rbrace_{t \in \mathbb{N}}$ is bounded, since $w^i(t) \in \Delta$ for all $i=1, 2, \ldots ,m$ and $t \in \mathbb{N}$. Combined with the previous item, the result follows. 
-\end{enumerate}
+	\item The sequence $\left\lbrace w(t) \right\rbrace_{t \in \mathbb{N}}$ is bounded, since $w^i(t) \in \Delta$ for all $i=1, 2, \ldots ,m$ and $t \in \mathbb{N}$. Combined with the previous item, the result follows.
+\end{enumerate} 
 \end{proof}
 
 \begin{lemma}[Strong convexity of $H(w,x)$ in $x$] \label{StateEq14}
@@ -247,7 +247,7 @@ $\nabla_{x^j} \nabla_{x^l} H(w,x) =
 \\ 2\sum\limits_{i=1}^{m} w^i_l &\mbox{if } j = l, \quad 1 \leq j,l \leq k. \end{cases} $
 \end{center}
 
-Since the Hessian is a diagonal matrix, the smallest eigenvalue is $\min\limits_{1 \leq l \leq k} 2\sum\limits_{i=1}^{m} w^i_l = \beta(W)$, and the result follows.
+Since the Hessian is a diagonal matrix, the smallest eigenvalue is $\min\limits_{1 \leq l \leq k} 2\sum\limits_{i=1}^{m} w^i_l = \beta(w)$, and the result follows.
 \end{proof}
 
 Now we are ready to prove the decrease property of KPALM algorithm.
@@ -347,7 +347,7 @@ Evaluating the last relation at $z(t+1)$ yields
 \begin{equation*}
 \begin{aligned}
 	\partial \Psi(z(t & + 1)) = \\
-	& = \left( \left( \nabla_{w^i} H_i(w(t+1),x(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \right)_{i=1, \ldots ,m} , \nabla_X H(w(t+1),x(t+1)) \right) \\
+	& = \left( \left( \nabla_{w^i} H_i(w(t+1),x(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \right)_{i=1, \ldots ,m} , \nabla_x H(w(t+1),x(t+1)) \right) \\
 	& = \left( \left( d^i(x(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \right)_{i=1, \ldots ,m} , \nabla_x H(w(t+1),x(t+1)) \right) \\
 	& = \left( \left( d^i(x(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \right)_{i=1, \ldots ,m} , \bf{0} \right) ,
 \end{aligned}
@@ -359,19 +359,19 @@ where the last equality follows from (\ref{StateEq6}), that is, the optimality c
 \end{equation}
 The optimality condition of $w^i(t+1)$ that is derived from (\ref{StateEq5}), yields that for all $i=1, 2, \ldots ,m$ there exists $u^i(t+1) \in \partial \delta_{\Delta}(w^i(t+1))$ such that
 \begin{equation}
-	d^i(X(t)) + \alpha(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) = \bf{0} . \label{StateEq10}
+	d^i(x(t)) + \alpha_i(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) = \bf{0} . \label{StateEq10}
 \end{equation}
 Setting $\gamma(t+1) := \left( \left( d^i(x(t+1)) + u^i(t+1) \right)_{i=1, \ldots ,m}, \bf{0} \right) \in \partial \Psi(z(t+1))$, and plugging (\ref{StateEq10}) into (\ref{StateEq9}) we have
 \begin{equation*}
 \begin{aligned}
 	\| \gamma(t+1) \|
-	& \leq \sum\limits_{i=1}^{m} \| d^i(x(t+1)) - d^i(x(t)) - \alpha(t) \left( w^i(t+1) - w^i(t) \right) \| \\
-	& \leq \sum\limits_{i=1}^{m} \| d^i(x(t+1)) - d^i(x(t)) \| + \sum\limits_{i=1}^{m} \alpha(t) \| w^i(t+1) - w^i(t) \| \\
-	& \leq \sum\limits_{i=1}^{m} 4M \| x(t+1) - x(t) \| + m \alpha(t) \|z(t+1) - z(t)\| \\
-	& \leq m \left( 4M + \alpha(t) \right) \|z(t+1) - z(t)\| , \\
+	& \leq \sum\limits_{i=1}^{m} \| d^i(x(t+1)) - d^i(x(t)) - \alpha_i(t) \left( w^i(t+1) - w^i(t) \right) \| \\
+	& \leq \sum\limits_{i=1}^{m} \| d^i(x(t+1)) - d^i(x(t)) \| + \sum\limits_{i=1}^{m} \alpha_i(t) \| w^i(t+1) - w^i(t) \| \\
+	& \leq \sum\limits_{i=1}^{m} 4M \| x(t+1) - x(t) \| + m \overline{\alpha}(t) \|z(t+1) - z(t)\| \\
+	& \leq m \left( 4M + \overline{\alpha}(t) \right) \|z(t+1) - z(t)\| , \\
 \end{aligned}
 \end{equation*}
-where the third inequality follows from \Cref{StateEq11}. Define $\rho_2 = m \left( 4M + \alpha(t) \right)$ and the result follows.
+where the third inequality follows from \Cref{StateEq11}, and $\overline{\alpha}(t) = \max\limits_{1 \leq i \leq m} \alpha_i(t)$. Define \\$\rho_2 = m \left( 4M + \overline{\alpha}(t) \right)$ and the result follows.
 \end{proof}
 
 
