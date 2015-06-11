@@ -122,7 +122,7 @@ We introduce some notations that will be used throughout this document.
 Using the fact that $\min\limits_{1 \leq l \leq k} u_l = \min \left\lbrace \langle u,v \rangle \mid v \in \Delta \right\rbrace$, and applying it over $\left(\ref{StateEq1}\right)$, gives a smooth reformulation of the clustering problem
 
 \begin{equation}
-	\min\limits_{X \in \mathbb{R}^{nk}} \sum\limits_{i=1}^{m} \min\limits_{w^i \in \Delta} \langle w^i , d^i(x) \rangle. \label{StateEq2}
+	\min\limits_{x \in \mathbb{R}^{nk}} \sum\limits_{i=1}^{m} \min\limits_{w^i \in \Delta} \langle w^i , d^i(x) \rangle. \label{StateEq2}
 \end{equation}
 
 Replacing further the constraint $w^i \in \Delta$ by adding the indicator function $\delta_{\Delta}(\cdot)$ to the objective function, results in a equivalent formulation
@@ -131,7 +131,7 @@ Replacing further the constraint $w^i \in \Delta$ by adding the indicator functi
 	\min\limits_{x \in \mathbb{R}^{nk} , w \in \mathbb{R}^{km}} \left\lbrace \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle + \delta_{\Delta}(w^i) \right\rbrace . \label{StateEq3}
 \end{equation}
 
-Finally, introducing several more useful notations, for each $i=1, 2, \ldots , m$, we denote
+Finally, introducing several more useful notations is needed. For each $i=1, 2, \ldots , m$, we denote
 \begin{center}
 $H(w,x) := \sum\limits_{i=1}^{m} H_i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle$ and $G(w) = \sum\limits_{i=1}^{m} G(w^i) := \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i) .$
 \\
@@ -184,22 +184,23 @@ Now we propose a PALM-like algorithm for clustering, which we call KPALM.
 At each step $t \in \mathbb{N}$, the KPALM algorithm alternates between cluster assignment and centers update. The explicit formulas, at step $t$, are given below
 
 \begin{equation}
-w^i(t+1) = \Pi_{\Delta} \left(w^i(t) - \frac{d^i(x(t))}{\alpha_i(t)}\right) , \quad i=1, 2, \ldots ,m , \label{StateEq7}
+w^i(t+1) = P_{\Delta} \left(w^i(t) - \frac{d^i(x(t))}{\alpha_i(t)}\right) , \quad i=1, 2, \ldots ,m , \label{StateEq7}
 \end{equation}
 
 \begin{equation}
-x^l(t+1) = \frac{\sum_{i=1}^{m} w^i_l(t+1) a^i}{\sum_{i=1}^{m} w^i_l(t+1)} , \quad l=1, 2, \ldots ,k . \label{StateEq8}
+x^l(t+1) = \frac{\sum_{i=1}^{m} w^i_l(t+1) a^i}{\sum_{i=1}^{m} w^i_l(t+1)} , \quad l=1, 2, \ldots ,k , \label{StateEq8}
 \end{equation}
+where $P_{\Delta}$ is the orthogonal projection onto the set $\Delta$.
 
 \begin{assumption} \label{StateEq17}
-We assume that none of the clusters get empty during this process, hence for all $1 \leq l \leq k$ and $t \in \mathbb{N}$ we have that $\sum\limits_{i=1}^{m} w^i_l(t) > 0$.
+We assume that none of the clusters $C^l, l = 1,2, \ldots ,k$, get empty during this process, hence for all $1 \leq l \leq k$ and $t \in \mathbb{N}$ we have that $\sum\limits_{i=1}^{m} w^i_l(t) > 0$.
 \end{assumption}
 	
 \begin{remark} 
 	\begin{enumerate}[(i)] \label{StateEq15}
 %		\item $\alpha(t)$ is the step-size, and it must be positive. If at some step $t \in \mathbb{N}$, $\alpha(t)=0$, then there exists $1 \leq l' \leq k$ such that $\beta(t) = \sum\limits_{i=1}^{m} w^i_{l'}(t) = 0$. Since for all $1 \leq l \leq k$ and $1 \leq i \leq m$ we know that $w^i_l(t) \geq 0$ then $w^i_{l'}(t)=0$ for each $1 \leq i \leq m$. Thus, none of the points in $\mathcal{A}$ belong to cluster $l'$, in that case the algorithm can halt. Hence from now on we assume that for all $t \in \mathbb{N}$, $\beta(t) = \min\limits_{1 \leq l \leq k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l(t)\right \rbrace > 0$, and thus $\alpha(t) > 0 $.
-		\item Since for all $t \in \mathbb{N} \quad w(t) \in \Delta^m$ then $\Psi(z(t)) = H(w(t),x(t)) + G(w(t)) \\ = H(w(t),x(t))$. \label{StateEq16}
-		\item For any choice of distance-like function $d(\cdot, \cdot)$, the function $x \mapsto H(w,x)$ is separable in $x^l$ for all $l = 1, 2, \ldots, k$. Thus, regardless the choice of distance-like function $d(\cdot, \cdot)$, the centers update step can be done in parallel over all centers, that is, $x^l(t+1) = \arg\min\limits_{x^l \in \mathbb{R}^k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l d(x^l , a^i) \right\rbrace, \\ l = 1, 2, \ldots, k$, and in the case of the squared Euclidean norm the result is as in (\ref{StateEq8}).
+		\item Since for all $t \in \mathbb{N}$ we have that $w(t) \in \Delta^m$ then $G(w(t))=0$ and therefore $\Psi(z(t)) = H(w(t),x(t))$. \label{StateEq16}
+		\item For any choice of distance-like function $d(\cdot, \cdot)$, the function $x \mapsto H(w,x)$ is separable in $x^l$ for all $l = 1, 2, \ldots, k$. Thus, regardless the choice of distance-like function $d(\cdot, \cdot)$, the centers update step can be done in parallel over all centers, that is, $x^l(t+1) = \arg\min\limits_{x^l \in \mathbb{R}^k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l d(x^l , a^i) \right\rbrace, \\ l = 1, 2, \ldots, k$, and in the case of the squared Euclidean norm the result is given in (\ref{StateEq8}).
 	\end{enumerate}
 \end{remark}
 
@@ -234,12 +235,12 @@ Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}} = \left\lbrace (w(t) , x
 \end{proof}
 
 \begin{lemma}[Strong convexity of $H(w,x)$ in $x$] \label{StateEq14}
-The function $x \mapsto H(w,x)$ is strongly convex with parameter $\beta(w) = 2 \min\limits_{1 \leq l \leq k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l\right \rbrace$, if $\beta(w) > 0$.
+The function $x \mapsto H(w,x)$ is strongly convex with parameter $\beta(w) = 2 \min\limits_{1 \leq l \leq k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l\right \rbrace$, whenever $\beta(w) > 0$.
 \end{lemma}
 
 \begin{proof}
 Since the function $x \mapsto H(w(t),x) = 
-\sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \|x^l - a^i\|^2$ is $C^2$, it is strongly convex iff the smallest eigenvalue of the corresponding Hessian matrix is positive. Thus
+\sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \|x^l - a^i\|^2$ is $C^2$, it is strongly convex if and only if the smallest eigenvalue of the corresponding Hessian matrix is positive. Thus
 
 \begin{center}
 $\nabla_{x^j} \nabla_{x^l} H(w,x) = 
@@ -253,7 +254,10 @@ Since the Hessian is a diagonal matrix, the smallest eigenvalue is $\min\limits_
 Now we are ready to prove the decrease property of KPALM algorithm.
 
 \begin{proposition}[Sufficient decrease property]
-Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}} = \left\lbrace w(t) , x(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM, then there exists $\rho_1 > 0$ such that $\rho_1 \|z(t+1) - z(t)\|^2 \leq \Psi(z(t)) - \Psi(z(t+1))$ for all $t \in \mathbb{N}$ .
+Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}} = \left\lbrace \left( w(t) , x(t) \right) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM, then there exists $\rho_1 > 0$ such that 
+\begin{equation*}
+	\rho_1 \|z(t+1) - z(t)\|^2 \leq \Psi(z(t)) - \Psi(z(t+1)) \quad \forall t \in \mathbb{N} .
+\end{equation*}
 \end{proposition}
 
 \begin{proof}
@@ -288,8 +292,8 @@ From \Cref{StateEq17} we have that $\beta(w(t)) = 2 \min\limits_{1 \leq l \leq k
 \begin{equation*}
 \begin{aligned}
 	H(w(t+1),x(t)) & - H(w(t+1),x(t+1)) \geq \\
-	& \geq \left\langle \nabla_x H(w(t+1),x(t+1)) , (x(t)-x(t+1)) \right\rangle + \frac{\beta(w(t))}{2} \|x(t) - x(t+1)\|^2 \\
-	& = \frac{\beta(w(t))}{2} \|x(t+1) - x(t)\|^2 \\
+	& \geq \left\langle \nabla_x H(w(t+1),x(t+1)) , x(t)-x(t+1) \right\rangle + \frac{\beta(w(t))}{2} \|x(t) - x(t+1)\|^2 \\
+	& = \frac{\beta(w(t))}{2} \|x(t+1) - x(t)\|^2 , \\
 \end{aligned}
 \end{equation*}
 where the last equality follows from (\ref{StateEq6}), since $\nabla_{x} H(w(t+1), x(t+1)) = 0$.
@@ -330,7 +334,7 @@ Since $d(u,v) = \| u-v \|^2$, we get that
 	= 4M \| x(t+1) - x(t)\| ,
 \end{align*}
 }
-this proves the desired results.
+this proves the desired result.
 \end{proof}
 
 \begin{proposition}[Subgradient lower bound for iterates gap property]
