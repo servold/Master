@@ -383,18 +383,18 @@ where the third inequality follows from \Cref{StateEq11}, and $\overline{\alpha}
 The famous KMEANS algorithm has close proximity to KPALM algorithm. KMEANS alternates between cluster assignments and center updates as well. In detail, we can write its steps in the following manner
 
 \begin{enumerate}[(1)]
-	\item Initialization: Set $t=0$, and pick random centers $y(0) \in \mathbb{R}^{nk}$
+	\item Initialization: Set $t=0$, and pick random centers $y(0) \in \mathbb{R}^{nk}$.
 
 	\item For each $t=0,1, \ldots$ generate a sequence $\left\lbrace(v(t),y(t))\right\rbrace_{t \in \mathbb{N}}$ as follows:
 	\begin{enumerate}[(2.1)]
 		\item Cluster Assignment: For $i=1, 2, \ldots ,m$ compute
 		\begin{equation}
-			v^i(t+1) = \arg\min\limits_{v^i \in \Delta} \left\lbrace \langle v^i , d^i(y(t)) \rangle\right\rbrace \label{StateEq12}
+			v^i(t+1) = \arg\min\limits_{v^i \in \Delta} \left\lbrace \langle v^i , d^i(y(t)) \rangle\right\rbrace . \label{StateEq12}
 		\end{equation}
 		
 		\item Center Update: For $l=1, 2, \ldots ,k$ compute
 		\begin{equation}
-			y^l(t+1) = \frac{\sum_{i=1}^{m} v^i_l(t+1) a^i}{\sum_{i=1}^{m} v^i_l(t+1)} \label{StateEq13}
+			y^l(t+1) = \frac{\sum_{i=1}^{m} v^i_l(t+1) a^i}{\sum_{i=1}^{m} v^i_l(t+1)} . \label{StateEq13}
 		\end{equation}
 	\end{enumerate}
 \end{enumerate}
@@ -405,9 +405,99 @@ The KMEANS algorithm obviously resemble KPALM algorithm. Denote $\overline{\alph
 \end{equation*}
 meaning, both algorithms converge to the same result.
 
-\newpage
+\subsection{KMEANS Convergence Proof}
 
-\section{KMEANS with Weiszfeld step }
+We start with rewriting the KMEANS algorithms, in its most familiar form
+\begin{enumerate}[(1)]
+	\item Initialization: Set $t=0$, and pick random centers $x(0) \in \mathbb{R}^{nk}$.
+
+	\item For each $t=0,1, \ldots$ generate a sequence $\left\lbrace (C(t),x(t))\right\rbrace_{t \in \mathbb{N}}$ as follows:
+	\begin{enumerate}[(2.1)]
+		\item Cluster Assignment: For $i=1, 2, \ldots ,m$ compute
+		\begin{equation}
+			C^l(t+1) = \left\lbrace a \in \mathcal{A} \mid \| a - x^l(t) \| \leq \|a - x^j(t) \|, \quad \forall 1 \leq l \leq k \right\rbrace . \label{StateEq20}
+		\end{equation}
+		
+		\item Center Update: For $l=1, 2, \ldots ,k$ compute
+		\begin{equation}
+			x^l(t+1) = mean(C^l(t)) := \frac{1}{\left| C^l(t) \right|} \sum\limits_{a \in C^l(t)} a . \label{StateEq21}
+		\end{equation}
+		
+		\item Stopping criteria: Halt if 
+		\begin{equation}
+			\forall 1 \leq l \leq k \quad C^l(t+1)=C^l(t) \label{StateEq22}
+		\end{equation}
+	\end{enumerate}
+\end{enumerate}
+As in KPALM, KMEANS needs \Cref{StateEq17} for step (\ref{StateEq21}) to be well defined. In addition, to prove the convergence of KMEANS to local minimum, we will need to following assumption.
+
+\begin{assumption} \label{StateEq23}
+For each step $t \in \mathbb{N}$, eack $a \in \mathcal{A}$ belongs to exclusively single cluster $C^l(t)$.
+\end{assumption}
+
+For any $x \in \mathbb{R}^{nk}$ we denote the super-partition of $\mathcal{A}$ with respect to $x$ by $\overline{C^l}(x) = \left\lbrace a \in \mathcal{A} \mid \right. \\ \left. \|a - x^l\| \leq \|a - x^j\| \quad \forall j \neq l \right\rbrace$, for all $1 \leq l \leq k$, and the sub-partition of $\mathcal{A}$ by $\underline{C^l}(x) = \left\lbrace a \in \mathcal{A} \mid \right. \\ \left. \|a - x^l\| < \|a - x^j\| \quad \forall j \neq l \right\rbrace$.
+Moreover, denote $R_{lj}(t) = \min\limits_{a \in C^l(t)} \left\lbrace \|a - x^j(t)\| - \|a - x^l(t)\| \right\rbrace$ for all $1 \leq l,j \leq k$, and $r(t) = \min\limits_{l \neq j} R_{lj}$. \\
+Due to \Cref{StateEq23} we have that $\overline{C^l}(x(t)) = \underline{C^l}(x(t)) = C^l(t+1)$, for all $1 \leq l \leq k, \: t \in \mathbb{N}$, we also have that $r(t) > 0$ for all $t \in \mathbb{N}$.
+
+\begin{proposition} \label{StateEq24}
+Let $(C(t), x(t))$ be the clusters and centers KMEANS returns. Denote the open neighborhood of $x(t)$ by $U = B\left( x^1(t),\frac{r(t)}{2}\right) \times  B\left( x^2(t),\frac{r(t)}{2}\right) \times \cdots \times B\left( x^l(t),\frac{r(t)}{2} \right)$, then for any $x \in U$ we have $\underline{C^l}(x)= C^l(t)$ for all $1 \leq l \leq k$.
+\end{proposition}
+
+\begin{proof}
+Pick some $a \in C^l(t)$, then $x^l(t-1)$ is the closest center among the centers of $x(t-1)$. Since KMEANS halts at step $t$, then from (\ref{StateEq22}) we have $x(t)=x(t-1)$, thus $x^l(t)$ is the closest center to $a$ among the centers of $x(t)$. Further we have
+\begin{equation}
+	r(t) \leq \|x^j(t) - a\| - \|x^l(t) -a\| \quad \forall j \neq l . \label{StateEq25}
+\end{equation}
+Next, we show that $a \in \underline{C^l}(x)$, indeed
+\begin{equation*}
+\begin{aligned}
+	\|a - x^l\| -  \|a - x^j\| &\leq \|a - x^l(t)\| + \|x^l(t) - x^l\| - \left( \|a - x^j(t)\| - \|x^j(t) - x^j\| \right) \\
+	& = \|a - x^l\| - \|a - x^j(t)\| + \|x^l(t) - x^l\| + \|x^j(t) - x^j\| \\
+	& < \|a - x^l\| - \|a - x^j(t)\| + r(t) \\
+	& \leq -r(t) + r(t) = 0 ,
+\end{aligned}
+\end{equation*}
+where the second inequality holds since $x^l \in B\left( x^l(t), \frac{r(t)}{2} \right)$ and $x^j \in B\left( x^j(t), \frac{r(t)}{2} \right)$, and the third inequality follows from (\ref{StateEq25}), and we get that $C^l(t) \subseteq \underline{C^l}(x)$. 
+Now, since $C(t)$ is a partition of $\mathcal{A}$ then $\underline{C^l}(x)= C^l(t)$ for all $1 \leq l \leq k$.
+\end{proof}
+
+\begin{proposition}[KMEANS converges to local minimum]
+Let $(C(t), x(t))$ be the clusters and centers KMEANS returns, then $x(t)$ is local minimum of $F$ in $U = B\left( x^1(t),\frac{r(t)}{2}\right) \times  B\left( x^2(t),\frac{r(t)}{2}\right) \\ \times \cdots \times B\left( x^l(t),\frac{r(t)}{2} \right) \subset \mathbb{R}^{nk}$.
+\end{proposition}
+
+\begin{proof}
+The minimum of $F$ in $U$ is
+\begin{equation*}
+\min\limits_{x \in U} F(x) = \min\limits_{x \in U} \sum\limits_{l=1}^{k} \sum\limits_{a \in C^l(x)} \|a - x^l \|^2 = \min\limits_{x \in U} \sum\limits_{l=1}^{k} \sum\limits_{a \in C^l(t)} \|a - x^l \|^2 ,
+\end{equation*}
+where the last equality follows from \Cref{StateEq24}.\\
+The function $x \mapsto \sum\limits_{l=1}^{k} \sum\limits_{a \in C^l(t)} \|a - x^l \|^2$ is strictly convex, separable in $x^l$ for all $1 \leq l \leq k$, and reaches its minimum at $\left( x^l \right)^{*} = \frac{1}{\left| C^l(t) \right|} \sum\limits_{a \in C^l(t)} a = mean(C^l(t)) = x^l(t),$ and the result follows.
+\end{proof}
+
+\section{Clustering via Alternation with Weiszfeld Step}
+
+In this section we tackle the clustering problem with distance-like function being the Euclidean norm in $\mathbb{R}^n$, namely
+\begin{equation}
+	\min_{x^1, x^2, \ldots, x^k \in \mathbb{R}^n} \left\lbrace \sum\limits_{i=1}^{m} \min\limits_{1 \leq l \leq k} d(x^l,a^i) \right\rbrace , \label{StateEq19}
+\end{equation}
+where $d(u,v) = \|u - v\|$. \\
+In the previous section we showed that (\ref{StateEq19}) has the following equivalent form
+\begin{equation*}
+	\min \left\lbrace \Psi(z) := H(w,x) + G(w) \mid z := (w,x) \in \mathbb{R}^{km} \times \mathbb{R}^{nk} \right\rbrace ,
+\end{equation*}
+where
+\begin{equation*}
+	H(w,x) = \sum\limits_{i=1}^{m} \left\langle w^i , d^i(x) \right\rangle
+	= \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} w^i_l d(x^l,a^i)
+	= \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l d(x^l,a^i) 
+	= \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \| x^l - a^i \| ,
+\end{equation*}
+and
+\begin{equation*}
+	G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i) .
+\end{equation*}
+
+\newpage
 
 Solving clustering problem with distance function $d(\cdot,\cdot) = \| u - v \|$
 \begin{equation*}
@@ -417,12 +507,12 @@ similarly to KMEANS it leads to the following alternation steps: \\
 \begin{enumerate}[(1)]
 	\item Clusters Assignment: For $i=1, 2, \ldots ,m$ compute
 		\begin{equation}
-			w^i(t+1) = \arg\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(x(t)) \rangle\right\rbrace \label{StateEq21}
+			w^i(t+1) = \arg\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(x(t)) \rangle\right\rbrace \label{StateEq31}
 		\end{equation}
 		
 	\item Centers Update: For $l=1, 2, \ldots ,k$ compute
 		\begin{equation}
-			x^l(t+1) = \arg\min\limits_{x^l \in \mathbb{R}^n} \sum\limits_{i=1}^{m} w^i_l(t+1) \| x^l -a^i \| \label{StateEq22}
+			x^l(t+1) = \arg\min\limits_{x^l \in \mathbb{R}^n} \sum\limits_{i=1}^{m} w^i_l(t+1) \| x^l -a^i \| \label{StateEq32}
 		\end{equation}
 \end{enumerate}
 The center update step could be computed via Weiszfeld algorithm.
