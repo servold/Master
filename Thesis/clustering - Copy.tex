@@ -440,7 +440,7 @@ Moreover, denote $R_{lj}(t) = \min\limits_{a \in C^l(t)} \left\lbrace \|a - x^j(
 Due to \Cref{StateEq23} we have that $\overline{C^l}(x(t)) = \underline{C^l}(x(t)) = C^l(t+1)$, for all $1 \leq l \leq k, \: t \in \mathbb{N}$, we also have that $r(t) > 0$ for all $t \in \mathbb{N}$.
 
 \begin{proposition} \label{StateEq24}
-Let $(C(t), x(t))$ be the clusters and centers KMEANS returns. Denote the open neighborhood of $x(t)$ by $U = B\left( x^1(t),\frac{r(t)}{2}\right) \times  B\left( x^2(t),\frac{r(t)}{2}\right) \times \cdots \times B\left( x^l(t),\frac{r(t)}{2} \right)$, then for any $x \in U$ we have $\underline{C^l}(x)= C^l(t)$ for all $1 \leq l \leq k$.
+Let $(C(t), x(t))$ be the clusters and centers KMEANS returns. Denote the open neighborhood of $x(t)$ by $U = B\left( x^1(t),\frac{r(t)}{2}\right) \times  B\left( x^2(t),\frac{r(t)}{2}\right) \times \cdots \times B\left( x^l(t),\frac{r(t)}{2} \right)$, then for any $x \in U$ we have $C^l(t) = \underline{C^l}(x)$ for all $1 \leq l \leq k$.
 \end{proposition}
 
 \begin{proof}
@@ -458,7 +458,7 @@ Next, we show that $a \in \underline{C^l}(x)$, indeed
 \end{aligned}
 \end{equation*}
 where the second inequality holds since $x^l \in B\left( x^l(t), \frac{r(t)}{2} \right)$ and $x^j \in B\left( x^j(t), \frac{r(t)}{2} \right)$, and the third inequality follows from (\ref{StateEq25}), and we get that $C^l(t) \subseteq \underline{C^l}(x)$. 
-Now, since $C(t)$ is a partition of $\mathcal{A}$ then $\underline{C^l}(x)= C^l(t)$ for all $1 \leq l \leq k$.
+By definition of $\underline{C^l}(x)$ we have that for any $l \neq j, \: \underline{C^l}(x) \cap \underline{C^j}(x)=\emptyset$, and for all $1 \leq l \leq k, \: \underline{C^l}(x) \subseteq \mathcal{A}$, now, since $C(t)$ is a partition of $\mathcal{A}$, then $C^l(t) = \underline{C^l}(x)$ for all $1 \leq l \leq k$.
 \end{proof}
 
 \begin{proposition}[KMEANS converges to local minimum]
@@ -474,50 +474,50 @@ where the last equality follows from \Cref{StateEq24}.\\
 The function $x \mapsto \sum\limits_{l=1}^{k} \sum\limits_{a \in C^l(t)} \|a - x^l \|^2$ is strictly convex, separable in $x^l$ for all $1 \leq l \leq k$, and reaches its minimum at $\left( x^l \right)^{*} = \frac{1}{\left| C^l(t) \right|} \sum\limits_{a \in C^l(t)} a = mean(C^l(t)) = x^l(t),$ and the result follows.
 \end{proof}
 
-\section{Clustering via Alternation with Weiszfeld Step}
-
-In this section we tackle the clustering problem with distance-like function being the Euclidean norm in $\mathbb{R}^n$, namely
-\begin{equation}
-	\min_{x^1, x^2, \ldots, x^k \in \mathbb{R}^n} \left\lbrace \sum\limits_{i=1}^{m} \min\limits_{1 \leq l \leq k} d(x^l,a^i) \right\rbrace , \label{StateEq19}
-\end{equation}
-where $d(u,v) = \|u - v\|$. \\
-In the previous section we showed that (\ref{StateEq19}) has the following equivalent form
-\begin{equation*}
-	\min \left\lbrace \Psi(z) := H(w,x) + G(w) \mid z := (w,x) \in \mathbb{R}^{km} \times \mathbb{R}^{nk} \right\rbrace ,
-\end{equation*}
-where
-\begin{equation*}
-	H(w,x) = \sum\limits_{i=1}^{m} \left\langle w^i , d^i(x) \right\rangle
-	= \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} w^i_l d(x^l,a^i)
-	= \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l d(x^l,a^i) 
-	= \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \| x^l - a^i \| ,
-\end{equation*}
-and
-\begin{equation*}
-	G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i) .
-\end{equation*}
-
-\newpage
-
-Solving clustering problem with distance function $d(\cdot,\cdot) = \| u - v \|$
-\begin{equation*}
-	\min_{x^1, \ldots, x^k \in \mathbb{R}^n} \left\lbrace \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \|x^l -a^i \| \mid w^i \in \Delta, \: i=1,2, \ldots, m \right\rbrace
-\end{equation*}
-similarly to KMEANS it leads to the following alternation steps: \\
-\begin{enumerate}[(1)]
-	\item Clusters Assignment: For $i=1, 2, \ldots ,m$ compute
-		\begin{equation}
-			w^i(t+1) = \arg\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(x(t)) \rangle\right\rbrace \label{StateEq31}
-		\end{equation}
-		
-	\item Centers Update: For $l=1, 2, \ldots ,k$ compute
-		\begin{equation}
-			x^l(t+1) = \arg\min\limits_{x^l \in \mathbb{R}^n} \sum\limits_{i=1}^{m} w^i_l(t+1) \| x^l -a^i \| \label{StateEq32}
-		\end{equation}
-\end{enumerate}
-The center update step could be computed via Weiszfeld algorithm.
-
-\newpage
+%\section{Clustering via Alternation with Weiszfeld Step}
+%
+%In this section we tackle the clustering problem with distance-like function being the Euclidean norm in $\mathbb{R}^n$, namely
+%\begin{equation}
+%	\min_{x^1, x^2, \ldots, x^k \in \mathbb{R}^n} \left\lbrace \sum\limits_{i=1}^{m} \min\limits_{1 \leq l \leq k} d(x^l,a^i) \right\rbrace , \label{StateEq19}
+%\end{equation}
+%where $d(u,v) = \|u - v\|$. \\
+%In the previous section we showed that (\ref{StateEq19}) has the following equivalent form
+%\begin{equation*}
+%	\min \left\lbrace \Psi(z) := H(w,x) + G(w) \mid z := (w,x) \in \mathbb{R}^{km} \times \mathbb{R}^{nk} \right\rbrace ,
+%\end{equation*}
+%where
+%\begin{equation*}
+%	H(w,x) = \sum\limits_{i=1}^{m} \left\langle w^i , d^i(x) \right\rangle
+%	= \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} w^i_l d(x^l,a^i)
+%	= \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l d(x^l,a^i) 
+%	= \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \| x^l - a^i \| ,
+%\end{equation*}
+%and
+%\begin{equation*}
+%	G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i) .
+%\end{equation*}
+%
+%\newpage
+%
+%Solving clustering problem with distance function $d(\cdot,\cdot) = \| u - v \|$
+%\begin{equation*}
+%	\min_{x^1, \ldots, x^k \in \mathbb{R}^n} \left\lbrace \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \|x^l -a^i \| \mid w^i \in \Delta, \: i=1,2, \ldots, m \right\rbrace
+%\end{equation*}
+%similarly to KMEANS it leads to the following alternation steps: \\
+%\begin{enumerate}[(1)]
+%	\item Clusters Assignment: For $i=1, 2, \ldots ,m$ compute
+%		\begin{equation}
+%			w^i(t+1) = \arg\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(x(t)) \rangle\right\rbrace \label{StateEq31}
+%		\end{equation}
+%		
+%	\item Centers Update: For $l=1, 2, \ldots ,k$ compute
+%		\begin{equation}
+%			x^l(t+1) = \arg\min\limits_{x^l \in \mathbb{R}^n} \sum\limits_{i=1}^{m} w^i_l(t+1) \| x^l -a^i \| \label{StateEq32}
+%		\end{equation}
+%\end{enumerate}
+%The center update step could be computed via Weiszfeld algorithm.
+%
+%\newpage
 
 %\section{Clustering via ADMM Approach }
 %
