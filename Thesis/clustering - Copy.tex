@@ -432,22 +432,19 @@ We start with rewriting the KMEANS algorithms, in its most familiar form
 		\end{equation}
 	\end{enumerate}
 \end{enumerate}
-As in KPALM, KMEANS needs \Cref{StateEq17} for step (\ref{StateEq21}) to be well defined. In addition, to prove the convergence of KMEANS to local minimum, we will need to following assumption.
+As in KPALM, KMEANS needs \Cref{StateEq17} for step (\ref{StateEq21}) to be well defined. In order to prove the convergence of KMEANS to local minimum, we will need to following assumption.
 
 \begin{assumption} \label{StateEq23}
 For any step $t \in \mathbb{N}$, each $a \in \mathcal{A}$ belongs exclusively to single cluster $C^l(t)$.
 \end{assumption}
 
-For any $x \in \mathbb{R}^{nk}$ we denote the super-partition of $\mathcal{A}$ with respect to $x$ by $\overline{C^l}(x) = \left\lbrace a \in \mathcal{A} \mid \right. \\ \left. \|a - x^l\| \leq \|a - x^j\| \quad \forall j \neq l \right\rbrace$, for all $1 \leq l \leq k$, and the sub-partition of $\mathcal{A}$ by $\underline{C^l}(x) = \left\lbrace a \in \mathcal{A} \mid \right. \\ \left. \|a - x^l\| < \|a - x^j\| \quad \forall j \neq l \right\rbrace$.
+For any $x \in \mathbb{R}^{nk}$ we denote the super-partition of $\mathcal{A}$ with respect to $x$ by $\overline{C^l}(x) = \left\lbrace a \in \mathcal{A} \mid \right. \\ \left. \|a - x^l\| \leq \|a - x^j\| , \quad \forall j \neq l \right\rbrace$, for all $1 \leq l \leq k$, and the sub-partition of $\mathcal{A}$ by $\underline{C^l}(x) = \left\lbrace a \in \mathcal{A} \mid \right. \\ \left. \|a - x^l\| < \|a - x^j\|, \quad \forall j \neq l \right\rbrace$.
 Moreover, denote $R_{lj}(t) = \min\limits_{a \in C^l(t)} \left\lbrace \|a - x^j(t)\| - \|a - x^l(t)\| \right\rbrace$ for all $1 \leq l,j \leq k$, and $r(t) = \min\limits_{l \neq j} R_{lj}$. \\
 Due to \Cref{StateEq23} we have that $\overline{C^l}(x(t)) = \underline{C^l}(x(t)) = C^l(t+1)$, for all $1 \leq l \leq k, \: t \in \mathbb{N}$, we also have that $r(t) > 0$ for all $t \in \mathbb{N}$.
 
 \begin{proposition} \label{StateEq24}
-<<<<<<< HEAD
-Let $(C(t), x(t))$ be the clusters and centers KMEANS returns. Denote an open neighborhood of $x(t)$ by $U = B\left( x^1(t),\frac{r(t)}{2}\right) \times  B\left( x^2(t),\frac{r(t)}{2}\right) \times \cdots \times B\left( x^l(t),\frac{r(t)}{2} \right)$, then for any $x \in U$ we have $\underline{C^l}(x)= C^l(t)$ for all $1 \leq l \leq k$.
-=======
-Let $(C(t), x(t))$ be the clusters and centers KMEANS returns. Denote the open neighborhood of $x(t)$ by $U = B\left( x^1(t),\frac{r(t)}{2}\right) \times  B\left( x^2(t),\frac{r(t)}{2}\right) \times \cdots \times B\left( x^l(t),\frac{r(t)}{2} \right)$, then for any $x \in U$ we have $C^l(t) = \underline{C^l}(x)$ for all $1 \leq l \leq k$.
->>>>>>> origin/master
+Let $(C(t), x(t))$ be the clusters and centers KMEANS returns. Denote an open neighbourhood of $x(t)$ by $U = B\left( x^1(t),\frac{r(t)}{2}\right) \times  B\left( x^2(t),\frac{r(t)}{2}\right) \times \cdots \times B\left( x^l(t),\frac{r(t)}{2} \right)$, then for any $x \in U$ we have $\underline{C^l}(x)= C^l(t)$ for all $1 \leq l \leq k$.
+Let $(C(t), x(t))$ be the clusters and centers KMEANS returns. Denote by $U = B\left( x^1(t),\frac{r(t)}{2}\right) \times  B\left( x^2(t),\frac{r(t)}{2}\right) \times \cdots \times B\left( x^l(t),\frac{r(t)}{2} \right)$ an open neighbourhood of $x(t)$, then for any $x \in U$ we have $C^l(t) = \underline{C^l}(x)$ for all $1 \leq l \leq k$.
 \end{proposition}
 
 \begin{proof}
@@ -465,7 +462,7 @@ Next, we show that $a \in \underline{C^l}(x)$, indeed
 \end{aligned}
 \end{equation*}
 where the second inequality holds since $x^l \in B\left( x^l(t), \frac{r(t)}{2} \right)$ and $x^j \in B\left( x^j(t), \frac{r(t)}{2} \right)$, and the third inequality follows from (\ref{StateEq25}), and we get that $C^l(t) \subseteq \underline{C^l}(x)$. 
-By definition of $\underline{C^l}(x)$ we have that for any $l \neq j, \: \underline{C^l}(x) \cap \underline{C^j}(x)=\emptyset$, and for all $1 \leq l \leq k, \: \underline{C^l}(x) \subseteq \mathcal{A}$, now, since $C(t)$ is a partition of $\mathcal{A}$, then $C^l(t) = \underline{C^l}(x)$ for all $1 \leq l \leq k$.
+By definition of $\underline{C^l}(x)$ we have that for any $l \neq j, \: \underline{C^l}(x) \cap \underline{C^j}(x)=\emptyset$, and for all $1 \leq l \leq k, \: \underline{C^l}(x) \subseteq \mathcal{A}$. Now, since $C(t)$ is a partition of $\mathcal{A}$, then $C^l(t) = \underline{C^l}(x)$ for all $1 \leq l \leq k$.
 \end{proof}
 
 \begin{proposition}[KMEANS converges to local minimum]
@@ -481,7 +478,6 @@ where the last equality follows from \Cref{StateEq24}.\\
 The function $x \mapsto \sum\limits_{l=1}^{k} \sum\limits_{a \in C^l(t)} \|a - x^l \|^2$ is strictly convex, separable in $x^l$ for all $1 \leq l \leq k$, and reaches its minimum at $\left( x^l \right)^{*} = \frac{1}{\left| C^l(t) \right|} \sum\limits_{a \in C^l(t)} a = mean(C^l(t)) = x^l(t),$ and the result follows.
 \end{proof}
 
-<<<<<<< HEAD
 \section{Clustering via Alternation with Weiszfeld Step}
 
 In this section we tackle the clustering problem with distance-like function being the Euclidean norm in $\mathbb{R}^n$, namely
@@ -603,7 +599,7 @@ Set $\rho_1 = \frac{1}{2} \min \left\lbrace \alpha(t), L(t) \right\rbrace$, and 
 \end{proof}
 
 \newpage
-=======
+
 %\section{Clustering via Alternation with Weiszfeld Step}
 %
 %In this section we tackle the clustering problem with distance-like function being the Euclidean norm in $\mathbb{R}^n$, namely
@@ -648,8 +644,6 @@ Set $\rho_1 = \frac{1}{2} \min \left\lbrace \alpha(t), L(t) \right\rbrace$, and 
 %The center update step could be computed via Weiszfeld algorithm.
 %
 %\newpage
->>>>>>> origin/master
-
 %\section{Clustering via ADMM Approach }
 %
 %First we add new variables $z^l, l=1, \ldots ,k$, and formulate an equivalent problem to the clustering problem (see (1.2)):
