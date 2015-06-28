@@ -3,7 +3,7 @@
 % reflected points over the axes. Each cluster has @points_in_cluster.
 % PALM algorithm runs at most @max_iters iterations. The results are 
 % returned in C_palm and I_palm.
-function [A,C_palm,I_palm,C_kmeans,I_kmeans,C_admm, I_admm, C_admm_norm, I_admm_norm] = sanity(points_in_cluster, cluster_center, max_iters, tol)
+function [A,C_palm,I_palm,C_kmeans,I_kmeans] = sanity(points_in_cluster, cluster_center, max_iters, tol)
     k = 4;
     n = 2;
     m = k*points_in_cluster;
@@ -11,7 +11,6 @@ function [A,C_palm,I_palm,C_kmeans,I_kmeans,C_admm, I_admm, C_admm_norm, I_admm_
     cluster_center = cluster_center - [1,1];
     plot_styles = {'b+'; 'g+'; 'r+'; 'c+'};
     X_0 = [cluster_center'+[0.1,0.1]',cluster_center'+[0.1,-0.1]',cluster_center'+[-0.1,0.1]',cluster_center'+[-0.1,-0.1]'];
-    rho = 10;
     
     for i = 1:points_in_cluster
         p1 = (cluster_center + [rand()*2, rand()*2]).*[+1,+1];
@@ -56,34 +55,6 @@ function [A,C_palm,I_palm,C_kmeans,I_kmeans,C_admm, I_admm, C_admm_norm, I_admm_
         hold on;
     end
     title('KMEANS norm^2 clustering');
-    hold off;
-    
-    %ADMM clustering
-    tic;
-    [C_admm, I_admm, admm_iters] = admm_clustering(A,n,m,k,rho,max_iters,tol,X_0);
-    disp(['ADMM clustering time: ', num2str(toc), ', # iterations: ', num2str(admm_iters)]);
-    
-    figure();
-    for l = 1:k
-        CIDX_labeled_l = (I_admm==l);
-        plot(A(1,CIDX_labeled_l), A(2,CIDX_labeled_l), char(plot_styles(l)));
-        hold on;
-    end
-    title('ADMM norm^2 clustering');
-    hold off;
-    
-    %ADMM norm clustering
-    tic;
-    [C_admm_norm, I_admm_norm, admm_norm_iters] = admm_norm_clustering(A,n,m,k,rho,max_iters,tol,X_0);
-    disp(['ADMM norm clustering time: ', num2str(toc), ', # iterations: ', num2str(admm_norm_iters)]);
-    
-    figure();
-    for l = 1:k
-        CIDX_labeled_l = (I_admm_norm==l);
-        plot(A(1,CIDX_labeled_l), A(2,CIDX_labeled_l), char(plot_styles(l)));
-        hold on;
-    end
-    title('ADMM norm clustering');
     hold off;
     
 end
