@@ -686,6 +686,38 @@ Therefore, denote $\overline{L}(t) = \\ \frac{1}{2} \max\limits_{1 \leq l \leq k
 
 \newpage
 
+\section{Clustering via ADMM Approach}
+Introducing some new variable into the problem leads to the following clustering problem notation
+\begin{equation*}
+\begin{split}
+	&\min\limits_{x \in \mathbb{R}^{nk}} \min\limits_{w \in \mathbb{R}^{km}} \left\lbrace \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} w^i_l d(x^l,a^i) \mid w^i \in \Delta, i=1,2, \ldots, m \right\rbrace \\
+	&= \min\limits_{x \in \mathbb{R}^{nk}, w \in \mathbb{R}^{km}, z \in \mathbb{R}^{km}} \left\lbrace \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} w^i_l z^i_l \: \bigg| 
+\begin{array}{c c c}
+ w^i \in \Delta, & i=1,2, \ldots, m, & \\
+ z^i_l = d(x^l,a^i), & i=1,2, \ldots, m, & l=1,2, \ldots, k
+\end{array}
+\right\rbrace .
+\end{split}
+\end{equation*}
+
+The augmented Lagrangian that is associated with this problem is 
+\begin{equation}
+	L_{\rho}(w,x,z,y) = \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} w^i_l z^i_l + \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} y^i_l (z^i_l - d(x^l,a^i)) + \frac{\rho}{2} \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} \left(z^i_l - d(x^l,a^i)\right)^2 . \label{StateEq50}
+\end{equation}
+Thus the ADMM formulas for (\ref{StateEq50}) are as follows
+\begin{equation*}
+\begin{split}
+	w(t+1) &= \arg\min\limits_{w \in \Delta^m} L_{\rho}(w,x(t),z(t),y(t)), \\
+	\Rightarrow \quad w^i(t+1) &= \arg\min\limits_{w^i \in \Delta} \sum\limits_{l=1}^{k} w^i_l z^i_l(t) = \arg\min\limits_{w^i \in \Delta} \left\langle w^i, z^i(t) \right\rangle, \quad 1 \leq i \leq m , \\
+	x(t+1) &= \arg\min\limits_{x \in \mathbb{R}^{nk}} L_{\rho}(w(t+1),x,z(t),y(t)), \\
+	\Rightarrow \quad x^l(t+1) &= \arg\min\limits_{x^l \in \mathbb{R}^{nk}} -\sum\limits_{i=1}^{m} y^i_l(t) d(x^l, a^i) + \frac{\rho}{2} \sum\limits_{i=1}^{m} \left(z^i_l - d(x^l,a^i)\right)^2, \quad 1 \leq l \leq k , \\
+	z(t+1) &= \arg\min\limits_{z \in \mathbb{R}^{km}} L_{\rho}(w(t+1),x(t+1),z,y(t)), \\
+	\Rightarrow \quad z^i(t+1) &= \arg\min\limits_{z^i \in \mathbb{R}^{km}} \left\langle w^i(t+1), z^i \right\rangle +  \left\langle y^i(t), z^i \right\rangle + \frac{\rho}{2} \left\lVert z^i - \left( d(x^l(t+1), a^i \right)_{l=1, \ldots , k} \right\lVert^2 \\
+	&= \left(d(x^l(t+1), a^i \right)_{l=1, \ldots , k} - \frac{1}{\rho}\left( w^i(t+1) + y^i(t) \right), \quad 1 \leq i \leq m, \\
+	y^i_l(t+1) &= y^i_l(t) + \rho (z^i_l(t+1) - d(x^l(t+1), a^i), \quad 1 \leq i \leq m, \: 1 \leq l \leq k.
+\end{split}
+\end{equation*}
+
 %\begin{thebibliography}{99}
 
 %\end{thebibliography}
