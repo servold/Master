@@ -10,7 +10,8 @@ function [x,I,t] = norm_clustering(A,n,m,k,max_iters,x_0)
     
     % W init
     for i = 1:m
-        w(:,i) = projection_onto_simplex(rand(k,1));
+        w(:,i) = rand(k,1);
+        w(:,i) = w(:,i)/sum(w(:,i));
     end
 
     for t = 1:max_iters
@@ -42,9 +43,12 @@ function [x,I,t] = norm_clustering(A,n,m,k,max_iters,x_0)
         [~,CIDX] = clustering_distance(x, A, m, k);
         I_new = CIDX';
         
-        if ((sum(I_new == I) == m))
-            break;
+        if (t <=10 || mod(t,10) == 1)
+            plot_clusters(A,I_new,k)
         end
+%         if ((sum(I_new == I) == m))
+%             break;
+%         end
         I = I_new;
     end
     

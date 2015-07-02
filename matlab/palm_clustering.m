@@ -10,7 +10,7 @@ function [X,I,t] = palm_clustering(A,n,m,k,max_iters,tol,X_0)
     I = zeros(m,(max_iters+1));
     Psi = zeros(1,max_iters);
     ones_vec = ones(m,1);
-    u = 0.000001; % alpha multiplier
+    alpha = 1e-05;
     
     % X init & init clustering
     X(:,:,1) = X_0;
@@ -25,13 +25,13 @@ function [X,I,t] = palm_clustering(A,n,m,k,max_iters,tol,X_0)
     for t = 1:max_iters
         
         % W update
-        alpha = u*min(W(:,:,t)*ones_vec);
-        if alpha < 0.0000001
-            disp(['alpha close to zero: ', num2str(alpha)]);
+        [v,j] = min(W(:,:,t)*ones_vec);
+        if v < 0.0000001
+            disp(['cluster ', num2str(j) ,' close to zero: ', num2str(v)]);
         end
         for i = 1:m
             d = distance_like(X(:,:,t), A(:,i), k);
-            W(:,i,t+1) = projection_onto_simplex(W(:,i,t) - 10*d/alpha);
+            W(:,i,t+1) = projection_onto_simplex(W(:,i,t) - d/alpha);
         end
         
         % X update
