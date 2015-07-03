@@ -716,13 +716,17 @@ Plugging (\ref{StateEq46}) into (\ref{StateEq45}), and taking norm yields
 \end{equation*}
 where the last inequality follows from \Cref{StateEq40} and the fact that $\overline{\alpha}(t) = \max\limits_{1 \leq i \leq m} \alpha_i(t)$. \\ 
 Next we will derive the following bound $\| \nabla_x H(w(t+1),x(t+1)) \| \leq c\|x(t+1) - x(t)\|$, for some constant $c>0$. Indeed, we have
-\begin{equation*}
+\begin{equation}
 \begin{aligned}
 	&\| \nabla_x H(w(t+1),x(t+1)) \| \leq \sum\limits_{l=1}^{k} \| \nabla_{x^l} H_l(w(t+1),x(t+1)) \| \\
-	&\leq \sum\limits_{l=1}^{k} \| \nabla_{x^l} H_l(w(t+1),x(t)) \| + \sum\limits_{l=1}^{k} \| \nabla_{x^l} H_l(w(t+1),x(t+1)) - \nabla_{x^l} H_l(w(t+1),x(t))\| .
+	&\leq \sum\limits_{l=1}^{k} \| \nabla_{x^l} H_l(w(t+1),x(t)) \| + \sum\limits_{l=1}^{k} \| \nabla_{x^l} H_l(w(t+1),x(t+1)) - \nabla_{x^l} H_l(w(t+1),x(t))\| . \label{StateEq47}
 \end{aligned}
+\end{equation}
+From (\ref{StateEq36}) we have
+\begin{equation*}
+\nabla_{x^l} H_l(w(t+1),x(t)) = L_l(w(t+1),x(t)) \left( x^l(t+1) - x^l(t) \right) , \quad \forall 1 \leq l \leq k,
 \end{equation*}
-Using (\ref{StateEq36}) and applying \Cref{StateEq41} with respect to $H_l(w(t+1),\cdot)$ yields
+applying \Cref{StateEq41} with respect to $H_l(w(t+1),\cdot)$ and plugging into (\ref{StateEq47}) yields
 \begin{equation*}
 \begin{aligned}
 	&\| \nabla_x H(w(t+1),x(t+1)) \| \leq \\
