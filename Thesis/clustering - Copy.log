@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.4)  3 JUL 2015 15:15
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.4)  3 JUL 2015 23:08
 entering extended mode
 **clustering*-*Copy.tex
 
@@ -499,7 +499,7 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 ) [1
 
 {C:/Users/servold/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
-Overfull \hbox (0.59914pt too wide) in paragraph at lines 202--203
+Overfull \hbox (13.07pt too wide) in paragraph at lines 202--203
 \OT1/cmr/m/it/10.95 date step can be done in par-al-lel over all cen-ters, that
  is, $\OML/cmm/m/it/10.95 x[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t \OT1/cmr
 /m/n/10.95 + 1) = [] [] [] \OML/cmm/m/it/10.95 ; [] $
@@ -549,7 +549,7 @@ iles (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Fil
 es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files 
 (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x
 86)/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "clustering - Copy.pdf" (15 pages, 229056 bytes).
+Output written on "clustering - Copy.pdf" (15 pages, 228657 bytes).
 PDF statistics:
  107 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

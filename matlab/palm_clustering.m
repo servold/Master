@@ -4,18 +4,22 @@
 % Returns @X, where for each iteration t, X(:,:,t) are the calculated
 % centers, W(:,:,t) are the coefficients, Psi(t) is the value of Psi, I(t)
 % are the clusters, and t is the number of iterations actual done.
-function [X,I,t] = palm_clustering(A,n,m,k,max_iters,tol,X_0)
+function [X,I,t] = palm_clustering(A,n,m,k,max_iters,tol,X_0,prefix)
     X = zeros(n,k,(max_iters+1));
     W = zeros(k,m,(max_iters+1));
     I = zeros(m,(max_iters+1));
     Psi = zeros(1,max_iters);
     ones_vec = ones(m,1);
-    alpha = 1e-05;
+    alpha = 100;
     
     % X init & init clustering
     X(:,:,1) = X_0;
     [~,CIDX] = clustering_distance(X(:,:,1), A, m, k);
     I(:,1) = CIDX';
+    
+    % plot x0
+    fig = plot_clusters(A,CIDX,k,X_0);
+%    saveas(fig,[prefix,'-alpha-',num2str(alpha),'-iter-',num2str(0),'.jpg']);
     
     % W init
     for i = 1:m
@@ -23,6 +27,7 @@ function [X,I,t] = palm_clustering(A,n,m,k,max_iters,tol,X_0)
     end
 
     for t = 1:max_iters
+        alpha = 100/t;
         
         % W update
         [v,j] = min(W(:,:,t)*ones_vec);
@@ -48,6 +53,11 @@ function [X,I,t] = palm_clustering(A,n,m,k,max_iters,tol,X_0)
         % clustering update
         [~,CIDX] = clustering_distance(X(:,:,t+1), A, m, k);
         I(:,t+1) = CIDX';
+        
+        if (t <=10 || mod(t,10) == 1)
+            fig = plot_clusters(A,CIDX,k,X(:,:,t+1));
+%            saveas(fig,[prefix,'-alpha-',num2str(alpha),'-iter-',num2str(t),'.jpg']);
+        end
         
         if ((sum(I(:,t+1) == I(:,t)) == m) && t>1 && (Psi(t-1)-Psi(t))<tol)
             break;

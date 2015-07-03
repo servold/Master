@@ -27,7 +27,7 @@ function [A,C_palm,I_palm,C_kmeans,I_kmeans] = sanity(points_in_cluster, cluster
     
     %PALM clustering
     tic;
-    [X, I, palm_iters] = palm_clustering(A,n,m,k,max_iters,tol,X_0);
+    [X, I, palm_iters] = palm_clustering(A,n,m,k,max_iters,tol,X_0, 'sanity');
     C_palm = X(:,:,palm_iters+1);
     I_palm = I(:,palm_iters+1);
     disp(['PALM clustering time: ', num2str(toc), ', # iterations: ', num2str(palm_iters)]);
