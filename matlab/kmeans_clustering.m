@@ -14,9 +14,6 @@ function [X,I,t] = kmeans_clustering(A,n,m,k,max_iters,tol,X_0)
     [D,CIDX] = clustering_distance(X(:,:,1), A, m, k);
     I(:,1) = CIDX';
     Phi(1) = D*ones_vec;
-    
-    % plot x0
-    plot_clusters(A,CIDX,k,X_0);
 
     for t = 1:max_iters
         
@@ -34,14 +31,13 @@ function [X,I,t] = kmeans_clustering(A,n,m,k,max_iters,tol,X_0)
         I(:,t+1) = CIDX';
         Phi(t+1) = D*ones_vec;
         
-        if (t <=10 || mod(t,10) == 1)
-            plot_clusters(A,CIDX,k,X(:,:,t+1));
-        end
-        
         if ((sum(I(:,t+1) == I(:,t)) == m) && abs(Phi(t+1)-Phi(t))<tol)
             break;
         end
     end
     
+    X = X(:,:,[1:t+1]);
+    I = I(:,[1:t+1]);
+    Phi = Phi(:,[1:t+1]);
 end
 
