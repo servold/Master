@@ -9,8 +9,6 @@ function [A,C_palm,I_palm,C_kmeans,I_kmeans] = sanity(points_in_cluster, cluster
     m = k*points_in_cluster;
     A = zeros(n,m);
     cluster_center = cluster_center - [1,1];
-    plot_styles = {'b+'; 'g+'; 'r+'; 'c+'};
-    X_0 = [cluster_center'+[0.1,0.1]',cluster_center'+[0.1,-0.1]',cluster_center'+[-0.1,0.1]',cluster_center'+[-0.1,-0.1]'];
     
     for i = 1:points_in_cluster
         p1 = (cluster_center + [rand()*2, rand()*2]).*[+1,+1];
@@ -22,24 +20,26 @@ function [A,C_palm,I_palm,C_kmeans,I_kmeans] = sanity(points_in_cluster, cluster
         A(:, (i-1)*k + 3) = p3';
         A(:, (i-1)*k + 4) = p4';
     end
-    
+    X_0 = [p1'+[0.1,0.1]',p1'+[0.1,-0.1]',p1'+[-0.1,0.1]',p3'+[-0.1,-0.1]'];
     disp('finished precomputing');
     
     %PALM clustering
     tic;
-    [X, I, palm_iters] = palm_clustering(A,n,m,k,max_iters,tol,X_0);
-    C_palm = X(:,:,palm_iters+1);
-    I_palm = I(:,palm_iters+1);
+    [X_pc, I_pc, palm_iters] = palm_clustering(A,n,m,k,max_iters,tol,X_0);
+    C_palm = X_pc(:,:,palm_iters+1);
+    I_palm = I_pc(:,palm_iters+1);
     disp(['PALM clustering time: ', num2str(toc), ', # iterations: ', num2str(palm_iters)]);
-    plot_clusters(A, k, X, I);
+    
     
     %KMEANS clustering
     tic;
-    [X, I, kmeans_iters] = kmeans_clustering(A,n,m,k,max_iters,tol,X_0);
-    C_kmeans = X(:,:,kmeans_iters+1);
-    I_kmeans = I(:,kmeans_iters+1);
+    [X_kmc, I_kmc, kmeans_iters] = kmeans_clustering(A,n,m,k,max_iters,tol,X_0);
+    C_kmeans = X_kmc(:,:,kmeans_iters+1);
+    I_kmeans = I_kmc(:,kmeans_iters+1);
     disp(['KMEANS clustering time: ', num2str(toc), ', # iterations: ', num2str(kmeans_iters)]);
-    plot_clusters(A, k, X, I);
+    
+    plot_clusters(A, k, X_pc, I_pc);
+    plot_clusters(A, k, X_kmc, I_kmc);
     
 end
 

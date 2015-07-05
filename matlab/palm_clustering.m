@@ -5,6 +5,7 @@
 % centers, W(:,:,t) are the coefficients, Psi(t) is the value of Psi, I(t)
 % are the clusters, and t is the number of iterations actual done.
 function [X,I,t] = palm_clustering(A,n,m,k,max_iters,tol,x_0)
+    setenv('distance', 'sq-E-norm');
     X = zeros(n,k,(max_iters+1));
     W = zeros(k,m,(max_iters+1));
     I = zeros(m,(max_iters+1));

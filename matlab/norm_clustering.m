@@ -1,4 +1,5 @@
 function [X,I,t] = norm_clustering(A,n,m,k,max_iters,tol,x_0)
+    setenv('distance', 'E-norm');
     X = zeros(n,k,(max_iters+1));
     W = zeros(k,m,(max_iters+1));
     I = zeros(m,(max_iters+1));
