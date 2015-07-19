@@ -356,7 +356,7 @@ Evaluating the last relation at $z(t+1)$ yields
 	\partial \Psi(z(t & + 1)) = \\
 	& = \left( \left( \nabla_{w^i} H_i(w(t+1),x(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \right)_{i=1, \ldots ,m} , \nabla_x H(w(t+1),x(t+1)) \right) \\
 	& = \left( \left( d^i(x(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \right)_{i=1, \ldots ,m} , \nabla_x H(w(t+1),x(t+1)) \right) \\
-	& = \left( \left( d^i(x(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \right)_{i=1, \ldots ,m} , \bf{0} \right) ,
+	& = \left( \left( d^i(x(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \right)_{i=1, \ldots ,m} , \mathbf{0} \right) ,
 \end{aligned}
 \end{equation*}
 where the last equality follows from (\ref{StateEq6}), that is, the optimality condition of $x(t+1)$. Taking the norm of the last equality yields
@@ -366,9 +366,9 @@ where the last equality follows from (\ref{StateEq6}), that is, the optimality c
 \end{equation}
 The optimality condition of $w^i(t+1)$ that is derived from (\ref{StateEq5}), yields that for all $i=1, 2, \ldots ,m$ there exists $u^i(t+1) \in \partial \delta_{\Delta}(w^i(t+1))$ such that
 \begin{equation}
-	d^i(x(t)) + \alpha_i(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) = \bf{0} . \label{StateEq10}
+	d^i(x(t)) + \alpha_i(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) = \mathbf{0} . \label{StateEq10}
 \end{equation}
-Setting $\gamma(t+1) := \left( \left( d^i(x(t+1)) + u^i(t+1) \right)_{i=1, \ldots ,m}, \bf{0} \right) \in \partial \Psi(z(t+1))$, and plugging (\ref{StateEq10}) into (\ref{StateEq9}) we have
+Setting $\gamma(t+1) := \left( \left( d^i(x(t+1)) + u^i(t+1) \right)_{i=1, \ldots ,m}, \mathbf{0} \right) \in \partial \Psi(z(t+1))$, and plugging (\ref{StateEq10}) into (\ref{StateEq9}) we have
 \begin{equation*}
 \begin{aligned}
 	\| \gamma(t+1) \|
@@ -503,7 +503,7 @@ Weiszfeld single iteration is defined for each $1 \leq l \leq k$ via
 \begin{equation}
 T_l(w,x) = \frac{\sum\limits_{i=1}^{m}\frac{w^i_la^i}{\|x^l - a^i\|}}{\sum\limits_{i=1}^{m}\frac{w^i_l}{\|x^l - a^i\|}} . \label{StateEq31}
 \end{equation} \\
-Next we present our algorithm for solving problem (\ref{StateEq30}).  The algorithm alternates between clusters assignment step, which is exactly as in KPALM, and centers update step that is based on a single Weizsfeld iteration.
+Next we present our algorithm for solving problem (\ref{StateEq30}).  The algorithm alternates between clusters assignment step, which is exactly as in KPALM, and centers update step that is based on a single Weiszfeld iteration.
 
 \begin{enumerate}[(1)]
 	\item Initialization: Set $t=0$, and pick random vectors $(w(0),x(0)) \in \Delta^m \times \mathbb{R}^{nk} .$
@@ -562,7 +562,7 @@ In the proof of sufficient decrease property of KPALM we showed that
 \end{equation}
 where $\alpha(t) = \min\limits_{1 \leq i \leq m} \left\lbrace \alpha_i(t) \right\rbrace$. This part was proven independently of the distance function $d(\cdot, \cdot)$, and since in (Alg-Name) the clusters assignment step is identical to KPALM, the claim is correct in the case of (Alg-Name) as well.
 
-Applying Lemma 4.2 from [reference to Weizsfeld paper] yields
+Applying Lemma 4.2 from [reference to Weiszfeld paper] yields
 \begin{equation*}
 	\begin{split}
 	H_l(w(t+1)&,x(t+1)) - H_l(w(t+1),x) \leq \\ 
@@ -571,7 +571,7 @@ Applying Lemma 4.2 from [reference to Weizsfeld paper] yields
 \end{equation*}
 Setting $x = x(t)$ and rearranging yields
 \begin{equation}
-	\frac{L_l(w(t+1),x(t))}{2} \|x^l(t+1) - x(t)\|^2 \leq H_l(w(t+1),x(t)) - H_l(w(t+1),x(t+1)), \quad \forall 1 \leq l \leq k . \label{StateEq38}
+	\frac{L_l(w(t+1),x(t))}{2} \|x^l(t+1) - x^l(t)\|^2 \leq H_l(w(t+1),x(t)) - H_l(w(t+1),x(t+1)), \quad \forall 1 \leq l \leq k . \label{StateEq38}
 \end{equation}
 
 Denote ${L(t)}= \min\limits_{1 \leq l \leq k} \left\lbrace L_l(w(t+1),x(t)) \right\rbrace$. Summing (\ref{StateEq38}) over $l = 1,2, \ldots ,k$ leads to
@@ -635,11 +635,11 @@ Let $y^0 \in \mathbb{R}^n \setminus \mathcal{A}$ be a fixed vector. Define the f
 \begin{equation*}
 	\widetilde{f}(y) = f(y) - \left\langle \nabla f(y^0), y \right\rangle ,
 \end{equation*}
-and similarly to the paper reference to Weiszfeld paper] we define
+and similarly to the paper [reference to Weiszfeld paper] we define
  \begin{equation*}
 	\widetilde{h}(x,y) = h(x,y) - \left\langle \nabla f(y^0), x \right\rangle .
 \end{equation*}
-It is clear that $x \mapsto \widetilde{h}(x,y)$ is still quadratic function with associated matrix $L(y)\bf{I}$. Therefore, we can write
+It is clear that $x \mapsto \widetilde{h}(x,y)$ is still quadratic function with associated matrix $L(y)\mathbf{I}$. Therefore, we can write
 \begin{equation}
 \begin{aligned}
 	\widetilde{h}(x,y) &= \widetilde{h}(y,y) + \left\langle \nabla_x \widetilde{h}(y,y), x-y \right\rangle + L(y) \|x-y\|^2 \\
@@ -677,7 +677,7 @@ Thus, using the definition of $\widetilde{f}$ and the face that $\nabla \widetil
 \end{equation*}
 Now, following the same arguments we can show that
 \begin{equation*}
-	f(y) \leq f(y^0) + \left\langle \nabla f(y), y^0 - y \right\rangle - \frac{1}{2 L(y^0)} \| \nabla f(y) - \nabla f(y^0) \|^2
+	f(y) \leq f(y^0) + \left\langle \nabla f(y), y - y^0 \right\rangle - \frac{1}{2 L(y^0)} \| \nabla f(y^0) - \nabla f(y) \|^2
 \end{equation*}
 and combining last two inequalities yields that
 \begin{equation*}
@@ -695,6 +695,7 @@ Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}} = \left\lbrace (w(t) , x
 \begin{equation*}
 	\| \gamma(t+1)\| \leq \rho_2 \|z(t+1) - z(t)\|, \quad \forall t \in \mathbb{N} .
 \end{equation*}
+\end{proposition}
 
 \begin{proof}
 Repeating the steps of the proof in the case of KPALM yields that 
@@ -703,7 +704,7 @@ Repeating the steps of the proof in the case of KPALM yields that
 \end{equation}
 where for all $1 \leq i \leq m, \: u^i(t+1) \in \partial \delta_{\Delta}(w^i(t+1))$ such that
 \begin{equation}
-	d^i(x(t)) + \alpha_i(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) = \bf{0} . \label{StateEq46}
+	d^i(x(t)) + \alpha_i(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) = \mathbf{0} . \label{StateEq46}
 \end{equation}
 Plugging (\ref{StateEq46}) into (\ref{StateEq45}), and taking norm yields
 \begin{equation*}
@@ -736,8 +737,82 @@ applying \Cref{StateEq41} with respect to $H_l(w(t+1),\cdot)$ and plugging into 
 Therefore, denote $\overline{L}(t) = \max\limits_{1 \leq l \leq k} \left\lbrace L_l(w(t+1),x(t)) + \frac{2 L_l(w(t+1),x(t)) L_l(w(t+1),x(t+1))}{L_l(w(t+1),x(t)) + L_l(w(t+1),x(t+1))} \right\rbrace$, and set \\ $\rho_2 = m + m\overline{\alpha}(t) + k\overline{L}(t)$, and the result follows.
 \end{proof}
 
-\end{proposition}
+\subsection{Refactoring the Method}
+In this section we use the modification of the Weiszfeld method as presented in [reference to Weiszfeld paper]. We will show that this approach allows us to drop \Cref{StateEq34} and treat the cases when $x^l(t) \in \mathcal{A}$ for some $1 \leq l \leq k$ and $t \in \mathbb{N}$.
 
+At first we return to the notations that are used in [reference to Weiszfeld paper]. We remind that in order to solve a single update of cluster center we need to solve the following minimization problem
+\begin{equation}
+	\min\limits_{x \in \mathbb{R}^n} \left\lbrace f(x) = \sum\limits_{i=1}^{m} w_i \|x - a_i\| \right\rbrace . \label{StateEq50}
+\end{equation}
+The operator that is invloved in solving this problem $\tilde{T}: \mathbb{R}^n \rightarrow \mathbb{R}^n$ is defined as follows
+\begin{equation*}
+	\tilde{T}(x) = \begin{cases} T(x), \quad &x \notin \mathcal{A}, \\ 
+a_j, \quad &x=a_j \: (1 \leq j \leq m) \mbox{ and } \|R_j\| \leq w_j, \\
+S(a_j), \quad &x=a_j \: (1 \leq j \leq m) \mbox{ and } \|R_j\| > w_j, \end{cases}
+\end{equation*}
+where the operator $T: \mathbb{R}^n \rightarrow \mathbb{R}^n$ is defined by
+\begin{equation*}
+	T(x) = \frac{\sum\limits_{i=1}^{m}\frac{w_i a_i}{\|x - a_i\|}}{\sum\limits_{i=1}^{m}\frac{w_i}{\|x - a_i\|}} ,
+\end{equation*}
+the values $R_j$ are computed via
+\begin{equation*}
+	R_j= \sum\limits_{i=1,i \neq j} w_i\frac{a_j - a_i}{\|a_i - a_j\|}, \quad j=1,2, \ldots ,m ,
+\end{equation*}
+and the operator $S: \mathcal{A} \rightarrow \mathbb{R}^n$ is defined as follows
+\begin{equation*}
+	S(a_j)= a_j + t_j d_j,
+\end{equation*}
+with the direction $d_j = -\frac{R_j}{\|R_j\|}$ and the stepsize $t_j = \frac{\|R_j\| - w_j}{L(a_j)}$.
+The function $L: \mathbb{R}^n \rightarrow \mathbb{R}$ that is used in the definition of the stepsize $t_j$ is also extended to $\mathcal{A}$  in the following manner
+\begin{equation*}
+	L(x)= \begin{cases} \sum\limits_{i=1}^{m} \frac{w_i}{\|x - a_i\|}, \quad &x \notin \mathcal{A}, \\ 
+\sum\limits_{\substack{i=1 \\ i \neq j}}^{m} \frac{w_i}{\|a_j - a_i\|}, \quad &x=a_j \: (1 \leq j \leq m). \end{cases}
+\end{equation*}
+
+Based on these notations, the algorithm that is proposed in [reference to Weiszfeld paper] to solve the problem (\ref{StateEq50}) is called the Modified Weiszfeld Method, and it is a simple iterative application of operator $\tilde{T}$, as specified below.
+\begin{enumerate}[(1)]
+	\item Initialization: Pick random vector $x_0 \in \mathbb{R}^{n}.$
+	\item General Step: For each $k=0,1, \ldots$ generate a sequence $x_{k+1} = \tilde{T}(x_k)$.
+\end{enumerate}
+
+\begin{lemma}
+Let $\left\lbrace x_k \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by the Modified Weiszfeld Method, and assume that for some $k \in \mathbb{N}$ either $x_k \in \mathcal{A}$ or $x_{k+1} \in \mathcal{A}$, then the following statements hold true.
+\begin{enumerate}[(i)]
+	\item There exists $M_1 > 0$ such that $M_1 \|x_{k+1} - x_k\|^2 \leq f(x_k) - f(x_{k+1})$.
+	\item There exist $M_2 > 0$ and $v_{k+1} \in \partial f(x_{k+1})$ such that $\|v_{k+1}\| \leq M_2 \|x_{k+1} - x_k\|$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\begin{enumerate}[(i)]
+	\item First assume that $x_k = a_j \in \mathcal{A}$. If $\|R_j\| \leq w_j$ then $x_{k+1} = a_j$ and the result follows. If $\|R_j\| > w_j$ then $x_{k+1} = S(a_j)$ then from [BS 2015, Lemma 7.1, page 20] we have that 
+	\begin{equation*}
+		f(x_k) - f(x_{k+1}) \geq \frac{L(a_j)}{2} {t_j}^2 = \frac{L(a_j)}{2} \|x_{k+1} - x_k\|^2.
+	\end{equation*} \\
+	Now, suppose $x_k \notin \mathcal{A}$, and $x_{k+1} = a_j \in \mathcal{A}$. Plugging $x=x_k$ in [BS 2015, Lemma 5.2, page 12] yields 
+	\begin{equation*}
+		f(x_{k+1}) - f(x_k) \leq \frac{L(x_k)}{2} \left( -\|x_{k+1} - x_k\|^2 \right).
+	\end{equation*}
+	Thus, setting $M_1 = L(x_k)$ gives the desired result for all cases.
+	\item Again, first we inspect the case $x_k = a_j \in \mathcal{A}$. If $\|R_j\| \leq w_j$ then according to [BS 2015] $x=a_j$ is the optimal solution to problem (\ref{StateEq50}), hence $ \mathbf{0} \in \partial f(a_j)$ and the results follows. If $\|R_j\| > w_j$ then $x_{k+1} = S(a_j)$, hence 
+	\begin{equation}
+		0 < t_j = \|x_{k+1} - x_k\| . \label{StateEq51}
+	\end{equation}
+	Moreover, evaluating the subgradient of $f$ leads to
+	\begin{equation*}
+		\partial f(x) = \begin{cases} \left\lbrace \nabla f(x) \right\rbrace = \left\lbrace \sum\limits_{i=1}^{m} w_i \frac{x - a_i}{\|x - a_i\|} \right\rbrace, \quad &x \notin \mathcal{A}, \\ 
+\left\lbrace \sum\limits_{\substack{i=1 \\ i \neq j}}^{m} w_i \frac{x - a_i}{\|a_j - a_i\|} + w_j z_j \mid \|z_j\| \leq 1 \right\rbrace, \quad &x=a_j \in \mathcal{A} \end{cases} .
+	\end{equation*}
+	Thus we have that
+	\begin{equation}
+		\| \partial f(x) \| \leq \sum\limits_{i=1}^{m} w_i \leq m .  \label{StateEq52}
+	\end{equation}
+	From (\ref{StateEq51}) and (\ref{StateEq52}) it follows that there exists $M_2 >0$ such that $\| \partial f(x) \| \leq M_2 \|x_{k+1} - x_k\|$. \\
+	Now, assume that $x_k \notin \mathcal{A}$, and $x_{k+1} = a_j \in \mathcal{A}$. Thus $\|x_{k+1} - x_k\| > 0$ and combining the fact that $\| \partial f(x)\| \leq m$ then again we can assure that there exists $M_2 >0$ such that $\| \partial f(x) \| \leq M_2 \|x_{k+1} - x_k\|$. 
+\end{enumerate}
+\end{proof}
+
+The last lemma allows us to drop \Cref{StateEq34} and bypass points in $\mathcal{A}$ by simply replacing the operator $T$ in center update step in (Alg-Name) (\ref{StateEq33}) with the operator $\tilde{T}$, and still reserve both, the sufficient decrease and the subgradient lower bound for iterates gap properties, that are essential for the conversion of the algorithm to some limit point.
 \newpage
 
 \section{Clustering via ADMM Approach}
@@ -756,9 +831,9 @@ Introducing some new variable into the problem leads to the following clustering
 
 The augmented Lagrangian that is associated with this problem is 
 \begin{equation}
-	L_{\rho}(w,x,z,y) = \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} w^i_l z^i_l + \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} y^i_l (z^i_l - d(x^l,a^i)) + \frac{\rho}{2} \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} \left(z^i_l - d(x^l,a^i)\right)^2 . \label{StateEq50}
+	L_{\rho}(w,x,z,y) = \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} w^i_l z^i_l + \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} y^i_l (z^i_l - d(x^l,a^i)) + \frac{\rho}{2} \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} \left(z^i_l - d(x^l,a^i)\right)^2 . \label{StateEq60}
 \end{equation}
-Thus the ADMM formulas for (\ref{StateEq50}) are as follows
+Thus the ADMM formulas for (\ref{StateEq60}) are as follows
 \begin{equation*}
 \begin{split}
 	w(t+1) &= \arg\min\limits_{w \in \Delta^m} L_{\rho}(w,x(t),z(t),y(t)), \\
