@@ -1,34 +1,21 @@
-function [X,I,t,Phi] = norm_clustering(A,n,m,k,max_iters,tol,x_0)
+function [X,I,t] = eps_norm_clustering(A,n,m,k,max_iters,tol,x_0,eps)
     setenv('distance', 'E-norm');
     X = zeros(n,k,(max_iters+1));
     W = zeros(k,m,(max_iters+1));
     I = zeros(m,(max_iters+1));
     Psi = zeros(1,max_iters);
-    Phi = zeros(k,m,max_iters);
     ones_vec = ones(m,1);
     alpha0 = 100;
     
-    [w0,x0] = SP_method(A,n,k,m);
-    
     % x init & init clustering
-    X(:,:,1) = x0;
+    X(:,:,1) = x_0;
     [~,CIDX] = clustering_distance(X(:,:,1), A, m, k);
     I(:,1) = CIDX';
     
     % W init
-    W(:,:,1) = w0;
-%     for i = 1:m
-%         W(:,i,1) = rand(k,1);
-%         W(:,i,1) = W(:,i,1)/sum(W(:,i,1));
-%     end
-    
-    M = zeros(k,m);
-    for l = 1:k
-        H_l_w0_x0 = H_l(W(l,:,1), X(:,l,1), A,m);
-        sum_w0_l = sum(W(l,:,1));
-        for i = 1:m
-            M(l,i) = (H_l(W(l,:,1), A(:,i), A,m) - H_l_w0_x0)/sum_w0_l;
-        end
+    for i = 1:m
+        W(:,i,1) = rand(k,1);
+        W(:,i,1) = W(:,i,1)/sum(W(:,i,1));
     end
 
     for t = 1:max_iters
@@ -41,6 +28,9 @@ function [X,I,t,Phi] = norm_clustering(A,n,m,k,max_iters,tol,x_0)
         end
         for i = 1:m
             d = distance_like(X(:,:,t), A(:,i), k);
+            for l = 1:k
+                d(l) = sqrt(d(l)^2 + eps^2);
+            end
             W(:,i,t+1) = projection_onto_simplex(W(:,i,t) - d/alpha);
         end
         
@@ -51,7 +41,7 @@ function [X,I,t,Phi] = norm_clustering(A,n,m,k,max_iters,tol,x_0)
             u = zeros(m,1);
             
             for i = 1:m
-                u(i) = w_l(i)/norm(x_l - A(:,i));
+                u(i) = w_l(i)/sqrt(norm(x_l - A(:,i))^2 + eps^2);
             end
             
             X(:,l,t+1) = A*u/sum(u);
@@ -59,20 +49,16 @@ function [X,I,t,Phi] = norm_clustering(A,n,m,k,max_iters,tol,x_0)
         
         % Psi computations
         for i = 1:m
-            Psi(t) = Psi(t) + distance_like(X(:,:,t+1), A(:,i), k)'*W(:,i,t+1);
+            d_i = distance_like(X(:,:,t+1), A(:,i), k);
+            w_i = W(:,i,t+1);
+            for l = 1:k
+                Psi(t) = Psi(t) + w_i(l)*sqrt(d_i(l)^2 + eps^2);
+            end
         end
         
         % clustering update
         [~,CIDX] = clustering_distance(X(:,:,t+1), A, m, k);
         I(:,t+1) = CIDX';
-        
-        norm_k_m = zeros(k,m);
-        for l = 1:k
-            for i = 1:m
-                norm_k_m(l,i) = norm(X(:,l,t+1) - A(:,i));
-            end
-        end
-        Phi(:,:,t) = norm_k_m - M;
         
         if ((sum(I(:,t+1) == I(:,t)) == m) && t>1 && (Psi(t-1)-Psi(t))<tol)
             break;
@@ -83,5 +69,4 @@ function [X,I,t,Phi] = norm_clustering(A,n,m,k,max_iters,tol,x_0)
     W = W(:,:,[1:t+1]);
     I = I(:,[1:t+1]);
     Psi = Psi(:,[1:t]);
-    Phi = Phi(:,:,[1:t]);
 end
