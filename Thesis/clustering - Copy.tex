@@ -492,8 +492,15 @@ In the previous sections we showed that (\ref{StateEq30}) has the following equi
 where $	H(w,x) = \sum\limits_{i=1}^{m} \left\langle w^i , d^i(x) \right\rangle
 	= \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \| x^l - a^i \| $ and $G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i)$.
 
-\subsection{Weiszfeld Algorithm Scheme}
-Short overview of the problem and the algorithm ...
+\subsection{The Smoothed Fermat-Weber Problem}
+Solving the smoothed Fermat-Weber plays a significant role in the algorithm that addresses the clustering problem with Euclidean norm distance-like function.
+The Fermat-Weber problem is formulated as follows
+\begin{equation}
+	\min_{x \in \mathbb{R}^n} \left\lbrace \sum\limits_{i=1}^{m} w_i\|x - a^i\| \right\rbrace , \label{StateEq60}
+\end{equation}
+where $w_i>0, \: i=1,2, \ldots, m$, are given positive weights and $a^1, a^2, \ldots, a^m \in \mathbb{R}^n$ are given vectors.
+
+
 
 \subsection{Clustering with Weiszfeld Step}
 
@@ -831,7 +838,7 @@ Introducing some new variable into the problem leads to the following clustering
 
 The augmented Lagrangian that is associated with this problem is 
 \begin{equation}
-	L_{\rho}(w,x,z,y) = \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} w^i_l z^i_l + \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} y^i_l (z^i_l - d(x^l,a^i)) + \frac{\rho}{2} \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} \left(z^i_l - d(x^l,a^i)\right)^2 . \label{StateEq60}
+	L_{\rho}(w,x,z,y) = \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} w^i_l z^i_l + \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} y^i_l (z^i_l - d(x^l,a^i)) + \frac{\rho}{2} \sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} \left(z^i_l - d(x^l,a^i)\right)^2 . \label{StateEq59}
 \end{equation}
 Thus the ADMM formulas for (\ref{StateEq60}) are as follows
 \begin{equation*}

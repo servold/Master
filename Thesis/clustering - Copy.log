@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.4)  4 AUG 2015 13:52
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.4)  5 AUG 2015 16:27
 entering extended mode
 **clustering*-*Copy.tex
 
@@ -513,14 +513,14 @@ $[][] \OT1/cmr/m/n/10.95 = [][]$
  []
 
 [6] [7] [8] [9] [10] [11]
-Overfull \hbox (20.74521pt too wide) in paragraph at lines 694--695
+Overfull \hbox (20.74521pt too wide) in paragraph at lines 700--701
 \OT1/cmr/bx/n/10.95 Proposition 4.2 \OT1/cmr/m/n/10.95 (Sub-gra-di-ent lower bo
 und for it-er-ates gap prop-erty)\OT1/cmr/bx/n/10.95 . \OT1/cmr/m/it/10.95 Let 
 $[][] \OT1/cmr/m/n/10.95 = [][]$
  []
 
 [12]
-Overfull \hbox (12.99016pt too wide) detected at line 717
+Overfull \hbox (12.99016pt too wide) detected at line 723
 [] []
  []
 
@@ -528,13 +528,13 @@ Overfull \hbox (12.99016pt too wide) detected at line 717
 ("C:\Users\servold\Documents\Graduate Studies\TAU\Master\Thesis\clustering - Co
 py.aux") ) 
 Here is how much of TeX's memory you used:
- 11584 strings out of 494045
- 221065 string characters out of 3145963
+ 11586 strings out of 494045
+ 221092 string characters out of 3145963
  281638 words of memory out of 3000000
- 14804 multiletter control sequences out of 15000+200000
+ 14806 multiletter control sequences out of 15000+200000
  11474 words of font info for 42 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 40i,21n,39p,10449b,323s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 40i,21n,39p,10449b,303s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmb
 x10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx1
 2.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.
@@ -549,7 +549,7 @@ iles (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Fil
 es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files 
 (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x
 86)/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "clustering - Copy.pdf" (16 pages, 237657 bytes).
+Output written on "clustering - Copy.pdf" (16 pages, 238280 bytes).
 PDF statistics:
  110 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
