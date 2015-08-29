@@ -192,7 +192,8 @@ x^l(t+1) = \frac{\sum_{i=1}^{m} w^i_l(t+1) a^i}{\sum_{i=1}^{m} w^i_l(t+1)} , \qu
 where $P_{\Delta}$ is the orthogonal projection onto the set $\Delta$.
 
 \begin{assumption} \label{StateEq17}
-For all $1 \leq l \leq k$ and $t \in \mathbb{N}$ we assume that $\sum\limits_{i=1}^{m} w^i_l(t) > 0$, or equivalently that for all $t \in \mathbb{N} \: \min\limits_{1 \leq l \leq k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l(t) \right\rbrace > 0$.
+%For all $1 \leq l \leq k$ and $t \in \mathbb{N}$ we assume that $\sum\limits_{i=1}^{m} w^i_l(t) > 0$, or equivalently that for all $t \in \mathbb{N} \: \min\limits_{1 \leq l \leq k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l(t) \right\rbrace > 0$.
+We assume that $\inf\limits_{t \in \mathbb{N}} \left\lbrace \sum\limits_{i=1}^{m} w^i_l(t) \right\rbrace > 0$.
 \end{assumption}
 	
 \begin{remark} 
@@ -200,6 +201,7 @@ For all $1 \leq l \leq k$ and $t \in \mathbb{N}$ we assume that $\sum\limits_{i=
 %		\item $\alpha(t)$ is the step-size, and it must be positive. If at some step $t \in \mathbb{N}$, $\alpha(t)=0$, then there exists $1 \leq l' \leq k$ such that $\beta(t) = \sum\limits_{i=1}^{m} w^i_{l'}(t) = 0$. Since for all $1 \leq l \leq k$ and $1 \leq i \leq m$ we know that $w^i_l(t) \geq 0$ then $w^i_{l'}(t)=0$ for each $1 \leq i \leq m$. Thus, none of the points in $\mathcal{A}$ belong to cluster $l'$, in that case the algorithm can halt. Hence from now on we assume that for all $t \in \mathbb{N}$, $\beta(t) = \min\limits_{1 \leq l \leq k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l(t)\right \rbrace > 0$, and thus $\alpha(t) > 0 $.
 		\item Since for all $t \in \mathbb{N}$ we have that $w(t) \in \Delta^m$ then $G(w(t))=0$ and therefore $\Psi(z(t)) = H(w(t),x(t))$. \label{StateEq16}
 		\item For any choice of distance-like function $d(\cdot, \cdot)$, the function $x \mapsto H(w,x)$ is separable in $x^l$ for all $l = 1, 2, \ldots, k$. Thus, regardless the choice of distance-like function $d(\cdot, \cdot)$, the centers update step can be done in parallel over all centers, that is, $x^l(t+1) = \arg\min\limits_{x^l \in \mathbb{R}^k} \left\lbrace \sum\limits_{i=1}^{m} w^i_l(t) d(x^l , a^i) \right\rbrace, \\ l = 1, 2, \ldots, k$, and in the case of the squared Euclidean norm the result is given in (\ref{StateEq8}).
+		\item Note that in the cluster assignment step we can bound the choice of $\alpha_i(t)$  out of some interval $\left[ \alpha_{min} , \alpha_{max} \right]$, where $\alpha_{min} > 0$ and $\alpha_{max} < \infty$. \label{StateItem3}
 	\end{enumerate}
 \end{remark}
 
@@ -306,7 +308,7 @@ Set \\$\rho_1 = \frac{1}{2}\min_{t \in \mathbb{N}}\left\lbrace \underline{\alpha
 	& = H(z(t)) - H(z(t+1)) = \Psi(z(t)) - \Psi(z(t+1)),
 \end{aligned}
 \end{equation*}
-where the last equality follows from \Cref{StateEq15}(\ref{StateEq16}).
+where the last equality follows from \Cref{StateEq15}(\ref{StateEq16}). Note that due to \Cref{StateEq15}(\ref{StateItem3}) and \Cref{StateEq17} it follows that $\rho_1 > 0$.
 \end{proof}
 
 Next, we aim to prove the subgradient lower bound for iterates gap property. The following lemma will be essential in our proof.
@@ -378,7 +380,7 @@ Setting $\gamma(t+1) := \left( \left( d^i(x(t+1)) + u^i(t+1) \right)_{i=1, \ldot
 	& \leq m \left( 4M + \overline{\alpha}(t) \right) \|z(t+1) - z(t)\| , \\
 \end{aligned}
 \end{equation*}
-where the third inequality follows from \Cref{StateEq11}, and $\overline{\alpha}(t) = \max\limits_{1 \leq i \leq m} \alpha_i(t)$. Define \\$\rho_2 = \max_{t\in \mathbb{N}} m \left( 4M + \overline{\alpha}(t) \right)$ and the result follows.
+where the third inequality follows from \Cref{StateEq11}, and $\overline{\alpha}(t) = \max\limits_{1 \leq i \leq m} \alpha_i(t)$. Define \\$\rho_2 = \max_{t\in \mathbb{N}} m \left( 4M + \overline{\alpha}(t) \right)$, due to \Cref{StateEq15}(\ref{StateItem3}) it follows that $\rho_2$ is bounded and the result follows.
 \end{proof}
 
 

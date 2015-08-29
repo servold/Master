@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.4)  17 AUG 2015 10:37
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.4)  28 AUG 2015 10:34
 entering extended mode
 **clustering*-*Copy.tex
 
@@ -499,28 +499,28 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 ) [1
 
 {C:/Users/servold/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
-Overfull \hbox (13.07pt too wide) in paragraph at lines 202--203
+Overfull \hbox (13.07pt too wide) in paragraph at lines 203--204
 \OT1/cmr/m/it/10.95 date step can be done in par-al-lel over all cen-ters, that
  is, $\OML/cmm/m/it/10.95 x[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t \OT1/cmr
 /m/n/10.95 + 1) = [] [] [] \OML/cmm/m/it/10.95 ; [] $
  []
 
 [3] [4] [5]
-Overfull \hbox (20.74521pt too wide) in paragraph at lines 340--341
+Overfull \hbox (20.74521pt too wide) in paragraph at lines 342--343
 \OT1/cmr/bx/n/10.95 Proposition 3.2 \OT1/cmr/m/n/10.95 (Sub-gra-di-ent lower bo
 und for it-er-ates gap prop-erty)\OT1/cmr/bx/n/10.95 . \OT1/cmr/m/it/10.95 Let 
 $[][] \OT1/cmr/m/n/10.95 = [][]$
  []
 
 [6] [7] [8] [9] [10] [11] [12] [13] [14]
-Overfull \hbox (20.74521pt too wide) in paragraph at lines 837--838
+Overfull \hbox (20.74521pt too wide) in paragraph at lines 839--840
 \OT1/cmr/bx/n/10.95 Proposition 4.2 \OT1/cmr/m/n/10.95 (Sub-gra-di-ent lower bo
 und for it-er-ates gap prop-erty)\OT1/cmr/bx/n/10.95 . \OT1/cmr/m/it/10.95 Let 
 $[][] \OT1/cmr/m/n/10.95 = [][]$
  []
 
 
-Overfull \hbox (17.12106pt too wide) detected at line 860
+Overfull \hbox (17.12106pt too wide) detected at line 862
 [] []
  []
 
@@ -528,10 +528,10 @@ Overfull \hbox (17.12106pt too wide) detected at line 860
 ("C:\Users\servold\Documents\Graduate Studies\TAU\Master\Thesis\clustering - Co
 py.aux") ) 
 Here is how much of TeX's memory you used:
- 11592 strings out of 494045
- 221167 string characters out of 3145963
+ 11594 strings out of 494045
+ 221196 string characters out of 3145963
  281638 words of memory out of 3000000
- 14811 multiletter control sequences out of 15000+200000
+ 14813 multiletter control sequences out of 15000+200000
  12721 words of font info for 47 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
  40i,21n,39p,10449b,368s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -551,7 +551,7 @@ es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files
 86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files (x86)
 /MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/M
 iKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "clustering - Copy.pdf" (18 pages, 263771 bytes).
+Output written on "clustering - Copy.pdf" (18 pages, 264377 bytes).
 PDF statistics:
  124 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
