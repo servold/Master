@@ -1,4 +1,4 @@
-function [w0,x0] = SP_method(A,n,k,m)
+function [w0,x0] = rand_init(A,n,k,m)
     w0 = zeros(k,m);
     for i = 1:m
         w0(:,i) = rand(k,1);

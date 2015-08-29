@@ -380,7 +380,7 @@ Setting $\gamma(t+1) := \left( \left( d^i(x(t+1)) + u^i(t+1) \right)_{i=1, \ldot
 	& \leq m \left( 4M + \overline{\alpha}(t) \right) \|z(t+1) - z(t)\| , \\
 \end{aligned}
 \end{equation*}
-where the third inequality follows from \Cref{StateEq11}, and $\overline{\alpha}(t) = \max\limits_{1 \leq i \leq m} \alpha_i(t)$. Define \\$\rho_2 = \max_{t\in \mathbb{N}} m \left( 4M + \overline{\alpha}(t) \right)$, due to \Cref{StateEq15}(\ref{StateItem3}) it follows that $\rho_2$ is bounded from above and the result follows.
+where the third inequality follows from \Cref{StateEq11}, and $\overline{\alpha}(t) = \max\limits_{1 \leq i \leq m} \alpha_i(t)$. Define \\$\rho_2 = \max_{t\in \mathbb{N}} m \left( 4M + \overline{\alpha}(t) \right)$, due to \Cref{StateEq15}(\ref{StateItem3}) it follows that $\rho_2$ is bounded from above, and the result follows.
 \end{proof}
 
 
@@ -569,7 +569,7 @@ The following properties of $h_{\epsilon}$ hold.
 \end{enumerate}
 \end{proof}
 
-The following proofs are based on the properties of the auxiliary function $h_{\epsilon}$, and they are similar to the proofs in [BS2015], hence we will just state them here.
+The following proofs are based on the properties of the auxiliary function $h_{\epsilon}$, and they are similar to the proofs in [BS2015], hence we will just state them here. \Cref{StateEq65} does not appear in that paper, and its proof is given here.
 
 \begin{lemma}[Monotonicity property of $T_{\epsilon}$, similar to  (BS2015, Lemma 3.2, page 7)] For every $y \in \mathbb{R}^n$ we have
 \begin{equation*}
@@ -658,7 +658,7 @@ for all $y^0,y \in \mathbb{R}^n$.
 \end{proof}
 
 
-\subsection{Clustering with $T_{\epsilon}$ Operator}
+\subsection{Algorithm to the Smoothed Clustering Problem}
 
 In the previous section we showed that (\ref{StateEq30}) has the following equivalent form
 \begin{equation*}
