@@ -5,7 +5,7 @@ function [X,I,t,Psi] = eps_norm_clustering(A,n,m,k,max_iters,tol,x_0,w_0,eps)
     I = zeros(m,(max_iters+1));
     Psi = zeros(1,max_iters);
     ones_vec = ones(m,1);
-    alpha0 = diam(A,m)*0.01;
+    alpha0 = diam(A,m);
     
     % x init & init clustering
     X(:,:,1) = x_0;
@@ -20,7 +20,7 @@ function [X,I,t,Psi] = eps_norm_clustering(A,n,m,k,max_iters,tol,x_0,w_0,eps)
 %     end
 
     for t = 1:max_iters
-        alpha = alpha0;
+        alpha = alpha0/t;
         
         % W update
         [v,j] = min(W(:,:,t)*ones_vec);

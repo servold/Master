@@ -11,7 +11,7 @@ function [X,I,t,Psi] = palm_clustering(A,n,m,k,max_iters,tol,x_0,w_0)
     I = zeros(m,(max_iters+1));
     Psi = zeros(1,max_iters);
     ones_vec = ones(m,1);
-    alpha0 = diam(A,m)*0.01;
+    alpha0 = diam(A,m);
     
     % X init & init clustering
     X(:,:,1) = x_0;
@@ -26,7 +26,7 @@ function [X,I,t,Psi] = palm_clustering(A,n,m,k,max_iters,tol,x_0,w_0)
 %     end
 
     for t = 1:max_iters
-        alpha = alpha0;
+        alpha = alpha0/t;
         
         % W update
         [v,j] = min(W(:,:,t)*ones_vec);
