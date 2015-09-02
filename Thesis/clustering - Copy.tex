@@ -487,7 +487,7 @@ In this section we tackle the clustering problem with distance-like function bei
 	\min_{x^1, x^2, \ldots, x^k \in \mathbb{R}^n} \left\lbrace \sum\limits_{i=1}^{m} \min\limits_{1 \leq l \leq k} \|x^l - a^i\| \right\rbrace . \label{StateEq30}
 \end{equation}
 
-Before proceeding towards the algorithm that is based on PALM theory, we need to develop some useful tools.
+We are about to develop an algorithm that is based on PALM theory to treat this problem. However, first we need to discuss the Fermat-Weber problem that bears close relation with the algorithm that we will present later, and develop some useful tools.
 
 \subsection{The Smoothed Fermat-Weber Problem}
 Solving the smoothed Fermat-Weber plays a significant role in the algorithm that addresses the clustering problem with Euclidean norm distance-like function.
@@ -499,7 +499,7 @@ where $w_i>0, \: i=1,2, \ldots, m$, are given positive weights and $\mathcal{A} 
 \begin{equation*}
 	T(x) = \frac{1}{\sum\limits_{i=1}^{m}\frac{w_i}{\|x - a^i\|}} \sum\limits_{i=1}^{m}\frac{w_i a^i}{\|x - a^i\|} .
 \end{equation*}
-It is easily noticed that $f(x)$ is not differentiable over $\mathcal{A}$.  For our purposes we are interested in the smoothed Fermat-Weber problem, that can be formulated in the following manner
+It is easily noticed that $f(x)$ is not differentiable over $\mathcal{A}$. For our purposes we are interested in the smoothed Fermat-Weber problem, that can be formulated in the following manner
 \begin{equation}
 	\min_{x \in \mathbb{R}^n} \left\lbrace f_{\epsilon}(x) := \sum\limits_{i=1}^{m} w_i \left( \|x - a^i\|^2 + {\epsilon}^2 \right)^{1/2} \right\rbrace , \label{StateEq61}
 \end{equation}
