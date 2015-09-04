@@ -13,7 +13,7 @@ function [x,I,t,psi] = slim_palm_clustering(A,n,m,k,max_iters,tol,x_0,w_0)
     w = w_0;
 
     for t = 1:max_iters
-        alpha = alpha0/(t^3);
+        alpha = alpha0/(2^(t-1));
         
         % W update
         [v,j] = min(w*ones_vec);
