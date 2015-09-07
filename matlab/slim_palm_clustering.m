@@ -1,4 +1,4 @@
-function [x,I,t,psi] = slim_palm_clustering(A,n,m,k,max_iters,tol,x_0,w_0)
+function [x,w,I,t,psi] = slim_palm_clustering(A,n,m,k,max_iters,tol,x_0,w_0)
     setenv('distance', 'sq-E-norm');
     ones_vec = ones(m,1);
     alpha0 = diam(A,m);
