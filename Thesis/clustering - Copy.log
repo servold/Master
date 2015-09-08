@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.4)  2 SEP 2015 11:44
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.4)  8 SEP 2015 05:38
 entering extended mode
 **clustering*-*Copy.tex
 
@@ -446,6 +446,14 @@ Package: enumerate 1999/03/05 v3.00 enumerate extensions (DPC)
 Package: cleveref 2013/12/28 v0.19 Intelligent cross-referencing
 Package cleveref Info: `amsthm' support loaded on input line 2858.
 )
+(C:\Users\servold\AppData\Roaming\MiKTeX\2.9\tex\latex\framed\framed.sty
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip56
+\fb@frw=\dimen159
+\fb@frh=\dimen160
+\FrameRule=\dimen161
+\FrameSep=\dimen162
+)
 \c@proposition=\count134
 \c@lemma=\count135
 \c@remark=\count136
@@ -453,88 +461,76 @@ Package cleveref Info: `amsthm' support loaded on input line 2858.
 
 ("C:\Users\servold\Documents\Graduate Studies\TAU\Master\Thesis\clustering - Co
 py.aux")
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 29.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 29.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 30.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 30.
  ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    ... okay on input line 30.
 
 (C:\Users\servold\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count138
-\scratchdimen=\dimen159
+\scratchdimen=\dimen163
 \scratchbox=\box45
 \nofMPsegments=\count139
 \nofMParguments=\count140
 \everyMPshowfont=\toks28
 \MPscratchCnt=\count141
-\MPscratchDim=\dimen160
+\MPscratchDim=\dimen164
 \MPnumerator=\count142
 \makeMPintoPDFobject=\count143
 \everyMPtoPDFconversion=\toks29
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for U+msa on input line 94.
+LaTeX Font Info:    Try loading font information for U+msa on input line 95.
  ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 94.
+LaTeX Font Info:    Try loading font information for U+msb on input line 95.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 ) [1
 
-{C:/Users/servold/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
-Overfull \hbox (13.07pt too wide) in paragraph at lines 203--204
-\OT1/cmr/m/it/10.95 date step can be done in par-al-lel over all cen-ters, that
- is, $\OML/cmm/m/it/10.95 x[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t \OT1/cmr
-/m/n/10.95 + 1) = [] [] [] \OML/cmm/m/it/10.95 ; [] $
- []
-
-[3] [4] [5]
-Overfull \hbox (20.74521pt too wide) in paragraph at lines 342--343
-\OT1/cmr/bx/n/10.95 Proposition 3.2 \OT1/cmr/m/n/10.95 (Sub-gra-di-ent lower bo
-und for it-er-ates gap prop-erty)\OT1/cmr/bx/n/10.95 . \OT1/cmr/m/it/10.95 Let 
-$[][] \OT1/cmr/m/n/10.95 = [][]$
- []
-
-[6] [7] [8] [9] [10] [11] [12] [13] [14] [15]
-Overfull \hbox (20.74521pt too wide) in paragraph at lines 862--863
+{C:/Users/servold/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] [3] [
+4] [5]
+[6] [7] [8] [9] [10] [11] [12]
+Overfull \hbox (20.74521pt too wide) in paragraph at lines 813--814
 \OT1/cmr/bx/n/10.95 Proposition 4.2 \OT1/cmr/m/n/10.95 (Sub-gra-di-ent lower bo
 und for it-er-ates gap prop-erty)\OT1/cmr/bx/n/10.95 . \OT1/cmr/m/it/10.95 Let 
 $[][] \OT1/cmr/m/n/10.95 = [][]$
  []
 
 
-Overfull \hbox (17.12106pt too wide) detected at line 885
+Overfull \hbox (18.58774pt too wide) detected at line 836
 [] []
  []
 
-[16] [17] [18]
+[13] [14] [15] [16] [17] [18]
 ("C:\Users\servold\Documents\Graduate Studies\TAU\Master\Thesis\clustering - Co
 py.aux") ) 
 Here is how much of TeX's memory you used:
- 11590 strings out of 494045
- 221148 string characters out of 3145963
+ 11630 strings out of 494045
+ 221791 string characters out of 3145963
  281638 words of memory out of 3000000
- 14810 multiletter control sequences out of 15000+200000
+ 14846 multiletter control sequences out of 15000+200000
  11474 words of font info for 42 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 40i,21n,39p,10449b,368s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 40i,16n,39p,10449b,321s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmb
 x10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx1
 2.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.
@@ -550,7 +546,7 @@ es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files
 (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files (x8
 6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)
 /MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "clustering - Copy.pdf" (18 pages, 258327 bytes).
+Output written on "clustering - Copy.pdf" (18 pages, 248019 bytes).
 PDF statistics:
  120 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
