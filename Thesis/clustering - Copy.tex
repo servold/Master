@@ -784,7 +784,7 @@ Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generat
 \end{proposition}
 
 \begin{proof}
-We introduce the following function $H^l_{\varepsilon}: \mathtt{R}^{km} \times \mathbb{R}^{nk} \rightarrow \mathbb{R}$ defined by
+We introduce the following function $H^l_{\varepsilon}: \mathbb{R}^{km} \times \mathbb{R}^{nk} \rightarrow \mathbb{R}$ defined by
 \begin{equation*}
 	H^l_{\varepsilon}(w,x) = \sum\limits_{i=1}^{m} w^i_l \left( \|x^l - a^i\|^2 + {\varepsilon}^2 \right)^{1/2} .
 \end{equation*}
@@ -1041,26 +1041,33 @@ Since for all $i=1,2, \dots, m, \: w^i \in \Delta$, the result follows.
 \newpage
 
 
-\section{Returning to KMENAS}
+\section{Returning to KMEANS}
 \subsection{Similarity to KMEANS}
 The famous KMEANS algorithm has close proximity to KPALM algorithm. KMEANS alternates between cluster assignments and center updates as well. In detail, we can write its steps in the following manner
 
+\begin{framed}
+\noindent \textbf{KMEANS}
 \begin{enumerate}[(1)]
-	\item Initialization: Set $t=0$, and pick random centers $y(0) \in \mathbb{R}^{nk}$.
-
-	\item For each $t=0,1, \ldots$ generate a sequence $\left\lbrace(v(t),y(t))\right\rbrace_{t \in \mathbb{N}}$ as follows:
+	\item Initialization: $y(0) \in \mathbb{R}^{nk}$.
+	\item General step $\left( t=0,1, \ldots \right)$:
 	\begin{enumerate}[(2.1)]
+		\item Cluster assignment: for $i=1, 2, \ldots ,m$ compute
 		\item Cluster Assignment: For $i=1, 2, \ldots ,m$ compute
 		\begin{equation}
 			v^i(t+1) = \arg\!\min\limits_{v^i \in \Delta} \left\lbrace \langle v^i , d^i(y(t)) \rangle\right\rbrace . \label{StateEq12}
 		\end{equation}
-		
-		\item Center Update: For $l=1, 2, \ldots ,k$ compute
+		\item Centers update: for $l=1, 2, \ldots ,k$ compute
 		\begin{equation}
 			y^l(t+1) = \frac{\sum_{i=1}^{m} v^i_l(t+1) a^i}{\sum_{i=1}^{m} v^i_l(t+1)} . \label{StateEq13}
 		\end{equation}
+		\item Stopping criteria: halt if 
+		\begin{equation}
+			\forall 1 \leq l \leq k \quad C^l(t+1)=C^l(t) \label{StateEq22}
+		\end{equation}
 	\end{enumerate}
 \end{enumerate}
+\end{framed}
+
 The KMEANS algorithm obviously resemble KPALM algorithm. Denote $\overline{\alpha}(t) = \max\limits_{1 \leq i \leq m} \alpha_i(t)$. Assuming same starting point $x(0) = y(0)$ and by taking $\overline{\alpha}(t) \to 0$, we have
 \begin{equation*}
 	v(t) = \lim_{\overline{\alpha}(t) \to 0} w(t), \quad
