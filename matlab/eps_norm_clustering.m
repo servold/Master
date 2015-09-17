@@ -1,4 +1,4 @@
-function [X,I,t,Psi] = eps_norm_clustering(A,n,m,k,max_iters,tol,x_0,w_0,eps)
+function [X,W,I,t,Psi] = eps_norm_clustering(A,n,m,k,max_iters,tol,x_0,w_0,eps)
     setenv('distance', 'E-norm');
     X = zeros(n,k,(max_iters+1));
     W = zeros(k,m,(max_iters+1));
@@ -61,9 +61,9 @@ function [X,I,t,Psi] = eps_norm_clustering(A,n,m,k,max_iters,tol,x_0,w_0,eps)
         [~,CIDX] = clustering_distance(X(:,:,t+1), A, m, k);
         I(:,t+1) = CIDX';
         
-        if ((sum(I(:,t+1) == I(:,t)) == m) && t>1 && (Psi(t-1)-Psi(t))<tol)
-            break;
-        end
+%         if ((sum(I(:,t+1) == I(:,t)) == m) && t>1 && (Psi(t-1)-Psi(t))<tol)
+%             break;
+%         end
     end
     
     X = X(:,:,[1:t+1]);
