@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.4)  16 SEP 2015 12:00
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.4)  18 SEP 2015 22:50
 entering extended mode
 **clustering*-*Copy.tex
 
@@ -508,14 +508,14 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 
 {C:/Users/servold/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] [3] [
 4] [5]
-[6] [7] [8] [9] [10] [11] [12] [13] [14] [15] [16] [17] [18] [19]
+[6] [7] [8] [9] [10] [11] [12] [13] [14] [15] [16] [17] [18] [19] [20]
 ("C:\Users\servold\Documents\Graduate Studies\TAU\Master\Thesis\clustering - Co
 py.aux") ) 
 Here is how much of TeX's memory you used:
- 11655 strings out of 494045
- 222210 string characters out of 3145963
+ 11659 strings out of 494045
+ 222288 string characters out of 3145963
  281638 words of memory out of 3000000
- 14869 multiletter control sequences out of 15000+200000
+ 14873 multiletter control sequences out of 15000+200000
  11978 words of font info for 45 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
  40i,11n,39p,10449b,321s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -535,9 +535,9 @@ es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files
 6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)
 /MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files (x86)/M
 iKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "clustering - Copy.pdf" (19 pages, 256571 bytes).
+Output written on "clustering - Copy.pdf" (20 pages, 261806 bytes).
 PDF statistics:
- 128 PDF objects out of 1000 (max. 8388607)
+ 131 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
