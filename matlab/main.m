@@ -7,22 +7,25 @@ function [iters,time,Psi,delta_x] = main(trials, A, n, m, k, max_iters, tol, eps
         [w0,x0] = rand_init(A,n,k,m);
         
         tic;
-        [x,I,t,phi] = kmeans_clustering(A,n,m,k,max_iters,tol,x0);
+        [x,I,t,psi] = kmeans_clustering(A,n,m,k,max_iters,tol,x0);
         y = toc;
         iters(1,1,j) = t;
         time(1,1,j) = y;
-        Psi(1,:,j) = phi(2:t+1);
+        Psi(1,:,j) = psi(2:t+1);
         for i = 2:t
             delta_x(1,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
         end
         
-%         tic;
-%         [I,X,t] = kmeans(A,k);
-%         y = toc;
-%         iters(2,1,j) = t;
-%         time(2,2,j) = y;
-%         [D,I] = clustering_distance(X, A, m, k);
-%         R(2,3,j) = sum(D);
+        tic;
+        x_pp = kmeans_pp_init(A,n,m,k);
+        [x,I,t,psi] = kmeans_clustering(A,n,m,k,max_iters,tol,x_pp);
+        y = toc;
+        iters(2,1,j) = t;
+        time(2,1,j) = y;
+        Psi(2,:,j) = psi(2:t+1);
+        for i = 2:t
+            delta_x(2,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
+        end
         
         tic;
         [x,w,~,t,psi] = palm_clustering(A,n,m,k,max_iters,tol,x0,w0);
