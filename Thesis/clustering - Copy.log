@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/W32TeX) (preloaded format=pdflatex 2015.2.13)  3 OCT 2015 10:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/W32TeX) (preloaded format=pdflatex 2015.2.13)  3 OCT 2015 11:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -580,24 +580,23 @@ Package pdftex.def Info: psi_algs_comparison-eps-converted-to.pdf used on input
  line 1221.
 (pdftex.def)             Requested size: 420.57022pt x 316.18047pt.
 Package epstopdf Info: Source file: <iterations_algs_comparison.eps>
-(epstopdf)                    date: 2015-10-03 10:30:46
-(epstopdf)                    size: 9030 bytes
+(epstopdf)                    date: 2015-10-03 11:02:04
+(epstopdf)                    size: 9654 bytes
 (epstopdf)             Output file: <iterations_algs_comparison-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2015-10-03 10:31:23
-(epstopdf)                    size: 5495 bytes
+(epstopdf)                    date: 2015-10-03 11:02:31
+(epstopdf)                    size: 5624 bytes
 (epstopdf)             Command: <repstopdf --outfile=iterations_algs_comparison
 -eps-converted-to.pdf iterations_algs_comparison.eps>
 (epstopdf)             \includegraphics on input line 1238.
 Package epstopdf Info: Output file is already uptodate.
 
-<iterations_algs_comparison-eps-converted-to.pdf, id=84, 529.98pt x 255.95625pt
->
+<iterations_algs_comparison-eps-converted-to.pdf, id=84, 529.98pt x 258.9675pt>
 File: iterations_algs_comparison-eps-converted-to.pdf Graphic file (type pdf)
- <use iterations_algs_comparison-eps-converted-to.pdf>
+<use iterations_algs_comparison-eps-converted-to.pdf>
 Package pdftex.def Info: iterations_algs_comparison-eps-converted-to.pdf used o
 n input line 1238.
-(pdftex.def)             Requested size: 375.80542pt x 181.49977pt.
+(pdftex.def)             Requested size: 375.80542pt x 183.63506pt.
 
 Underfull \hbox (badness 6792) in paragraph at lines 1239--1239
 []\OT1/cmr/m/n/10 (a) |Num-ber of it-er-a-tions of KMEANS, KMEANS++ and KPALM w
@@ -651,9 +650,6 @@ Package pdftex.def Info: iterations_dynamic_alpha_eps_kpalm_comparison-eps-conv
 erted-to.pdf used on input line 1250.
 (pdftex.def)             Requested size: 375.80542pt x 179.36449pt.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
 [21 <./dynamic_alpha_kpalm-eps-converted-to.pdf>] [22 <./psi_algs_comparison-ep
 s-converted-to.pdf>] [23 <./iterations_algs_comparison-eps-converted-to.pdf> <.
 /iterations_dynamic_alpha_kpalm_comparison-eps-converted-to.pdf> <./iterations_
@@ -685,7 +681,7 @@ e1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2014/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmti10.pfb><c:/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmtt10.pfb><c:/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/symbols/m
 sbm10.pfb>
-Output written on "clustering - Copy.pdf" (23 pages, 279958 bytes).
+Output written on "clustering - Copy.pdf" (23 pages, 280087 bytes).
 PDF statistics:
  186 PDF objects out of 1000 (max. 8388607)
  132 compressed objects within 2 object streams
