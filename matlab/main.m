@@ -1,8 +1,11 @@
 function [iters,time,Psi,delta_x] = main(trials, A, n, m, k, max_iters, tol, eps)
-    iters = zeros(4,1,trials);
-    time = zeros(4,1,trials);
-    Psi = zeros(4,max_iters,trials);
-    delta_x = zeros(4,max_iters-1,trials);
+    alpha_update_functions = {@(a,t)a/(2^(t-1)), @(a,t)a/t, @(a,t)a/(t^2), @(a,t)a, @(a,t)10*a, @(a,t)0.1*a};
+    iters = zeros(2+2*length(alpha_update_functions),1,trials);
+    time = zeros(2+2*length(alpha_update_functions),1,trials);
+    Psi = zeros(2+2*length(alpha_update_functions),max_iters,trials);
+    Psi(:,:,:)=nan;
+    delta_x = zeros(2+2*length(alpha_update_functions),max_iters-1,trials);
+    delta_x(:,:,:)=nan;
     for j = 1:trials
         [w0,x0] = rand_init(A,n,k,m);
         
@@ -11,7 +14,7 @@ function [iters,time,Psi,delta_x] = main(trials, A, n, m, k, max_iters, tol, eps
         y = toc;
         iters(1,1,j) = t;
         time(1,1,j) = y;
-        Psi(1,:,j) = psi(2:t+1);
+        Psi(1,1:t,j) = psi(2:t+1);
         for i = 2:t
             delta_x(1,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
         end
@@ -22,19 +25,22 @@ function [iters,time,Psi,delta_x] = main(trials, A, n, m, k, max_iters, tol, eps
         y = toc;
         iters(2,1,j) = t;
         time(2,1,j) = y;
-        Psi(2,:,j) = psi(2:t+1);
+        Psi(2,1:t,j) = psi(2:t+1);
         for i = 2:t
             delta_x(2,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
         end
         
-        tic;
-        [x,w,~,t,psi] = palm_clustering(A,n,m,k,max_iters,tol,x0,w0);
-        y = toc;
-        iters(3,1,j) = t;
-        time(3,1,j) = y;
-        Psi(3,:,j) = psi;
-        for i = 2:t
-            delta_x(3,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
+        for f = 1:length(alpha_update_functions)
+            idx = 2+f;
+            tic;
+            [x,w,~,t,psi] = palm_clustering(A,n,m,k,max_iters,tol,x0,w0,alpha_update_functions{f});
+            y = toc;
+            iters(idx,1,j) = t;
+            time(idx,1,j) = y;
+            Psi(idx,1:length(psi),j) = psi;
+            for i = 2:t
+                delta_x(idx,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
+            end
         end
         
 %         setenv('distance', 'E-norm');
@@ -48,14 +54,17 @@ function [iters,time,Psi,delta_x] = main(trials, A, n, m, k, max_iters, tol, eps
 %         end
 %         R(3,4,j) = comp_psi;
         
-        tic;
-        [x,w,~,t,psi] = eps_norm_clustering(A,n,m,k,max_iters,tol,x0,w0,eps);
-        y = toc;
-        iters(4,1,j) = t;
-        time(4,1,j) = y;
-        Psi(4,:,j) = psi;
-        for i = 2:t
-            delta_x(4,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
+        for f = 1:length(alpha_update_functions)
+            idx = 2+length(alpha_update_functions)+f;
+            tic;
+            [x,w,~,t,psi] = eps_norm_clustering(A,n,m,k,max_iters,tol,x0,w0,eps,alpha_update_functions{f});
+            y = toc;
+            iters(idx,1,j) = t;
+            time(idx,1,j) = y;
+            Psi(idx,1:length(psi),j) = psi;
+            for i = 2:t
+                delta_x(idx,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
+            end
         end
         
 %         setenv('distance', 'sq-E-norm');

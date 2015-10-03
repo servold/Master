@@ -32,9 +32,9 @@ function [X,I,t,Phi] = kmeans_clustering(A,n,m,k,max_iters,tol,x_0)
         I(:,t+1) = CIDX';
         Phi(t+1) = D*ones_vec;
         
-%         if ((sum(I(:,t+1) == I(:,t)) == m) && abs(Phi(t+1)-Phi(t))<tol)
-%             break;
-%         end
+        if ((sum(I(:,t+1) == I(:,t)) == m) && abs(Phi(t+1)-Phi(t))<tol)
+            break;
+        end
     end
     
     X = X(:,:,[1:t+1]);
