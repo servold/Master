@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.4)  8 OCT 2015 16:31
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.4)  12 OCT 2015 13:07
 entering extended mode
 **clustering*-*Copy.tex
 
@@ -671,11 +671,11 @@ Package pdftex.def Info: iterations_dynamic_alpha_eps_kpalm_comparison-eps-conv
 erted-to.pdf used on input line 1274.
 (pdftex.def)             Requested size: 375.80542pt x 179.36449pt.
 Package epstopdf Info: Source file: <dynamic_alpha_eps_kpalm.eps>
-(epstopdf)                    date: 2015-10-08 14:30:48
+(epstopdf)                    date: 2015-10-12 12:57:31
 (epstopdf)                    size: 13603 bytes
 (epstopdf)             Output file: <dynamic_alpha_eps_kpalm-eps-converted-to.p
 df>
-(epstopdf)                    date: 2015-10-08 14:32:34
+(epstopdf)                    date: 2015-10-12 12:57:31
 (epstopdf)                    size: 4947 bytes
 (epstopdf)             Command: <epstopdf --outfile=dynamic_alpha_eps_kpalm-eps
 -converted-to.pdf dynamic_alpha_eps_kpalm.eps>
@@ -724,7 +724,7 @@ TeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86)/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files (x86)/MiKTeX 2.
 9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/MiKTeX 2.9/
 fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "clustering - Copy.pdf" (25 pages, 296248 bytes).
+Output written on "clustering - Copy.pdf" (25 pages, 296216 bytes).
 PDF statistics:
  189 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

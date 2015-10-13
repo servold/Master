@@ -145,17 +145,17 @@ Replacing the terms in Problem (\ref{StateEq3}) with the functions defined above
 \subsection{Introduction to the PALM Theory} \label{State_PALM_Theory}
 
 In this subsection we give a brief review of the problem structure that PALM theory treats, the requirements needed and the results it assures.
-PALM theory solves the nonconvex and nonsmooth minimization problem of the following form
+The PALM algorithm solves the nonconvex and nonsmooth minimization problem of the following form
 \begin{center}
 (\textit{M})\quad minimize $\Psi(x,y):=f(x)+g(y)+H(x,y)$ over all $(x,y) \in \mathbb{R}^n \times \mathbb{R}^m$,
 \end{center}
-where $f:\mathbb{R}^n \rightarrow \left(-\infty,+\infty\right]$ and $g:\mathbb{R}^n \rightarrow \left(-\infty,+\infty\right]$ are proper and lower semicontinuous functions and $H:\mathbb{R}^n \times \mathbb{R}^m \rightarrow \mathbb{R}$ is a $C^1$ function.
+where $f:\mathbb{R}^n \rightarrow \left(-\infty,+\infty\right]$ and $g:\mathbb{R}^n \rightarrow \left(-\infty,+\infty\right]$ are proper and lower semicontinuous functions while $H:\mathbb{R}^n \times \mathbb{R}^m \rightarrow \mathbb{R}$ is a $C^1$ function.
 
 Suppose that we are given a generic algorithm $\mathcal{A}$ which solves problem (\textit{M}) and generates a sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ via the following:
 \begin{equation*}
-	z^0 \in \mathbb{R}^{nm}, \: z^{k+1} \in \mathcal{A}\left(z^k\right), \quad k=0,1,\ldots.
+	z^0 \in \mathbb{R}^d, \: z^{k+1} \in \mathcal{A}\left(z^k\right), \quad k=0,1,\ldots.
 \end{equation*}
-There are three basic requirements necessary for PALM that assure the convergence of the whole sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ to a critical point of $\Psi$.
+There are three basic requirements necessary for PALM to assure the convergence of the whole sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ to a critical point of $\Psi$.
 \begin{enumerate}[(1)]
 	\item Sufficient decrease property: There exists a positive constant $\rho_1$, such that
 	\begin{equation*}
@@ -1234,9 +1234,9 @@ We use the famous Iris dataset to test the performance of the KPALM algorithm. I
     \label{fig:dynamic_alpha_psi_comp}
 \end{figure} 
 
-\Cref{fig:dynamic_alpha_psi_comp} shows that dynamic values of the parameter $\alpha$ which decreases fast, such as $\alpha_i(t)=\\\frac{diam(\mathcal{A})}{2^{t-1}}$, achieve smaller function values, and increase the rate of conversion.
+\Cref{fig:dynamic_alpha_psi_comp} shows that dynamic values of the parameter $\alpha$ which decreases fast, such as $\alpha_i(t)=\\\frac{diam(\mathcal{A})}{2^{t-1}}$, achieve smaller function values.
 
-In \Cref{fig:algs_psi_comp} we made a comparison between KPALM with dynamic rule for choosing the parameter $\alpha$, $\alpha_i(t)=\frac{diam(\mathcal{A})}{2^{t-1}}$, with KMEANS and KMEANS++. It demonstrates that KPALM can reach lower objective function values then KMEANS, and these are similar to the values achieved with KMEAN++.
+In \Cref{fig:algs_psi_comp} we made a comparison between KPALM with dynamic rule for choosing the parameter $\alpha$, that is $\alpha_i(t)=\frac{diam(\mathcal{A})}{2^{t-1}}$, with KMEANS and KMEANS++. It demonstrates that KPALM can reach lower objective function values then KMEANS, and these are similar to the values achieved with KMEAN++.
 
 \begin{figure}[t]
     \centering
@@ -1252,9 +1252,9 @@ In \Cref{fig:algs_psi_comp} we made a comparison between KPALM with dynamic rule
 %    \label{fig:dynamic_alpha_relative_delta_comp}
 %\end{figure}
 
-\Cref{fig:iters_comp} shows the number of iteration needed to reach precision 1e-3 between consecutive objective function values.
+\Cref{fig:iters_comp} shows the number of iteration needed to reach precision of 1e-3 between consecutive objective function values.
 
-Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_psi_comp} we can see a comparison of the objective values of $\Psi_{\varepsilon}$ for different values of $\alpha$. The value of $\varepsilon$ is set to 1e-10.
+Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_psi_comp} we can see a comparison of the objective values of $\Psi_{\varepsilon}$ for different function values. The value of $\varepsilon$ is set to be 1e-5.
 
 \begin{figure}[ht]
     \centering
