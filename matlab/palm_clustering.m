@@ -9,7 +9,7 @@ function [X,W,I,t,Psi] = palm_clustering(A,n,m,k,max_iters,tol,x_0,w_0,alpha_upd
     X = zeros(n,k,(max_iters+1));
     W = zeros(k,m,(max_iters+1));
     I = zeros(m,(max_iters+1));
-    Psi = zeros(1,max_iters);
+    Psi = zeros(1,max_iters+1);
     ones_vec = ones(m,1);
     alpha0 = diam(A,m);
     
@@ -20,13 +20,14 @@ function [X,W,I,t,Psi] = palm_clustering(A,n,m,k,max_iters,tol,x_0,w_0,alpha_upd
     
     % W init
     W(:,:,1) = w_0;
-%     for i = 1:m
-%         W(:,i,1) = rand(k,1);
-%         W(:,i,1) = W(:,i,1)/sum(W(:,i,1));
-%     end
-
+    
+    % Psi computations
+    for i = 1:m
+        Psi(1) = Psi(1) + distance_like(X(:,:,1), A(:,i), k)'*W(:,i,1);
+    end
+    
     for t = 1:max_iters
-        alpha = alpha_update_f(alpha0,t);
+        alpha = max(1e-8,alpha_update_f(alpha0,t));
         
         % W update
         [v,j] = min(W(:,:,t)*ones_vec);
@@ -46,21 +47,21 @@ function [X,W,I,t,Psi] = palm_clustering(A,n,m,k,max_iters,tol,x_0,w_0,alpha_upd
         
         % Psi computations
         for i = 1:m
-            Psi(t) = Psi(t) + distance_like(X(:,:,t+1), A(:,i), k)'*W(:,i,t+1);
+            Psi(t+1) = Psi(t+1) + distance_like(X(:,:,t+1), A(:,i), k)'*W(:,i,t+1);
         end
         
         % clustering update
         [~,CIDX] = clustering_distance(X(:,:,t+1), A, m, k);
         I(:,t+1) = CIDX';
         
-        if ((sum(I(:,t+1) == I(:,t)) == m) && t>1 && (Psi(t-1)-Psi(t))<tol)
+        if ((sum(I(:,t+1) == I(:,t)) == m) && t>1 && (Psi(t)-Psi(t+1))<tol)
             break;
         end
     end
     
-    X = X(:,:,[1:t+1]);
-    W = W(:,:,[1:t+1]);
-    I = I(:,[1:t+1]);
-    Psi = Psi(:,[1:t]);
+    X = X(:,:,1:t+1);
+    W = W(:,:,1:t+1);
+    I = I(:,1:t+1);
+    Psi = Psi(:,1:t+1);
 end
 

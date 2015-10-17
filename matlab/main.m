@@ -14,7 +14,7 @@ function [iters,time,Psi,delta_x] = main(trials, A, n, m, k, max_iters, tol, eps
         y = toc;
         iters(1,1,j) = t;
         time(1,1,j) = y;
-        Psi(1,1:t,j) = psi(2:t+1);
+        Psi(1,1:(t+1),j) = psi(1:t+1);
         for i = 2:t
             delta_x(1,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
         end
@@ -25,7 +25,7 @@ function [iters,time,Psi,delta_x] = main(trials, A, n, m, k, max_iters, tol, eps
         y = toc;
         iters(2,1,j) = t;
         time(2,1,j) = y;
-        Psi(2,1:t,j) = psi(2:t+1);
+        Psi(2,1:(t+1),j) = psi(1:t+1);
         for i = 2:t
             delta_x(2,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
         end
@@ -34,6 +34,19 @@ function [iters,time,Psi,delta_x] = main(trials, A, n, m, k, max_iters, tol, eps
             idx = 2+f;
             tic;
             [x,w,~,t,psi] = palm_clustering(A,n,m,k,max_iters,tol,x0,w0,alpha_update_functions{f});
+            y = toc;
+            iters(idx,1,j) = t;
+            time(idx,1,j) = y;
+            Psi(idx,1:length(psi),j) = psi;
+            for i = 2:t
+                delta_x(idx,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
+            end
+        end
+        
+        for f = 1:length(alpha_update_functions)
+            idx = 2+length(alpha_update_functions)+f;
+            tic;
+            [x,w,~,t,psi] = palm_clustering(A,n,m,k,max_iters,tol,x_pp,w0,alpha_update_functions{f});
             y = toc;
             iters(idx,1,j) = t;
             time(idx,1,j) = y;
@@ -55,7 +68,7 @@ function [iters,time,Psi,delta_x] = main(trials, A, n, m, k, max_iters, tol, eps
 %         R(3,4,j) = comp_psi;
         
         for f = 1:length(alpha_update_functions)
-            idx = 2+length(alpha_update_functions)+f;
+            idx = 2+2*length(alpha_update_functions)+f;
             tic;
             [x,w,~,t,psi] = eps_norm_clustering(A,n,m,k,max_iters,tol,x0,w0,eps,alpha_update_functions{f});
             y = toc;

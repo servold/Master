@@ -37,8 +37,8 @@ function [X,I,t,Phi] = kmeans_clustering(A,n,m,k,max_iters,tol,x_0)
         end
     end
     
-    X = X(:,:,[1:t+1]);
-    I = I(:,[1:t+1]);
-    Phi = Phi(:,[1:t+1]);
+    X = X(:,:,1:t+1);
+    I = I(:,1:t+1);
+    Phi = Phi(:,1:t+1);
 end
 
