@@ -1071,21 +1071,25 @@ Since for all $i=1,2, \dots, m, \: w^i \in \Delta$, the result follows.
 \newpage
 
 
-%\section{Returning to KMEANS}
-%\subsection{Similarity to KMEANS}
-%The famous KMEANS algorithm has close relation to KPALM algorithm. KMEANS alternates between cluster assignment and centers update steps as well. In detail, we can write its steps in the following manner
-%
-%\begin{framed}
-%\noindent \textbf{KMEANS}
-%\begin{enumerate}[(1)]
-%	\item Initialization: $x(0) \in \mathbb{R}^{nk}$.
-%	\item General step $\left( t=0,1, \ldots \right)$:
-%	\begin{enumerate}[(2.1)]
-%		\item Cluster assignment: for $i=1, 2, \ldots ,m$ compute
-%		\begin{equation}
-%			w^i(t+1) = \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(x(t)) \rangle\right\rbrace . \label{StateEq12}
-%		\end{equation}
-%		\item Centers update: for $l=1, 2, \ldots ,k$ compute
+\section{Returning to KMEANS}
+\subsection{Similarity to KMEANS}
+The famous KMEANS algorithm has close relation to KPALM algorithm. KMEANS alternates between cluster assignment and centers update steps as well. In detail, we can write its steps in the following manner
+
+\begin{framed}
+\noindent \textbf{KMEANS}
+\begin{enumerate}[(1)]
+	\item Initialization: $x(0) \in \mathbb{R}^{nk}$.
+	\item General step $\left( t=0,1, \ldots \right)$:
+	\begin{enumerate}[(2.1)]
+		\item Cluster assignment: for $i=1, 2, \ldots ,m$ compute
+		\begin{equation}
+			w^i(t+1) = \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(x(t)) \rangle\right\rbrace . \label{StateEq12}
+		\end{equation}
+		\item Centers update: for $l=1, 2, \ldots ,k$ compute
+		\begin{equation}
+			x^l(t+1) = \frac{\sum_{i=1}^{m} w^i_l(t+1) a^i}{\sum_{i=1}^{m} w^i_l(t+1)} . \label{StateEq13}
+		\end{equation}
+%		\item Stopping criteria: halt if 
 %		\begin{equation}
 %			\forall 1 \leq l \leq k \quad C^l(t+1)=C^l(t) \label{StateEq15}
 %		\end{equation}
