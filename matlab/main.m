@@ -33,7 +33,7 @@ function [iters,time,Psi,delta_x] = main(trials, A, n, m, k, max_iters, tol, eps
         for f = 1:length(alpha_update_functions)
             idx = 2+f;
             tic;
-            [x,w,~,t,psi] = palm_clustering(A,n,m,k,max_iters,tol,x0,w0,alpha_update_functions{f});
+            [x,w,~,~,t,psi] = palm_clustering(A,n,m,k,max_iters,tol,x0,w0,alpha_update_functions{f});
             y = toc;
             iters(idx,1,j) = t;
             time(idx,1,j) = y;
@@ -46,7 +46,7 @@ function [iters,time,Psi,delta_x] = main(trials, A, n, m, k, max_iters, tol, eps
         for f = 1:length(alpha_update_functions)
             idx = 2+length(alpha_update_functions)+f;
             tic;
-            [x,w,~,t,psi] = palm_clustering(A,n,m,k,max_iters,tol,x_pp,w0,alpha_update_functions{f});
+            [x,w,~,~,t,psi] = palm_clustering(A,n,m,k,max_iters,tol,x_pp,w0,alpha_update_functions{f});
             y = toc;
             iters(idx,1,j) = t;
             time(idx,1,j) = y;

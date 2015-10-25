@@ -4,11 +4,12 @@
 % Returns @X, where for each iteration t, X(:,:,t) are the calculated
 % centers, W(:,:,t) are the coefficients, Psi(t) is the value of Psi, I(t)
 % are the clusters, and t is the number of iterations actual done.
-function [X,W,I,t,Psi] = palm_clustering(A,n,m,k,max_iters,tol,x_0,w_0,alpha_update_f)
+function [X,W,I,I_W,t,Psi] = palm_clustering(A,n,m,k,max_iters,tol,x_0,w_0,alpha_update_f)
     setenv('distance', 'sq-E-norm');
     X = zeros(n,k,(max_iters+1));
     W = zeros(k,m,(max_iters+1));
     I = zeros(m,(max_iters+1));
+    I_W = zeros(m,(max_iters+1));
     Psi = zeros(1,max_iters+1);
     ones_vec = ones(m,1);
     alpha0 = diam(A,m);
@@ -20,6 +21,10 @@ function [X,W,I,t,Psi] = palm_clustering(A,n,m,k,max_iters,tol,x_0,w_0,alpha_upd
     
     % W init
     W(:,:,1) = w_0;
+    for j = 1:m
+        [~,b] = max(w_0(:,j));
+        I_W(j,1) = b;
+    end
     
     % Psi computations
     for i = 1:m
@@ -54,7 +59,12 @@ function [X,W,I,t,Psi] = palm_clustering(A,n,m,k,max_iters,tol,x_0,w_0,alpha_upd
         [~,CIDX] = clustering_distance(X(:,:,t+1), A, m, k);
         I(:,t+1) = CIDX';
         
-        if ((sum(I(:,t+1) == I(:,t)) == m) && t>1 && (Psi(t)-Psi(t+1))<tol)
+        for j = 1:m
+            [~,b] = max(W(:,j,t+1));
+            I_W(j,t+1) = b;
+        end
+        
+        if ((sum(I_W(:,t+1) == I_W(:,t)) == m) && t>1 && (Psi(t)-Psi(t+1))<tol)
             break;
         end
     end
@@ -62,6 +72,7 @@ function [X,W,I,t,Psi] = palm_clustering(A,n,m,k,max_iters,tol,x_0,w_0,alpha_upd
     X = X(:,:,1:t+1);
     W = W(:,:,1:t+1);
     I = I(:,1:t+1);
+    I_W = I_W(:,1:t+1);
     Psi = Psi(:,1:t+1);
 end
 
