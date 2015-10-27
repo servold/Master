@@ -64,9 +64,9 @@ function [X,W,I,I_W,t,Psi] = palm_clustering(A,n,m,k,max_iters,tol,x_0,w_0,alpha
             I_W(j,t+1) = b;
         end
         
-        if ((sum(I_W(:,t+1) == I_W(:,t)) == m) && t>1 && (Psi(t)-Psi(t+1))<tol)
-            break;
-        end
+%         if ((sum(I_W(:,t+1) == I_W(:,t)) == m) && t>1 && (Psi(t)-Psi(t+1))<tol)
+%             break;
+%         end
     end
     
     X = X(:,:,1:t+1);
