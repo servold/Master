@@ -76,9 +76,9 @@ function [X,W,I,I_W,t,Psi] = eps_norm_clustering(A,n,m,k,max_iters,tol,x_0,w_0,e
             I_W(j,t+1) = b;
         end
         
-%         if ((sum(I(:,t+1) == I(:,t)) == m) && t>1 && (Psi(t)-Psi(t+1))<tol)
-%             break;
-%         end
+        if ((Psi(t)-Psi(t+1))<tol)
+            break;
+        end
     end
     
     X = X(:,:,1:t+1);
