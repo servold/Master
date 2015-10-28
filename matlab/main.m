@@ -1,6 +1,6 @@
 function [iters,time,Psi,delta_x] = main(trials, A, n, m, k, max_iters, tol, eps)
-    alpha_update_functions = {@(a,t)a/(2^(t-1)), @(a,t)0.1*a};
-%     alpha_update_functions = {@(a,t)a/(2^(t-1)), @(a,t)a/t, @(a,t)a/(t^2), @(a,t)a, @(a,t)10*a, @(a,t)0.1*a};
+%     alpha_update_functions = {@(a,t)a/(2^(t-1)), @(a,t)0.1*a};
+    alpha_update_functions = {@(a,t)a/(2^(t-1)), @(a,t)a/t, @(a,t)a/(t^2), @(a,t)a, @(a,t)10*a, @(a,t)0.1*a};
     iters = zeros(2+3*length(alpha_update_functions),1,trials);
     time = zeros(2+3*length(alpha_update_functions),1,trials);
     Psi = zeros(2+3*length(alpha_update_functions),max_iters,trials);
@@ -8,6 +8,7 @@ function [iters,time,Psi,delta_x] = main(trials, A, n, m, k, max_iters, tol, eps
     delta_x = zeros(2+3*length(alpha_update_functions),max_iters-1,trials);
     delta_x(:,:,:)=nan;
     for j = 1:trials
+        disp(['trial ', num2str(j)]);
         [w0,x0] = rand_init(A,n,k,m);
         
         tic;
