@@ -1,6 +1,7 @@
-function [mean_iters,mean_time,mean_psi,mean_delta_x] = mean_all(trials,max_iters,iters,time,Psi,delta_x)
+function [mean_iters,mean_time,mean_similarity,mean_psi,mean_delta_x] = mean_all(trials,max_iters,iters,time,similarity,Psi,delta_x)
     mean_iters = mean(iters,3);
     mean_time = mean(time,3);
+    mean_similarity = mean(similarity,3);
     s = size(iters);
     algs = s(1);
     no_nans_psi = Psi;
