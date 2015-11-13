@@ -130,7 +130,7 @@ Replacing further the constraint $w^i \in \Delta$ by adding the indicator functi
 where $w = (w^1, w^2, \ldots , w^m) \in \mathbb{R}^{km}$.
 Finally, for the simplicity of the yet to come expositions, we define the following functions
 \begin{center}
-$H(w,x) := \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle \quad$ and $\quad G(w) = \sum\limits_{i=1}^{m} G(w^i) := \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i) .$
+$H(w,x) := \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle \quad$ and $\quad G(w) = \sum\limits_{i=1}^{m} G^i(w^i) := \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i) .$
 \end{center}
 
 Replacing the terms in Problem (\ref{StateEq3}) with the functions defined above gives a compact equivalent form of the original clustering problem
@@ -261,7 +261,7 @@ The function $x \mapsto H(w,x)$ is strongly convex with parameter $\beta(w)$ whi
 \end{lemma}
 
 \begin{proof}
-Since the function $x \mapsto H(w(t),x) = 
+Since the function $x \mapsto H(w,x) = 
 \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \|x^l - a^i\|^2$ is $C^2$, it is strongly convex if and only if the smallest eigenvalue of the corresponding Hessian matrix is positive. Indeed, the Hessian is given by
 
 \begin{center}
