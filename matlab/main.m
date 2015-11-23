@@ -1,6 +1,7 @@
 function [iters,time,similarity,Psi,delta_x] = main(trials, A, n, m, k, max_iters, tol, eps, I_true)
-%     alpha_update_functions = {@(a,t)a/(2^(t-1)), @(a,t)0.1*a};
-    alpha_update_functions = {@(a,t)a/(2^(t-1)), @(a,t)a/t, @(a,t)a/(t^2), @(a,t)a, @(a,t)10*a, @(a,t)0.1*a};
+%     alpha_update_functions = {@(a,t)a/(2^(t-1)), @(a,t)a/t,
+%     @(a,t)a/(t^2), @(a,t)a, @(a,t)10*a, @(a,t)0.1*a};
+    alpha_update_functions = {@(a,t)a/(2^(t-1)), @(a,t)a/(t^2), @(a,t)a, @(a,t)0.1*a};
     iters = zeros(2+3*length(alpha_update_functions),1,trials);
     time = zeros(2+3*length(alpha_update_functions),1,trials);
     similarity = zeros(2+3*length(alpha_update_functions),1,trials);
@@ -62,11 +63,25 @@ function [iters,time,similarity,Psi,delta_x] = main(trials, A, n, m, k, max_iter
                 delta_x(idx,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
             end
         end
+
+%         for f = 1:length(alpha_update_functions)
+%             idx = f;
+%             tic;
+%             [x,w,~,I_W,t,psi] = eps_norm_clustering(A,n,m,k,max_iters,tol,x0,w0,eps,alpha_update_functions{f});
+%             y = toc;
+%             iters(idx,1,j) = t;
+%             time(idx,1,j) = y;
+%             similarity(idx,1,j) = compare_clusters(I_true, I_W(:,t+1), k);
+%             Psi(idx,1:length(psi),j) = psi;
+%             for i = 2:t
+%                 delta_x(idx,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
+%             end
+%         end
         
         for f = 1:length(alpha_update_functions)
             idx = 2+2*length(alpha_update_functions)+f;
             tic;
-            [x,w,~,I_W,t,psi] = eps_norm_clustering(A,n,m,k,max_iters,tol,x0,w0,eps,alpha_update_functions{f});
+            [x,w,~,~,~,I_W,t,~,psi,~,~] = eps_norm_clustering3(A,n,m,k,max_iters,tol,x0,w0,eps,alpha_update_functions{f});
             y = toc;
             iters(idx,1,j) = t;
             time(idx,1,j) = y;

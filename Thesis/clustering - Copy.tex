@@ -26,6 +26,9 @@
 \newtheorem{remark}{Remark}
 \newtheorem{assumption}{Assumption}
 
+\newcommand{\nn}{\mathbb{N}} %Nonnegative integers
+\newcommand{\rr}{\mathbb{R}} %Real numbers
+\newcommand{\norm}[1]{\left\Vert {#1} \right\Vert} %Norm
 \def\abs#1{\left\lvert#1\right\rvert}
 \makeatletter
 \def\Let@{\def\\{\notag\math@cr}}
@@ -123,7 +126,7 @@ where
 \begin{equation*}
 d^{i}(x) = (d(x^1,a^i), d(x^2,a^i), \ldots , d(x^k,a^i)) \in \mathbb{R}^k, \quad i=1, 2, \ldots , m.
 \end{equation*}
-Replacing further the constraint $w^i \in \Delta$ by adding the indicator function $\delta_{\Delta}(\cdot)$, which defined to be $0$ in $\Delta$ and $\infty$ otherwise, to the objective function, results in a equivalent formulation
+Replacing further the constraint $w^i \in \Delta$ by adding the indicator function $\delta_{\Delta}(\cdot)$, which is defined to be $0$ in $\Delta$ and $\infty$ otherwise, to the objective function, results in a equivalent formulation
 \begin{equation}
 	\min\limits_{x \in \mathbb{R}^{nk} , w \in \mathbb{R}^{km}} \left\lbrace \sum\limits_{i=1}^{m} \left( \langle w^i , d^i(x) \rangle + \delta_{\Delta}(w^i) \right) \right\rbrace , \label{StateEq3}
 \end{equation}
@@ -180,9 +183,9 @@ Since the clustering problem has a specific structure, we are ought to exploit i
 
 As in the PALM algorithm, our algorithm is based on alternating minimization, with the following adaptations which are motivated by the observations mentioned above. More precisely, with respect to $w$ we suggest to regularize the first subproblem with proximal term as follows
 \begin{equation}
-	w^i(t+1) = \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(x(t)) \rangle + \frac{\alpha_i(t)}{2} \|w^i - w^i(t)\|^2 \right\rbrace, \quad i=1,2, \ldots, m . \label{State_w_update}
+	w^i(t+1) = \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(x(t)) \rangle + \frac{\alpha_i(t)}{2} \|w^i - w^i(t)\|^2 \right\rbrace, \quad i=1,2, \ldots, m , \label{State_w_update}
 \end{equation}
-On the other hand, with respect to $x$ we perform exact minimization
+where $\alpha_i(t) > 0$ for all $i=1,2, \ldots, m$. On the other hand, with respect to $x$ we perform exact minimization
 \begin{equation}
 	x(t+1) = \arg\!\min \left\lbrace H(w(t+1), x) \mid x \in \mathbb{R}^{nk} \right\rbrace . \label{State_x_update}
 \end{equation}
@@ -322,7 +325,7 @@ Set $\rho_1 = \frac{1}{2}\min\left\lbrace \underline{\alpha} , \underline{\beta}
 	&= H(z(t)) - H(z(t+1)) \\
 	&= \Psi(z(t)) - \Psi(z(t+1)),
 \end{align*}
-where the last equality follows from the fact that $G(w(t)) = 0$ for all $t \in \mathbb{N}$ and therefore $H(z(t))=\Psi(z(t))$, $t \in \mathbb{N}$.
+where the last equality follows from the fact that $G(w(t)) = 0$, since $w(t) \in \Delta^m$ for all $t \in \mathbb{N}$, and therefore $H(z(t))=\Psi(z(t))$, $t \in \mathbb{N}$.
 \end{proof}
 
 Now, we aim to prove the subgradient lower bound for the iterates gap. The following lemma will be essential in our proof.
@@ -337,7 +340,6 @@ where $M = \max\limits_{1 \leq i \leq m} \|a^i\|$.
 
 \begin{proof}
 Since $d(u,v) = \| u-v \|^2$, we get that
-{\allowdisplaybreaks
 \begin{align*} 
 	\| d^i(x(t&+1))  - d^i(x(t)) \| 
 	 = \left[ \sum\limits_{l=1}^{k} \abs{ \|x^l(t+1) - a^i\|^2 - \| x^l(t) -a^i\|^2 }^2 \right]^{\frac{1}{2}} \\
@@ -348,8 +350,7 @@ Since $d(u,v) = \| u-v \|^2$, we get that
 	& = \left[ \sum\limits_{l=1}^{k} (4M)^2 \|x^l(t+1) - x^l(t)\|^2 \right]^{\frac{1}{2}} 
 	= 4M \| x(t+1) - x(t)\| ,
 \end{align*}
-}
-this proves the desired result.
+where the last inequality follows from the fact that $x^l(t) \in Conv(\mathcal{A})$ and hence $\norm{x^l(t)} \leq M$ for all $t \in \nn$ and $l=1,2,\ldots,k$, this proves the desired result.
 \end{proof}
 
 \begin{proposition}[Subgradient lower bound for the iterates gap]
@@ -388,10 +389,10 @@ Hence, by defining $\overline{\alpha} = \max\limits_{1 \leq i \leq m} \overline{
 	\| \gamma(t+1) \|
 	& \leq \sum\limits_{i=1}^{m} \| d^i(x(t+1)) - d^i(x(t)) - \alpha_i(t) \left( w^i(t+1) - w^i(t) \right) \| \\
 	& \leq \sum\limits_{i=1}^{m} \| d^i(x(t+1)) - d^i(x(t)) \| + \sum\limits_{i=1}^{m} \alpha_i(t) \| w^i(t+1) - w^i(t) \| \\
-	& \leq \sum\limits_{i=1}^{m} 4M \| x(t+1) - x(t) \| + m \overline{\alpha} \|z(t+1) - z(t)\| \\
-	& \leq m \left( 4M + \overline{\alpha} \right) \|z(t+1) - z(t)\| , 
+	& \leq \sum\limits_{i=1}^{m} 4M \| x(t+1) - x(t) \| +  \overline{\alpha} \sqrt{m}\|w(t+1) - w(t)\| \\
+	& \leq \left( 4Mm + \overline{\alpha}\sqrt{m} \right) \|z(t+1) - z(t)\| , 
 \end{align*}
-where the third inequality follows from \Cref{StateEq11}. Define $\rho_2 = m \left( 4M + \overline{\alpha} \right)$, and the result follows.
+where the third inequality follows from \Cref{StateEq11}. Define $\rho_2 = 4Mm + \overline{\alpha}\sqrt{m}$, and the result follows.
 \end{proof}
 
 
@@ -462,10 +463,34 @@ where
 	= \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \left( \| x^l - a^i \|^2 + {\epsilon}^2 \right)^{1/2} , \label{StateEq34}
 \end{equation}
 and for all $i=1,2, \ldots, m$,
+\begin{equation}
+	d_{\varepsilon}^i(x) = \left( \left( \|x^1 - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}, \left( \|x^2 - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}, \ldots , \left( \|x^k - a^i\|^2 + {\varepsilon}^2 \right)^{1/2} \right) \in \mathbb{R}^k . \label{StateEq35}
+\end{equation}
+Note that $\Psi_{\varepsilon}(z)$ is a perturbed form of $\Psi(z)$ for a small $\varepsilon > 0$, and obviously $\Psi_0(z)=\Psi(z)$. The following lemma shows that the smoothed function $H_{\varepsilon}(w,x)$ indeed approximates $H(w,x)$.
+
+\begin{lemma}[Closeness of smooth]
+For any $(w,x) \in {\Delta}^m \times \mathbb{R}^{nk}$ and $\varepsilon > 0$ the following inequalities hold true
 \begin{equation*}
-	d_{\varepsilon}^i(x) = \left( \left( \|x^1 - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}, \left( \|x^2 - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}, \ldots , \left( \|x^k - a^i\|^2 + {\varepsilon}^2 \right)^{1/2} \right) \in \mathbb{R}^k .
+	H(w,x) \leq H_{\varepsilon}(w,x) \leq H(w,x) + m\varepsilon .
 \end{equation*}
-Note that $\Psi_{\varepsilon}(z)$ is a perturbed form of $\Psi(z)$ for a small $\varepsilon > 0$, and obviously $\Psi_0(z)=\Psi(z)$.
+\end{lemma}
+
+\begin{proof}
+Applying the inequality
+\begin{equation*}
+	\forall \: \lambda \geq 0, \quad \lambda \leq \sqrt{\lambda^2 + \varepsilon^2} \leq \lambda + \varepsilon .
+\end{equation*}
+with $\lambda = \|x^l - a^i \|$, yields
+\begin{equation*}
+	\|x^l - a^i \| \leq \left(\|x^l - a^i \|^2 + {\varepsilon}^2 \right)^{1/2} \leq \|x^l - a^i \| + \varepsilon ,
+\end{equation*}
+for all $l=1,2, \ldots, k$ and $i=1,2, \ldots, m$.
+Multiplying each inequality by $w^i_l$ and summing over $l=1,2, \ldots, k$ and $i=1,2, \ldots, m$ we obtain
+\begin{equation*}
+	H(w,x) \leq H_{\varepsilon}(w,x) \leq H(w,x) + \sum\limits_{i=1}^m \sum\limits_{l=1}^k w^i_l \varepsilon .
+\end{equation*}
+Since for all $i=1,2, \dots, m, \: w^i \in \Delta$, the result follows.
+\end{proof}
 
 Now we would like to develop an algorithm which is based on the methodology of PALM to solve Problem (\ref{StateEq31}). It is easy to see that with respect to $w$, the objective function $\Psi_{\varepsilon}$ keeps on the same structure as $\Psi$ and therefore we apply the same step as in KPALM. More precisely, for all $i=1,2, \ldots, m$, we have
 \begin{align*}
@@ -477,9 +502,9 @@ where $\alpha_i(t)$, $i=1,2, \ldots, m$, is arbitrarily chosen. On the other han
 	x^l(t+1) = \arg\!\min\limits_{x^l} \left\lbrace \left\langle x^l - x^l(t) , \nabla_{x^l}H_{\varepsilon}(w(t+1),x(t)) \right\rangle + \frac{L^l_{\varepsilon}(w(t+1),x(t))}{2} \|x^l - x^l(t)\|^2 \right\rbrace,
 \end{equation*}
 where 
-\begin{equation*}
-	L^l_{\varepsilon}(w(t+1),x(t)) = \sum\limits_{i=1}^{m} \frac{w^i_l(t+1)}{\left( \|x^l(t)-a^i\|^2 + {\varepsilon}^2 \right)^{1/2}}, \quad \forall \: l=1,2, \ldots, k.
-\end{equation*}
+\begin{equation}
+	L^l_{\varepsilon}(w(t+1),x(t)) := \sum\limits_{i=1}^{m} \frac{w^i_l(t+1)}{\left( \|x^l(t)-a^i\|^2 + {\varepsilon}^2 \right)^{1/2}}, \quad \forall \: l=1,2, \ldots, k. \label{L_eps_def}
+\end{equation}
 
 %Next we extend the notations of the previous subsection, so that the functions and operators defined there are to be dependent on the weights $w$. For each $1 \leq l \leq k$, denote $w_l = \left( w_l^1, w_l^2, \ldots , w_l^m \right) \\ \in \mathbb{R}_+^m$ and define
 %\begin{equation*}
@@ -499,6 +524,8 @@ where
 %\end{equation*}
 
 Now we present our algorithm for solving Problem (\ref{StateEq31}), we call it $\varepsilon$-KPALM.  The algorithm alternates between cluster assignment step, similar to  KPALM, and centers update step that is based on certain gradient step.
+
+\newpage
 
 \begin{framed}
 \noindent \textbf{$\varepsilon$-KPALM}
@@ -565,7 +592,7 @@ Before we will be able to prove the two properties needed for global convergence
 \begin{equation*}
 	f_{\varepsilon}(x) = \sum\limits_{i=1}^{m} v_i \left( \|x - a^i\|^2 + {\varepsilon}^2 \right)^{1/2},
 \end{equation*}
-for fixed positive numbers $v_1,v_2, \ldots, v_m \in \mathbb{R}$ and $a^i \in \mathbb{R}^n$, $i=1,2, \ldots, m$. We also need the following auxiliary function $h_{\varepsilon}: \mathbb{R}^n \times \mathbb{R}^n \rightarrow \mathbb{R}$ given by
+for fixed non-negative numbers (not all zero) $v_1,v_2, \ldots, v_m \in \mathbb{R}$ and $a^i \in \mathbb{R}^n$, $i=1,2, \ldots, m$. We also need the following auxiliary function $h_{\varepsilon}: \mathbb{R}^n \times \mathbb{R}^n \rightarrow \mathbb{R}$ given by
 \begin{equation*}
 	h_{\varepsilon}(x,y) = \sum\limits_{i=1}^m \frac{v_i \left( \|x-a^i\|^2 + {\varepsilon}^2 \right)}{\left( \|y-a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} .
 \end{equation*}
@@ -596,7 +623,7 @@ The following properties of $h_{\varepsilon}$ hold.
 %	 \end{equation*}
 	\item For any $x,y \in \mathbb{R}^n$, \label{State_h_prop4}
 	\begin{equation*}
-		f_{\varepsilon}(x) \leq f_{\varepsilon}(y) + \left\langle \nabla f_{\varepsilon}(y), x-y \right\rangle + \frac{L_{\varepsilon}}{2}\|x-y\|^2 .
+		f_{\varepsilon}(x) \leq f_{\varepsilon}(y) + \left\langle \nabla f_{\varepsilon}(y), x-y \right\rangle + \frac{L_{\varepsilon}(y)}{2}\|x-y\|^2 .
 	\end{equation*}
 \end{enumerate}
 \end{lemma}
@@ -650,68 +677,6 @@ The following properties of $h_{\varepsilon}$ hold.
 %	f_{\varepsilon}(T_{\varepsilon}(y)) - f_{\varepsilon}(x) \leq \frac{L_{\varepsilon}(y)}{2} \left( \|y-x\|^2 - \|T_{\varepsilon}(y) - x\|^2 \right) .
 %\end{equation*}
 %\end{lemma}
-
-Now we can prove that the function $f_{\varepsilon}$ has Lipschitz continuous gradient.
-
-\begin{lemma} \label{StateEq65}
-For all $y,z \in \mathbb{R}^n$ the following statement holds true
-\begin{equation*}
-	\| \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z) \| \leq \frac{2L_{\varepsilon}(z)L_{\varepsilon}(y)}{L_{\varepsilon}(z)+L_{\varepsilon}(y)} \|z - y\|.
-\end{equation*}
-\end{lemma}
-
-\begin{proof}
-Let $z \in \mathbb{R}^n$ be a fixed vector. Define the following two functions
-\begin{equation*}
-	\widetilde{f_{\varepsilon}}(y) = f_{\varepsilon}(y) - \left\langle \nabla f_{\varepsilon}(z), y \right\rangle ,
-\end{equation*}
-and 
- \begin{equation*}
-	\widetilde{h_{\varepsilon}}(x,y) = h_{\varepsilon}(x,y) - \left\langle \nabla f_{\varepsilon}(z), x \right\rangle .
-\end{equation*}
-It is clear that $x \mapsto \widetilde{h_{\varepsilon}}(x,y)$ is also a quadratic function with associated matrix $L_{\varepsilon}(y)\mathbf{I}$. Therefore, from \Cref{State_h_prop}(\ref{State_h_prop1}) we can write
-\begin{align}
-	\widetilde{h_{\varepsilon}}(x,y) &= \widetilde{h_{\varepsilon}}(y,y) + \left\langle \nabla_x \widetilde{h_{\varepsilon}}(y,y), x-y \right\rangle + L_{\varepsilon}(y) \|x-y\|^2 \\
-	&= \widetilde{f_{\varepsilon}}(y) + \left\langle 2\nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z), x-y \right\rangle + L_{\varepsilon}(y) \|x-y\|^2.	\label{StateEq66}
-\end{align}
-On the other hand, from \Cref{State_h_prop}(\ref{State_h_prop2}) we have that
-\begin{align}
-	\widetilde{h_{\varepsilon}}(x,y) &= h_{\varepsilon}(x,y) - \left\langle	\nabla f_{\varepsilon}(z),x \right\rangle \geq 2f_{\varepsilon}(x) - f_{\varepsilon}(y) - \left\langle \nabla f_{\varepsilon}(z),x \right\rangle \\
-	&= 2 \widetilde{f_{\varepsilon}}(x) - \widetilde{f_{\varepsilon}}(y) + \left\langle \nabla f_{\varepsilon}(z), x-y \right\rangle, \label{StateEq67}
-\end{align}
-where the last equality follows from the definition of $\widetilde{f_{\varepsilon}}$. Combining (\ref{StateEq66}) and (\ref{StateEq67}) yields
-\begin{align*}
-	2\widetilde{f_{\varepsilon}}(x) &\leq 2\widetilde{f_{\varepsilon}}(y) + 2 \left\langle \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z), x-y \right\rangle + L_{\varepsilon}(y) \|x-y\|^2 \\
-	&= 2\widetilde{f_{\varepsilon}}(y) + 2 \left\langle \nabla \widetilde{f_{\varepsilon}}(y), x-y \right\rangle + L_{\varepsilon}(y) \|x-y\|^2.
-\end{align*}
-Dividing the last inequality by $2$ leads to
-\begin{equation}
-	\widetilde{f_{\varepsilon}}(x) \leq \widetilde{f_{\varepsilon}}(y) + \left\langle \nabla \widetilde{f_{\varepsilon}}(y), x-y \right\rangle + \frac{L_{\varepsilon}(y)}{2} \|x-y\|^2. \label{StateEq68}
-\end{equation}
-It is clear that the optimal point of $\widetilde{f_{\varepsilon}}$ is $z$ since $\nabla \widetilde{f_{\varepsilon}}(z) = 0$, therefore using (\ref{StateEq68}) with \\$x = y - \left( 1/L_{\varepsilon}(y) \right) \nabla \widetilde{f_{\varepsilon}}(y)$ yields
-\begin{align*}
-	\widetilde{f_{\varepsilon}}(z) &\leq \widetilde{f_{\varepsilon}}\left( y - \frac{1}{L_{\varepsilon}(y)} \nabla \widetilde{f_{\varepsilon}}(y) \right) \leq \widetilde{f_{\varepsilon}}(y) + \left\langle \nabla \widetilde{f_{\varepsilon}}(y), - \frac{1}{L_{\varepsilon}(y)} \nabla \widetilde{f_{\varepsilon}}(y) \right\rangle + \frac{L_{\varepsilon}(y)}{2} \left\lVert \frac{1}{L_{\varepsilon}(y)} \nabla \widetilde{f_{\varepsilon}}(y) \right\rVert ^2 \\
-	&= \widetilde{f_{\varepsilon}}(y) - \frac{1}{2 L_{\varepsilon}(y)} \left\lVert \nabla \widetilde{f_{\varepsilon}}(y) \right\rVert ^2.
-\end{align*}
-Thus, using the definition of $\widetilde{f_{\varepsilon}}$ and the fact that $\nabla \widetilde{f_{\varepsilon}}(y) = \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z)$, yields that
-\begin{equation*}
-	f_{\varepsilon}(z) \leq f_{\varepsilon}(y) + \left\langle \nabla f_{\varepsilon}(z), z - y \right\rangle - \frac{1}{2 L_{\varepsilon}(y)} \| \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z) \|^2 .
-\end{equation*}
-Now, following the same arguments we can show that
-\begin{equation*}
-	f_{\varepsilon}(y) \leq f_{\varepsilon}(z) + \left\langle \nabla f_{\varepsilon}(y), y - z \right\rangle - \frac{1}{2 L_{\varepsilon}(z)} \| \nabla f_{\varepsilon}(z) - \nabla f_{\varepsilon}(y) \|^2 .
-\end{equation*}
-Combining the last two inequalities yields that
-\begin{equation*}
-	\left( \frac{1}{2 L_{\varepsilon}(z)} + \frac{1}{2 L_{\varepsilon}(y)} \right) \| \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z) \|^2 \leq \left\langle \nabla f_{\varepsilon}(z) - \nabla f_{\varepsilon}(y), z - y \right\rangle ,
-\end{equation*}
-that is, 
-\begin{equation*}
-	\| \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z) \| \leq \frac{2L_{\varepsilon}(z)L_{\varepsilon}(y)}{L_{\varepsilon}(z) + L_{\varepsilon}(y)} \|z - y\| ,
-\end{equation*}
-for all $z,y \in \mathbb{R}^n$. This proves the desired result.
-\end{proof}
-
 %The following lemma will be used to prove the sufficient decrease property of the KPALM algorithm.
 %
 %\begin{lemma} \label{State_SD_lemma}
@@ -750,7 +715,7 @@ Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generat
 	\begin{equation*}
 		L^l_{\varepsilon}(w(t+1),x(t)) \geq \frac{\underline{\beta}}{\left( {d_{\mathcal{A}}}^2 + {\varepsilon}^2 \right)^{1/2}} ,
 	\end{equation*}
-	where $d_{\mathcal{A}}$ is the diameter of $Conv(\mathcal{A})$ and $\underline{\beta}$ is given in (\ref{State_beta}). \label{State_L_bounds1}
+	where $d_{\mathcal{A}} = diam(Conv(\mathcal{A}))$ is the diameter of $Conv(\mathcal{A})$ and $\underline{\beta}$ is given in (\ref{State_beta}). \label{State_L_bounds1}
 	\item For all $t \in \mathbb{N}$ and $l=1,2, \ldots, k$ we have
 	\begin{equation*}
 		L^l_{\varepsilon}(w(t+1),x(t)) \leq \frac{m}{\varepsilon} .
@@ -764,7 +729,7 @@ Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generat
 	\begin{equation*}
 		L^l_{\varepsilon}(w(t+1),x(t)) = \sum\limits_{i=1}^{m} \frac{w^i_l(t+1)}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \geq \frac{\sum_{i=1}^{m}w^i_l(t+1)}{\left( {d_{\mathcal{A}}}^2 + {\varepsilon}^2 \right)^{1/2}} \geq \frac{\underline{\beta}}{\left( {d_{\mathcal{A}}}^2 + {\varepsilon}^2 \right)^{1/2}} ,
 	\end{equation*}
-	as asserted. 
+	where the first inequality follows from $\norm{x^l(t) - a^i} \leq d_{\mathcal{A}}$. 
 	\item Since $w(t+1) \in {\Delta}^m$ we have
 	\begin{equation*}
 		L^l_{\varepsilon}(w(t+1),x(t)) = \sum\limits_{i=1}^{m} \frac{w^i_l(t+1)}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \leq \sum\limits_{i=1}^{m} \frac{1}{\varepsilon} = \frac{m}{\varepsilon} ,
@@ -910,17 +875,81 @@ Set $\rho_1 = \frac{1}{2} \min \left\lbrace \underline{\alpha}, \underline{\beta
 	&= H_{\varepsilon}(z(t)) - H_{\varepsilon}(z(t+1)) \\
 	&= \Psi_{\varepsilon}(z(t)) - \Psi_{\varepsilon}(z(t+1)),
 \end{align*}
-where the last equality follows from the fact that $G(w(t)) = 0$, for all $t \in \mathbb{N}$. This proves the desired result.
+where the last equality follows from the fact that $G(w(t)) = 0$, since $w(t) \in \Delta^m$ for all $t \in \mathbb{N}$. This proves the desired result.
 \end{proof}
 
-The next lemma will be useful in proving the subgradient lower bounds for the iterates gap property of the sequence generated by $\varepsilon$-KPALM.
+The next two lemmas will be useful in proving the subgradient lower bounds for the iterates gap property of the sequence generated by $\varepsilon$-KPALM.
+
+\begin{lemma} \label{StateEq65}
+For all $y,z \in \mathbb{R}^n$ the following statement holds true
+\begin{equation*}
+	\| \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z) \| \leq \frac{2L_{\varepsilon}(z)L_{\varepsilon}(y)}{L_{\varepsilon}(z)+L_{\varepsilon}(y)} \|z - y\|.
+\end{equation*}
+\end{lemma}
+
+\begin{proof}
+Let $z \in \mathbb{R}^n$ be a fixed vector. Define the following function
+\begin{equation*}
+	\widetilde{f_{\varepsilon}}(y) = f_{\varepsilon}(y) - \left\langle \nabla f_{\varepsilon}(z), y \right\rangle ,
+\end{equation*}
+%and 
+% \begin{equation*}
+%	\widetilde{h_{\varepsilon}}(x,y) = h_{\varepsilon}(x,y) - \left\langle \nabla f_{\varepsilon}(z), x \right\rangle .
+%\end{equation*}
+%It is clear that $x \mapsto \widetilde{h_{\varepsilon}}(x,y)$ is also a quadratic function with associated matrix $L_{\varepsilon}(y)\mathbf{I}$. Therefore, from \Cref{State_h_prop}(\ref{State_h_prop1}) we can write
+%\begin{align}
+%	\widetilde{h_{\varepsilon}}(x,y) &= \widetilde{h_{\varepsilon}}(y,y) + \left\langle \nabla_x \widetilde{h_{\varepsilon}}(y,y), x-y \right\rangle + L_{\varepsilon}(y) \|x-y\|^2 \\
+%	&= \widetilde{f_{\varepsilon}}(y) + \left\langle 2\nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z), x-y \right\rangle + L_{\varepsilon}(y) \|x-y\|^2.	\label{StateEq66}
+%\end{align}
+%On the other hand, from \Cref{State_h_prop}(\ref{State_h_prop2}) we have that
+%\begin{align}
+%	\widetilde{h_{\varepsilon}}(x,y) &= h_{\varepsilon}(x,y) - \left\langle	\nabla f_{\varepsilon}(z),x \right\rangle \geq 2f_{\varepsilon}(x) - f_{\varepsilon}(y) - \left\langle \nabla f_{\varepsilon}(z),x \right\rangle \\
+%	&= 2 \widetilde{f_{\varepsilon}}(x) - \widetilde{f_{\varepsilon}}(y) + \left\langle \nabla f_{\varepsilon}(z), x-y \right\rangle, \label{StateEq67}
+%\end{align}
+%where the last equality follows from the definition of $\widetilde{f_{\varepsilon}}$. Combining (\ref{StateEq66}) and (\ref{StateEq67}) yields
+%\begin{align*}
+%	2\widetilde{f_{\varepsilon}}(x) &\leq 2\widetilde{f_{\varepsilon}}(y) + 2 \left\langle \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z), x-y \right\rangle + L_{\varepsilon}(y) \|x-y\|^2 \\
+%	&= 2\widetilde{f_{\varepsilon}}(y) + 2 \left\langle \nabla \widetilde{f_{\varepsilon}}(y), x-y \right\rangle + L_{\varepsilon}(y) \|x-y\|^2.
+%\end{align*}
+%Dividing the last inequality by $2$ leads to
+hence,
+\begin{equation}
+	 f_{\varepsilon}(y) = \widetilde{f_{\varepsilon}}(y) + \left\langle \nabla f_{\varepsilon}(z), y \right\rangle . \label{StateEq67}
+\end{equation}
+Substituting (\ref{StateEq67}) into \Cref{State_h_prop}(\ref{State_h_prop4}) yields
+\begin{equation}
+	\widetilde{f_{\varepsilon}}(x) \leq \widetilde{f_{\varepsilon}}(y) + \left\langle \nabla \widetilde{f_{\varepsilon}}(y), x-y \right\rangle + \frac{L_{\varepsilon}(y)}{2} \|x-y\|^2. \label{StateEq68}
+\end{equation}
+It is clear that the optimal point of $\widetilde{f_{\varepsilon}}$ is $z$ since $\nabla \widetilde{f_{\varepsilon}}(z) = 0$, therefore using (\ref{StateEq68}) with \\$x = y - \left( 1/L_{\varepsilon}(y) \right) \nabla \widetilde{f_{\varepsilon}}(y)$ yields
+\begin{align*}
+	\widetilde{f_{\varepsilon}}(z) &\leq \widetilde{f_{\varepsilon}}\left( y - \frac{1}{L_{\varepsilon}(y)} \nabla \widetilde{f_{\varepsilon}}(y) \right) \leq \widetilde{f_{\varepsilon}}(y) + \left\langle \nabla \widetilde{f_{\varepsilon}}(y), - \frac{1}{L_{\varepsilon}(y)} \nabla \widetilde{f_{\varepsilon}}(y) \right\rangle + \frac{L_{\varepsilon}(y)}{2} \left\lVert \frac{1}{L_{\varepsilon}(y)} \nabla \widetilde{f_{\varepsilon}}(y) \right\rVert ^2 \\
+	&= \widetilde{f_{\varepsilon}}(y) - \frac{1}{2 L_{\varepsilon}(y)} \left\lVert \nabla \widetilde{f_{\varepsilon}}(y) \right\rVert ^2.
+\end{align*}
+Thus, using the definition of $\widetilde{f_{\varepsilon}}$ and the fact that $\nabla \widetilde{f_{\varepsilon}}(y) = \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z)$, yields that
+\begin{equation*}
+	f_{\varepsilon}(z) \leq f_{\varepsilon}(y) + \left\langle \nabla f_{\varepsilon}(z), z - y \right\rangle - \frac{1}{2 L_{\varepsilon}(y)} \| \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z) \|^2 .
+\end{equation*}
+Now, following the same arguments we can show that
+\begin{equation*}
+	f_{\varepsilon}(y) \leq f_{\varepsilon}(z) + \left\langle \nabla f_{\varepsilon}(y), y - z \right\rangle - \frac{1}{2 L_{\varepsilon}(z)} \| \nabla f_{\varepsilon}(z) - \nabla f_{\varepsilon}(y) \|^2 .
+\end{equation*}
+Combining the last two inequalities yields that
+\begin{equation*}
+	\left( \frac{1}{2 L_{\varepsilon}(z)} + \frac{1}{2 L_{\varepsilon}(y)} \right) \| \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z) \|^2 \leq \left\langle \nabla f_{\varepsilon}(z) - \nabla f_{\varepsilon}(y), z - y \right\rangle ,
+\end{equation*}
+that is, 
+\begin{equation*}
+	\| \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z) \| \leq \frac{2L_{\varepsilon}(z)L_{\varepsilon}(y)}{L_{\varepsilon}(z) + L_{\varepsilon}(y)} \|z - y\| ,
+\end{equation*}
+for all $z,y \in \mathbb{R}^n$. This proves the desired result.
+\end{proof}
 
 \begin{lemma} \label{StateEq40}
 For any $x,y \in \mathbb{R}^{nk}$ such that $x^l,y^l \in Conv(\mathcal{A})$ for all $1 \leq l \leq k$ the following inequality holds 
 \begin{equation*}
 	\|d_{\varepsilon}^i(x) - d_{\varepsilon}^i(y)\| \leq \frac{ d_{\mathcal{A}}}{\varepsilon}\|x-y\|, \quad \forall \: i=1, 2, \ldots ,m ,
 \end{equation*}
-with $d_{\mathcal{A}} = diam(Conv(\mathcal{A}))$.
+with $d_{\mathcal{A}} = diam(Conv(\mathcal{A}))$ and $d^i_{\varepsilon}(\cdot)$ is defined in (\ref{StateEq35}).
 \end{lemma}
 
 \begin{proof}
@@ -935,9 +964,9 @@ Therefore, for all $i=1,2, \ldots, m$ and $l=1,2, \ldots, k$ we have
 	&\leq \frac{1}{2\varepsilon} \abs{ \|x^l-a^i\|^2 + {\varepsilon}^2 - \left( \|y^l-a^i\|^2 + {\varepsilon}^2 \right) } \\
 	&= \frac{1}{2\varepsilon} \abs{\|x^l-a^i\|^2 - \|y^l-a^i\|^2} \\
 	&= \frac{1}{2\varepsilon} \abs{\|x^l-a^i\| + \|y^l-a^i\|} \cdot \abs{\|x^l-a^i\| - \|y^l-a^i\|} \\
-	&\leq \frac{1}{\varepsilon} \: d_{\mathcal{A}}\|x^l-y^l\| .
+	&\leq \frac{1}{\varepsilon} \: d_{\mathcal{A}}\|x^l-y^l\| ,
 \end{align*}
-Hence,
+where the last inequality follows from $\norm{x^l-a^i},\norm{y^l-a^i} \leq d_{\mathcal{A}}$ and the reverse triangle inequality. Therefore,
 \begin{align*}
 	\|d_{\varepsilon}^i(x) - d_{\varepsilon}^i(y)\| 
 	&= \left[ \sum_{l=1}^{k} \abs{\left( \|x-a^i\|^2  + {\varepsilon}^2 \right)^{1/2} - \left( \|y-a^i\|^2 + {\varepsilon}^2 \right)^{1/2} }^2 \right]^\frac{1}{2} \\
@@ -989,7 +1018,7 @@ Plugging (\ref{StateEq46}) into (\ref{StateEq45}), and taking the norm yields
 	&+ \| \nabla_x H_{\varepsilon}(w(t+1),x(t+1)) \| \\
 	&\leq \sum\limits_{i=1}^{m} \| d_{\varepsilon}^i(x(t+1)) - d_{\varepsilon}^i(x(t)) \| + \sum\limits_{i=1}^{m} \alpha_i(t) \| w^i(t+1) - w^i(t) \| \\
 	&+ \| \nabla_x H_{\varepsilon}(w(t+1),x(t+1)) \| \\
-	&\leq \frac{\sqrt{m} d_{\mathcal{A}}}{\varepsilon} \|x(t+1) - x(t)\| + \sqrt{m} \overline{\alpha} \|w(t+1) - w(t)\| + \| \nabla_x H_{\varepsilon}(w(t+1),x(t+1)) \|,
+	&\leq \frac{m d_{\mathcal{A}}}{\varepsilon} \|x(t+1) - x(t)\| + \overline{\alpha}\sqrt{m} \|w(t+1) - w(t)\| + \| \nabla_x H_{\varepsilon}(w(t+1),x(t+1)) \|,
 \end{align*}
 where the last inequality follows from \Cref{StateEq40} and the fact that $\overline{\alpha} = \max\limits_{1 \leq i \leq m} \overline{\alpha_i}$. \\ 
 Next we will show that  $\| \nabla_x H_{\varepsilon}(w(t+1),x(t+1)) \| \leq c\|x(t+1) - x(t)\|$, for some constant $c>0$. Indeed, for all $l=1,2, \ldots, k$, we have
@@ -1031,45 +1060,215 @@ Hence, from (\ref{StateEq47}), we have
 %	&\leq \sum\limits_{l=1}^{k} \left( L_{\varepsilon}^{w_l(t+1)}(x^l(t)) + \frac{2 L_{\varepsilon}^{w_l(t+1)}(x^l(t)) L_{\varepsilon}^{w_l(t+1)}(x^l(t+1))}{L_{\varepsilon}^{w_l(t+1)}(x^l(t)) + L_{\varepsilon}^{w_l(t+1)}(x^l(t+1))} \right) \|x^l(t+1) - x^l(t)\| .
 %\end{aligned}
 %\end{equation*}
-Therefore, setting $\rho_2 = \sqrt{m} \left( \frac{d_{\mathcal{A}}}{\varepsilon} + \overline{\alpha} \right) + \frac{2m\sqrt{k}}{\varepsilon}$, yields the result.
+Therefore, setting $\rho_2 =  \frac{m d_{\mathcal{A}}}{\varepsilon} + \overline{\alpha}\sqrt{m} + \frac{2m\sqrt{k}}{\varepsilon}$, yields the result.
 \end{proof}
 
-The following lemma shows that the smoothed function $H_{\varepsilon}(w,x)$ indeed approximates $H(w,x)$.
-
-\begin{lemma}[Closeness of smooth]
-For any $(w,x) \in {\Delta}^m \times \mathbb{R}^{nk}$ and $\varepsilon > 0$ the following inequalities hold true
-\begin{equation*}
-	H(w,x) \leq H_{\varepsilon}(w,x) \leq H(w,x) + m\varepsilon .
-\end{equation*}
-\end{lemma}
-
-\begin{proof}
-Applying the inequality
-\begin{equation*}
-	\left( a+b \right)^{\lambda} \leq a^{\lambda} + b^{\lambda}, \quad \forall \: a,b \geq 0, \: \lambda \in \left( 0,1 \right] ,
-\end{equation*}
-with $a = \|x^l - a^i \|^2$ , $b = {\varepsilon}^2$ and $\lambda = \frac{1}{2}$, yields
-\begin{equation*}
-	\left(\|x^l - a^i \|^2 + {\varepsilon}^2 \right)^{1/2} \leq \|x^l - a^i \| + \varepsilon , \quad \forall \: 1 \leq l \leq k, \: 1 \leq i \leq m .
-\end{equation*}
-Together with the fact that
-\begin{equation*}
-	\|x^l - a^i \| \leq \left(\|x^l - a^i \|^2 + {\varepsilon}^2 \right)^{1/2},
-\end{equation*}
-yields the following inequality
-\begin{equation*}
-	\|x^l - a^i \| \leq \left(\|x^l - a^i \|^2 + {\varepsilon}^2 \right)^{1/2} \leq \|x^l - a^i \| + \varepsilon ,
-\end{equation*}
-for all $l=1,2, \ldots, k$ and $i=1,2, \ldots, m$.
-Multiplying each inequality by $w^i_l$ and summing over $l=1,2, \ldots, k$ and $i=1,2, \ldots, m$ we obtain
-\begin{equation*}
-	H(w,x) \leq H_{\varepsilon}(w,x) \leq H(w,x) + \sum\limits_{i=1}^m \sum\limits_{l=1}^k w^i_l \varepsilon .
-\end{equation*}
-Since for all $i=1,2, \dots, m, \: w^i \in \Delta$, the result follows.
-\end{proof}
 
 \newpage
 
+\subsection{Different Approach Towards Solving the Smoothed $H\varepsilon$}
+In this section we describe a different approach towards solving the smoothed clustering problem described in (\ref{StateEq31}). Using the  Arithmetic-Geometric inequality we derive the following simple observation
+\begin{equation*}
+	\forall \: \lambda \geq 0, \quad \frac{1}{2} \min\limits_{s \geq 0} \left\lbrace s\lambda + \frac{1}{\lambda} \right\rbrace \geq \min\limits_{s \geq 0} \left\lbrace \sqrt{s\lambda \cdot \frac{1}{s}} \right\rbrace = \sqrt{\lambda} .
+\end{equation*}
+Using this inequality we can write
+\begin{equation}
+	\sqrt{\norm{u}^2 + {\varepsilon}^2} = \frac{1}{2}\min\limits_{v \geq 0} \left\lbrace v\left( \norm{u}^2 + {\varepsilon}^2\right) + \frac{1}{v} \right\rbrace , \label{AG_inq}
+\end{equation}
+with $v^* = 1/\sqrt{\norm{u}^2 + {\varepsilon}^2}$. Note that $v^* \in I := \left[ 1/\kappa , 1/\varepsilon \right]$, where $\kappa = \sqrt{2} \max\{d_{\mathcal{A}},\varepsilon\}$.
+Thus, instead of solving $H_\varepsilon$ directly, defined in (\ref{StateEq34}), we replace it with the following function
+\begin{equation}
+	B_{\varepsilon}(v,w,x) = \frac{1}{2}\sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} \left\lbrace v^i_lw^i_l \left( \norm{x^l-a^i}^2 +{\varepsilon}^2 \right) + \frac{w^i_l}{v^i_l} \right\rbrace ,
+\end{equation}
+where $v = \left(v^1, v^2, \ldots v^m \right) \in I^{km}$. For all $i=1,2,\ldots,m$ we define $h^i_{\varepsilon}: \rr^{mk} \times \rr^{nk} \rightarrow \rr^{k}$ by
+\begin{equation*}
+	b^i_{\varepsilon}(v,x)= \left( \frac{1}{2} v^i_l \left( \norm{x^l-a^i}^2 +{\varepsilon}^2 \right) + \frac{1}{2v^i_l} \right)_{l=1,2,\ldots,k} \in \rr^{k} ,
+\end{equation*}
+and we have that
+\begin{equation}
+	B_{\varepsilon}(v,w,x) = \sum\limits_{i=1}^m \left\langle w^i, b^i_{\varepsilon}(v,x) \right\rangle . \label{B_eq_sum_b}
+\end{equation}
+
+Now the situation is similar to that of the squared Euclidean norm, namely
+\begin{enumerate}[(1)]
+	\item The function $w \mapsto B_{\varepsilon}(v,w,x)$, for fixed $v$ and $x$, is linear and therefore there is no need to linearize it as suggested in PALM.
+	\item The function $x \mapsto B_{\varepsilon}(v,w,x)$, for fixed $v$ and $w$, is quadratic and convex. Hence, there is no need to add a proximal term as suggested in PALM.
+\end{enumerate}
+
+Equipped with these observation we proceed to a PALM-like algorithm, which is based on three steps alternating minimization. More precisely, with respect to $v$ we perform exact minimization
+\begin{equation}
+	v(t+1) = \arg\!\min \{ B_{\varepsilon}(v,w(t),x(t)) \mid v \in \rr^{mk} \} . \label{v_step}
+\end{equation}
+With respect to $w$, as in KPALM case, we suggest to regularize the subproblem with proximal term as follows
+\begin{equation}
+	w^i(t+1) = \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , b^i_{\varepsilon}(v(t+1),x(t)) \rangle + \frac{\alpha_i(t)}{2} \|w^i - w^i(t)\|^2 \right\rbrace, \quad i=1,2, \ldots, m , \label{w_step}
+\end{equation}
+where $\alpha_i(t) > 0$ for all $i=1,2, \ldots, m$. And with respect to $x$, again as in KPALM case, we perform exact minimization
+\begin{equation}
+	x(t+1) = \arg\!\min \left\lbrace B_{\varepsilon}(v(t+1), w(t+1), x) \mid x \in \mathbb{R}^{nk} \right\rbrace . \label{x_step}
+\end{equation}
+It is easy to check that the explicit solutions to all three subproblems are given by
+\begin{equation}
+	v^i_l(t+1) = \frac{1}{\left(\norm{x^l(t)-a^i}^2 + {\varepsilon}^2 \right)^{1/2}}, \quad i=1,2,\ldots,m, \: l=1,2,\ldots,k , \label{v_step_sol}
+\end{equation}
+\begin{equation}
+	w^i(t+1) = P_{\Delta}\left( w^i(t) - \frac{b^i_{\varepsilon}(v(t+1),x(t))}{\alpha_i(t)} \right), \quad i=1,2,\ldots,m , \label{w_step_sol}
+\end{equation}
+and
+\begin{equation}
+	x^l(t+1) = \frac{\sum_{i=1}^{m} w^i_l(t+1)v^i_l(t+1)a^i}{\sum_{i=1}^{m} w^i_l(t+1)v^i_l(t+1)}, \quad l=1,2,\ldots,k . \label{x_step_sol}
+\end{equation}
+
+From the subproblem for $v$ and the initial observation (see (\ref{AG_inq})) we derive the following three relations
+\begin{equation}
+	B_{\varepsilon}(v(t+1),w,x(t)) = H_{\varepsilon}(w,x(t)), \quad \forall \: t \in \nn, \: \forall \: w \in \Delta^{m} , \label{B_eq_H}
+\end{equation}
+\begin{equation}
+	b^i_{\varepsilon}(v(t+1),x(t)) = d^i_{\varepsilon}(x(t)), \quad \forall \: t \in \nn, \: i=1,2,\ldots,m , \label{b_eq_h}
+\end{equation}
+where $d^i_{\varepsilon}$ is defined in (\ref{StateEq35}), and
+\begin{equation}
+	B_{\varepsilon}(v,w,x) \geq H_{\varepsilon}(w,x) \quad \forall \: (v,w,x) \in I^{mk} \times \Delta^{m} \times \rr^{nk} . \label{B_geq_H}
+\end{equation}
+Substituting (\ref{b_eq_h}) into $w$ update step (see (\ref{w_step_sol})) yields
+\begin{equation*}
+	w^i(t+1) = P_{\Delta}\left( w^i(t) - \frac{d^i_{\varepsilon}(x(t))}{\alpha_i(t)} \right), \quad i=1,2,\ldots,m . 
+\end{equation*}
+Moreover, substituting $v$ update step (see (\ref{v_step_sol})) into $x$ update step (see (\ref{x_step_sol})) yields
+\begin{equation*}
+	x^l(t+1) = \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \sum\limits_{i=1}^{m} \left( \frac{w^i_l(t+1)}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \right) a^i, \quad l=1,2,\ldots,k ,
+\end{equation*}
+where $L^l_{\varepsilon}$ is defined in (\ref{L_eps_def}). Those are exactly the update steps $w$ and $x$ in $\varepsilon$-KPALM, which means the two algorithms are the same. However, with the current version we can swiftly prove the sufficient decrease and the subgradient bounds for the iterates gap properties, similar to the KPALM case.
+
+\begin{proposition}[Sufficient decrease property]
+Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. Then, there exists $\rho_1 > 0$ such that 
+\begin{equation*}
+	\rho_1 \|z(t+1) - z(t)\|^2 \leq \Psi_{\varepsilon}(z(t)) - \Psi_{\varepsilon}(z(t+1)) \quad \forall \: t \in \mathbb{N} .
+\end{equation*}
+\end{proposition}
+
+\begin{proof}
+From (\ref{w_step}) we have
+\begin{equation*}
+	\left\langle w^i(t+1),b^i_{\varepsilon}(v(t+1),x(t))\right\rangle + \frac{\alpha_i(t)}{2}\norm{w^i(t+1)-w^i(t)}^2 \leq \left\langle w^i(t),b^i_{\varepsilon}(v(t+1),x(t))\right\rangle
+\end{equation*}
+Summing the last inequality over $i=1,2,\ldots,m$ and applying (\ref{B_eq_sum_b}) yields
+\begin{equation*}
+	B_{\varepsilon}(v(t+1),w(t+1),x(t)) + \sum\limits_{i=1}^m \frac{\alpha_i(t)}{2}\norm{w^i(t+1)-w^i(t)}^2 \leq B_{\varepsilon}(v(t+1),w(t),x(t))
+\end{equation*}
+Using \Cref{StateMainAssum}(\ref{StateMainAssum1}) we derive 
+\begin{align}
+	\frac{\underline{\alpha}}{2}\norm{w(t+1)-w(t)}^2 &\leq B_{\varepsilon}(v(t+1),w(t),x(t)) - B_{\varepsilon}(v(t+1),w(t+1),x(t)) \\
+	&\leq H_{\varepsilon}(w(t),x(t)) - H_{\varepsilon}(w(t+1),x(t)), \label{SD_in_w}
+\end{align}
+where the last inequality follows from (\ref{B_eq_H}) and (\ref{B_geq_H}).
+
+Since the function $x \mapsto B_{\varepsilon}(v,w,x)$ is $C^2$, and
+\begin{center}
+$\nabla_{x^j} \nabla_{x^l} B_{\varepsilon}(v,w,x) = 
+\begin{cases} 0 &\mbox{if } j \neq l, \quad 1 \leq j,l \leq k ,
+\\ \sum\limits_{i=1}^{m} w^i_l v^i_l &\mbox{if } j = l, \quad 1 \leq j,l \leq k, \end{cases} $
+\end{center}
+hence, the function $x \mapsto B_{\varepsilon}(v(t+1),w(t),x)$ is strongly convex with parameter $\underline{\beta}/2\kappa$, for all $t \in \nn$, indeed,
+\begin{equation*}
+	\nabla^2_{x^l}B_{\varepsilon}(v(t+1),w(t),x) = \sum\limits_{i=1}^{m} w^i_l(t) v^i_l(t+1) \geq \frac{1}{\kappa} \sum\limits_{i=1}^{m} w^i_l(t) = \frac{\beta(w^i(t))}{2\kappa} \geq \frac{\underline{\beta}}{2\kappa} > 0 ,
+\end{equation*}
+where the first inequality follows from the fact that $v^i_l(t) \in I$ for all $t \in \nn$, $\beta(\cdot)$ is defined in (\ref{State_beta}), and the second inequality is due to \Cref{StateMainAssum}(\ref{StateMainAssum2}). Using the strong convexity property we deduce the sufficient decrease in $x$, indeed,
+\begin{align}
+	\frac{\underline{\beta}}{4\kappa}\norm{x(t+1)-x(t)}^2 &= \left\langle \nabla_x B_{\varepsilon}(z(t+1)),x(t)-x(t+1)\right\rangle + \frac{\underline{\beta}}{4\kappa}\norm{x(t+1)-x(t)}^2 \\
+	&\leq B_{\varepsilon}(v(t+1),w(t+1),x(t)) - B_{\varepsilon}(z(t+1)) \\
+	&\leq H_{\varepsilon}(w(t+1),x(t)) - H_{\varepsilon}(w(t+1),x(t+1)), \label{SD_in_x}
+\end{align}
+where the first equality follows from (\ref{x_step}), the second inequality follows from the strong convexity, and the last inequality is due to (\ref{B_eq_H}) and (\ref{B_geq_H}). Set $\rho_1=\min\{\underline{\alpha}/2, \underline{\beta}/4\kappa \}$. Summing (\ref{SD_in_w}) and (\ref{SD_in_x}), we get
+\begin{align*}
+	\rho_1 \|z(t+1) - z(t)\|^2 
+	 &= \rho_1 \left( \|w(t+1) - w(t)\|^2 + \|x(t+1) - x(t)\|^2  \right) \leq \\
+	&\leq \left[ H_{\varepsilon}(z(t)) - H_{\varepsilon}(w(t+1),x(t)) \right] + \left[ H_{\varepsilon}(w(t+1),x(t)) - H_{\varepsilon}(z(t+1)) \right] \\
+	&= H_{\varepsilon}(z(t)) - H_{\varepsilon}(z(t+1)) \\
+	&= \Psi_{\varepsilon}(z(t)) - \Psi_{\varepsilon}(z(t+1)),
+\end{align*}
+where the last equality follows from the fact that $G(w(t)) = 0$, for all $t \in \mathbb{N}$. This proves the desired result.
+\end{proof}
+
+\begin{proposition}[Subgradient lower bound for the iterates gap]
+Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. Then, there exists $\rho_2 > 0$ and $\gamma(t+1) \in \partial \Psi_{\varepsilon}(z(t+1))$ such that 
+\begin{equation*}
+	\| \gamma(t+1)\| \leq \rho_2 \|z(t+1) - z(t)\|, \quad \forall \: t \in \mathbb{N} .
+\end{equation*}
+\end{proposition}
+
+\begin{proof}
+By the definition of $\Psi_{\varepsilon}$ (see (\ref{StateEq31})) we get
+\begin{equation}
+	\Psi_{\varepsilon}(w,x) = H_{\varepsilon}(w,x) + \sum\limits_{i=1}^m \delta_{\Delta}(w^i) \label{Psi_epsilon}
+\end{equation}
+Differentiating (\ref{Psi_epsilon}) w.r.t. $x$ and evaluating in $z(t+1)$ yields
+\begin{equation}
+	\partial_x \Psi_{\varepsilon}(z(t+1)) = \nabla_x H_{\varepsilon}(z(t+1)) = \nabla_x B_{\varepsilon}(z(t+1)) = \mathbf{0} , \label{diff_in_x}
+\end{equation}
+where the second equality follows from (\ref{B_eq_H}), and the last follows from (\ref{x_step}). Differentiating (\ref{Psi_epsilon}) w.r.t. $w^i$ and evaluating in $z(t+1)$ yields
+\begin{equation}
+	\partial_{w^i} \Psi_{\varepsilon}(z(t+1)) = d^i_{\varepsilon}(x(t+1)) + \partial_{w^i}\delta_{\Delta}(w^i(t+1)) . \label{diff_in_w}
+\end{equation}
+The optimality condition of $w^i(t+1)$ which derived from (\ref{w_step}), yields that for all $i=1, 2, \ldots ,m$ there exists $u^i(t+1) \in \partial \delta_{\Delta}(w^i(t+1))$ such that
+\begin{align}
+	\mathbf{0} &= b^i_{\varepsilon}(v(t+1),x(t)) + \alpha_i(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) \\
+	&= d^i_{\varepsilon}(x(t)) + \alpha_i(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) , \label{partial_in_w}
+\end{align}
+where the last equality follows from (\ref{b_eq_h}). Substituting (\ref{partial_in_w}) into (\ref{diff_in_w}) and combining with (\ref{diff_in_x}) we deduce that
+\begin{equation*}
+	\gamma(t+1) := \left( \left( d^i(x(t+1)) - d^i(x(t)) - \alpha_i(t)(w^i(t+1) - w^i(t)) \right)_{i=1,2, \ldots, m}, \mathbf{0} \right) \in \partial \Psi_{\varepsilon}(z(t+1)).
+\end{equation*}
+Therefore,
+\begin{align*}
+	\norm{\gamma(t+1)} &\leq \sum\limits_{i=1}^m \norm{d^i(x(t+1)) - d^i(x(t)) - \alpha_i(t)(w^i(t+1) - w^i(t))} \\
+	&\leq \sum\limits_{i=1}^m \norm{d^i(x(t+1)) - d^i(x(t))} + \overline{\alpha} \sum\limits_{i=1}^m \norm{w^i(t+1) - w^i(t))} \\
+	&\leq \sum\limits_{i=1}^m \frac{ d_{\mathcal{A}}}{\varepsilon}\norm{x(t+1) - x(t)} + \overline{\alpha}\sqrt{m}\norm{w(t+1)-w(t)} \\
+	&\leq \left(\frac{m d_{\mathcal{A}}}{\varepsilon} + \overline{\alpha}\sqrt{m}\right) \norm{z(t+1)-z(t)},
+\end{align*}
+where the third inequality follows from \Cref{StateEq40}. Define $\rho_2 = \frac{m d_{\mathcal{A}}}{\varepsilon} + \overline{\alpha}\sqrt{m}$, and the result follows.
+\end{proof}
+
+\subsection{Synthetic Dataset}
+
+In this section we show that $\varepsilon$-KPALM is less sensitive to outliners in the data verses algorithms that suit the squared Euclidean norm (e.g. KMEAN, KMEANS++ and KPALM). We generated two synthetic datasets, each contains 300 points in the plane, by sampling three two-dimensional Gaussian, 100 samples each. In \Cref{fig:gaussians}(\ref{fig:dense_gaussians}) the clusters are denser than in \Cref{fig:gaussians}(\ref{fig:sparse_gaussians}). 
+
+Then we run the clustering algorithms and compared their clustering results, namely, how many points were clustered correctly. From \Cref{fig:gaussians_similarity}(\ref{fig:dense_gaussians_similarity}) it is evident that KMEANS is superior to other algorithms in the dense case and $\epsilon$-KPALM is quite sensitive. Whereas, in the sparse case in \Cref{fig:gaussians_similarity}(\ref{fig:sparse_gaussians_similarity}), $\epsilon$-KMEANS is superior, and less sensitive to outliners.
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{dense_gaussians}
+        \caption{Dense Gaussians.}
+        \label{fig:dense_gaussians}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{sparse_gaussians}
+        \caption{Sparse Gaussians.}
+        \label{fig:sparse_gaussians}
+    \end{subfigure}
+    \caption{Two datasets, each 300 points.}
+    \label{fig:gaussians}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.7\textwidth}
+        \includegraphics[width=\textwidth]{dense_gaussians_similarity}
+        \caption{Dense Gaussians clustering.}
+        \label{fig:dense_gaussians_similarity}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.7\textwidth}
+        \includegraphics[width=\textwidth]{sparse_gaussians_similarity}
+        \caption{Sparse Gaussians clustering.}
+        \label{fig:sparse_gaussians_similarity}
+    \end{subfigure}
+    \caption{Results of clustering algorithms for dense and sparse datasets.}
+    \label{fig:gaussians_similarity}
+\end{figure}
+
+\newpage
 
 \section{Returning to KMEANS}
 \subsection{Similarity to KMEANS}
@@ -1299,7 +1498,6 @@ Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_p
     \caption{Comparison of the objective values for different values of $\alpha$.}
     \label{fig:dynamic_alpha_eps_psi_comp}
 \end{figure} 
-
 
 %\section{Clustering via ADMM Approach}
 %
