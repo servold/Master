@@ -1075,12 +1075,12 @@ Using this inequality we can write
 \begin{equation}
 	\sqrt{\norm{u}^2 + {\varepsilon}^2} = \frac{1}{2}\min\limits_{v \geq 0} \left\lbrace v\left( \norm{u}^2 + {\varepsilon}^2\right) + \frac{1}{v} \right\rbrace , \label{AG_inq}
 \end{equation}
-with $v^* = 1/\sqrt{\norm{u}^2 + {\varepsilon}^2}$. Note that $v^* \in I := \left[ 1/\kappa , 1/\varepsilon \right]$, where $\kappa = \sqrt{2} \max\{d_{\mathcal{A}},\varepsilon\}$.
+with $v^* = 1/\sqrt{\norm{u}^2 + {\varepsilon}^2}$.
 Thus, instead of solving $H_\varepsilon$ directly, defined in (\ref{StateEq34}), we replace it with the following function
 \begin{equation}
 	B_{\varepsilon}(v,w,x) = \frac{1}{2}\sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} \left\lbrace v^i_lw^i_l \left( \norm{x^l-a^i}^2 +{\varepsilon}^2 \right) + \frac{w^i_l}{v^i_l} \right\rbrace ,
 \end{equation}
-where $v = \left(v^1, v^2, \ldots v^m \right) \in I^{km}$. For all $i=1,2,\ldots,m$ we define $h^i_{\varepsilon}: \rr^{mk} \times \rr^{nk} \rightarrow \rr^{k}$ by
+where $v = \left(v^1, v^2, \ldots v^m \right) \in I^{km}$, where $I:=\left[1/\kappa, 1/\varepsilon\right]$ and $\kappa = \sqrt{ d_{\mathcal{A}}^2 + {\varepsilon}^2}$. For all $i=1,2,\ldots,m$ we define $b^i_{\varepsilon}: \rr^{mk} \times \rr^{nk} \rightarrow \rr^{k}$ by
 \begin{equation*}
 	b^i_{\varepsilon}(v,x)= \left( \frac{1}{2} v^i_l \left( \norm{x^l-a^i}^2 +{\varepsilon}^2 \right) + \frac{1}{2v^i_l} \right)_{l=1,2,\ldots,k} \in \rr^{k} ,
 \end{equation*}
@@ -1097,7 +1097,7 @@ Now the situation is similar to that of the squared Euclidean norm, namely
 
 Equipped with these observation we proceed to a PALM-like algorithm, which is based on three steps alternating minimization. More precisely, with respect to $v$ we perform exact minimization
 \begin{equation}
-	v(t+1) = \arg\!\min \{ B_{\varepsilon}(v,w(t),x(t)) \mid v \in \rr^{mk} \} . \label{v_step}
+	v(t+1) = \arg\!\min \{ B_{\varepsilon}(v,w(t),x(t)) \mid v \in I^{mk} \} . \label{v_step}
 \end{equation}
 With respect to $w$, as in KPALM case, we suggest to regularize the subproblem with proximal term as follows
 \begin{equation}
@@ -1187,7 +1187,7 @@ where the first equality follows from (\ref{x_step}), the second inequality foll
 	&= H_{\varepsilon}(z(t)) - H_{\varepsilon}(z(t+1)) \\
 	&= \Psi_{\varepsilon}(z(t)) - \Psi_{\varepsilon}(z(t+1)),
 \end{align*}
-where the last equality follows from the fact that $G(w(t)) = 0$, for all $t \in \mathbb{N}$. This proves the desired result.
+where the last equality follows from the fact that $G(w(t)) = 0$, since $ w(t) \in \Delta^m$ for all $t \in \mathbb{N}$. This proves the desired result.
 \end{proof}
 
 \begin{proposition}[Subgradient lower bound for the iterates gap]
@@ -1231,9 +1231,9 @@ where the third inequality follows from \Cref{StateEq40}. Define $\rho_2 = \frac
 
 \subsection{Synthetic Dataset}
 
-In this section we show that $\varepsilon$-KPALM is less sensitive to outliners in the data verses algorithms that suit the squared Euclidean norm (e.g. KMEAN, KMEANS++ and KPALM). We generated two synthetic datasets, each contains 300 points in the plane, by sampling three two-dimensional Gaussian, 100 samples each. In \Cref{fig:gaussians}(\ref{fig:dense_gaussians}) the clusters are denser than in \Cref{fig:gaussians}(\ref{fig:sparse_gaussians}). 
+In this section we show that $\varepsilon$-KPALM is less sensitive to outliners in the data verses algorithms that suit the squared Euclidean norm (e.g. KMEANS, KMEANS++ and KPALM). We generated two synthetic datasets, each contains 300 points in the plane, by sampling three two-dimensional Gaussian, 100 samples each. In \Cref{fig:gaussians}(\ref{fig:dense_gaussians}) the clusters are denser than in \Cref{fig:gaussians}(\ref{fig:sparse_gaussians}). 
 
-Then we run the clustering algorithms and compared their clustering results, namely, how many points were clustered correctly. From \Cref{fig:gaussians_similarity}(\ref{fig:dense_gaussians_similarity}) it is evident that KMEANS is superior to other algorithms in the dense case and $\epsilon$-KPALM is quite sensitive. Whereas, in the sparse case in \Cref{fig:gaussians_similarity}(\ref{fig:sparse_gaussians_similarity}), $\epsilon$-KMEANS is superior, and less sensitive to outliners.
+Then we run the clustering algorithms and compared their clustering results, namely, how many points were clustered correctly. From \Cref{fig:gaussians_similarity}(\ref{fig:dense_gaussians_similarity}) it is evident that KMEANS is superior to other algorithms in the dense case and $\epsilon$-KPALM is quite sensitive. Whereas, in the sparse case in \Cref{fig:gaussians_similarity}(\ref{fig:sparse_gaussians_similarity}), $\epsilon$-KPALM is superior, and less sensitive to outliners.
 
 \begin{figure}[h!]
     \centering
