@@ -25,6 +25,7 @@
 \newtheorem{lemma}{Lemma}[proposition]
 \newtheorem{remark}{Remark}
 \newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
 
 \newcommand{\nn}{\mathbb{N}} %Nonnegative integers
 \newcommand{\rr}{\mathbb{R}} %Real numbers
@@ -97,9 +98,9 @@
 
 \newpage
 
-\section{The Clustering Problem}
+\section{Introduction}
 
-Let $\mathcal{A}= \left\lbrace a^1, a^2, \ldots ,a^m \right\rbrace$ be a given set of points in $\mathbb{R}^n$, and let $1 < k < m$ be a fixed given number of clusters. The clustering problem consists of partitioning the data $\mathcal{A}$ into $k$ subsets $\left\lbrace C^1, C^2, \ldots ,C^k \right\rbrace$, called clusters. For each $l=1, 2, \ldots ,k$, the cluster $C^l$ is represented by its center $x^l \in \mathbb{R}^n$, and we are interested to determine $k$ cluster centers $\left\lbrace x^1, x^2, \ldots ,x^k \right\rbrace$ such that the sum of certain proximity measures from each point $a^i$, $i=1, 2, \ldots ,m$, to a nearest cluster center $x^l$ is minimized. We define the vector of all centers by  $x = (x^1, x^2, \ldots , x^k) \in \mathbb{R}^{nk}$.
+Let $\mathcal{A}= \left\lbrace a^1, a^2, \ldots ,a^m \right\rbrace$ be a given set of points in $\mathbb{R}^n$, and let $1 < k < m$ be a fixed given number of clusters. The clustering problem consists of partitioning the dataset $\mathcal{A}$ into $k$ subsets $\left\lbrace C^1, C^2, \ldots ,C^k \right\rbrace$, called clusters. For each $l=1, 2, \ldots ,k$, the cluster $C^l$ is represented by its center $x^l \in \mathbb{R}^n$, and we are interested to determine $k$ cluster centers $\left\lbrace x^1, x^2, \ldots ,x^k \right\rbrace$ such that the sum of certain proximity measures from each data point $a^i$, $i=1, 2, \ldots ,m$, to a nearest cluster center $x^l$ is minimized. We define the vector of all centers by  $x = (x^1, x^2, \ldots , x^k) \in \mathbb{R}^{nk}$.
 
 The clustering problem is given by
 \begin{equation}
@@ -108,7 +109,9 @@ The clustering problem is given by
 \noindent with $\textit{d}(\cdot ,\cdot)$ being a distance-like function.
 
 
-\section{Problem Reformulation and Notations}
+\section{Problem Reformulation and Mathematical Tools}
+
+\subsection{Reformulation of the Clustering Problem}
 
 We begin with a reformulation of the clustering problem which will be the basis for our developments in this work. The reformulation is based on the following fact:
 \begin{equation*}
@@ -142,76 +145,129 @@ Replacing the terms in Problem (\ref{StateEq3}) with the functions defined above
 	\min \left\lbrace \Psi(z) := H(w,x) + G(w) \mid z := (w,x) \in \mathbb{R}^{km} \times \mathbb{R}^{nk} \right\rbrace . \label{StateEq4}
 \end{equation}
 
-
-\section{Clustering: The Squared Euclidean Norm Case} \label{State_Clustering_SqNorm}
-
 \subsection{Introduction to the PALM Theory} \label{State_PALM_Theory}
 
-In this subsection we give a brief review of the main developments established in \ref{BST2014}. These developments which include the PALM algorithm and general procedure for proving global convergence of generic algorithm play a central rule in this work.
+In this subsection we give a brief review of the main developments established in \ref{BST2014}. These developments which include the proximal alternating linearized minimization (PALM) algorithm and general procedure for proving global convergence of generic algorithm play a central rule in this work. First, let us recall several definitions which are needed for the upcoming discussion.
 
-Let $\Psi : \rr^d \rightarrow ( -\infty, +\infty ]$ be a proper and lower semicontinuous function which is bounded from below and consider the problem
+\begin{definition}[Subdifferentials]
+	Let $\sigma : \rr^d \rightarrow (-\infty,+\infty]$ be a proper and lower semicontinuous function.
+	\begin{enumerate}[(i)]
+		\item For a given $x \in dom\;\sigma := \left\lbrace x \in \rr^d : \; \sigma(x) < \infty \right\rbrace$, the \textit{Fr\'echet subdifferential} of $\sigma$ at $x$, written $\widehat{\partial}\sigma(x)$, is the set of all vectors $u \in \rr^d$ which satisfy
+		\begin{equation*}
+			\lim\limits_{y \neq x} \inf\limits_{y \rightarrow x} \frac{\sigma(y) - \sigma(x) - \left\langle u, y-x \right\rangle}{\norm{y-x}} \geq 0.
+		\end{equation*}
+		When $x \notin dom\sigma$, we set $\widehat{\partial}\sigma(x) = \emptyset$.
+		\item The \textit{limiting-subdifferential}, or subdifferential in short, of $\sigma$ at $x \in \rr^n$, written $\partial\sigma(x)$, is defined through the following closure process
+		\begin{equation*}
+			\partial\sigma(x) := \left\lbrace u \in \rr^d : \exists x^k \rightarrow x, \; \sigma(x^k)\rightarrow \sigma(x) \text{ and } u^k \in \widehat{\partial}\sigma(x^k) \text{ as } k \rightarrow \infty \right\rbrace.
+		\end{equation*}
+	\end{enumerate}
+\end{definition}
+In the nonsmooth context, as in the smooth case, the well-known Fermat's rule remains unchanged, that is, if $x \in \rr^d$ is a local minimizer of $\sigma$ then $0 \in \partial\sigma(x)$. Points whose subdifferential contains $0$ are called \textit{critical points}, and the set of all critical points of $\sigma$ is denoted by crit$\sigma$.
+
+Next we present the Kurdyka-{\L}ojasiewicz property, which plays a central role in PALM's analysis. Let $\eta \in (0,+\infty]$. Denote by $\Phi_{\eta}$ the class of all concave and continuous functions $\varphi:[0,\eta) \rightarrow \rr_+$ which satisfy the following conditions
+\begin{enumerate}[(i)]
+	\item $\varphi(0)=0$;
+	\item $\varphi$ is $C^1$ on $(0,\eta)$ and continuous at $0$;
+	\item for all $s \in (0,\eta): \; \varphi'(s)>0$.
+\end{enumerate}
+\begin{definition}[Kurdyka-{\L}ojasiewicz property]
+	Let $\sigma: \rr^d \rightarrow (-\infty,+\infty]$ be proper and lower semicontinuous.
+	\begin{enumerate}[(i)]
+		\item The function $\sigma$ is said to have the \textit{Kurdyka-{\L}ojasiewicz (KL) property} at $\overline{u} \in dom \; \partial\sigma := \\ \left\lbrace u \in \rr^d : \; \partial\sigma \neq \emptyset \right\rbrace$ if there exist $\eta \in (0,+\infty]$, a neighborhood $U$ of $\overline{u}$ and a function $\varphi \in \Phi_{\eta}$, such that for all
+		\begin{equation*}
+			u \in U \cap \left\lbrace x \in \rr^d : \; \sigma(\overline{u}) < \sigma(x) < \sigma(\overline{u}) + \eta \right\rbrace,
+		\end{equation*}
+		the following inequality holds
+		\begin{equation*}
+			\varphi'(\sigma(u) - \sigma(\overline{u}))dist(0,\partial\sigma(u)) \geq 1,
+		\end{equation*}
+		where $dist(x,S) := \inf \left\lbrace \norm{y-x} : \; y \in S\right\rbrace$ denotes the distance from $x \in \rr^d$ to $S \subset \rr^d$.
+		\item If $\sigma$ satisfy the KL property at each point of $dom\;\sigma$ then $\sigma$ is called a \textit{KL function}.
+	\end{enumerate}
+\end{definition}
+
+Equipped with the definitions above, we present the methodology that was used for PALM algorithm, and will be used several times throughout this work. Let $\Psi : \rr^d \rightarrow ( -\infty, +\infty ]$ be a proper and lower semicontinuous function which is bounded from below and consider the problem
 \begin{equation*}
 	(P) \quad \left\lbrace \Psi(z) : z \in \rr^d \right\rbrace .
 \end{equation*} 
-Suppose that we are given a generic algorithm $\mathcal{A}$ which solves problem (\textit{P}) and generates a sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ via the following:
+Suppose that we are given a generic algorithm $\mathcal{A}$ which generates a sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ via the following scheme:
 \begin{equation*}
 	z^0 \in \mathbb{R}^d, \: z^{k+1} \in \mathcal{A}\left(z^k\right), \quad k=0,1,\ldots.
 \end{equation*}
-According to \ref{AB2009},\ref{ABS2013}, there are three main steps to assure the convergence of the whole sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ to a critical point of $\Psi$.
-\begin{enumerate}[(1)]
-	\item Sufficient decrease property: There exists a positive constant $\rho_1$, such that
+Building upon \ref{AB2009},\ref{ABS2013}, the following three requirements are sufficient to assure the convergence of the whole sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ to a critical point of $\Psi$.
+\begin{enumerate}[(C1)]
+	\item \textit{Sufficient decrease property:} There exists a positive constant $\rho_1$, such that
 	\begin{equation*}
 		\rho_1 \|z^{k+1} - z^k\|^2 \leq \Psi(z^k) - \Psi(z^{k+1}), \quad \forall \: k=0,1,\ldots .
-	\end{equation*}
-	\item A subgradient lower bound for iterates gap: Assuming that the sequence generated by the algorithm $\mathcal{A}$ is bounded. There exists a positive constant $\rho_2$, such that
+	\end{equation*} \label{C1}
+	\item \textit{A subgradient lower bound for iterates gap:} Assuming that the sequence generated by the algorithm $\mathcal{A}$ is bounded. There exists a positive constant $\rho_2$, such that
 	\begin{equation*}
-		\|w^{k+1}\| \leq \rho_2 \|z^{k+1} - z^k\|, \quad w^k \in \partial \Psi\left( z^k \right) \quad \forall \: k=0,1,\ldots ,
-	\end{equation*}
-	where $\partial \Psi(x)$ is the limiting-subdifferential, defined through the following closure process
-	\begin{equation*}
-		\partial \Psi(x) := \left\lbrace \exists \; x^k \rightarrow x, \; \Psi\left(x^k\right) \rightarrow \Psi\left(x\right) \text{ and } u^k \in \widehat{\partial}\Psi(x^k) \rightarrow u \text{ as } k \rightarrow \infty \right\rbrace,
-	\end{equation*}
-	and $\widehat{\partial}\Psi(x)$ is the set of all vectors $u \in \rr^d$ which satisfy
-	\begin{equation*}
-		\lim\limits_{y \neq x} \inf\limits_{y \rightarrow x} \frac{\Psi(y) - \Psi(x) - \left\langle u, y-x \right\rangle}{\norm{y-x}} \geq 0.
-	\end{equation*}
-	\item The function $\Psi$ is a KL function. 
+		\|w^{k+1}\| \leq \rho_2 \|z^{k+1} - z^k\|, \quad w^k \in \partial \Psi\left( z^k \right) \quad \forall \: k=0,1,\ldots .
+	\end{equation*} \label{C2}
+%	where $\partial \Psi(x)$ is the limiting-subdifferential, defined through the following closure process
+%	\begin{equation*}
+%		\partial \Psi(x) := \left\lbrace \exists \; x^k \rightarrow x, \; \Psi\left(x^k\right) \rightarrow \Psi\left(x\right) \text{ and } u^k \in \widehat{\partial}\Psi(x^k) \rightarrow u \text{ as } k \rightarrow \infty \right\rbrace,
+%	\end{equation*}
+%	and $\widehat{\partial}\Psi(x)$ is the set of all vectors $u \in \rr^d$ which satisfy
+%	\begin{equation*}
+%		\lim\limits_{y \neq x} \inf\limits_{y \rightarrow x} \frac{\Psi(y) - \Psi(x) - \left\langle u, y-x \right\rangle}{\norm{y-x}} \geq 0.
+%	\end{equation*}
+	\item \textit{KL property:} The function $\Psi$ is a KL function. \label{C3} 
 \end{enumerate}
-With regard to the last item, see the definition of KL property in [BST2014]. The objective functions to be discussed in the current work are all KL functions, since it is either a weighed sum of squared Euclidean norms, or a weighed sum of Euclidean norms.
+%With regard to the last item, see the definition of KL property in [BST2014]. The objective functions to be discussed in the current work are all KL functions, since it is either a weighed sum of squared Euclidean norms, or a weighed sum of Euclidean norms.
 
-The PALM algorithm solves the nonconvex and nonsmooth minimization problem of the following form
+Finally, we present the proximal alternating linearized minimization (PALM) algorithm which solves the nonconvex and nonsmooth minimization problem of the following form
 \begin{center}
 (\textit{M})\quad minimize $\Psi(x,y):=f(x)+g(y)+H(x,y)$ over all $(x,y) \in \mathbb{R}^n \times \mathbb{R}^m$,
 \end{center}
-where $f:\mathbb{R}^n \rightarrow \left(-\infty,+\infty\right]$ and $g:\mathbb{R}^n \rightarrow \left(-\infty,+\infty\right]$ are proper and lower semicontinuous functions while $H:\mathbb{R}^n \times \mathbb{R}^m \rightarrow \mathbb{R}$ is a $C^1$ function.
+where $f:\mathbb{R}^n \rightarrow \left(-\infty,+\infty\right]$ and $g:\mathbb{R}^n \rightarrow \left(-\infty,+\infty\right]$ are proper and lower semicontinuous functions while $H:\mathbb{R}^n \times \mathbb{R}^m \rightarrow \mathbb{R}$ is a $C^1$ function. In addition, partial gradients of $H$ are Lipschitz continuous, namely, $H(\cdot, y) \in C^{1,1}_{L_1(y)}$ and $H(x,\cdot) \in C^{1,1}_{L_2(x)}$.
+PALM is alternating the steps of the proximal forward-backward (PFB) scheme. PFB scheme tackles the problem of minimizing the sum of a smooth function $h$ with a nonsmooth one $\sigma$, and can be viewed as the proximal regularization of $h$ linearized at a given point $x^k$, that is,
+\begin{equation*}
+	x^{k+1} \in \arg\!\min_{x \in \rr^d} \left\lbrace \left\langle x - x^k, \nabla h\left(x^k\right) \right\rangle + \frac{t}{2}\norm{x-x^k}^2 + \sigma(x)\right\rbrace,\; (t>0).
+\end{equation*}
+Adopting this scheme on the two blocks $(x,y)$ leads towards the following approximations 
+\begin{equation*}
+	\widehat{\Psi}\left(x,y^k\right) = \left\langle x-x^k, \nabla_x H\left( x^k, y^k \right)\right\rangle + \frac{c^k}{2}\norm{x-x^k}^2 + f(x), \; (c_k>0),
+\end{equation*}
+and
+\begin{equation*}
+	\widetilde{\Psi}\left(x^{k+1},y\right) = \left\langle y-y^k, \nabla_y H\left( x^{k+1}, y^k \right)\right\rangle + \frac{d^k}{2}\norm{y-y^k}^2 + g(y), \; (d_k>0).
+\end{equation*}
+Thus, PALM is alternating between the following two subproblems
+\begin{center}
+$x^{k+1} \in \arg\!\min \left\lbrace \widehat{\Psi}(x,y^k) : \; x \in \rr^n \right\rbrace$ \quad and \quad $y^{k+1} \in \arg\!\min \left\lbrace \widetilde{\Psi}\left(x^{k+1},y\right) : \; y \in \rr^m \right\rbrace$.
+\end{center}
+Bolte et al. \ref{BST2014} proved the properties (C1) and (C2), assuming $\Psi$ is KL function and the generated sequence by PALM, $\left\lbrace z^k:=\left( x^k, y^k\right)\right\rbrace_{k \in \nn}$, is bounded, and they further established the convergence of $\left\lbrace z^k\right\rbrace_{k \in \nn}$ to a critical point of $\Psi$.
 
+\section{Clustering: The Squared Euclidean Norm Case} \label{State_Clustering_SqNorm}
 \subsection{Clustering with PALM}
 
-In this section we tackle the clustering problem, given in (\ref{StateEq4}), with the classical distance function defined by $d(u,v) = \|u-v\|^2$. We devise a PALM-like algorithm, based on the discussion in the previous subsection.
+In this section we tackle the clustering problem, given in (\ref{StateEq4}), for which the proximity function $d(\cdot,\cdot)$ is taken to be the classical distance function defined by $d(u,v) = \|u-v\|^2$. We devise a PALM-like algorithm, based on the discussion in the previous subsection.
 Since the clustering problem has a specific structure, we are ought to exploit it in the following manner.
 \begin{enumerate}[(1)]
-	\item The function $w \mapsto H(w,x)$, for fixed $x$, is linear and therefore there is no need to linearize it as suggested in PALM.
-	\item The function $x \mapsto H(w,x)$, for fixed $w$, is quadratic and convex. Hence, there is no need to add a proximal term as suggested in PALM.
+	\item The function $w \mapsto H(w,x)$, for fixed $x$, is linear and therefore there is no need to linearize it as suggested in the framework which was discussed in \Cref{State_PALM_Theory}.
+	\item The function $x \mapsto H(w,x)$, for fixed $w$, is quadratic and convex. Hence, there is no need to add a proximal term as suggested in the framework which was discussed in \Cref{State_PALM_Theory}.
 \end{enumerate}
 
-As in the PALM algorithm, our algorithm is based on alternating minimization, with the following adaptations which are motivated by the observations mentioned above. More precisely, with respect to $w$ we suggest to regularize the first subproblem with proximal term as follows
+As in the PALM algorithm, our algorithm is based on the old approach of alternating minimization, with the following adaptations which are motivated by the observations mentioned above. More precisely, with respect to $w$ we suggest to regularize the first subproblem with proximal term as follows
 \begin{equation}
 	w^i(t+1) = \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(x(t)) \rangle + \frac{\alpha_i(t)}{2} \|w^i - w^i(t)\|^2 \right\rbrace, \quad i=1,2, \ldots, m , \label{State_w_update}
 \end{equation}
-where $\alpha_i(t) > 0$ for all $i=1,2, \ldots, m$. On the other hand, with respect to $x$ we perform exact minimization
+where $\alpha_i(t) > 0$ for all $i=1,2, \ldots, m$. On the other hand, with respect to $x$ we perform exact minimization, that is,
 \begin{equation}
 	x(t+1) = \arg\!\min \left\lbrace H(w(t+1), x) \mid x \in \mathbb{R}^{nk} \right\rbrace . \label{State_x_update}
 \end{equation}
-It is easy to check that all subproblems, with respect to $w^i$, $i=1,2, \ldots, m$, and $x$, can be written explicitly  as follows:
-\begin{equation}
-w^i(t+1) = P_{\Delta} \left(w^i(t) - \frac{d^i(x(t))}{\alpha_i(t)}\right) , \quad i=1, 2, \ldots ,m , \label{StateEq7}
-\end{equation}
-where $P_{\Delta}$ is the orthogonal projection onto the set $\Delta$, and
-\begin{equation}
-x^l(t+1) = \frac{\sum_{i=1}^{m} w^i_l(t+1) a^i}{\sum_{i=1}^{m} w^i_l(t+1)} , \quad l=1, 2, \ldots ,k . \label{StateEq8}
-\end{equation}
-\newpage
-Therefore we can record now the suggested KPALM algorithm.
+It is easy to check that all subproblems, with respect to $w^i$, $i=1,2, \ldots, m$, and $x$, can be rewritten explicitly (where we use $P_{\Delta}$ for the orthogonal projection onto the set $\Delta$). Thus, we can present now the KPALM algorithm.
+%as follows:
+%\begin{equation}
+%w^i(t+1) = P_{\Delta} \left(w^i(t) - \frac{d^i(x(t))}{\alpha_i(t)}\right) , \quad i=1, 2, \ldots ,m , \label{StateEq7}
+%\end{equation}
+%where $P_{\Delta}$ is the orthogonal projection onto the set $\Delta$, and
+%\begin{equation}
+%x^l(t+1) = \frac{\sum_{i=1}^{m} w^i_l(t+1) a^i}{\sum_{i=1}^{m} w^i_l(t+1)} , \quad l=1, 2, \ldots ,k . \label{StateEq8}
+%\end{equation}
+%Therefore we can record now the suggested KPALM algorithm.
 \begin{framed}
 \noindent \textbf{KPALM}
 \begin{enumerate}[(1)]
@@ -222,7 +278,7 @@ Therefore we can record now the suggested KPALM algorithm.
 		\begin{equation}
 			w^i(t+1) = P_{\Delta} \left(w^i(t) - \frac{d^i(x(t))}{\alpha_i(t)}\right) . \label{StateEq5}
 		\end{equation}
-		\item Centers update: for each $l=1, 2, \ldots ,k$ compute
+		\item Center update: for each $l=1, 2, \ldots ,k$ compute
 		\begin{equation}
 			x^l(t+1) = \frac{\sum_{i=1}^{m} w^i_l(t+1) a^i}{\sum_{i=1}^{m} w^i_l(t+1)} . \label{StateEq6}
 		\end{equation}
@@ -231,23 +287,23 @@ Therefore we can record now the suggested KPALM algorithm.
 \end{framed}
 
 We begin our analysis of the KPALM algorithm with the following boundedness property of the generated sequence. For simplicity, from now on, we denote $z(t):=\left( w(t),x(t) \right)$, $t \in \mathbb{N}$.
-\begin{proposition}[Boundedness of KPALM sequence]
+\begin{proposition}[Boundedness of KPALM sequence] \label{boundedness_prop}
 Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM. Then, the following statements hold true.
 \begin{enumerate}[(i)]
-	\item For all $l=1, 2, \ldots ,k$, the sequence $\left\lbrace x^l(t) \right\rbrace_{t \in \mathbb{N}}$ is contained in $Conv(\mathcal{A})$, the convex hull of $\mathcal{A}$, and therefore bounded by $M = \max\limits_{1 \leq i \leq m} \| a^i \|$
+	\item For all $l=1, 2, \ldots ,k$, the sequence $\left\lbrace x^l(t) \right\rbrace_{t \in \mathbb{N}}$ is contained in $Conv(\mathcal{A})$, the convex hull of $\mathcal{A}$, and therefore bounded by $M = \max\limits_{1 \leq i \leq m} \| a^i \|$. \label{boundedness_prop_1}
 	\item The sequence $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ is bounded in $\mathbb{R}^{km} \times \mathbb{R}^{nk}$.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
 \begin{enumerate}[(i)]
-	\item  Set $\lambda_i = w^i_l(t)/\sum\limits_{j=1}^{m} w^j_l(t), i=1, 2, \ldots ,m$, then $\lambda_i \geq 0$ and $\sum\limits_{i=1}^{m} \lambda_i = 1$. From (\ref{StateEq8}) we have
+	\item  Let $1\leq l \leq k$. We set $\lambda_i = w^i_l(t)/\sum\limits_{j=1}^{m} w^j_l(t), i=1, 2, \ldots ,m$, then $\lambda_i \geq 0$ and $\sum\limits_{i=1}^{m} \lambda_i = 1$. From (\ref{StateEq6}) we have
 	\begin{equation}
 		x^l(t) = \frac{\sum_{i=1}^{m} w^i_l(t) a^i}{\sum_{i=1}^{m} w^i_l(t)} 
 		= \sum_{i=1}^{m} \left( \frac{ w^i_l(t)}{\sum_{j=1}^{m} w^j_l(t)} \right) a^i 
-		= \sum\limits_{i=1}^{m} \lambda_i a^i \in Conv(\mathcal{A}). \label{StateBound}
+		= \sum\limits_{i=1}^{m} \lambda_i a^i \in Conv(\mathcal{A}), \label{StateBound}
 	\end{equation}
-	Hence $x^l(t)$ is in the convex hull of $\mathcal{A}$, for all $l = 1, 2, \ldots, k$ and $t \in \mathbb{N}$. Taking the norm of $x^l(t)$ and using (\ref{StateBound}) yields that
+	which proves that $x^l(t)$ is in the convex hull of $\mathcal{A}$, for all $l = 1, 2, \ldots, k$ and $t \in \mathbb{N}$. Taking the norm of $x^l(t)$ and using (\ref{StateBound}) yields that
 	\begin{equation*}
 		\| x^l(t) \| = \left\lVert \sum_{i=1}^{m} \lambda_i a^i \right\lVert
 		\leq \sum_{i=1}^{m} \lambda_i \| a^i \|
@@ -270,7 +326,7 @@ The following assumption will be crucial for the coming analysis.
 		\end{equation}		 \label{StateMainAssum2}
 \end{enumerate}
 \end{assumption}
-It should be noted that \Cref{StateMainAssum}(\ref{StateMainAssum1}) is very mild since the parameters $\alpha_i(t)$, $1 \leq i \leq m$ and $t \in \mathbb{N}$, can be chosen arbitrarily by the user and therefore it can be controlled such that the boundedness property holds true. \Cref{StateMainAssum}(\ref{StateMainAssum2}) is essential since if it is not true then $w^i_l(t)=0$ for all $1 \leq i \leq m$, which means that the center $x^l$ does not involved in the objective function.
+It should be noted that \Cref{StateMainAssum}(\ref{StateMainAssum1}) is very mild since the parameters $\alpha_i(t)$, $1 \leq i \leq m$ and $t \in \mathbb{N}$, can be chosen arbitrarily by the user and therefore it can be controlled such that the boundedness property holds true. \Cref{StateMainAssum}(\ref{StateMainAssum2}) is essential since if it is not true then $w^i_l(t)=0$ for all $1 \leq i \leq m$, which means that the center $x^l$ does not play any role in the solution process which is, of course, meaningless situation.
 
 \begin{lemma}[Strong convexity of $H(w,x)$ in $x$] \label{StateEq14}
 The function $x \mapsto H(w,x)$ is strongly convex with parameter $\beta(w)$ which defined in (\ref{State_beta}), whenever $\beta(w) > 0$.
@@ -289,10 +345,10 @@ $\nabla_{x^j} \nabla_{x^l} H(w,x) =
 Since the Hessian is a diagonal matrix, the smallest eigenvalue is $\beta(w) = 2\min\limits_{1 \leq l \leq k} \sum\limits_{i=1}^{m} w^i_l$, and the result follows.
 \end{proof}
 
-Now we are ready to prove the descent property of the KPALM algorithm.
+Now we are ready to prove global convergence of the sequence $\left\lbrace z(t)\right\rbrace_{t \in \nn}$ generated by KPALM to a critical point of $\Psi$ given in (\ref{StateEq4}). We will follow here the general procedure which was discussed is \Cref{State_PALM_Theory}. Therefore we need to prove that $\left\lbrace z(t)\right\rbrace_{t \in \nn}$ satisfies the conditions (C1) and (C2). We begin by proving condition (C1).
 
 \begin{proposition}[Sufficient decrease property] \label{State_KPALM_SDP}
-Suppose that \Cref{StateMainAssum} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}} $ be the sequence generated by KPALM. Then, there exists $\rho_1 > 0$ such that 
+Let $\left\lbrace z(t) \right\rbrace_{t \in \nn}$ be the sequence generated by KPALM. Suppose that \Cref{StateMainAssum} holds true, then there exists $\rho_1 > 0$ such that 
 \begin{equation*}
 	\rho_1 \|z(t+1) - z(t)\|^2 \leq \Psi(z(t)) - \Psi(z(t+1)), \quad \forall \: t \in \mathbb{N} .
 \end{equation*}
@@ -307,7 +363,7 @@ From step (\ref{StateEq5}), see also (\ref{State_w_update}), we derive, for each
 	& = \langle w^i(t) , d^i(x(t)) \rangle \\
 	& = H^i(w(t),x(t)) .
 \end{align*}
-Hence, we obtain
+Hence, we obtain for all $t \in \nn$, that
 \begin{equation}
 	\frac{\alpha_i(t)}{2} \|w^i(t+1) - w^i(t)\|^2 
 	\leq H^i(w(t),x(t)) - H^i(w(t+1),x(t)) . \label{StateEq18}
@@ -320,9 +376,9 @@ Denote $\underline{\alpha} = \min\limits_{1 \leq i \leq m} \underline{\alpha_i}$
 	& \leq \sum\limits_{i=1}^{m} \left[ H^i(w(t),x(t)) - H^i(w(t+1),x(t)) \right] \\
 	& = H(w(t),x(t)) - H(w(t+1),x(t)) ,  \label{StateEq16}
 \end{align}
-where the first inequality follows from \Cref{StateMainAssum}(\ref{StateMainAssum1}).
+where the first inequality follows from \Cref{StateMainAssum}(\ref{StateMainAssum1}) and the definition of $\underline{\alpha}$.
 
-From \Cref{StateMainAssum}(\ref{StateMainAssum2}) we have that $\beta(w(t)) \geq \underline{\beta}$, and from \Cref{StateEq14} it follows that the function $x \mapsto H(w(t),x)$ is strongly convex with parameter $\beta(w(t))$, hence it follows that
+From \Cref{StateMainAssum}(\ref{StateMainAssum2}) we have that $\beta(w(t)) \geq \underline{\beta}$, for all $t \in \nn$, and from \Cref{StateEq14} it follows that the function $x \mapsto H(w(t),x)$ is strongly convex with parameter $\beta(w(t))$. H using the strong convexity yields that
 \begin{align}
 	H(w(t+1)&,x(t))  - H(w(t+1),x(t+1)) \geq \\
 	& \geq \left\langle \nabla_x H(w(t+1),x(t+1)) , x(t)-x(t+1) \right\rangle + \frac{\beta(w(t))}{2} \|x(t) - x(t+1)\|^2 \\
@@ -341,10 +397,10 @@ Set $\rho_1 = \frac{1}{2}\min\left\lbrace \underline{\alpha} , \underline{\beta}
 where the last equality follows from the fact that $G(w(t)) = 0$, since $w(t) \in \Delta^m$ for all $t \in \mathbb{N}$, and therefore $H(z(t))=\Psi(z(t))$, $t \in \mathbb{N}$.
 \end{proof}
 
-Now, we aim to prove the subgradient lower bound for the iterates gap. The following lemma will be essential in our proof.
+Now, we are focusing on proving condition (C2) and we will need to following technical result.
 
 \begin{lemma} \label{StateEq11}
-Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM, then 
+Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM. Then we have a Lipschitz property of $d^i(\cdot)$ for all $t \in \nn$, given by
 \begin{equation*}
 	\| d^i(x(t+1) - d^i(x(t)) \| \leq 4M \| x(t+1) - x(t)\|, \quad \forall \: i=1, 2, \ldots ,m, \: t \in \mathbb{N} ,
 \end{equation*}
@@ -363,10 +419,12 @@ Since $d(u,v) = \| u-v \|^2$, we get that
 	& = \left[ \sum\limits_{l=1}^{k} (4M)^2 \|x^l(t+1) - x^l(t)\|^2 \right]^{\frac{1}{2}} 
 	= 4M \| x(t+1) - x(t)\| ,
 \end{align*}
-where the last inequality follows from the fact that $x^l(t) \in Conv(\mathcal{A})$ and hence $\norm{x^l(t)} \leq M$ for all $t \in \nn$ and $l=1,2,\ldots,k$, this proves the desired result.
+where the last inequality follows from the fact that $x^l(t) \in Conv(\mathcal{A})$ and hence $\norm{x^l(t)} \leq M$ for all $t \in \nn$ and $l=1,2,\ldots,k$ (see \Cref{boundedness_prop}(\ref{boundedness_prop_1})). This proves the desired result.
 \end{proof}
 
-\begin{proposition}[Subgradient lower bound for the iterates gap]
+Now, using this result we can show that $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ satisfies condition (C2).
+
+\begin{proposition}[Subgradient lower bound for the iterates gap] \label{Subgradient_proof_KPALM}
 Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM. Then, there exists $\rho_2 > 0$ and $\gamma(t+1) \in \partial \Psi(z(t+1))$ such that 
 \begin{equation*}
 	\| \gamma(t+1)\| \leq \rho_2 \|z(t+1) - z(t)\|, \quad \forall \: t \in \mathbb{N} .
@@ -393,7 +451,7 @@ The optimality condition of $w^i(t+1)$ which derived from (\ref{State_w_update})
 \begin{equation}
 	d^i(x(t)) + \alpha_i(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) = \mathbf{0} . \label{StateEq10}
 \end{equation}
-Setting $\gamma(t+1) := \left( \left( d^i(x(t+1)) + u^i(t+1) \right)_{i=1,2, \ldots ,m}, \mathbf{0} \right)$ and from (\ref{StateEq9}) it follows that $\gamma(t+1) \in \\ \partial \Psi(z(t+1))$. Using (\ref{StateEq10}) we obtain
+Setting $\gamma(t+1) := \left( \left( d^i(x(t+1)) + u^i(t+1) \right)_{i=1,2, \ldots ,m}, \mathbf{0} \right)$, it follows from (\ref{StateEq9})  that $\gamma(t+1) \in \\ \partial \Psi(z(t+1))$. Using (\ref{StateEq10}) we obtain
 \begin{equation*}
 	\gamma(t+1) = \left( \left( d^i(x(t+1)) - d^i(x(t)) - \alpha_i(t)(w^i(t+1) - w^i(t)) \right)_{i=1,2, \ldots, m}, \mathbf{0} \right).
 \end{equation*}
@@ -466,14 +524,14 @@ and
 $\quad G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i)$.
 \end{center}
 
-In order to be able to use the theory mentioned in Section \ref{State_PALM_Theory}, we have used the fact that the coupled function $H(w,x)$ is smooth, which is not the case now. Therefore, for any $\varepsilon > 0$, it leads us to the following smoothed form of the clustering problem
+In order to be able to use the theory mentioned in \Cref{State_PALM_Theory}, we have used, in \Cref{State_Clustering_SqNorm}, the fact that the coupled function $H(w,x)$ is smooth, which is not the case now. Therefore, for any $\varepsilon > 0$, it leads us to the following smoothed form of the clustering problem
 \begin{equation}
 	\min \left\lbrace \Psi_{\varepsilon}(z) := H_{\varepsilon}(w,x) + G(w) \mid z := (w,x) \in \mathbb{R}^{km} \times \mathbb{R}^{nk} \right\rbrace , \label{StateEq31}
 \end{equation}
 where 
 \begin{equation}
 	H_{\varepsilon}(w,x) = \sum\limits_{l=1}^{k} H^l_{\varepsilon}(w,x)
-	= \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \left( \| x^l - a^i \|^2 + {\epsilon}^2 \right)^{1/2} , \label{StateEq34}
+	= \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \left( \| x^l - a^i \|^2 + {\varepsilon}^2 \right)^{1/2} , \label{StateEq34}
 \end{equation}
 and for all $i=1,2, \ldots, m$,
 \begin{equation}
@@ -482,35 +540,35 @@ and for all $i=1,2, \ldots, m$,
 Note that $\Psi_{\varepsilon}(z)$ is a perturbed form of $\Psi(z)$ for a small $\varepsilon > 0$, and obviously $\Psi_0(z)=\Psi(z)$. The following lemma shows that the smoothed function $H_{\varepsilon}(w,x)$ indeed approximates $H(w,x)$.
 
 \begin{lemma}[Closeness of smooth]
-For any $(w,x) \in {\Delta}^m \times \mathbb{R}^{nk}$ and $\varepsilon > 0$ the following inequalities hold true
+For any $(w,x) \in {\Delta}^m \times \mathbb{R}^{nk}$ and $\varepsilon > 0$ the following relations hold true
 \begin{equation*}
 	H(w,x) \leq H_{\varepsilon}(w,x) \leq H(w,x) + m\varepsilon .
 \end{equation*}
 \end{lemma}
 
 \begin{proof}
-Applying the inequality
+It is clear that for all $\lambda \geq 0$ we have
 \begin{equation*}
 	\forall \: \lambda \geq 0, \quad \lambda \leq \sqrt{\lambda^2 + \varepsilon^2} \leq \lambda + \varepsilon .
 \end{equation*}
-with $\lambda = \|x^l - a^i \|$, yields
+Applying this inequality with $\lambda = \|x^l - a^i \|$, yields
 \begin{equation*}
 	\|x^l - a^i \| \leq \left(\|x^l - a^i \|^2 + {\varepsilon}^2 \right)^{1/2} \leq \|x^l - a^i \| + \varepsilon ,
 \end{equation*}
 for all $l=1,2, \ldots, k$ and $i=1,2, \ldots, m$.
-Multiplying each inequality by $w^i_l$ and summing over $l=1,2, \ldots, k$ and $i=1,2, \ldots, m$ we obtain
+By multiplying each inequality by $w^i_l$ and summing over $l=1,2, \ldots, k$ and $i=1,2, \ldots, m$ we obtain
 \begin{equation*}
 	H(w,x) \leq H_{\varepsilon}(w,x) \leq H(w,x) + \sum\limits_{i=1}^m \sum\limits_{l=1}^k w^i_l \varepsilon .
 \end{equation*}
 Since for all $i=1,2, \dots, m, \: w^i \in \Delta$, the result follows.
 \end{proof}
 
-Now we would like to develop an algorithm which is based on the methodology of PALM to solve Problem (\ref{StateEq31}). It is easy to see that with respect to $w$, the objective function $\Psi_{\varepsilon}$ keeps on the same structure as $\Psi$ and therefore we apply the same step as in KPALM. More precisely, for all $i=1,2, \ldots, m$, we have
+Now we would like to develop an algorithm which is based on the methodology of PALM (see \Cref{State_PALM_Theory}) to solve Problem (\ref{StateEq31}). It is easy to see that with respect to $w$, the objective function $\Psi_{\varepsilon}$ keeps on the same structure as $\Psi$ and therefore we apply the same step as in KPALM. More precisely, for all $i=1,2, \ldots, m$, we have
 \begin{align*}
 	w^i(t+1) &= \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \left\langle w^i, d^i_{\varepsilon}(x(t)) \right\rangle + \frac{\alpha_i(t)}{2} \|w^i -w^i(t)\|^2 \right\rbrace \\
 	&= P_{\Delta} \left( w^i(t) - \frac{d^i_{\varepsilon}(x(t))}{\alpha_i(t)} \right), \quad \forall \: t \in \mathbb{N},
 \end{align*}
-where $\alpha_i(t)$, $i=1,2, \ldots, m$, is arbitrarily chosen. On the other hand, with respect to $x$ we tackle the subproblem differently than in KPALM. Here we follow exactly the idea of PALM, that is, linearizing the function and adding regularizing term
+where $\alpha_i(t)$, $i=1,2, \ldots, m$, is arbitrarily chosen. On the other hand, with respect to $x$ we tackle the subproblem differently than in KPALM. Here we follow exactly the idea of PALM, that is, linearizing the function $x \rightarrow H(w,\cdot)$, for fixed $w$, and adding a regularizing term
 \begin{equation*}
 	x^l(t+1) = \arg\!\min\limits_{x^l} \left\lbrace \left\langle x^l - x^l(t) , \nabla_{x^l}H_{\varepsilon}(w(t+1),x(t)) \right\rangle + \frac{L^l_{\varepsilon}(w(t+1),x(t))}{2} \|x^l - x^l(t)\|^2 \right\rbrace,
 \end{equation*}
@@ -518,7 +576,7 @@ where
 \begin{equation}
 	L^l_{\varepsilon}(w(t+1),x(t)) := \sum\limits_{i=1}^{m} \frac{w^i_l(t+1)}{\left( \|x^l(t)-a^i\|^2 + {\varepsilon}^2 \right)^{1/2}}, \quad \forall \: l=1,2, \ldots, k. \label{L_eps_def}
 \end{equation}
-
+The motivation to use this specific regularizing parameter (see (\ref{L_eps_def})) will be discussed later.
 %Next we extend the notations of the previous subsection, so that the functions and operators defined there are to be dependent on the weights $w$. For each $1 \leq l \leq k$, denote $w_l = \left( w_l^1, w_l^2, \ldots , w_l^m \right) \\ \in \mathbb{R}_+^m$ and define
 %\begin{equation*}
 % L_{\varepsilon}^{w_l}(x^l) = \sum\limits_{i=1}^m \frac{w^i_l}{\left( \|x^l-a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} ,
@@ -594,14 +652,16 @@ Now we present our algorithm for solving Problem (\ref{StateEq31}), we call it $
 %	\end{enumerate}
 %\end{remark}
 
+\begin{remark}
 Similarly to the KPALM algorithm, the sequence generated by $\varepsilon$-KPALM is also bounded, since here we also have that
 \begin{align*}
 	x^l(t+1) &= x^l(t) - \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \nabla_{x^l} H(w(t+1),x(t)) \\
 	&= x^l(t) - \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \sum\limits_{i=1}^{m} w^i_l(t+1) \cdot \frac{x^l(t) - a^i}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \\
 	&= \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \sum\limits_{i=1}^{m} \left( \frac{w^i_l(t+1)}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \right) a^i \in Conv(\mathcal{A}).
 \end{align*}
+\end{remark}
 
-Before we will be able to prove the two properties needed for global convergence of the sequence $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ generated by $\varepsilon$-KPALM, we will need several auxiliary results. For the simplicity of the expositions we define the  function $f_{\varepsilon}: \mathbb{R}^n \rightarrow \mathbb{R}$ by
+Before we will be able to prove the two properties (see \Cref{State_PALM_Theory}) needed for global convergence of the sequence $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ generated by $\varepsilon$-KPALM, we will need several auxiliary results. For the simplicity of the expositions we define the  function $f_{\varepsilon}: \mathbb{R}^n \rightarrow \mathbb{R}$ by
 \begin{equation*}
 	f_{\varepsilon}(x) = \sum\limits_{i=1}^{m} v_i \left( \|x - a^i\|^2 + {\varepsilon}^2 \right)^{1/2},
 \end{equation*}
@@ -614,7 +674,7 @@ for fixed non-negative numbers (not all zero) $v_1,v_2, \ldots, v_m \in \mathbb{
 %	T_{\varepsilon}(x) = \frac{1}{\sum\limits_{i=1}^{m}\frac{w_i}{\left( \|x - b^i\|^2 + {\varepsilon}^2 \right)^{1/2}}} \sum\limits_{i=1}^{m}\frac{w_i b^i}{\left( \|x - b^i\|^2 + {\varepsilon}^2 \right)^{1/2}} ,
 %\end{equation*}
 %and 
-Finally we introduce the following operator, $L_{\varepsilon}: \mathbb{R}^n \rightarrow \mathbb{R}$ defined by
+Finally we introduce the following modulus, $L_{\varepsilon}: \mathbb{R}^n \rightarrow \mathbb{R}$ defined by
 \begin{equation*}
 	L_{\varepsilon}(x) = \sum\limits_{i=1}^{m}\frac{v_i}{\left( \|x - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} .
 \end{equation*}
@@ -719,7 +779,7 @@ The following properties of $h_{\varepsilon}$ hold.
 %Rearranging the last inequality yields the desired result.
 %\end{proof}
 
-Now we get back to $\varepsilon$-KPALM algorithm and prove few technical results about the involved functions which are based on the auxiliary results obtained above.
+Now we get back to the $\varepsilon$-KPALM algorithm and prove few technical results about the involved functions which are based on the properties obtained above.
 
 \begin{proposition}[Bounds for $L^l_{\varepsilon}$] \label{State_L_bounds}
 Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. Then, the following two statements hold true.
@@ -742,7 +802,7 @@ Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generat
 	\begin{equation*}
 		L^l_{\varepsilon}(w(t+1),x(t)) = \sum\limits_{i=1}^{m} \frac{w^i_l(t+1)}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \geq \frac{\sum_{i=1}^{m}w^i_l(t+1)}{\left( {d_{\mathcal{A}}}^2 + {\varepsilon}^2 \right)^{1/2}} \geq \frac{\underline{\beta}}{\left( {d_{\mathcal{A}}}^2 + {\varepsilon}^2 \right)^{1/2}} ,
 	\end{equation*}
-	where the first inequality follows from $\norm{x^l(t) - a^i} \leq d_{\mathcal{A}}$. 
+	where the first inequality follows from the fact that $\norm{x^l(t) - a^i} \leq d_{\mathcal{A}}$, for all $1 \leq l \leq k$. 
 	\item Since $w(t+1) \in {\Delta}^m$ we have
 	\begin{equation*}
 		L^l_{\varepsilon}(w(t+1),x(t)) = \sum\limits_{i=1}^{m} \frac{w^i_l(t+1)}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \leq \sum\limits_{i=1}^{m} \frac{1}{\varepsilon} = \frac{m}{\varepsilon} ,
@@ -830,22 +890,22 @@ Replacing the last term with the following compact form
 and the result follows.
 \end{proof}
 
-Now we are finally ready to prove the two properties needed for guaranteeing that the sequence which is generated by $\varepsilon$-KPALM converges to a critical point of $\Psi_{\varepsilon}$.
+Now we are finally ready to prove the two properties needed for guaranteeing that the sequence $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ which is generated by $\varepsilon$-KPALM converges to a critical point of $\Psi_{\varepsilon}$.
 
 \begin{proposition}[Sufficient decrease property]
 Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. Then, there exists $\rho_1 > 0$ such that 
 \begin{equation*}
-	\rho_1 \|z(t+1) - z(t)\|^2 \leq \Psi_{\varepsilon}(z(t)) - \Psi_{\varepsilon}(z(t+1)) \quad \forall \: t \in \mathbb{N} .
+	\rho_1 \|z(t+1) - z(t)\|^2 \leq \Psi_{\varepsilon}(z(t)) - \Psi_{\varepsilon}(z(t+1)), \quad \forall \: t \in \mathbb{N} .
 \end{equation*}
 \end{proposition}
 
 \begin{proof}
-As we already mentioned, the steps with respect to $w$ of KPALM and $\varepsilon$-KPALM  are similar and therefore following the same arguments given at the beginning of the proof of \Cref{State_KPALM_SDP} we have that
+As we already mentioned, the step with respect to $w$ of KPALM and $\varepsilon$-KPALM  are similar in nature and therefore following the same arguments given at the beginning of the proof of \Cref{State_KPALM_SDP} we have that
 \begin{equation}
 	\frac{\underline{\alpha}}{2} \|w(t+1) - w(t)\|^2 \leq H_{\varepsilon}(w(t),x(t)) - H_{\varepsilon}(w(t+1),x(t)) , \label{StateEq37}
 \end{equation}
 where $\underline{\alpha} = \min\limits_{1 \leq i \leq m} \alpha_i $.
-Applying \Cref{State_H_eps_prop} with (\ref{StateEq33}) we get for all $t \in \mathbb{N}$ that
+Applying \Cref{State_H_eps_prop} and using (\ref{StateEq33}) we get for all $t \in \mathbb{N}$ that
 \begin{align}
 	H_{\varepsilon}(w(t+1),x(t)) - H_{\varepsilon}(w(t+1),x(t+1)) 
 	&\geq \sum\limits_{l=1}^{k} \frac{L^l_{\varepsilon}(w(t+1),x(t))}{2} \|x^l(t+1)-x^l(t)\|^2 \\
@@ -1016,11 +1076,11 @@ Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generat
 \end{proposition}
 
 \begin{proof}
-Repeating the steps of the proof in the case of KPALM yields that 
+Repeating the steps of the proof in the case of KPALM (see \Cref{Subgradient_proof_KPALM}) yields that 
 \begin{equation}
 	\gamma(t+1) := \left( \left( d_{\varepsilon}^i(x(t+1)) + u^i(t+1) \right)_{i=1, \ldots ,m}, \nabla_x H_{\varepsilon}(w(t+1),x(t+1)) \right) \in \partial \Psi_{\varepsilon}(z(t+1)) , \label{StateEq45}
 \end{equation}
-where for all $1 \leq i \leq m, \: u^i(t+1) \in \partial \delta_{\Delta}(w^i(t+1))$ such that
+where $u^i(t+1) \in \partial \delta_{\Delta}(w^i(t+1)), \; i=1,2,\ldots,m$. Now, writing the optimality condition of step (\ref{StateEq32}), yields that 
 \begin{equation}
 	d_{\varepsilon}^i(x(t)) + \alpha_i(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) = \mathbf{0} . \label{StateEq46}
 \end{equation}
@@ -1079,21 +1139,25 @@ Therefore, setting $\rho_2 =  \frac{m d_{\mathcal{A}}}{\varepsilon} + \overline{
 
 \newpage
 
-\subsection{Different Approach Towards Solving the Smoothed $H\varepsilon$}
+\subsection{Different Approach Towards Solving the Smoothed H$\varepsilon$}
 In this section we describe a different approach towards solving the smoothed clustering problem described in (\ref{StateEq31}). Using the  Arithmetic-Geometric inequality we derive the following simple observation
 \begin{equation*}
-	\forall \: \lambda \geq 0, \quad \frac{1}{2} \min\limits_{s \geq 0} \left\lbrace s\lambda + \frac{1}{\lambda} \right\rbrace \geq \min\limits_{s \geq 0} \left\lbrace \sqrt{s\lambda \cdot \frac{1}{s}} \right\rbrace = \sqrt{\lambda} .
+	\frac{1}{2} \min\limits_{s \geq 0} \left\lbrace s\lambda + \frac{1}{\lambda} \right\rbrace \geq \min\limits_{s \geq 0} \left\lbrace \sqrt{s\lambda \cdot \frac{1}{s}} \right\rbrace = \sqrt{\lambda}, \quad \forall \: \lambda \geq 0,
 \end{equation*}
-Using this inequality we can write
+and the unique minimizer is given by $s^*=1/\sqrt{\lambda}$. Using this fact we can write
 \begin{equation}
 	\sqrt{\norm{u}^2 + {\varepsilon}^2} = \frac{1}{2}\min\limits_{v \geq 0} \left\lbrace v\left( \norm{u}^2 + {\varepsilon}^2\right) + \frac{1}{v} \right\rbrace , \label{AG_inq}
 \end{equation}
 with $v^* = 1/\sqrt{\norm{u}^2 + {\varepsilon}^2}$.
-Thus, instead of solving $H_\varepsilon$ directly, defined in (\ref{StateEq34}), we replace it with the following function
+Thus, instead of solving problem (\ref{StateEq31}) with $H_\varepsilon(\cdot,\cdot)$, defined in (\ref{StateEq34}), we replace it with the following function
 \begin{equation}
 	B_{\varepsilon}(v,w,x) = \frac{1}{2}\sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} \left\lbrace v^i_lw^i_l \left( \norm{x^l-a^i}^2 +{\varepsilon}^2 \right) + \frac{w^i_l}{v^i_l} \right\rbrace ,
 \end{equation}
-where $v = \left(v^1, v^2, \ldots v^m \right) \in I^{km}$, where $I:=\left[1/\kappa, 1/\varepsilon\right]$ and $\kappa = \sqrt{ d_{\mathcal{A}}^2 + {\varepsilon}^2}$. For all $i=1,2,\ldots,m$ we define $b^i_{\varepsilon}: \rr^{mk} \times \rr^{nk} \rightarrow \rr^{k}$ by
+where $v = \left(v^1, v^2, \ldots, v^m \right)$, and then problem (\ref{StateEq31}) can be written equivalently as
+\begin{equation*}
+	\min_{x,v,w} \left\lbrace B_{\varepsilon}(v,w,x) + G(w) : \; v \geq 0 \right\rbrace.
+\end{equation*}
+For all $i=1,2,\ldots,m$ we define $b^i_{\varepsilon}: \rr^{mk} \times \rr^{nk} \rightarrow \rr^{k}$ by
 \begin{equation*}
 	b^i_{\varepsilon}(v,x)= \left( \frac{1}{2} v^i_l \left( \norm{x^l-a^i}^2 +{\varepsilon}^2 \right) + \frac{1}{2v^i_l} \right)_{l=1,2,\ldots,k} \in \rr^{k} ,
 \end{equation*}
@@ -1102,25 +1166,31 @@ and we have that
 	B_{\varepsilon}(v,w,x) = \sum\limits_{i=1}^m \left\langle w^i, b^i_{\varepsilon}(v,x) \right\rangle . \label{B_eq_sum_b}
 \end{equation}
 
-Now the situation is similar to that of the squared Euclidean norm, namely
+Now the situation is similar to that of \Cref{State_Clustering_SqNorm}, namely
 \begin{enumerate}[(1)]
-	\item The function $w \mapsto B_{\varepsilon}(v,w,x)$, for fixed $v$ and $x$, is linear and therefore there is no need to linearize it as suggested in PALM.
-	\item The function $x \mapsto B_{\varepsilon}(v,w,x)$, for fixed $v$ and $w$, is quadratic and convex. Hence, there is no need to add a proximal term as suggested in PALM.
+	\item The function $w \mapsto B_{\varepsilon}(v,w,x)$, for fixed $v$ and $x$, is linear;
+	\item The function $x \mapsto B_{\varepsilon}(v,w,x)$, for fixed $v$ and $w$, is quadratic and convex.
 \end{enumerate}
+Hence we can tackle these two steps as in KPALM.
 
 Equipped with these observation we proceed to a PALM-like algorithm, which is based on three steps alternating minimization. More precisely, with respect to $v$ we perform exact minimization
-\begin{equation}
-	v(t+1) = \arg\!\min \{ B_{\varepsilon}(v,w(t),x(t)) \mid v \in I^{mk} \} . \label{v_step}
-\end{equation}
-With respect to $w$, as in KPALM case, we suggest to regularize the subproblem with proximal term as follows
+\begin{equation*}
+	v(t+1) = \arg\!\min \left\lbrace B_{\varepsilon}(v,w(t),x(t)) : \; v \geq 0\right\rbrace 
+\end{equation*}
+% \in I^{km}$, 
+It should be noted that this problem can be written equivalently by
+\begin{equation*}
+	v(t+1) = \arg\!\min \left\lbrace B_{\varepsilon}(v,w(t),x(t)) : \; v \in I^{mk} \right\rbrace, \label{v_step}
+\end{equation*}
+where $I:=\left[1/\kappa, 1/\varepsilon\right]$ and $\kappa = \sqrt{ d_{\mathcal{A}}^2 + {\varepsilon}^2}$. With respect to $w$, as in KPALM case, we need to solve the subproblem given by
 \begin{equation}
 	w^i(t+1) = \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , b^i_{\varepsilon}(v(t+1),x(t)) \rangle + \frac{\alpha_i(t)}{2} \|w^i - w^i(t)\|^2 \right\rbrace, \quad i=1,2, \ldots, m , \label{w_step}
 \end{equation}
-where $\alpha_i(t) > 0$ for all $i=1,2, \ldots, m$. And with respect to $x$, again as in KPALM case, we perform exact minimization
+where $\alpha_i(t) > 0$, $i=1,2, \ldots, m$. With respect to $x$, again as in KPALM case, we perform exact minimization
 \begin{equation}
 	x(t+1) = \arg\!\min \left\lbrace B_{\varepsilon}(v(t+1), w(t+1), x) \mid x \in \mathbb{R}^{nk} \right\rbrace . \label{x_step}
 \end{equation}
-It is easy to check that the explicit solutions to all three subproblems are given by
+It is easy to check that explicit solutions to all three subproblems are given by
 \begin{equation}
 	v^i_l(t+1) = \frac{1}{\left(\norm{x^l(t)-a^i}^2 + {\varepsilon}^2 \right)^{1/2}}, \quad i=1,2,\ldots,m, \: l=1,2,\ldots,k , \label{v_step_sol}
 \end{equation}
@@ -1132,7 +1202,7 @@ and
 	x^l(t+1) = \frac{\sum_{i=1}^{m} w^i_l(t+1)v^i_l(t+1)a^i}{\sum_{i=1}^{m} w^i_l(t+1)v^i_l(t+1)}, \quad l=1,2,\ldots,k . \label{x_step_sol}
 \end{equation}
 
-From the subproblem for $v$ and the initial observation (see (\ref{AG_inq})) we derive the following three relations
+From the subproblem for $v$ and the observation given in (\ref{AG_inq}), we derive the following three relations
 \begin{equation}
 	B_{\varepsilon}(v(t+1),w,x(t)) = H_{\varepsilon}(w,x(t)), \quad \forall \: t \in \nn, \: \forall \: w \in \Delta^{m} , \label{B_eq_H}
 \end{equation}
@@ -1141,33 +1211,33 @@ From the subproblem for $v$ and the initial observation (see (\ref{AG_inq})) we 
 \end{equation}
 where $d^i_{\varepsilon}$ is defined in (\ref{StateEq35}), and
 \begin{equation}
-	B_{\varepsilon}(v,w,x) \geq H_{\varepsilon}(w,x) \quad \forall \: (v,w,x) \in I^{mk} \times \Delta^{m} \times \rr^{nk} . \label{B_geq_H}
+	B_{\varepsilon}(v,w,x) \geq H_{\varepsilon}(w,x), \quad \forall \: (v,w,x) \in I^{mk} \times \Delta^{m} \times \rr^{nk} . \label{B_geq_H}
 \end{equation}
-Substituting (\ref{b_eq_h}) into $w$ update step (see (\ref{w_step_sol})) yields
+Substituting (\ref{b_eq_h}) into (\ref{w_step_sol}) yields
 \begin{equation*}
 	w^i(t+1) = P_{\Delta}\left( w^i(t) - \frac{d^i_{\varepsilon}(x(t))}{\alpha_i(t)} \right), \quad i=1,2,\ldots,m . 
 \end{equation*}
-Moreover, substituting $v$ update step (see (\ref{v_step_sol})) into $x$ update step (see (\ref{x_step_sol})) yields
+Moreover, substituting (\ref{v_step_sol}) into (\ref{x_step_sol}) yields
 \begin{equation*}
 	x^l(t+1) = \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \sum\limits_{i=1}^{m} \left( \frac{w^i_l(t+1)}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \right) a^i, \quad l=1,2,\ldots,k ,
 \end{equation*}
-where $L^l_{\varepsilon}$ is defined in (\ref{L_eps_def}). Those are exactly the update steps $w$ and $x$ in $\varepsilon$-KPALM, which means the two algorithms are the same. However, with the current version we can swiftly prove the sufficient decrease and the subgradient lower bound for the iterates gap properties, similar to the KPALM case.
+where $L^l_{\varepsilon}$ is defined in (\ref{L_eps_def}). Thus, we recover the $\varepsilon$-KPALM algorithm, which means these two different approaches lead to the same iterative algorithm. However, with the current approach we can swiftly prove the sufficient decrease and the subgradient lower bound for the iterates gap properties, which are needed to obtain global convergence of $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ that generated by $\varepsilon$-KPALM.
 
 \begin{proposition}[Sufficient decrease property]
 Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. Then, there exists $\rho_1 > 0$ such that 
 \begin{equation*}
-	\rho_1 \|z(t+1) - z(t)\|^2 \leq \Psi_{\varepsilon}(z(t)) - \Psi_{\varepsilon}(z(t+1)) \quad \forall \: t \in \mathbb{N} .
+	\rho_1 \|z(t+1) - z(t)\|^2 \leq \Psi_{\varepsilon}(z(t)) - \Psi_{\varepsilon}(z(t+1)), \quad \forall \: t \in \mathbb{N} .
 \end{equation*}
 \end{proposition}
 
 \begin{proof}
 From (\ref{w_step}) we have
 \begin{equation*}
-	\left\langle w^i(t+1),b^i_{\varepsilon}(v(t+1),x(t))\right\rangle + \frac{\alpha_i(t)}{2}\norm{w^i(t+1)-w^i(t)}^2 \leq \left\langle w^i(t),b^i_{\varepsilon}(v(t+1),x(t))\right\rangle
+	\left\langle w^i(t+1),b^i_{\varepsilon}(v(t+1),x(t))\right\rangle + \frac{\alpha_i(t)}{2}\norm{w^i(t+1)-w^i(t)}^2 \leq \left\langle w^i(t),b^i_{\varepsilon}(v(t+1),x(t))\right\rangle.
 \end{equation*}
 Summing the last inequality over $i=1,2,\ldots,m$ and applying (\ref{B_eq_sum_b}) yields
 \begin{equation*}
-	B_{\varepsilon}(v(t+1),w(t+1),x(t)) + \sum\limits_{i=1}^m \frac{\alpha_i(t)}{2}\norm{w^i(t+1)-w^i(t)}^2 \leq B_{\varepsilon}(v(t+1),w(t),x(t))
+	B_{\varepsilon}(v(t+1),w(t+1),x(t)) + \sum\limits_{i=1}^m \frac{\alpha_i(t)}{2}\norm{w^i(t+1)-w^i(t)}^2 \leq B_{\varepsilon}(v(t+1),w(t),x(t)).
 \end{equation*}
 Using \Cref{StateMainAssum}(\ref{StateMainAssum1}) we derive 
 \begin{align}
@@ -1182,11 +1252,11 @@ $\nabla_{x^j} \nabla_{x^l} B_{\varepsilon}(v,w,x) =
 \begin{cases} 0 &\mbox{if } j \neq l, \quad 1 \leq j,l \leq k ,
 \\ \sum\limits_{i=1}^{m} w^i_l v^i_l &\mbox{if } j = l, \quad 1 \leq j,l \leq k, \end{cases} $
 \end{center}
-hence, the function $x \mapsto B_{\varepsilon}(v(t+1),w(t),x)$ is strongly convex with parameter $\underline{\beta}/2\kappa$, for all $t \in \nn$, indeed,
+it follows that, the function $x \mapsto B_{\varepsilon}(v(t+1),w(t),x)$ is strongly convex with parameter $\underline{\beta}/2\kappa$, for all $t \in \nn$. Indeed,
 \begin{equation*}
-	\nabla^2_{x^l}B_{\varepsilon}(v(t+1),w(t),x) = \sum\limits_{i=1}^{m} w^i_l(t) v^i_l(t+1) \geq \frac{1}{\kappa} \sum\limits_{i=1}^{m} w^i_l(t) = \frac{\beta(w^i(t))}{2\kappa} \geq \frac{\underline{\beta}}{2\kappa} > 0 ,
+	\nabla^2_{x^l}B_{\varepsilon}(v(t+1),w(t),x) = \sum\limits_{i=1}^{m} w^i_l(t) v^i_l(t+1) \geq \frac{1}{\kappa} \sum\limits_{i=1}^{m} w^i_l(t) \geq \frac{\beta(w^i(t))}{2\kappa} > \frac{\underline{\beta}}{2\kappa} > 0 ,
 \end{equation*}
-where the first inequality follows from the fact that $v^i_l(t) \in I$ for all $t \in \nn$, $\beta(\cdot)$ is defined in (\ref{State_beta}), and the second inequality is due to \Cref{StateMainAssum}(\ref{StateMainAssum2}). Using the strong convexity property we deduce the sufficient decrease in $x$, indeed,
+where the first inequality follows from the fact that $v^i_l(t) \in I$ for all $t \in \nn$, $\beta(\cdot)$ is defined in (\ref{State_beta}), and the second inequality is due to \Cref{StateMainAssum}(\ref{StateMainAssum2}). Using the strong convexity property we deduce the sufficient decrease in $x$, as follows,
 \begin{align}
 	\frac{\underline{\beta}}{4\kappa}\norm{x(t+1)-x(t)}^2 &= \left\langle \nabla_x B_{\varepsilon}(z(t+1)),x(t)-x(t+1)\right\rangle + \frac{\underline{\beta}}{4\kappa}\norm{x(t+1)-x(t)}^2 \\
 	&\leq B_{\varepsilon}(v(t+1),w(t+1),x(t)) - B_{\varepsilon}(z(t+1)) \\
@@ -1215,11 +1285,11 @@ By the definition of $\Psi_{\varepsilon}$ (see (\ref{StateEq31})) we get
 \begin{equation}
 	\Psi_{\varepsilon}(w,x) = H_{\varepsilon}(w,x) + \sum\limits_{i=1}^m \delta_{\Delta}(w^i) \label{Psi_epsilon}
 \end{equation}
-Differentiating (\ref{Psi_epsilon}) w.r.t. $x$ and evaluating in $z(t+1)$ yields
+Differentiating (\ref{Psi_epsilon}) with respect to $x$ and evaluating it in $z(t+1)$ yields
 \begin{equation}
 	\partial_x \Psi_{\varepsilon}(z(t+1)) = \nabla_x H_{\varepsilon}(z(t+1)) . \label{diff_in_x}
 \end{equation}
-Differentiating (\ref{Psi_epsilon}) w.r.t. $w^i$ and evaluating in $z(t+1)$ yields
+Similarly, differentiating (\ref{Psi_epsilon}) with respect to $w^i$ and evaluating it in $z(t+1)$ yields
 \begin{equation}
 	\partial_{w^i} \Psi_{\varepsilon}(z(t+1)) = d^i_{\varepsilon}(x(t+1)) + \partial_{w^i}\delta_{\Delta}(w^i(t+1)) . \label{diff_in_w}
 \end{equation}
@@ -1244,9 +1314,9 @@ where the second inequality was established in \Cref{subgrad_proof} (see (\ref{l
 
 \subsection{Synthetic Dataset}
 
-In this section we show that $\varepsilon$-KPALM is less sensitive to outliners in the data verses algorithms that suit the squared Euclidean norm (e.g. KMEANS, KMEANS++ and KPALM). We generated two synthetic datasets, each contains 300 points in the plane, by sampling three two-dimensional Gaussian, 100 samples each. In \Cref{fig:gaussians}(\ref{fig:dense_gaussians}) the clusters are denser than in \Cref{fig:gaussians}(\ref{fig:sparse_gaussians}). 
+In this section we show that $\varepsilon$-KPALM is less sensitive to outliners in the data verses algorithms that suit the squared Euclidean norm (e.g., KMEANS, KMEANS++ and KPALM). We generated two synthetic datasets, each contains 300 points in the plane, by sampling three two-dimensional Gaussian, 100 samples each. In \Cref{fig:gaussians}(\ref{fig:dense_gaussians}) the clusters are denser than in \Cref{fig:gaussians}(\ref{fig:sparse_gaussians}). 
 
-Then we run the clustering algorithms and compared their clustering results, namely, how many points were clustered correctly. From \Cref{fig:gaussians_similarity}(\ref{fig:dense_gaussians_similarity}) it is evident that KMEANS is superior to other algorithms in the dense case and $\epsilon$-KPALM is quite sensitive. Whereas, in the sparse case in \Cref{fig:gaussians_similarity}(\ref{fig:sparse_gaussians_similarity}), $\epsilon$-KPALM is superior, and less sensitive to outliners.
+Then we run the clustering algorithms and compared their clustering results, namely, how many points were clustered correctly. From \Cref{fig:gaussians_similarity}(\ref{fig:dense_gaussians_similarity}) it is evident that KMEANS is superior to other algorithms in the dense case and $\varepsilon$-KPALM is quite sensitive. Whereas, in the sparse case in \Cref{fig:gaussians_similarity}(\ref{fig:sparse_gaussians_similarity}), $\varepsilon$-KPALM is superior, and less sensitive to outliners.
 
 \begin{figure}[h!]
     \centering
