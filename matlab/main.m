@@ -1,4 +1,4 @@
-function [iters,time,similarity,Psi,delta_x] = main(trials, A, n, m, k, max_iters, tol, eps, I_true)
+function [iters,time,similarity,Psi,delta_x,last_x,last_I] = main(trials, A, n, m, k, max_iters, tol, eps, I_true)
 %     alpha_update_functions = {@(a,t)a/(2^(t-1)), @(a,t)a/t,
 %     @(a,t)a/(t^2), @(a,t)a, @(a,t)10*a, @(a,t)0.1*a};
     alpha_update_functions = {@(a,t)a/(2^(t-1)), @(a,t)a/(t^2), @(a,t)a, @(a,t)0.1*a};
@@ -9,6 +9,8 @@ function [iters,time,similarity,Psi,delta_x] = main(trials, A, n, m, k, max_iter
     Psi(:,:,:)=nan;
     delta_x = zeros(2+3*length(alpha_update_functions),max_iters-1,trials);
     delta_x(:,:,:)=nan;
+    last_x = zeros(2+3*length(alpha_update_functions),trials,n,k);
+    last_I = zeros(2+3*length(alpha_update_functions),trials,m);
     for j = 1:trials
         disp(['trial ', num2str(j)]);
         [w0,x0] = rand_init(A,n,k,m);
@@ -23,6 +25,8 @@ function [iters,time,similarity,Psi,delta_x] = main(trials, A, n, m, k, max_iter
         for i = 2:t
             delta_x(1,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
         end
+        last_x(1,j,:,:) = x(:,:,t+1);
+        last_I(1,j,:) = I(:,t+1)';
         
         tic;
         x_pp = kmeans_pp_init(A,n,m,k);
@@ -35,6 +39,8 @@ function [iters,time,similarity,Psi,delta_x] = main(trials, A, n, m, k, max_iter
         for i = 2:t
             delta_x(2,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
         end
+        last_x(2,j,:,:) = x(:,:,t+1);
+        last_I(2,j,:) = I(:,t+1)';
         
         for f = 1:length(alpha_update_functions)
             idx = 2+f;
@@ -48,6 +54,8 @@ function [iters,time,similarity,Psi,delta_x] = main(trials, A, n, m, k, max_iter
             for i = 2:t
                 delta_x(idx,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
             end
+            last_x(idx,j,:,:) = x(:,:,t+1);
+            last_I(idx,j,:) = I_W(:,t+1)';
         end
         
         for f = 1:length(alpha_update_functions)
@@ -62,21 +70,9 @@ function [iters,time,similarity,Psi,delta_x] = main(trials, A, n, m, k, max_iter
             for i = 2:t
                 delta_x(idx,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
             end
+            last_x(idx,j,:,:) = x(:,:,t+1);
+            last_I(idx,j,:) = I_W(:,t+1)';
         end
-
-%         for f = 1:length(alpha_update_functions)
-%             idx = f;
-%             tic;
-%             [x,w,~,I_W,t,psi] = eps_norm_clustering(A,n,m,k,max_iters,tol,x0,w0,eps,alpha_update_functions{f});
-%             y = toc;
-%             iters(idx,1,j) = t;
-%             time(idx,1,j) = y;
-%             similarity(idx,1,j) = compare_clusters(I_true, I_W(:,t+1), k);
-%             Psi(idx,1:length(psi),j) = psi;
-%             for i = 2:t
-%                 delta_x(idx,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
-%             end
-%         end
         
         for f = 1:length(alpha_update_functions)
             idx = 2+2*length(alpha_update_functions)+f;
@@ -90,6 +86,8 @@ function [iters,time,similarity,Psi,delta_x] = main(trials, A, n, m, k, max_iter
             for i = 2:t
                 delta_x(idx,i,j) = norm(x(:,:,i)-x(:,:,i-1))/norm(x(:,:,i-1));
             end
+            last_x(idx,j,:,:) = x(:,:,t+1);
+            last_I(idx,j,:) = I_W(:,t+1)';
         end
 
     end

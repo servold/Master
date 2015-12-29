@@ -26,6 +26,7 @@
 \newtheorem{remark}{Remark}
 \newtheorem{assumption}{Assumption}
 \newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
 
 \newcommand{\nn}{\mathbb{N}} %Nonnegative integers
 \newcommand{\rr}{\mathbb{R}} %Real numbers
@@ -165,12 +166,16 @@ In this subsection we give a brief review of the main developments established i
 \end{definition}
 In the nonsmooth context, as in the smooth case, the well-known Fermat's rule remains unchanged, that is, if $x \in \rr^d$ is a local minimizer of $\sigma$ then $0 \in \partial\sigma(x)$. Points whose subdifferential contains $0$ are called \textit{critical points}, and the set of all critical points of $\sigma$ is denoted by crit$\sigma$.
 
-Next we present the Kurdyka-{\L}ojasiewicz property, which plays a central role in PALM's analysis. Let $\eta \in (0,+\infty]$. Denote by $\Phi_{\eta}$ the class of all concave and continuous functions $\varphi:[0,\eta) \rightarrow \rr_+$ which satisfy the following conditions
-\begin{enumerate}[(i)]
-	\item $\varphi(0)=0$;
-	\item $\varphi$ is $C^1$ on $(0,\eta)$ and continuous at $0$;
-	\item for all $s \in (0,\eta): \; \varphi'(s)>0$.
-\end{enumerate}
+Now we present the Kurdyka-{\L}ojasiewicz property, which plays a central role in PALM's analysis. Let $\eta \in (0,+\infty]$. Denote the following class of functions
+\begin{equation*}
+	\Phi_{\eta} = \left\lbrace \varphi \in C\left([0,\eta), \rr_+ \right)  , concave : \; \varphi \in C^1\left((0,\eta)\right), \; \varphi'>0, \; \varphi(0)=0 \right\rbrace .
+\end{equation*}
+%Denote by $\Phi_{\eta}$ the class of all concave and continuous functions $\varphi:[0,\eta) \rightarrow \rr_+$ which satisfy the following conditions
+%\begin{enumerate}[(i)]
+%	\item $\varphi(0)=0$;
+%	\item $\varphi$ is $C^1$ on $(0,\eta)$ and continuous at $0$;
+%	\item for all $s \in (0,\eta): \; \varphi'(s)>0$.
+%\end{enumerate}
 \begin{definition}[Kurdyka-{\L}ojasiewicz property]
 	Let $\sigma: \rr^d \rightarrow (-\infty,+\infty]$ be proper and lower semicontinuous.
 	\begin{enumerate}[(i)]
@@ -186,6 +191,24 @@ Next we present the Kurdyka-{\L}ojasiewicz property, which plays a central role 
 		\item If $\sigma$ satisfy the KL property at each point of $dom\;\sigma$ then $\sigma$ is called a \textit{KL function}.
 	\end{enumerate}
 \end{definition}
+
+\begin{definition}[Semi-algebraic sets and function] 
+\begin{enumerate}[(i)]
+	\item A set $S \subset \rr^d$ is a real semi-algebraic set if there exists a finite number of real polynomial functions $g_{ij}, h_{ij}: \rr^d \rightarrow \rr$ such that
+	\begin{equation*}
+		S = \bigcup\limits_{j=1}^{p} \bigcap\limits_{i=1}^{q} \left\lbrace u \in \rr^d : \; g_{ij}=0 \text{ and } h_{ij}(u)<0 \right\rbrace
+	\end{equation*}
+	\item A function $h:\rr^d \rightarrow (-\infty, +\infty]$ is called semi-algebraic if its graph
+	\begin{equation*}
+		\left\lbrace (u,t)\in\rr^{d+1} : \; h(u)=t \right\rbrace
+	\end{equation*}
+	is a semi-algebraic subset of $\rr^{d+1}$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem} \label{SA_is_KL}
+Let $\sigma:\rr^d \rightarrow (-\infty, +\infty]$ be a proper and lower semicontinuous function. If $\sigma$ is semi-algebraic then if satisfies the KL property at any point of dom $\sigma$.
+\end{theorem}
 
 Equipped with the definitions above, we present the methodology that was used for PALM algorithm, and will be used several times throughout this work. Let $\Psi : \rr^d \rightarrow ( -\infty, +\infty ]$ be a proper and lower semicontinuous function which is bounded from below and consider the problem
 \begin{equation*}
@@ -217,6 +240,8 @@ Building upon \ref{AB2009},\ref{ABS2013}, the following three requirements are s
 \end{enumerate}
 %With regard to the last item, see the definition of KL property in [BST2014]. The objective functions to be discussed in the current work are all KL functions, since it is either a weighed sum of squared Euclidean norms, or a weighed sum of Euclidean norms.
 
+Due to \ref{SA_is_KL}, property (C3), can be replaced with the requirement of $\Psi$ to be a semi-algebraic function. This requirement is much easier to verify, and the class of semi-algebraic function is very broad.
+
 Finally, we present the proximal alternating linearized minimization (PALM) algorithm which solves the nonconvex and nonsmooth minimization problem of the following form
 \begin{center}
 (\textit{M})\quad minimize $\Psi(x,y):=f(x)+g(y)+H(x,y)$ over all $(x,y) \in \mathbb{R}^n \times \mathbb{R}^m$,
@@ -238,7 +263,8 @@ Thus, PALM is alternating between the following two subproblems
 \begin{center}
 $x^{k+1} \in \arg\!\min \left\lbrace \widehat{\Psi}(x,y^k) : \; x \in \rr^n \right\rbrace$ \quad and \quad $y^{k+1} \in \arg\!\min \left\lbrace \widetilde{\Psi}\left(x^{k+1},y\right) : \; y \in \rr^m \right\rbrace$.
 \end{center}
-Bolte et al. \ref{BST2014} proved the properties (C1) and (C2), assuming $\Psi$ is KL function and the generated sequence by PALM, $\left\lbrace z^k:=\left( x^k, y^k\right)\right\rbrace_{k \in \nn}$, is bounded, and they further established the convergence of $\left\lbrace z^k\right\rbrace_{k \in \nn}$ to a critical point of $\Psi$.
+Assuming $\Psi$ is KL function and the generated sequence by PALM, $\left\lbrace z^k:=\left( x^k, y^k\right)\right\rbrace_{k \in \nn}$, is bounded, Bolte et al. \ref{BST2014} proved that the sequence obeys properties (C1) and (C2), and it converges to a critical point of $\Psi$. 
+%Bolte et al. \ref{BST2014} proved the properties (C1) and (C2), assuming $\Psi$ is KL function and the generated sequence by PALM, $\left\lbrace z^k:=\left( x^k, y^k\right)\right\rbrace_{k \in \nn}$, is bounded, and they further established the convergence of $\left\lbrace z^k\right\rbrace_{k \in \nn}$ to a critical point of $\Psi$.
 
 \section{Clustering: The Squared Euclidean Norm Case} \label{State_Clustering_SqNorm}
 \subsection{Clustering with PALM}
