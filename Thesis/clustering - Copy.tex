@@ -148,7 +148,8 @@ Replacing the terms in Problem (\ref{StateEq3}) with the functions defined above
 
 \subsection{Introduction to the PALM Theory} \label{State_PALM_Theory}
 
-In this subsection we give a brief review of the main developments established in \ref{BST2014}. These developments which include the proximal alternating linearized minimization (PALM) algorithm and general procedure for proving global convergence of generic algorithm play a central rule in this work. First, let us recall several definitions which are needed for the upcoming discussion.
+In this subsection we give a brief review of the main developments established in \cite
+{BST2014}. These developments which include the proximal alternating linearized minimization (PALM) algorithm and general procedure for proving global convergence of generic algorithm play a central rule in this work. First, let us recall several definitions which are needed for the upcoming discussion.
 
 \begin{definition}[Subdifferentials]
 	Let $\sigma : \rr^d \rightarrow (-\infty,+\infty]$ be a proper and lower semicontinuous function.
@@ -192,9 +193,9 @@ Now we present the Kurdyka-{\L}ojasiewicz property, which plays a central role i
 	\end{enumerate}
 \end{definition}
 
-\begin{definition}[Semi-algebraic sets and function] 
+\begin{definition}[Semi-algebraic sets and functions] 
 \begin{enumerate}[(i)]
-	\item A set $S \subset \rr^d$ is a real semi-algebraic set if there exists a finite number of real polynomial functions $g_{ij}, h_{ij}: \rr^d \rightarrow \rr$ such that
+	\item A subset $S \subset \rr^d$ is a real semi-algebraic set if there exists a finite number of real polynomial functions $g_{ij}, h_{ij}: \rr^d \rightarrow \rr$ such that
 	\begin{equation*}
 		S = \bigcup\limits_{j=1}^{p} \bigcap\limits_{i=1}^{q} \left\lbrace u \in \rr^d : \; g_{ij}=0 \text{ and } h_{ij}(u)<0 \right\rbrace
 	\end{equation*}
@@ -209,6 +210,7 @@ Now we present the Kurdyka-{\L}ojasiewicz property, which plays a central role i
 \begin{theorem} \label{SA_is_KL}
 Let $\sigma:\rr^d \rightarrow (-\infty, +\infty]$ be a proper and lower semicontinuous function. If $\sigma$ is semi-algebraic then if satisfies the KL property at any point of dom $\sigma$.
 \end{theorem}
+The class of semi-algebraic function is very broad, and it includes real polynomial functions; indicator functions of semi-algebraic sets; finite sums and products of semi-algebraic functions; composition of semi-algebraic functions, and many more.
 
 Equipped with the definitions above, we present the methodology that was used for PALM algorithm, and will be used several times throughout this work. Let $\Psi : \rr^d \rightarrow ( -\infty, +\infty ]$ be a proper and lower semicontinuous function which is bounded from below and consider the problem
 \begin{equation*}
@@ -218,7 +220,7 @@ Suppose that we are given a generic algorithm $\mathcal{A}$ which generates a se
 \begin{equation*}
 	z^0 \in \mathbb{R}^d, \: z^{k+1} \in \mathcal{A}\left(z^k\right), \quad k=0,1,\ldots.
 \end{equation*}
-Building upon \ref{AB2009},\ref{ABS2013}, the following three requirements are sufficient to assure the convergence of the whole sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ to a critical point of $\Psi$.
+Building upon \cite{AB2009,ABS2013}, the following three requirements are sufficient to assure the convergence of the whole sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ to a critical point of $\Psi$.
 \begin{enumerate}[(C1)]
 	\item \textit{Sufficient decrease property:} There exists a positive constant $\rho_1$, such that
 	\begin{equation*}
@@ -240,9 +242,7 @@ Building upon \ref{AB2009},\ref{ABS2013}, the following three requirements are s
 \end{enumerate}
 %With regard to the last item, see the definition of KL property in [BST2014]. The objective functions to be discussed in the current work are all KL functions, since it is either a weighed sum of squared Euclidean norms, or a weighed sum of Euclidean norms.
 
-Due to \ref{SA_is_KL}, property (C3), can be replaced with the requirement of $\Psi$ to be a semi-algebraic function. This requirement is much easier to verify, and the class of semi-algebraic function is very broad.
-
-Finally, we present the proximal alternating linearized minimization (PALM) algorithm which solves the nonconvex and nonsmooth minimization problem of the following form
+Due to \Cref{SA_is_KL}, property (C3) follows whenever $\Psi$ is a semi-algebraic function. Finally, we present the proximal alternating linearized minimization (PALM) algorithm which solves the nonconvex and nonsmooth minimization problem of the following form
 \begin{center}
 (\textit{M})\quad minimize $\Psi(x,y):=f(x)+g(y)+H(x,y)$ over all $(x,y) \in \mathbb{R}^n \times \mathbb{R}^m$,
 \end{center}
@@ -263,7 +263,7 @@ Thus, PALM is alternating between the following two subproblems
 \begin{center}
 $x^{k+1} \in \arg\!\min \left\lbrace \widehat{\Psi}(x,y^k) : \; x \in \rr^n \right\rbrace$ \quad and \quad $y^{k+1} \in \arg\!\min \left\lbrace \widetilde{\Psi}\left(x^{k+1},y\right) : \; y \in \rr^m \right\rbrace$.
 \end{center}
-Assuming $\Psi$ is KL function and the generated sequence by PALM, $\left\lbrace z^k:=\left( x^k, y^k\right)\right\rbrace_{k \in \nn}$, is bounded, Bolte et al. \ref{BST2014} proved that the sequence obeys properties (C1) and (C2), and it converges to a critical point of $\Psi$. 
+Assuming $\Psi$ is KL function and the generated sequence by PALM, $\left\lbrace z^k:=\left( x^k, y^k\right)\right\rbrace_{k \in \nn}$, is bounded, Bolte et al. \cite{BST2014} proved that the sequence obeys properties (C1) and (C2), and it converges to a critical point of $\Psi$. 
 %Bolte et al. \ref{BST2014} proved the properties (C1) and (C2), assuming $\Psi$ is KL function and the generated sequence by PALM, $\left\lbrace z^k:=\left( x^k, y^k\right)\right\rbrace_{k \in \nn}$, is bounded, and they further established the convergence of $\left\lbrace z^k\right\rbrace_{k \in \nn}$ to a critical point of $\Psi$.
 
 \section{Clustering: The Squared Euclidean Norm Case} \label{State_Clustering_SqNorm}
@@ -1344,7 +1344,7 @@ In this section we show that $\varepsilon$-KPALM is less sensitive to outliners 
 
 Then we run the clustering algorithms and compared their clustering results, namely, how many points were clustered correctly. From \Cref{fig:gaussians_similarity}(\ref{fig:dense_gaussians_similarity}) it is evident that KMEANS is superior to other algorithms in the dense case and $\varepsilon$-KPALM is quite sensitive. Whereas, in the sparse case in \Cref{fig:gaussians_similarity}(\ref{fig:sparse_gaussians_similarity}), $\varepsilon$-KPALM is superior, and less sensitive to outliners.
 
-\begin{figure}[h!]
+\begin{figure}
     \centering
     \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{dense_gaussians}
@@ -1361,14 +1361,15 @@ Then we run the clustering algorithms and compared their clustering results, nam
     \label{fig:gaussians}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}
     \centering
-    \begin{subfigure}[b]{0.7\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{dense_gaussians_similarity}
         \caption{Dense Gaussians clustering.}
         \label{fig:dense_gaussians_similarity}
     \end{subfigure}
-    \begin{subfigure}[b]{0.7\textwidth}
+    \quad
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{sparse_gaussians_similarity}
         \caption{Sparse Gaussians clustering.}
         \label{fig:sparse_gaussians_similarity}
@@ -1454,8 +1455,6 @@ Setting $\rho_1 = \underline{\beta} /2(1 + mc^2)$, we can write
 \end{align*}
 where the first inequality follows from \Cref{StateLemma_x_bounds_w}, the second follows from (\ref{StateEq70}), and the last equality follows from the fact that $G(w(t))=0$, for all $t \in \mathbb{N}$.
 \end{proof}
-
-\newpage
 
 \subsection{KMEANS Local Minima Convergence Proof}
 
@@ -1579,21 +1578,21 @@ In \Cref{fig:algs_psi_comp} we made a comparison between KPALM with dynamic rule
 
 Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_psi_comp} we can see a comparison of the objective values of $\Psi_{\varepsilon}$ for different function values. The value of $\varepsilon$ is set to be 1e-5.
 
-\begin{figure}[ht]
+\begin{figure}
     \centering
-    \begin{subfigure}[b]{0.8\textwidth}
+    \begin{subfigure}[b]{0.7\textwidth}
         \includegraphics[width=\textwidth]{iterations_algs_comparison}
         \caption{Number of iterations of KMEANS, KMEANS++ and KPALM with $\alpha(t)=diam(\mathcal{A})/2^{t-1}$.}
         \label{fig:iters_algs_comp}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.8\textwidth}
+    \begin{subfigure}[b]{0.7\textwidth}
         \includegraphics[width=\textwidth]{iterations_dynamic_alpha_kpalm_comparison}
         \caption{Number of iterations of KPALM with different updates of $\alpha(t)$.}
         \label{fig:iters_dyn_alpha_kpalm_comp}
     \end{subfigure}
-    \begin{subfigure}[b]{0.8\textwidth}
+    \begin{subfigure}[b]{0.7\textwidth}
         \includegraphics[width=\textwidth]{iterations_dynamic_alpha_eps_kpalm_comparison}
         \caption{Number of iterations of $\varepsilon$-KPALM with different updates of $\alpha(t)$.}
         \label{fig:iters_dyn_alpha_eps_kpalm_comp}
@@ -1606,7 +1605,7 @@ Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_p
     \includegraphics[width=\textwidth]{dynamic_alpha_eps_kpalm}
     \caption{Comparison of the objective values for different values of $\alpha$.}
     \label{fig:dynamic_alpha_eps_psi_comp}
-\end{figure} 
+\end{figure}
 
 %\section{Clustering via ADMM Approach}
 %
@@ -1641,8 +1640,10 @@ Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_p
 %\end{split}
 %\end{equation*}
 
-%\begin{thebibliography}{99}
-
-%\end{thebibliography}
+\begin{thebibliography}{99}
+\bibitem{BST2014} BTS2014
+\bibitem{AB2009} AB2009
+\bibitem{ABS2013} AB2013
+\end{thebibliography}
 
 \end{document}
