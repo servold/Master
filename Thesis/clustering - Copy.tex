@@ -210,9 +210,9 @@ Now we present the Kurdyka-{\L}ojasiewicz property, which plays a central role i
 \begin{theorem} \label{SA_is_KL}
 Let $\sigma:\rr^d \rightarrow (-\infty, +\infty]$ be a proper and lower semicontinuous function. If $\sigma$ is semi-algebraic then if satisfies the KL property at any point of dom $\sigma$.
 \end{theorem}
-The class of semi-algebraic function is very broad, and it includes real polynomial functions; indicator functions of semi-algebraic sets; finite sums and products of semi-algebraic functions; composition of semi-algebraic functions, and many more.
+The class of semi-algebraic function is very broad, it includes real polynomial functions; indicator functions of semi-algebraic sets; finite sums and products of semi-algebraic functions; composition of semi-algebraic functions, and many more.
 
-Equipped with the definitions above, we present the methodology that was used for PALM algorithm, and will be used several times throughout this work. Let $\Psi : \rr^d \rightarrow ( -\infty, +\infty ]$ be a proper and lower semicontinuous function which is bounded from below and consider the problem
+Equipped with these definitions, we present the methodology that was used for PALM algorithm, and will be used several times throughout this work. Let $\Psi : \rr^d \rightarrow ( -\infty, +\infty ]$ be a proper and lower semicontinuous function which is bounded from below and consider the problem
 \begin{equation*}
 	(P) \quad \left\lbrace \Psi(z) : z \in \rr^d \right\rbrace .
 \end{equation*} 
@@ -1338,48 +1338,6 @@ Therefore,
 where the second inequality was established in \Cref{subgrad_proof} (see (\ref{lipschitz_grad_x_H})) and the third inequality follows from \Cref{StateEq40}. Define $\rho_2 = \frac{m d_{\mathcal{A}}}{\varepsilon} + \overline{\alpha}\sqrt{m} + \frac{2m\sqrt{k}}{\varepsilon}$, and the result follows.
 \end{proof}
 
-\subsection{Synthetic Dataset}
-
-In this section we show that $\varepsilon$-KPALM is less sensitive to outliners in the data verses algorithms that suit the squared Euclidean norm (e.g., KMEANS, KMEANS++ and KPALM). We generated two synthetic datasets, each contains 300 points in the plane, by sampling three two-dimensional Gaussian, 100 samples each. In \Cref{fig:gaussians}(\ref{fig:dense_gaussians}) the clusters are denser than in \Cref{fig:gaussians}(\ref{fig:sparse_gaussians}). 
-
-Then we run the clustering algorithms and compared their clustering results, namely, how many points were clustered correctly. From \Cref{fig:gaussians_similarity}(\ref{fig:dense_gaussians_similarity}) it is evident that KMEANS is superior to other algorithms in the dense case and $\varepsilon$-KPALM is quite sensitive. Whereas, in the sparse case in \Cref{fig:gaussians_similarity}(\ref{fig:sparse_gaussians_similarity}), $\varepsilon$-KPALM is superior, and less sensitive to outliners.
-
-\begin{figure}
-    \centering
-    \begin{subfigure}[b]{0.45\textwidth}
-        \includegraphics[width=\textwidth]{dense_gaussians}
-        \caption{Dense Gaussians.}
-        \label{fig:dense_gaussians}
-    \end{subfigure}
-    \quad
-    \begin{subfigure}[b]{0.45\textwidth}
-        \includegraphics[width=\textwidth]{sparse_gaussians}
-        \caption{Sparse Gaussians.}
-        \label{fig:sparse_gaussians}
-    \end{subfigure}
-    \caption{Two datasets, each 300 points.}
-    \label{fig:gaussians}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \begin{subfigure}[b]{0.45\textwidth}
-        \includegraphics[width=\textwidth]{dense_gaussians_similarity}
-        \caption{Dense Gaussians clustering.}
-        \label{fig:dense_gaussians_similarity}
-    \end{subfigure}
-    \quad
-    \begin{subfigure}[b]{0.45\textwidth}
-        \includegraphics[width=\textwidth]{sparse_gaussians_similarity}
-        \caption{Sparse Gaussians clustering.}
-        \label{fig:sparse_gaussians_similarity}
-    \end{subfigure}
-    \caption{Results of clustering algorithms for dense and sparse datasets.}
-    \label{fig:gaussians_similarity}
-\end{figure}
-
-\newpage
-
 \section{Returning to KMEANS}
 \subsection{Similarity to KMEANS}
 The famous KMEANS algorithm has close relation to KPALM algorithm. KMEANS alternates between cluster assignment and centers update steps as well. In detail, we can write its steps in the following manner
@@ -1394,7 +1352,7 @@ The famous KMEANS algorithm has close relation to KPALM algorithm. KMEANS altern
 		\begin{equation}
 			w^i(t+1) = \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(x(t)) \rangle\right\rbrace . \label{StateEq12}
 		\end{equation}
-		\item Centers update: for $l=1, 2, \ldots ,k$ compute
+		\item Center update: for $l=1, 2, \ldots ,k$ compute
 		\begin{equation}
 			x^l(t+1) = \frac{\sum_{i=1}^{m} w^i_l(t+1) a^i}{\sum_{i=1}^{m} w^i_l(t+1)} . \label{StateEq13}
 		\end{equation}
@@ -1406,7 +1364,7 @@ The famous KMEANS algorithm has close relation to KPALM algorithm. KMEANS altern
 \end{enumerate}
 \end{framed}
 
-It is easy to see that if we take $\alpha_i(t) = 0$ for all $1 \leq i \leq m$ and $t \in \mathbb{N}$, then KPALM becomes KMEANS. We aim to employ the PALM theory once more and show that the sequence generated by KMEANS converges to a critical point of $\Psi(\cdot)$, as defined is (\ref{StateEq4}). The sufficient decrease proof of \Cref{State_Clustering_SqNorm} breaks down in this case, since it is based on \Cref{StateMainAssum}(\ref{StateMainAssum1}), that is, $\alpha_i(t) > \underline{\alpha_i} > 0$, for all $t \in \mathbb{N}$ and $i=1,2, \ldots, m$. However, the proof of the subgradient lower bound for the iterates gap property follows through as is. In the following discussion we present the means to treat the case that $\alpha_i(t) = 0$, and prove the sufficient decrease property.
+It is easy to see that if we take $\alpha_i(t) = 0$ for all $1 \leq i \leq m$ and $t \in \mathbb{N}$, then KPALM becomes KMEANS. We aim to use the theory described in \Cref{State_PALM_Theory} once again and show that the sequence generated by KMEANS converges to a critical point of $\Psi(\cdot)$, as defined is (\ref{StateEq4}). The sufficient decrease proof of \Cref{State_Clustering_SqNorm} collapses in this case, since it is based on \Cref{StateMainAssum}(\ref{StateMainAssum1}), that is, $\alpha_i(t) > \underline{\alpha_i} > 0$, for all $t \in \mathbb{N}$ and $i=1,2, \ldots, m$. However, the proof of the subgradient lower bound for the iterates gap property follows through as is. In the following discussion we present the means to treat the case that $\alpha_i(t) = 0$, and prove the sufficient decrease property.
 
 \begin{lemma} \label{StateLemma_x_bounds_w}
 Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KMEANS. Then, there exists $c > 0$ such that
@@ -1469,7 +1427,7 @@ In this section we present a simple and direct proof that KMEANS converges to lo
 		\begin{equation}
 			C^l(t+1) = \left\lbrace a \in \mathcal{A} \mid \| a - x^l(t) \| \leq \|a - x^j(t) \|, \quad \forall 1 \leq l \leq k \right\rbrace . \label{StateEq20}
 		\end{equation}
-		\item Centers update: for $l=1, 2, \ldots ,k$ compute
+		\item Center update: for $l=1, 2, \ldots ,k$ compute
 		\begin{equation}
 			x^l(t+1) = mean(C^l(t+1)) := \frac{1}{\left| C^l(t+1) \right|} \sum\limits_{a \in C^l(t+1)} a . \label{StateEq21}
 		\end{equation}
@@ -1524,19 +1482,19 @@ where the last equality follows from \Cref{StateEq24}. \\
 The function $x \mapsto \sum\limits_{l=1}^{k} \sum\limits_{a \in C^l(t)} \|a - x^l \|^2$ is strictly convex, separable in $x^l$ for all $1 \leq l \leq k$, and reaches its minimum at $\frac{1}{\left| C^l(t) \right|} \sum\limits_{a \in C^l(t)} a = mean(C^l(t)) = x^l(t),$ and the result follows.
 \end{proof}
 
-\newpage
-
 \section{Numeric Results}
 In this section we show the numeric results and compare the algorithms presented in this work with other algorithms that are commonly used to address the clustering problem.
 
 The initialization points used within the implementation of the compared algorithms are as follows. KMEANS staring point is constructed by randomly choosing $k$ different points from the dataset. The same technique is employed in the cases of KPALM and $\varepsilon$-KPALM, for the $x(0)$ variable. Whereas for the $w(0)$ variable, it is chosen at random from $\Delta^m$. KMEANS++ takes also part in our comparison, and it is basically the same as KMEANS, with the exception of its starting point that is constructed in the following manner. The first center $x^1(0)$ is chosen randomly from the dataset $\mathcal{A}$. Suppose that $1 \leq l < k$ centers have already been chosen, set $x^{l+1}(0)$ to be the point in the dataset that is the furthest from its closest center.
+
+Since it is impractical to compare the function values achieved with the algorithms which solve the squared Euclidean clustering problem with that of the algorithms which solve the Euclidean clustering problem, we used some criteria devised to compare clustering partitions. Criteria such as \textit{variation of information (VI)}, \textit{Mirkin metric}, and \textit{Van Dongen metric}, are few examples for metrics that measure the difference between two clustering partitions (see \cite{M2005}). With these metrics we compared the similarity of the partition achieved with each algorithm to the desired partition of each dataset. The goal is to decrease the value of the metrics.
 
 \subsection{Iris Dataset}
 We used the famous Iris dataset to test the performance of the KPALM algorithm. It is important to note that choosing the parameter $\alpha$ is left to the user, and as presented below, has a significant effect on the convergence rate and the quality of the achieved clustering, namely the value of the objective function over the generated series. All the plots in this section are made by averaging over $100$ trials, each trial with random starting point.
 
 \begin{figure}[h]
     \centering
-    \includegraphics{dynamic_alpha_kpalm}
+    \includegraphics[width=0.6\textwidth]{dynamic_alpha_kpalm}
     \caption{Comparison of the objective values for different values of $\alpha$.}
     \label{fig:dynamic_alpha_psi_comp}
 \end{figure} 
@@ -1607,6 +1565,64 @@ Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_p
     \label{fig:dynamic_alpha_eps_psi_comp}
 \end{figure}
 
+
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{dense_gaussians}
+        \caption{Dense Gaussians.}
+        \label{fig:dense_gaussians}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{sparse_gaussians}
+        \caption{Sparse Gaussians.}
+        \label{fig:sparse_gaussians}
+    \end{subfigure}
+    \caption{Two datasets, each 300 points.}
+    \label{fig:gaussians}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{dense_gaussians_similarity}
+        \caption{Dense Gaussians clustering.}
+        \label{fig:dense_gaussians_similarity}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{sparse_gaussians_similarity}
+        \caption{Sparse Gaussians clustering.}
+        \label{fig:sparse_gaussians_similarity}
+    \end{subfigure}
+    \caption{Results of clustering algorithms for dense and sparse datasets.}
+    \label{fig:gaussians_similarity}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.95\textwidth}
+        \includegraphics[width=\textwidth]{dense_gaussians_metrics2}
+        \caption{Dense Gaussians metrics comparison.}
+        \label{fig:dense_gaussians_metrics}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.95\textwidth}
+        \includegraphics[width=\textwidth]{sparse_gaussians_metrics2}
+        \caption{Sparse Gaussians metrics comparison.}
+        \label{fig:sparse_gaussians_metrics}
+    \end{subfigure}
+    \caption{Comparison of metrics between clusterings for dense and sparse datasets.}
+    \label{fig:gaussians_metrics}
+\end{figure}
+
+\subsection{Synthetic Dataset}
+
+In this section we show that $\varepsilon$-KPALM is less sensitive to outliners in the data verses algorithms that suit the squared Euclidean norm (e.g., KMEANS, KMEANS++ and KPALM). We generated two synthetic datasets, each contains 300 points in the plane, by sampling three two-dimensional Gaussian, 100 samples each. In \Cref{fig:gaussians}(\ref{fig:dense_gaussians}) the clusters are denser than in \Cref{fig:gaussians}(\ref{fig:sparse_gaussians}).
+Then we run the clustering algorithms and compared their clustering results, namely, how many points were clustered correctly. From \Cref{fig:gaussians_similarity}(\ref{fig:dense_gaussians_similarity}) it is evident that KMEANS is superior to other algorithms in the dense case and $\varepsilon$-KPALM is quite sensitive. Whereas, in the sparse case in \Cref{fig:gaussians_similarity}(\ref{fig:sparse_gaussians_similarity}), $\varepsilon$-KPALM is superior, and less sensitive to outliners. In \Cref{fig:gaussians_metrics} we compare the distance of clusterings achieved with different algorithms to the desired clustering, where kpalm1, kpalm2 and kpalm3 match using $\alpha(t)=diam(\mathcal{A})/2^{t-1}$, $\alpha(t)=diam(\mathcal{A})/t^2$ and $\alpha(t)=diam(\mathcal{A})$ respectively, and similarly for $\varepsilon$-kpalm$i$, $i \in \{1,2,3\}$. In \Cref{fig:gaussians_metrics}(\ref{fig:dense_gaussians_metrics}) we witness that for dense dataset, the resulting clusterings of squared Euclidean algorithms, namely, KMEANS, KMEANS++ and KPALM, are superior to the clustering $\varepsilon$-KPALM, where KPALM with $\alpha(t)=diam(\mathcal{A})/2^{t-1}$ gives the best result, that is, the clustering in this setting is the closest to the desired clustering. Whereas in the sparse dataset, the clustering achieved with $\varepsilon$-KPALM with $\alpha(t)=diam(\mathcal{A})/t^2$ is the closest to the desired clustering, as reflected from \Cref{fig:gaussians_metrics}(\ref{fig:sparse_gaussians_metrics}).
+
 %\section{Clustering via ADMM Approach}
 %
 %Introducing some new variable into the problem leads to the following clustering problem notation
@@ -1641,9 +1657,21 @@ Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_p
 %\end{equation*}
 
 \begin{thebibliography}{99}
-\bibitem{BST2014} BTS2014
-\bibitem{AB2009} AB2009
-\bibitem{ABS2013} AB2013
+\bibitem{AB2009} Attouch, H., Bolte, J.: On the convergence of the proximal algorithm for nonsmooth functions involving analytic features. Math. Program. \textbf{116}, 5-16 (2009)
+%
+\bibitem{ABS2013} Attouch, H., Bolte, J., Svaiter, B.F.: Convergence of descent methods for semi-algebraic and tame problems: proximal algorithms, forward–backward splitting, and regularized Gauss–Seidel methods. Math. Program. \textbf{137}, 91-129 (2013)
+%
+\bibitem{BS2015} Beck, A., Sabach, S.: Weiszfeld’s Method: Old and New Results. Journal of Optimization Theory and Applications \textbf{164}, 1-40 (2015)
+%
+\bibitem{ATY1991} Ben-Tal, A., Teboulle, M., Yang, W.H.: A least-squares-based method for a class of nonsmooth minimization problems with applications in plasticity. Applied Mathematics and Optimization \textbf{24}, 273-288 (1991)
+%
+\bibitem{BST2014} Bolte, J., Sabach, S., Teboulle, M.: Proximal alternating linearized minimization for nonconvex and nonsmooth problems. Math. Program. \textbf{146}, 459-494 (2014)
+%
+\bibitem{IS1984} Ismail, M. A., Selim, S.Z.: K-Means-Type Algorithms: A Generalized Convergence Theorem and Characterization of Local Optimality. IEEE Transactions on Pattern Analysis and Machine Intelligence \textbf{6}, 81-87 (1984)
+%
+\bibitem{M2005} Meila, M.: Comparing Clusterings – An Axiomatic View. In ICML '05: Proceedings of the 22nd international conference on Machine Learning ACM, New York, 577-584 (2005)
+%
+\bibitem{T2007} Teboulle, M.: A Unified Continuous Optimization Framework for Center-Based Clustering Methods. The Journal of Machine Learning Research \textbf{8}, 65-102 (2007)
 \end{thebibliography}
 
 \end{document}
