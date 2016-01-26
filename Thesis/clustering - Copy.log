@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.29)  25 JAN 2016 21:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.29)  26 JAN 2016 22:58
 entering extended mode
 **"clustering - Copy.tex"
 ("clustering - Copy.tex"
@@ -540,22 +540,27 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \tf@toc=\write3
  [1
 
-{C:/Users/servold/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2
+{C:/Users/servold/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+("clustering - Copy.lof")
+\tf@lof=\write4
+ [2
 
-] [3] [4] [5]
-Overfull \hbox (2.70052pt too wide) in paragraph at lines 229--230
+] [3
+
+] [4] [5] [6]
+Overfull \hbox (2.70052pt too wide) in paragraph at lines 236--237
 []\OT1/cmr/m/it/12 The func-tion $\OML/cmm/m/it/12 $ \OT1/cmr/m/it/12 is said 
 to have the Kurdyka-[]ojasiewicz (KL) prop-erty at $[] \OMS/cmsy/m/n/12 2 \OML/
 cmm/m/it/12 dom @ \OT1/cmr/m/n/12 := [] $
  []
 
-[6] [7] [8] [9] [10]
-Overfull \hbox (23.91978pt too wide) in paragraph at lines 437--437
+[7] [8] [9] [10] [11]
+Overfull \hbox (23.91978pt too wide) in paragraph at lines 452--452
 [] 
  []
 
-[11]
-Overfull \hbox (2.13058pt too wide) in paragraph at lines 459--462
+[12]
+Overfull \hbox (2.13058pt too wide) in paragraph at lines 474--477
 \OT1/cmr/m/n/12 where the equal-ity fol-lows from (3.2[]), since $\OMS/cmsy/m/n
 /12 r[]\OML/cmm/m/it/12 H\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 w\OT1/cmr/m/n/12 (\O
 ML/cmm/m/it/12 t \OT1/cmr/m/n/12 + 1)\OML/cmm/m/it/12 ; x\OT1/cmr/m/n/12 (\OML/
@@ -564,72 +569,72 @@ n/12 = [] [] []$,
  []
 
 
-Overfull \hbox (9.9371pt too wide) in paragraph at lines 468--468
+Overfull \hbox (9.9371pt too wide) in paragraph at lines 483--483
 [] 
  []
 
 
-Overfull \hbox (16.68666pt too wide) in paragraph at lines 493--493
+Overfull \hbox (16.68666pt too wide) in paragraph at lines 508--508
 [] 
  []
 
-[12]
-Overfull \hbox (7.15276pt too wide) in paragraph at lines 519--519
+[13]
+Overfull \hbox (7.15276pt too wide) in paragraph at lines 534--534
 [] 
  []
 
 
-Overfull \hbox (21.48251pt too wide) in paragraph at lines 522--523
+Overfull \hbox (21.48251pt too wide) in paragraph at lines 537--538
 []\OT1/cmr/m/n/12 The op-ti-mal-ity con-di-tion of $\OML/cmm/m/it/12 w[]\OT1/cm
 r/m/n/12 (\OML/cmm/m/it/12 t \OT1/cmr/m/n/12 + 1)$ which de-rived from (3.1[]),
  yields that for all $\OML/cmm/m/it/12 i \OT1/cmr/m/n/12 = 1\OML/cmm/m/it/12 ; 
 \OT1/cmr/m/n/12 2\OML/cmm/m/it/12 ; [] ; m$
  []
 
-[13]
-Overfull \hbox (5.51793pt too wide) in paragraph at lines 525--527
+[14]
+Overfull \hbox (5.51793pt too wide) in paragraph at lines 540--542
 \OT1/cmr/m/n/12 Setting $\OML/cmm/m/it/12 \OT1/cmr/m/n/12 (\OML/cmm/m/it/12 t 
 \OT1/cmr/m/n/12 + 1) := []$, it fol-lows from (3.11[]) that $\OML/cmm/m/it/12 
 \OT1/cmr/m/n/12 (\OML/cmm/m/it/12 t \OT1/cmr/m/n/12 + 1) \OMS/cmsy/m/n/12 2 [] 
 $
  []
 
-[14]
-Overfull \hbox (7.57426pt too wide) in paragraph at lines 611--613
+[15]
+Overfull \hbox (7.57426pt too wide) in paragraph at lines 626--628
 \OT1/cmr/m/n/12 The fol-low-ing lemma shows that the smoothed func-tion $\OML/c
 mm/m/it/12 H[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 w; x\OT1/cmr/m/n/12 )$ in-deed 
 ap-prox-i-mates $\OML/cmm/m/it/12 H\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 w; x\OT1/c
 mr/m/n/12 )$. 
  []
 
-[15] [16] [17] [18]
-Overfull \hbox (16.26726pt too wide) in paragraph at lines 984--1014
+[16] [17] [18] [19]
+Overfull \hbox (16.26726pt too wide) in paragraph at lines 999--1029
 \OT1/cmr/m/n/12 where the sec-ond in-equal-ity fol-lows from Propo-si-tion 4.1(
 i[]). Set $\OML/cmm/m/it/12 [] \OT1/cmr/m/n/12 = [] [] []$.
  []
 
 
-Overfull \hbox (23.92892pt too wide) in paragraph at lines 1020--1020
-[] 
- []
-
-[19]
-Overfull \hbox (7.97485pt too wide) in paragraph at lines 1070--1070
+Overfull \hbox (23.92892pt too wide) in paragraph at lines 1035--1035
 [] 
  []
 
 [20]
-Overfull \hbox (20.41092pt too wide) in paragraph at lines 1111--1111
+Overfull \hbox (7.97485pt too wide) in paragraph at lines 1085--1085
 [] 
  []
 
 [21]
-Overfull \hbox (1.89291pt too wide) in paragraph at lines 1165--1165
+Overfull \hbox (20.41092pt too wide) in paragraph at lines 1126--1126
 [] 
  []
 
-[22] [23] [24] [25]
-Overfull \hbox (9.73264pt too wide) in paragraph at lines 1362--1364
+[22]
+Overfull \hbox (1.89291pt too wide) in paragraph at lines 1180--1180
+[] 
+ []
+
+[23] [24] [25] [26]
+Overfull \hbox (9.73264pt too wide) in paragraph at lines 1377--1379
 \OT1/cmr/m/n/12 The op-ti-mal-ity con-di-tion of $\OML/cmm/m/it/12 w[]\OT1/cmr/
 m/n/12 (\OML/cmm/m/it/12 t \OT1/cmr/m/n/12 + 1)$ which de-rived from (4.19[]), 
 yields that for all $\OML/cmm/m/it/12 i \OT1/cmr/m/n/12 = 1\OML/cmm/m/it/12 ; \
@@ -637,25 +642,25 @@ OT1/cmr/m/n/12 2\OML/cmm/m/it/12 ; [] ; m$
  []
 
 
-Overfull \hbox (63.89986pt too wide) detected at line 1371
+Overfull \hbox (63.89986pt too wide) detected at line 1386
 \OML/cmm/m/it/12 \OT1/cmr/m/n/12 (\OML/cmm/m/it/12 t \OT1/cmr/m/n/12 + 1) := [
 ] \OMS/cmsy/m/n/12 2 \OML/cmm/m/it/12 @\OT1/cmr/m/n/12 	[](\OML/cmm/m/it/12 z\O
 T1/cmr/m/n/12 (\OML/cmm/m/it/12 t \OT1/cmr/m/n/12 + 1))\OML/cmm/m/it/12 :
  []
 
-[26]
-Overfull \hbox (29.73286pt too wide) in paragraph at lines 1378--1378
+[27]
+Overfull \hbox (29.73286pt too wide) in paragraph at lines 1393--1393
 [] 
  []
 
-[27]
-Overfull \hbox (8.90117pt too wide) in paragraph at lines 1434--1435
+[28]
+Overfull \hbox (8.90117pt too wide) in paragraph at lines 1449--1450
 []\OT1/cmr/m/n/12 Equipped with the last lemma we briefly prove the suf-fi-cien
 t de-crease prop-erty of KMEANS. 
  []
 
-[28] [29]
-Overfull \hbox (21.18634pt too wide) in paragraph at lines 1489--1492
+[29] [30]
+Overfull \hbox (21.18634pt too wide) in paragraph at lines 1504--1507
 $[]$\OT1/cmr/m/n/12 , for all $1 \OMS/cmsy/m/n/12  \OML/cmm/m/it/12 l \OMS/cms
 y/m/n/12  \OML/cmm/m/it/12 k$\OT1/cmr/m/n/12 , and the sub-partition of $\OMS/
 cmsy/m/n/12 A$ \OT1/cmr/m/n/12 by $[](\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 ) = [] 
@@ -663,20 +668,20 @@ cmsy/m/n/12 A$ \OT1/cmr/m/n/12 by $[](\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 ) = []
  []
 
 
-Overfull \hbox (6.52104pt too wide) in paragraph at lines 1489--1492
+Overfull \hbox (6.52104pt too wide) in paragraph at lines 1504--1507
 $[]$\OT1/cmr/m/n/12 . More-over, de-note $\OML/cmm/m/it/12 R[]\OT1/cmr/m/n/12 (
 \OML/cmm/m/it/12 t\OT1/cmr/m/n/12 ) = [] []$
  []
 
 
-Overfull \hbox (43.43674pt too wide) in paragraph at lines 1514--1515
+Overfull \hbox (43.43674pt too wide) in paragraph at lines 1529--1530
 \OT1/cmr/m/it/12 and cen-ters KMEANS re-turns, then $\OML/cmm/m/it/12 x\OT1/cmr
 /m/n/12 (\OML/cmm/m/it/12 t\OT1/cmr/m/n/12 )$ \OT1/cmr/m/it/12 is lo-cal min-i-
 mum of $\OML/cmm/m/it/12 F$ \OT1/cmr/m/it/12 in $\OML/cmm/m/it/12 U \OT1/cmr/m/
 n/12 = \OML/cmm/m/it/12 B [] \OMS/cmsy/m/n/12  \OML/cmm/m/it/12 B [] [] $
  []
 
-[30]
+[31]
 Package epstopdf Info: Source file: <dynamic_alpha_kpalm.eps>
 (epstopdf)                    date: 2015-09-20 12:02:54
 (epstopdf)                    size: 13210 bytes
@@ -685,21 +690,21 @@ Package epstopdf Info: Source file: <dynamic_alpha_kpalm.eps>
 (epstopdf)                    size: 5063 bytes
 (epstopdf)             Command: <epstopdf --outfile=dynamic_alpha_kpalm-eps-con
 verted-to.pdf dynamic_alpha_kpalm.eps>
-(epstopdf)             \includegraphics on input line 1538.
+(epstopdf)             \includegraphics on input line 1553.
 Package epstopdf Info: Output file is already uptodate.
 
-<dynamic_alpha_kpalm-eps-converted-to.pdf, id=109, 420.57124pt x 316.18124pt>
+<dynamic_alpha_kpalm-eps-converted-to.pdf, id=113, 420.57124pt x 316.18124pt>
 File: dynamic_alpha_kpalm-eps-converted-to.pdf Graphic file (type pdf)
 
 <use dynamic_alpha_kpalm-eps-converted-to.pdf>
 Package pdftex.def Info: dynamic_alpha_kpalm-eps-converted-to.pdf used on input
- line 1538.
+ line 1553.
 (pdftex.def)             Requested size: 281.85585pt x 211.89822pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[31]
+[32]
 Package epstopdf Info: Source file: <psi_algs_comparison2.eps>
 (epstopdf)                    date: 2015-10-17 19:30:39
 (epstopdf)                    size: 10893 bytes
@@ -709,15 +714,15 @@ Package epstopdf Info: Source file: <psi_algs_comparison2.eps>
 (epstopdf)                    size: 6005 bytes
 (epstopdf)             Command: <epstopdf --outfile=psi_algs_comparison2-eps-co
 nverted-to.pdf psi_algs_comparison2.eps>
-(epstopdf)             \includegraphics on input line 1557.
+(epstopdf)             \includegraphics on input line 1572.
 Package epstopdf Info: Output file is already uptodate.
 
-<psi_algs_comparison2-eps-converted-to.pdf, id=114, 420.57124pt x 316.18124pt>
+<psi_algs_comparison2-eps-converted-to.pdf, id=117, 420.57124pt x 316.18124pt>
 File: psi_algs_comparison2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use psi_algs_comparison2-eps-converted-to.pdf>
 Package pdftex.def Info: psi_algs_comparison2-eps-converted-to.pdf used on inpu
-t line 1557.
+t line 1572.
 (pdftex.def)             Requested size: 281.85585pt x 211.89822pt.
 Package epstopdf Info: Source file: <psi_algs_comparison2_zoom.eps>
 (epstopdf)                    date: 2015-10-17 19:30:39
@@ -728,14 +733,14 @@ Package epstopdf Info: Source file: <psi_algs_comparison2_zoom.eps>
 (epstopdf)                    size: 6270 bytes
 (epstopdf)             Command: <epstopdf --outfile=psi_algs_comparison2_zoom-e
 ps-converted-to.pdf psi_algs_comparison2_zoom.eps>
-(epstopdf)             \includegraphics on input line 1562.
+(epstopdf)             \includegraphics on input line 1577.
 Package epstopdf Info: Output file is already uptodate.
 
-<psi_algs_comparison2_zoom-eps-converted-to.pdf, id=115, 963.6pt x 683.55376pt>
+<psi_algs_comparison2_zoom-eps-converted-to.pdf, id=118, 963.6pt x 683.55376pt>
 File: psi_algs_comparison2_zoom-eps-converted-to.pdf Graphic file (type pdf)
 <use psi_algs_comparison2_zoom-eps-converted-to.pdf>
 Package pdftex.def Info: psi_algs_comparison2_zoom-eps-converted-to.pdf used on
- input line 1562.
+ input line 1577.
 (pdftex.def)             Requested size: 281.85585pt x 199.93607pt.
 Package epstopdf Info: Source file: <iterations_algs_comparison.eps>
 (epstopdf)                    date: 2015-10-03 16:54:22
@@ -746,15 +751,15 @@ o.pdf>
 (epstopdf)                    size: 5624 bytes
 (epstopdf)             Command: <epstopdf --outfile=iterations_algs_comparison-
 eps-converted-to.pdf iterations_algs_comparison.eps>
-(epstopdf)             \includegraphics on input line 1582.
+(epstopdf)             \includegraphics on input line 1597.
 Package epstopdf Info: Output file is already uptodate.
 
-<iterations_algs_comparison-eps-converted-to.pdf, id=116, 529.98pt x 258.9675pt
+<iterations_algs_comparison-eps-converted-to.pdf, id=119, 529.98pt x 258.9675pt
 >
 File: iterations_algs_comparison-eps-converted-to.pdf Graphic file (type pdf)
  <use iterations_algs_comparison-eps-converted-to.pdf>
 Package pdftex.def Info: iterations_algs_comparison-eps-converted-to.pdf used o
-n input line 1582.
+n input line 1597.
 (pdftex.def)             Requested size: 328.82706pt x 160.67671pt.
 Package epstopdf Info: Source file: <iterations_dynamic_alpha_kpalm_comparison.
 eps>
@@ -767,17 +772,17 @@ eps-converted-to.pdf>
 (epstopdf)             Command: <epstopdf --outfile=iterations_dynamic_alpha_kp
 alm_comparison-eps-converted-to.pdf iterations_dynamic_alpha_kpalm_comparison.e
 ps>
-(epstopdf)             \includegraphics on input line 1589.
+(epstopdf)             \includegraphics on input line 1604.
 Package epstopdf Info: Output file is already uptodate.
 
-<iterations_dynamic_alpha_kpalm_comparison-eps-converted-to.pdf, id=117, 529.98
+<iterations_dynamic_alpha_kpalm_comparison-eps-converted-to.pdf, id=120, 529.98
 pt x 252.945pt>
 File: iterations_dynamic_alpha_kpalm_comparison-eps-converted-to.pdf Graphic fi
 le (type pdf)
 
 <use iterations_dynamic_alpha_kpalm_comparison-eps-converted-to.pdf>
 Package pdftex.def Info: iterations_dynamic_alpha_kpalm_comparison-eps-converte
-d-to.pdf used on input line 1589.
+d-to.pdf used on input line 1604.
 (pdftex.def)             Requested size: 328.82706pt x 156.94006pt.
 Package epstopdf Info: Source file: <iterations_dynamic_alpha_eps_kpalm_compari
 son.eps>
@@ -790,17 +795,17 @@ son-eps-converted-to.pdf>
 (epstopdf)             Command: <epstopdf --outfile=iterations_dynamic_alpha_ep
 s_kpalm_comparison-eps-converted-to.pdf iterations_dynamic_alpha_eps_kpalm_comp
 arison.eps>
-(epstopdf)             \includegraphics on input line 1594.
+(epstopdf)             \includegraphics on input line 1609.
 Package epstopdf Info: Output file is already uptodate.
 
-<iterations_dynamic_alpha_eps_kpalm_comparison-eps-converted-to.pdf, id=118, 52
+<iterations_dynamic_alpha_eps_kpalm_comparison-eps-converted-to.pdf, id=121, 52
 9.98pt x 252.945pt>
 File: iterations_dynamic_alpha_eps_kpalm_comparison-eps-converted-to.pdf Graphi
 c file (type pdf)
 
 <use iterations_dynamic_alpha_eps_kpalm_comparison-eps-converted-to.pdf>
 Package pdftex.def Info: iterations_dynamic_alpha_eps_kpalm_comparison-eps-conv
-erted-to.pdf used on input line 1594.
+erted-to.pdf used on input line 1609.
 (pdftex.def)             Requested size: 328.82706pt x 156.94006pt.
 Package epstopdf Info: Source file: <dynamic_alpha_eps_kpalm.eps>
 (epstopdf)                    date: 2015-10-12 12:57:31
@@ -811,15 +816,15 @@ df>
 (epstopdf)                    size: 4947 bytes
 (epstopdf)             Command: <epstopdf --outfile=dynamic_alpha_eps_kpalm-eps
 -converted-to.pdf dynamic_alpha_eps_kpalm.eps>
-(epstopdf)             \includegraphics on input line 1603.
+(epstopdf)             \includegraphics on input line 1618.
 Package epstopdf Info: Output file is already uptodate.
 
-<dynamic_alpha_eps_kpalm-eps-converted-to.pdf, id=119, 513.92pt x 370.38374pt>
+<dynamic_alpha_eps_kpalm-eps-converted-to.pdf, id=122, 513.92pt x 370.38374pt>
 File: dynamic_alpha_eps_kpalm-eps-converted-to.pdf Graphic file (type pdf)
 
 <use dynamic_alpha_eps_kpalm-eps-converted-to.pdf>
 Package pdftex.def Info: dynamic_alpha_eps_kpalm-eps-converted-to.pdf used on i
-nput line 1603.
+nput line 1618.
 (pdftex.def)             Requested size: 352.31624pt x 253.92044pt.
 Package epstopdf Info: Source file: <dense_gaussians.eps>
 (epstopdf)                    date: 2015-11-22 21:03:33
@@ -829,15 +834,15 @@ Package epstopdf Info: Source file: <dense_gaussians.eps>
 (epstopdf)                    size: 10818 bytes
 (epstopdf)             Command: <epstopdf --outfile=dense_gaussians-eps-convert
 ed-to.pdf dense_gaussians.eps>
-(epstopdf)             \includegraphics on input line 1613.
+(epstopdf)             \includegraphics on input line 1628.
 Package epstopdf Info: Output file is already uptodate.
 
-<dense_gaussians-eps-converted-to.pdf, id=120, 420.57124pt x 316.18124pt>
+<dense_gaussians-eps-converted-to.pdf, id=123, 420.57124pt x 316.18124pt>
 File: dense_gaussians-eps-converted-to.pdf Graphic file (type pdf)
 
 <use dense_gaussians-eps-converted-to.pdf>
 Package pdftex.def Info: dense_gaussians-eps-converted-to.pdf used on input lin
-e 1613.
+e 1628.
 (pdftex.def)             Requested size: 211.3883pt x 158.92004pt.
 Package epstopdf Info: Source file: <sparse_gaussians.eps>
 (epstopdf)                    date: 2015-11-22 21:10:22
@@ -847,15 +852,15 @@ Package epstopdf Info: Source file: <sparse_gaussians.eps>
 (epstopdf)                    size: 10933 bytes
 (epstopdf)             Command: <epstopdf --outfile=sparse_gaussians-eps-conver
 ted-to.pdf sparse_gaussians.eps>
-(epstopdf)             \includegraphics on input line 1619.
+(epstopdf)             \includegraphics on input line 1634.
 Package epstopdf Info: Output file is already uptodate.
 
-<sparse_gaussians-eps-converted-to.pdf, id=121, 420.57124pt x 316.18124pt>
+<sparse_gaussians-eps-converted-to.pdf, id=124, 420.57124pt x 316.18124pt>
 File: sparse_gaussians-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sparse_gaussians-eps-converted-to.pdf>
 Package pdftex.def Info: sparse_gaussians-eps-converted-to.pdf used on input li
-ne 1619.
+ne 1634.
 (pdftex.def)             Requested size: 211.3883pt x 158.92004pt.
 Package epstopdf Info: Source file: <dense_gaussians_similarity.eps>
 (epstopdf)                    date: 2015-11-22 21:56:35
@@ -866,15 +871,15 @@ o.pdf>
 (epstopdf)                    size: 3687 bytes
 (epstopdf)             Command: <epstopdf --outfile=dense_gaussians_similarity-
 eps-converted-to.pdf dense_gaussians_similarity.eps>
-(epstopdf)             \includegraphics on input line 1630.
+(epstopdf)             \includegraphics on input line 1645.
 Package epstopdf Info: Output file is already uptodate.
 
-<dense_gaussians_similarity-eps-converted-to.pdf, id=122, 963.6pt x 460.72125pt
+<dense_gaussians_similarity-eps-converted-to.pdf, id=125, 963.6pt x 460.72125pt
 >
 File: dense_gaussians_similarity-eps-converted-to.pdf Graphic file (type pdf)
  <use dense_gaussians_similarity-eps-converted-to.pdf>
 Package pdftex.def Info: dense_gaussians_similarity-eps-converted-to.pdf used o
-n input line 1630.
+n input line 1645.
 (pdftex.def)             Requested size: 211.3883pt x 101.06372pt.
 Package epstopdf Info: Source file: <sparse_gaussians_similarity.eps>
 (epstopdf)                    date: 2015-11-22 21:58:05
@@ -885,15 +890,15 @@ to.pdf>
 (epstopdf)                    size: 3698 bytes
 (epstopdf)             Command: <epstopdf --outfile=sparse_gaussians_similarity
 -eps-converted-to.pdf sparse_gaussians_similarity.eps>
-(epstopdf)             \includegraphics on input line 1636.
+(epstopdf)             \includegraphics on input line 1651.
 Package epstopdf Info: Output file is already uptodate.
 
-<sparse_gaussians_similarity-eps-converted-to.pdf, id=123, 963.6pt x 442.65375p
+<sparse_gaussians_similarity-eps-converted-to.pdf, id=126, 963.6pt x 442.65375p
 t>
 File: sparse_gaussians_similarity-eps-converted-to.pdf Graphic file (type pdf)
  <use sparse_gaussians_similarity-eps-converted-to.pdf>
 Package pdftex.def Info: sparse_gaussians_similarity-eps-converted-to.pdf used 
-on input line 1636.
+on input line 1651.
 (pdftex.def)             Requested size: 211.3883pt x 97.10043pt.
 Package epstopdf Info: Source file: <dense_gaussians_metrics2.eps>
 (epstopdf)                    date: 2016-01-04 10:45:36
@@ -904,15 +909,15 @@ pdf>
 (epstopdf)                    size: 4524 bytes
 (epstopdf)             Command: <epstopdf --outfile=dense_gaussians_metrics2-ep
 s-converted-to.pdf dense_gaussians_metrics2.eps>
-(epstopdf)             \includegraphics on input line 1647.
+(epstopdf)             \includegraphics on input line 1662.
 Package epstopdf Info: Output file is already uptodate.
 
-<dense_gaussians_metrics2-eps-converted-to.pdf, id=124, 963.6pt x 471.7625pt>
+<dense_gaussians_metrics2-eps-converted-to.pdf, id=127, 963.6pt x 471.7625pt>
 File: dense_gaussians_metrics2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use dense_gaussians_metrics2-eps-converted-to.pdf>
 Package pdftex.def Info: dense_gaussians_metrics2-eps-converted-to.pdf used on 
-input line 1647.
+input line 1662.
 (pdftex.def)             Requested size: 446.2658pt x 218.48187pt.
 Package epstopdf Info: Source file: <sparse_gaussians_metrics2.eps>
 (epstopdf)                    date: 2016-01-03 20:36:37
@@ -923,24 +928,24 @@ Package epstopdf Info: Source file: <sparse_gaussians_metrics2.eps>
 (epstopdf)                    size: 4584 bytes
 (epstopdf)             Command: <epstopdf --outfile=sparse_gaussians_metrics2-e
 ps-converted-to.pdf sparse_gaussians_metrics2.eps>
-(epstopdf)             \includegraphics on input line 1653.
+(epstopdf)             \includegraphics on input line 1668.
 Package epstopdf Info: Output file is already uptodate.
 
-<sparse_gaussians_metrics2-eps-converted-to.pdf, id=125, 963.6pt x 471.7625pt>
+<sparse_gaussians_metrics2-eps-converted-to.pdf, id=128, 963.6pt x 471.7625pt>
 File: sparse_gaussians_metrics2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sparse_gaussians_metrics2-eps-converted-to.pdf>
 Package pdftex.def Info: sparse_gaussians_metrics2-eps-converted-to.pdf used on
- input line 1653.
+ input line 1668.
 (pdftex.def)             Requested size: 446.2658pt x 218.48187pt.
- [32 <./dynamic_alpha_kpalm-eps-converted-to.pdf>] [33 <./psi_algs_comparison2-
-eps-converted-to.pdf> <./psi_algs_comparison2_zoom-eps-converted-to.pdf>] [34 <
+ [33 <./dynamic_alpha_kpalm-eps-converted-to.pdf>] [34 <./psi_algs_comparison2-
+eps-converted-to.pdf> <./psi_algs_comparison2_zoom-eps-converted-to.pdf>] [35 <
 ./iterations_algs_comparison-eps-converted-to.pdf> <./iterations_dynamic_alpha_
 kpalm_comparison-eps-converted-to.pdf> <./iterations_dynamic_alpha_eps_kpalm_co
-mparison-eps-converted-to.pdf>] [35 <./dynamic_alpha_eps_kpalm-eps-converted-to
+mparison-eps-converted-to.pdf>] [36 <./dynamic_alpha_eps_kpalm-eps-converted-to
 .pdf> <./dense_gaussians-eps-converted-to.pdf> <./sparse_gaussians-eps-converte
 d-to.pdf> <./dense_gaussians_similarity-eps-converted-to.pdf> <./sparse_gaussia
-ns_similarity-eps-converted-to.pdf>] [36 <./dense_gaussians_metrics2-eps-conver
+ns_similarity-eps-converted-to.pdf>] [37 <./dense_gaussians_metrics2-eps-conver
 ted-to.pdf> <./sparse_gaussians_metrics2-eps-converted-to.pdf>]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
@@ -954,14 +959,14 @@ Missing character: There is no ™ in font cmr12!
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no “ in font cmr12!
- [37
+ [38
 
 ] ("clustering - Copy.aux") ) 
 Here is how much of TeX's memory you used:
- 13745 strings out of 493636
- 259797 string characters out of 3141319
+ 13751 strings out of 493636
+ 259925 string characters out of 3141319
  308905 words of memory out of 3000000
- 16992 multiletter control sequences out of 15000+200000
+ 16995 multiletter control sequences out of 15000+200000
  16247 words of font info for 61 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  42i,12n,42p,10391b,492s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -980,9 +985,9 @@ C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/
 Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Pro
 gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Progr
 am Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "clustering - Copy.pdf" (37 pages, 370965 bytes).
+Output written on "clustering - Copy.pdf" (38 pages, 373152 bytes).
 PDF statistics:
- 259 PDF objects out of 1000 (max. 8388607)
+ 262 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  66 words of extra memory for PDF output out of 10000 (max. 10000000)
 

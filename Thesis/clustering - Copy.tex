@@ -112,28 +112,28 @@
 
 The clustering problem is the task of grouping objects which are similar. It consists of partitioning a dataset into subsets, called clusters, such that the data points in each cluster are similar with respect to a specific criteria. 
 
-The clustering problem is a fundamental problem in machine learning field, and it arises in wide scope of applications, such as data mining, pattern recognition, information retrieval and many others. For example, in image segmentation, one is interested in partitioning the pixels of an image into objects, where each pixel can be described via its location in the image and its color given in RGB format. Another example is learning the probability density of some data, where the data is assumed to be drawn from a mixtures of distributions. Each partition of the data is represented by a unimodal probability density model, and summing of all the cluster models gives a multimodal density for the entire dataset. Vector quantization is yet another example, where large sets of points are represented by their centroid point. This method can be used for data compression, data correction and pattern recognition.
+The clustering problem is a fundamental problem in the machine learning field, and it arises in wide scope of applications, such as data mining, pattern recognition, information retrieval and many others. For example, in image segmentation, one is interested in partitioning the pixels of an image into objects, where each pixel can be described via its location in the image and its color given in RGB format. Another example is learning the probability density of some data, where the data is assumed to be drawn from a mixtures of distributions. Each partition of the data is represented by a unimodal probability density model, and a summation of all the cluster models gives a multimodal density for the entire dataset. Vector quantization is yet another example, where large sets of points are represented by their centroid point. This method can be used for data compression, data correction and pattern recognition.
 
-There are several categories of clustering methods, each has a direct impact of the final clustering structure.
+There are several categories of clustering methods, each has a direct impact on the final clustering structure.
 \begin{enumerate}[(i)]
-	\item Hierarchical versus partitioning clustering: In partitioning clustering the dataset is divided into clusters, whereas in hierarchical clustering each cluster may have sub-clusters, thus forming a tree which leaves are the single points of the dataset.
-	\item Hard versus soft and fuzzy clustering: In hard clustering each data point is assigned to single cluster, versus a soft clustering where each point may be assigned to more than one cluster, hence clusters may overlap. In fuzzy clustering for each point there is a distribution that describes the probability of a point to be part of a cluster.
-	\item Complete versus partial clustering: In complete clustering all points in the dataset are assigned to clusters, whereas in partial clustering some points may be intentionally skipped and are not being assigned to a cluster.
+	\item Hierarchical versus partitioning clustering. In partitioning clustering the dataset is divided into clusters, whereas in hierarchical clustering each cluster may have sub-clusters, thus forming a tree which leaves are the single points of the dataset.
+	\item Hard versus soft and fuzzy clustering. In hard clustering each data point is assigned to single cluster, versus a soft clustering where each point may be assigned to more than one cluster, hence clusters may overlap. In fuzzy clustering for each point there is a distribution that describes the probability of a point to be part of a certain cluster.
+	\item Complete versus partial clustering. In complete clustering all points in the dataset are assigned to clusters, whereas in partial clustering some points may be intentionally skipped and are not being assigned to a cluster.
 \end{enumerate}
 
 Finding the optimal partition of a fixed number of clusters for some given dataset is known to be a NP-hard problem, and hence cannot be solved efficiently. Most algorithms seek to minimize some mathematical criteria, and usually achieve local rather than global minimum solution. In this work we focus on partitioning clustering, where the number of clusters in known in advance. Most partitioning clustering methods iteratively update the cluster centers, and hence they are often referred as center-based clustering methods. We introduce few notations for the upcoming discussion. Let $\mathcal{A}= \left\lbrace a^1, a^2, \ldots ,a^m \right\rbrace$ be a given set of points in $\mathbb{R}^n$, and let $1 < k < m$ be a fixed given number of clusters. The clustering problem consists of partitioning the dataset $\mathcal{A}$ into $k$ subsets $\left\lbrace C^1, C^2, \ldots ,C^k \right\rbrace$, called clusters. For each $l=1, 2, \ldots ,k$, the cluster $C^l$ is represented by its center $x^l \in \mathbb{R}^n$. We describe several well-known center-based clustering algorithms.
 \begin{enumerate}[(i)]
-	\item K-means algorithm: This algorithm is probably the most famous within the clustering scope, and dates back to MacQueen (1967). The k-means algorithm partitions the data into $k$ sets. The solution is then a set of $k$ centers, each of which is located at the centroid of the data for which it is the closest center. The k-means algorithm performs hard clustering, and each point is labeled according to its closest center. The objective function that the k-means algorithm minimizes is
+	\item The k-means algorithm. This algorithm is probably the most famous within the clustering scope, and dates back to MacQueen (1967). The k-means algorithm partitions the data into $k$ sets. The solution is then a set of $k$ centers, each of which is located at the centroid of the data for which it is the closest center. The k-means algorithm performs hard clustering, and each point is labeled according to its closest center. This algorithm can be discribed as an optimization algorithm (see precise details below) which minimizes the following objective function
 	\begin{equation*}
 		f_{KM}(x) = \sum\limits_{i=1}^{m}\min\limits_{1 \le l \le k} \norm{a^i-x^l}^2.
 	\end{equation*}
 	The simplicity of the algorithm both in the theoretical and implementation aspects made it very popular.
-	\item Fuzzy k-means (FKM) algorithm: The FKM algorithm is a soft clustering method. For each data point the result of the FKM algorithm is a distribution of membership over the clusters. The objective function that the FKM algorithm minimizes is
+	\item Fuzzy k-means (FKM) algorithm. The FKM algorithm is a soft clustering method. For each data point the result of the FKM algorithm is a distribution of membership over the clusters. The objective function that the FKM algorithm minimizes is
 	\begin{equation*}
 		f_{FKM}(x) = \sum\limits_{i=1}^{m}\sum\limits_{l=1}^{k}(w^i_l)^\beta \norm{a^i-x^l}^2.
 	\end{equation*}
-	The parameter $w^i_l$ denotes the probability that data point $a^i$ is assigned to cluster $x^l$, thus it is under the constraints $\sum_{l=1}^{k} w^i_l = 1$ for all $1 \leq i \leq m$ and $w^i_l \geq 0$. The parameter $\beta > 1$ governs the "fuzzy partition". Setting $\beta = 1$ results in the standard k-means algorithm.
-	\item Expectation-Maximization (EM) algorithm: The EM algorithms is used extensively in statistical estimation problems for learning mixtures of distributions. It is a soft clustering algorithm. The objective function that EM maximizes is 
+	The parameter $w^i_l$ denotes the probability that data point $a^i$ is assigned to cluster $x^l$, thus it is under the constraints $\sum_{l=1}^{k} w^i_l = 1$ for all $1 \leq i \leq m$ and $w^i_l \geq 0$. The parameter $\beta > 1$ governs the "fuzzy partition". Setting $\beta = 1$ results in the standard k-means algorithm (see \Cref{State_Clustering_Reformulation} for more details).
+	\item Expectation-Maximization (EM) algorithm. The EM algorithm is used extensively in statistical estimation problems for learning mixtures of distributions. It is a soft clustering algorithm. The objective function that EM maximizes is 
 	\begin{equation*}
 		f_{EM} = \sum\limits_{i=1}^{m} \log \left( \sum\limits_{l=1}^{k} p\left(a^i|x^l\right) p\left(x^l\right) \right),
 	\end{equation*}
@@ -141,31 +141,31 @@ Finding the optimal partition of a fixed number of clusters for some given datas
 \end{enumerate}
 An interesting paper of Teboulle \cite{T2007} shows that these center-based clustering algorithms can be recovered from the proposed continuous optimization framework. The smoothing methodologies for the clustering problem are based on nonlinear means and on approximation of appropriate asymptotic functions.
 
-Most of the existing clustering methods are sensitive to the starting point, namely choosing different starting point result in significant changes in the final clustering. There are plethora of heuristic initialization method. One such initialization method is choosing random $k$ data points as a staring centers for clustering, assuming uniform distribution or some other prior distribution on the data. Another popular method is k-means++, where the first center is chosen at random from the dataset, and for each $2 \leq l \leq k$, the center $x^l$ is the furthest point from the points chosen so far.
+Most of the existing clustering methods are sensitive to the starting point, namely choosing different starting point result in significant changes in the final clustering. There are plethora of heuristic initialization methods. One such initialization method is to choose $k$ random data points as staring centers, assuming uniform distribution or some other prior distribution on the data. Another popular method is k-means++, where the first center is chosen at random from the dataset, and for each $2 \leq l \leq k$, the center $x^l$ is the furthest data point from the data points chosen so far.
 
 %In this work we focus on partitioning clustering, where the number of clusters in known in advance. Most partitioning clustering methods iteratively update the cluster centers, and hence they are often referred as center-based clustering methods. These clustering methods are usually classified as \textit{hard} and \textit{soft}, depending on the way the data points are assigned to clusters. Hard clustering produces a disjoint partition of the data, namely each point is assigned to exactly one cluster. Soft clustering is a relaxation of the disjoint partition demand, and it allows overlapping of the clusters.
 %
 %The first important category of clustering algorithms is the iterative optimization clustering algorithms. It includes algorithms such as the \textit{k-means} and the \textit{Expectation-Maximization} (EM) algorithms and many more. The k-means algorithm is a very popular data clustering algorithm. It iteratively locates the 
 
 % There exist many approximation algorithms and even more heuristic approaches for the clustering problem. In this work we study the hard clustering center-based method from continuous optimization perspective. 
-The starting point of our work is a formulation of the clustering problem which consists of minimizing the sum of finite collection of min-functions, which is a nonsmooth and nonconvex optimization problem, in its most the general case. The clustering problem is given by
+We begin this work with a formulation of the clustering problem which consists of minimizing the sum of finite collection of min-functions. This is a nonsmooth and nonconvex optimization problem, in its most general case. The clustering problem is given by
 \begin{equation}
 	\min\limits_{x \in \mathbb{R}^{nk}} \left\lbrace F(x) := \sum\limits_{i=1}^{m} \min\limits_{1 \le l \le k} d(x^l,a^i) \right\rbrace , \label{StateEq1}
 \end{equation}
-\noindent with $\textit{d}(\cdot ,\cdot)$ being a distance-like function.
+where $x=\left( x^1,x^2, \ldots, x^k \right) \in \rr^{nk}$ with $\textit{d}(\cdot ,\cdot)$ being a distance-like function.
 
 %Let $\mathcal{A}= \left\lbrace a^1, a^2, \ldots ,a^m \right\rbrace$ be a given set of points in $\mathbb{R}^n$, and let $1 < k < m$ be a fixed given number of clusters. The clustering problem consists of partitioning the dataset $\mathcal{A}$ into $k$ subsets $\left\lbrace C^1, C^2, \ldots ,C^k \right\rbrace$, called clusters. For each $l=1, 2, \ldots ,k$, the cluster $C^l$ is represented by its center $x^l \in \mathbb{R}^n$, and we are interested to determine $k$ cluster centers $\left\lbrace x^1, x^2, \ldots ,x^k \right\rbrace$ such that the sum of certain proximity measures from each data point $a^i$, $i=1, 2, \ldots ,m$, to a nearest cluster center $x^l$ is minimized. We define the vector of all centers by  $x = (x^1, x^2, \ldots , x^k) \in \mathbb{R}^{nk}$.
 
-The lack of smoothness in this formulation can be overcome, yet the nonconvex nature of the clustering problem shall accompany the discussions throughout this work. Significant amount of studies have been made on convex models, even though in many cases the original optimization problem is nonconvex. To overcome the lack of convexity the common approach is usually achieved by relaxation of the original problem. Motivated by papers of Attouch et al. \cite{AB2009, ABS2013} that established convergence of the sequences generated by the proximal Gauss-Seidel scheme in the general nonconvex and nonsmooth settings, and similar result for the proximal-forward-backward algorithm applied to the nonconvex and nonsmooth minimization of the sum of a nonsmooth function with a smooth one. This approach assumes that the objective function to be minimized satisfies the Kurdyka-{\L}ojasiewicz (KL) property. The convergence results were further extended in the recent work by Bolte et al. \cite{BST2014}, where the objective function is a function of finite blocks of variables. 
+We focus on two cases of distance-like functions. The first is the squared Euclidean norm, which is the standard proximity measure used in the k-means algorithm. For this case, we derive an equivalent smooth optimization problem for the clustering problem presented in (\ref{StateEq1}) and prove convergence result for the suggested algorithm via the methodology which was recently developed in \cite{BST2014} and will be discussed in great details below. The second distance-like function that we study is the Euclidean norm. In this case we present an approximation model, in order to overcome the lack of smoothness in the problem. Then we propose an algorithm to solve the approximated model which combines ideas which were used in the squared Euclidean case \textbf{????}. We present numeric experiments, that show the superiority of the Euclidean norm distance function for datasets in which the data points are spread relatively sparsely form their centers.
 
-We focus on two cases of distance-like functions. The first is the squared Euclidean norm, which is the standard proximity measure used by k-means. For this case, we derive an equivalent smooth optimization problem for the clustering problem presented in (\ref{StateEq1}) and prove our convergence result for the suggested algorithm via the methodology which is discussed in \cite{BST2014}. The second distance-like function that we study is the Euclidean norm. In this case we present two approximations, in order to overcome the lack of smoothness in the problem, and then proceed with the same methodology as in the first case. We present numeric experiments, that show the superiority of the Euclidean norm distance function for datasets in which the data points are spread relatively sparsely form their centers.
+The lack of smoothness in this formulation can be overcome, yet the nonconvex nature of the clustering problem will accompany the discussions throughout this work. Significant amount of studies have been made on convex models, even though in many cases the original optimization problem is nonconvex. To overcome the lack of convexity, one of the common approaches is usually achieved by considering a convex relaxation of the original problem. In this thesis we take a different route and consider the problem in its original nonconvex form. Very recently this complicated route became more relevant and interesting thanks to few papers which pave the way for dealing with nonconvex problems using sophisticated mathematical tools as will be explained later.
 
 \noindent \textbf{Outline of the thesis.} This work is organized as follows. In the following section we transform the initial formulation  of the clustering problem into a smooth one. In addition, we introduce 
 the KL theory and the general methodology that will be used in our analysis of the proposed algorithms. In section 3 and 4 we suggest two algorithms, KPLAM and $\varepsilon$-KPALM, respectively. KPALM addresses the clustering problem with squared Euclidean norm distance-like function and $\varepsilon$-KPALM the standard Euclidean norm distance function. Employing the methodology of Section 2 we establish our convergence results.  In section 5 we prove the convergence of k-means algorithm to a critical point and under certain assumption extend the convergence to a local minimum. Finally, in Section 6 we compare the performance of these algorithm according to some common criteria.
 
 \section{Problem Reformulation and Mathematical Tools}
 
-\subsection{Reformulation of the Clustering Problem}
+\subsection{Reformulation of the Clustering Problem} \label{State_Clustering_Reformulation}
 
 We begin with a reformulation of the clustering problem which will be the basis for our developments in this work. The reformulation is based on the following fact:
 \begin{equation*}
@@ -220,9 +220,9 @@ In this subsection we give a brief review of the main developments established i
 \end{definition}
 In the nonsmooth context, as in the smooth case, the well-known Fermat's rule remains unchanged, that is, if $x \in \rr^d$ is a local minimizer of $\sigma$ then $0 \in \partial\sigma(x)$. Points whose subdifferential contains $0$ are called \textit{critical points}, and the set of all critical points of $\sigma$ is denoted by crit$\sigma$.
 
-Now we present the Kurdyka-{\L}ojasiewicz property, which plays a central role in PALM's analysis. Let $\eta \in (0,+\infty]$. Denote the following class of functions
+Now we present the Kurdyka-{\L}ojasiewicz property, which plays a central role in PALM's analysis. Let $\eta \in (0,+\infty]$. Denote the following class of concave functions
 \begin{equation*}
-	\Phi_{\eta} = \left\lbrace \varphi \in C\left([0,\eta), \rr_+ \right)  , concave : \; \varphi \in C^1\left((0,\eta)\right), \; \varphi'>0, \; \varphi(0)=0 \right\rbrace .
+	\Phi_{\eta} = \left\lbrace \varphi \in C\left([0,\eta), \rr_+ \right)  , : \; \varphi \in C^1\left((0,\eta)\right), \; \varphi'>0, \; \varphi(0)=0 \right\rbrace .
 \end{equation*}
 %Denote by $\Phi_{\eta}$ the class of all concave and continuous functions $\varphi:[0,\eta) \rightarrow \rr_+$ which satisfy the following conditions
 %\begin{enumerate}[(i)]
@@ -254,7 +254,7 @@ Now we present the Kurdyka-{\L}ojasiewicz property, which plays a central role i
 	\end{equation*}
 	\item A function $h:\rr^d \rightarrow (-\infty, +\infty]$ is called semi-algebraic if its graph
 	\begin{equation*}
-		\left\lbrace (u,t)\in\rr^{d+1} : \; h(u)=t \right\rbrace
+		\left\lbrace (u,t)\in\rr^{d+1} : \; h(u)=t \right\rbrace ,
 	\end{equation*}
 	is a semi-algebraic subset of $\rr^{d+1}$.
 \end{enumerate}
@@ -263,17 +263,24 @@ Now we present the Kurdyka-{\L}ojasiewicz property, which plays a central role i
 \begin{theorem} \label{SA_is_KL}
 Let $\sigma:\rr^d \rightarrow (-\infty, +\infty]$ be a proper and lower semicontinuous function. If $\sigma$ is semi-algebraic then if satisfies the KL property at any point of dom $\sigma$.
 \end{theorem}
-The class of semi-algebraic function is very broad, it includes real polynomial functions; indicator functions of semi-algebraic sets; finite sums and products of semi-algebraic functions; composition of semi-algebraic functions, and many more.
+The class of semi-algebraic functiods is very broad, it includes real polynomial functions; indicator functions of semi-algebraic sets; finite sums and products of semi-algebraic functions; composition of semi-algebraic functions, and many more.
+
+Attouch et al. \cite{AB2009, ABS2013} established convergence of the sequences generated by the proximal Gauss-Seidel scheme in the general nonconvex and nonsmooth settings, and similar result for the proximal-forward-backward algorithm applied to the nonconvex and nonsmooth minimization of the sum of a nonsmooth function with a smooth one. This approach assumes that the objective function to be minimized satisfies the Kurdyka-{\L}ojasiewicz (KL) property. The convergence results were further extended in the recent work by Bolte et al. \cite{BST2014}, where the objective function is a function of finite blocks of variables. Additional contribution of \cite{BST2014} is the general methodology to prove convergence of generic algorithm in the setting of nonconvex and nonsmooth optimization problems.
 
 Equipped with these definitions, we present the methodology that was used for PALM algorithm, and will be used several times throughout this work. Let $\Psi : \rr^d \rightarrow ( -\infty, +\infty ]$ be a proper and lower semicontinuous function which is bounded from below and consider the problem
 \begin{equation*}
-	(P) \quad \left\lbrace \Psi(z) : z \in \rr^d \right\rbrace .
+	(P) \quad \min \left\lbrace \Psi(z) : z \in \rr^d \right\rbrace .
 \end{equation*} 
 Suppose that we are given a generic algorithm $\mathcal{A}$ which generates a sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ via the following scheme:
 \begin{equation*}
 	z^0 \in \mathbb{R}^d, \: z^{k+1} \in \mathcal{A}\left(z^k\right), \quad k=0,1,\ldots.
 \end{equation*}
-Building upon \cite{AB2009,ABS2013}, the following three requirements are sufficient to assure the convergence of the whole sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ to a critical point of $\Psi$.
+The set of all limit points is denoted by $\omega\left(z^0\right)$, and defined by
+\begin{equation*}
+	\left\lbrace \overline{z} \in \rr^d : \exists \text{ an increasing sequence of integers } \left\lbrace k_l\right\rbrace_{l \in \nn} \text{ such that } z^{k_l} \rightarrow \overline{z} \text{ as } l \rightarrow \infty \right\rbrace .
+\end{equation*}
+
+The purpose of the proposed methodology is to assure the convergence of the whole sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ to a critical point of $\Psi$.
 \begin{enumerate}[(C1)]
 	\item \textit{Sufficient decrease property:} There exists a positive constant $\rho_1$, such that
 	\begin{equation*}
@@ -300,23 +307,24 @@ Due to \Cref{SA_is_KL}, property (C3) follows whenever $\Psi$ is a semi-algebrai
 (\textit{M})\quad minimize $\Psi(x,y):=f(x)+g(y)+H(x,y)$ over all $(x,y) \in \mathbb{R}^n \times \mathbb{R}^m$,
 \end{center}
 where $f:\mathbb{R}^n \rightarrow \left(-\infty,+\infty\right]$ and $g:\mathbb{R}^n \rightarrow \left(-\infty,+\infty\right]$ are proper and lower semicontinuous functions while $H:\mathbb{R}^n \times \mathbb{R}^m \rightarrow \mathbb{R}$ is a $C^1$ function. In addition, partial gradients of $H$ are Lipschitz continuous, namely, $H(\cdot, y) \in C^{1,1}_{L_1(y)}$ and $H(x,\cdot) \in C^{1,1}_{L_2(x)}$.
-PALM is alternating the steps of the proximal forward-backward (PFB) scheme. PFB scheme tackles the problem of minimizing the sum of a smooth function $h$ with a nonsmooth one $\sigma$, and can be viewed as the proximal regularization of $h$ linearized at a given point $x^k$, that is,
+%PALM is alternating the steps of the proximal forward-backward (PFB) scheme. PFB scheme tackles the problem of minimizing the sum of a smooth function $h$ with a nonsmooth one $\sigma$, and can be viewed as the proximal regularization of $h$ linearized at a given point $x^k$, that is,
+%\begin{equation*}
+%	x^{k+1} \in \arg\!\min_{x \in \rr^d} \left\lbrace \left\langle x - x^k, \nabla h\left(x^k\right) \right\rangle + \frac{t}{2}\norm{x-x^k}^2 + \sigma(x)\right\rbrace,\; (t>0).
+%\end{equation*}
+%Adopting this scheme on
+As mentioned in \cite{BST2014} the PALM algorithm is nothing but alternating the classical proximal gradient (aka Proximal Forward-Backward) over the two blocks $(x,y)$. This leads towards the following approximations 
 \begin{equation*}
-	x^{k+1} \in \arg\!\min_{x \in \rr^d} \left\lbrace \left\langle x - x^k, \nabla h\left(x^k\right) \right\rangle + \frac{t}{2}\norm{x-x^k}^2 + \sigma(x)\right\rbrace,\; (t>0).
-\end{equation*}
-Adopting this scheme on the two blocks $(x,y)$ leads towards the following approximations 
-\begin{equation*}
-	\widehat{\Psi}\left(x,y^k\right) = \left\langle x-x^k, \nabla_x H\left( x^k, y^k \right)\right\rangle + \frac{c^k}{2}\norm{x-x^k}^2 + f(x), \; (c_k>0),
+	\widehat{\Psi}\left(x,y^k\right) = \left\langle x-x^k, \nabla_x H\left( x^k, y^k \right)\right\rangle + \frac{c_k}{2}\norm{x-x^k}^2 + f(x), \; (c_k>0),
 \end{equation*}
 and
 \begin{equation*}
-	\widetilde{\Psi}\left(x^{k+1},y\right) = \left\langle y-y^k, \nabla_y H\left( x^{k+1}, y^k \right)\right\rangle + \frac{d^k}{2}\norm{y-y^k}^2 + g(y), \; (d_k>0).
+	\widetilde{\Psi}\left(x^{k+1},y\right) = \left\langle y-y^k, \nabla_y H\left( x^{k+1}, y^k \right)\right\rangle + \frac{d_k}{2}\norm{y-y^k}^2 + g(y), \; (d_k>0).
 \end{equation*}
-Thus, PALM is alternating between the following two subproblems
+Thus, PALM can be summarized as follows
 \begin{center}
 $x^{k+1} \in \arg\!\min \left\lbrace \widehat{\Psi}(x,y^k) : \; x \in \rr^n \right\rbrace$ \quad and \quad $y^{k+1} \in \arg\!\min \left\lbrace \widetilde{\Psi}\left(x^{k+1},y\right) : \; y \in \rr^m \right\rbrace$.
 \end{center}
-Assuming $\Psi$ is KL function and the generated sequence by PALM, $\left\lbrace z^k:=\left( x^k, y^k\right)\right\rbrace_{k \in \nn}$, is bounded, Bolte et al. \cite{BST2014} proved that the sequence obeys properties (C1) and (C2), and it converges to a critical point of $\Psi$. 
+Assuming $\Psi$ is KL function and the generated sequence by PALM, $\left\lbrace z^k:=\left( x^k, y^k\right)\right\rbrace_{k \in \nn}$, is bounded, Bolte et al. \cite{BST2014} proved that the sequence is a gradient-like descent sequence, and thus it converges to a critical point of $\Psi$. 
 %Bolte et al. \ref{BST2014} proved the properties (C1) and (C2), assuming $\Psi$ is KL function and the generated sequence by PALM, $\left\lbrace z^k:=\left( x^k, y^k\right)\right\rbrace_{k \in \nn}$, is bounded, and they further established the convergence of $\left\lbrace z^k\right\rbrace_{k \in \nn}$ to a critical point of $\Psi$.
 
 \section{Clustering: The Squared Euclidean Norm Case} \label{State_Clustering_SqNorm}
