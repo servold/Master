@@ -1,0 +1,8 @@
+\select@language {american}
+\contentsline {figure}{\numberline {1}{\ignorespaces Comparison of the objective values for different values of $\alpha $.\relax }}{34}
+\contentsline {figure}{\numberline {2}{\ignorespaces Comparison of objective function values for KMEANS, KMEANS++, KPALM and KMEANS++.\relax }}{35}
+\contentsline {figure}{\numberline {3}{\ignorespaces Comparison of number of iterations needed to reach 1e-3 precision of $\Psi $.\relax }}{36}
+\contentsline {figure}{\numberline {4}{\ignorespaces Comparison of the objective values for different values of $\alpha $.\relax }}{37}
+\contentsline {figure}{\numberline {5}{\ignorespaces Two datasets, each 300 points.\relax }}{37}
+\contentsline {figure}{\numberline {6}{\ignorespaces Results of clustering algorithms for dense and sparse datasets.\relax }}{37}
+\contentsline {figure}{\numberline {7}{\ignorespaces Comparison of metrics between clusterings for dense and sparse datasets.\relax }}{38}

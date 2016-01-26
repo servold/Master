@@ -98,8 +98,15 @@
 %
 
 \tableofcontents
-
 \clearpage
+{%
+\let\oldnumberline\numberline%
+\renewcommand{\numberline}{\figurename~\oldnumberline}%
+\listoffigures%
+}
+\clearpage
+%\listoftables
+%\clearpage
 
 \section{Introduction}
 
