@@ -1,16 +1,16 @@
 \select@language {american}
 \contentsline {section}{\numberline {1}Introduction}{2}
-\contentsline {section}{\numberline {2}Problem Reformulation and Mathematical Tools}{3}
-\contentsline {subsection}{\numberline {2.1}Reformulation of the Clustering Problem}{3}
-\contentsline {subsection}{\numberline {2.2}Introduction to the PALM Theory}{4}
-\contentsline {section}{\numberline {3}Clustering: The Squared Euclidean Norm Case}{7}
-\contentsline {subsection}{\numberline {3.1}Clustering with PALM}{7}
-\contentsline {section}{\numberline {4}Clustering: The Euclidean Norm Case}{12}
-\contentsline {subsection}{\numberline {4.1}A Smoothed Clustering Problem}{12}
-\contentsline {subsection}{\numberline {4.2}Different Approach Towards Solving the Smoothed H$\varepsilon $}{21}
-\contentsline {section}{\numberline {5}Returning to KMEANS}{25}
-\contentsline {subsection}{\numberline {5.1}Similarity to KMEANS}{25}
-\contentsline {subsection}{\numberline {5.2}KMEANS Local Minima Convergence Proof}{27}
-\contentsline {section}{\numberline {6}Numeric Results}{29}
-\contentsline {subsection}{\numberline {6.1}Iris Dataset}{29}
-\contentsline {subsection}{\numberline {6.2}Synthetic Dataset}{30}
+\contentsline {section}{\numberline {2}Problem Reformulation and Mathematical Tools}{5}
+\contentsline {subsection}{\numberline {2.1}Reformulation of the Clustering Problem}{5}
+\contentsline {subsection}{\numberline {2.2}Introduction to the PALM Theory}{5}
+\contentsline {section}{\numberline {3}Clustering: The Squared Euclidean Norm Case}{8}
+\contentsline {subsection}{\numberline {3.1}Clustering with PALM}{8}
+\contentsline {section}{\numberline {4}Clustering: The Euclidean Norm Case}{14}
+\contentsline {subsection}{\numberline {4.1}A Smoothed Clustering Problem}{14}
+\contentsline {subsection}{\numberline {4.2}Different Approach Towards Solving the Smoothed H$\varepsilon $}{23}
+\contentsline {section}{\numberline {5}Returning to KMEANS}{27}
+\contentsline {subsection}{\numberline {5.1}Similarity to KMEANS}{27}
+\contentsline {subsection}{\numberline {5.2}KMEANS Local Minima Convergence Proof}{29}
+\contentsline {section}{\numberline {6}Numeric Results}{31}
+\contentsline {subsection}{\numberline {6.1}Iris Dataset}{31}
+\contentsline {subsection}{\numberline {6.2}Synthetic Dataset}{32}
