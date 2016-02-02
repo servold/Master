@@ -1,0 +1,173 @@
+ \chapter{Problem Reformulation and Mathematical Tools} \label{Chapter2}
+
+\noindent \noindent \hrulefill
+
+\section{Reformulation of the Clustering Problem} \label{State_Clustering_Reformulation}
+
+We begin with a reformulation of the clustering problem which will be the basis for our developments in this work. The reformulation is based on the following fact:
+\begin{equation*}
+	\min\limits_{1 \leq l \leq k} u_l = \min \left\lbrace \langle u,v \rangle : v \in \Delta \right\rbrace ,
+\end{equation*}
+where $\Delta$ denotes the well-known simplex defined by
+\begin{equation*}
+	\Delta = \left\lbrace u \in \mathbb{R}^k : \sum\limits_{l=1}^{k} u_l = 1, \: u \geq 0 \right\rbrace .
+\end{equation*}
+Using this fact in Problem (\ref{StateEq1}) and introducing new variables $w^i \in \mathbb{R}^k$, $i=1,2, \ldots, m$, gives a smooth reformulation of the clustering problem
+\begin{equation}
+	\min\limits_{x \in \mathbb{R}^{nk}} \sum\limits_{i=1}^{m} \min\limits_{w^i \in \Delta} \langle w^i , d^i(x) \rangle , \label{StateEq2}
+\end{equation}
+where 
+\begin{equation*}
+d^{i}(x) = (d(x^1,a^i), d(x^2,a^i), \ldots , d(x^k,a^i)) \in \mathbb{R}^k, \quad i=1, 2, \ldots , m.
+\end{equation*}
+Replacing further the constraint $w^i \in \Delta$ by adding the indicator function $\delta_{\Delta}(\cdot)$, which is defined to be $0$ in $\Delta$ and $\infty$ otherwise, to the objective function, results in a equivalent formulation
+\begin{equation}
+	\min\limits_{x \in \mathbb{R}^{nk} , w \in \mathbb{R}^{km}} \left\lbrace \sum\limits_{i=1}^{m} \left( \langle w^i , d^i(x) \rangle + \delta_{\Delta}(w^i) \right) \right\rbrace , \label{StateEq3}
+\end{equation}
+where $w = (w^1, w^2, \ldots , w^m) \in \mathbb{R}^{km}$.
+Finally, for the simplicity of the yet to come expositions, we define the following functions
+\begin{center}
+$H(w,x) := \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle \quad$ and $\quad G(w) = \sum\limits_{i=1}^{m} G^i(w^i) := \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i) .$
+\end{center}
+
+Replacing the terms in Problem (\ref{StateEq3}) with the functions defined above gives a compact equivalent form of the original clustering problem
+
+\begin{equation}
+	\min \left\lbrace \Psi(z) := H(w,x) + G(w) \mid z := (w,x) \in \mathbb{R}^{km} \times \mathbb{R}^{nk} \right\rbrace . \label{StateEq4}
+\end{equation}
+
+\section{Introduction to the PALM Theory} \label{State_PALM_Theory}
+
+In this subsection we give a brief review of the main developments established in \cite
+{BST2014}. These developments which include the proximal alternating linearized minimization (PALM) algorithm and general procedure for proving global convergence of generic algorithm play a central rule in this work. First, let us recall several definitions which are needed for the upcoming discussion.
+
+\begin{definition}[Subdifferentials] \label{subdiff_def}
+	Let $\sigma : \rr^d \rightarrow (-\infty,+\infty]$ be a proper and lower semicontinuous function.
+	\begin{enumerate}[(i)]
+		\item For a given $x \in dom\;\sigma := \left\lbrace x \in \rr^d : \; \sigma(x) < \infty \right\rbrace$, the \textit{Fr\'echet subdifferential} of $\sigma$ at $x$, written $\widehat{\partial}\sigma(x)$, is the set of all vectors $u \in \rr^d$ which satisfy
+		\begin{equation*}
+			\lim\limits_{y \neq x} \inf\limits_{y \rightarrow x} \frac{\sigma(y) - \sigma(x) - \left\langle u, y-x \right\rangle}{\norm{y-x}} \geq 0.
+		\end{equation*}
+		When $x \notin dom\sigma$, we set $\widehat{\partial}\sigma(x) = \emptyset$.
+		\item The \textit{limiting-subdifferential}, or subdifferential in short, of $\sigma$ at $x \in \rr^n$, written $\partial\sigma(x)$, is defined through the following closure process
+		\begin{equation*}
+			\partial\sigma(x) := \left\lbrace u \in \rr^d : \exists x^k \rightarrow x, \; \sigma(x^k)\rightarrow \sigma(x) \text{ and } u^k \in \widehat{\partial}\sigma(x^k) \text{ as } k \rightarrow \infty \right\rbrace.
+		\end{equation*}
+	\end{enumerate}
+\end{definition}
+In the nonsmooth context, as in the smooth case, the well-known Fermat's rule remains unchanged, that is, if $x \in \rr^d$ is a local minimizer of $\sigma$ then $0 \in \partial\sigma(x)$. Points whose subdifferential contains $0$ are called \textit{critical points}, and the set of all critical points of $\sigma$ is denoted by crit$\sigma$.
+
+Now we present the Kurdyka-{\L}ojasiewicz property, which plays a central role in PALM's analysis. Let $\eta \in (0,+\infty]$. Denote the following class of concave functions
+\begin{equation*}
+	\Phi_{\eta} = \left\lbrace \varphi \in C\left([0,\eta), \rr_+ \right)  , : \; \varphi \in C^1\left((0,\eta)\right), \; \varphi'>0, \; \varphi(0)=0 \right\rbrace .
+\end{equation*}
+
+\begin{definition}[Kurdyka-{\L}ojasiewicz property]
+	Let $\sigma: \rr^d \rightarrow (-\infty,+\infty]$ be proper and lower semicontinuous.
+	\begin{enumerate}[(i)]
+		\item The function $\sigma$ is said to have the \textit{Kurdyka-{\L}ojasiewicz (KL) property} at $\overline{u} \in dom \; \partial\sigma :=  \left\lbrace u \in \rr^d : \; \partial\sigma \neq \emptyset \right\rbrace$ if there exist $\eta \in (0,+\infty]$, a neighborhood $U$ of $\overline{u}$ and a function $\varphi \in \Phi_{\eta}$, such that for all
+		\begin{equation*}
+			u \in U \cap \left\lbrace x \in \rr^d : \; \sigma(\overline{u}) < \sigma(x) < \sigma(\overline{u}) + \eta \right\rbrace,
+		\end{equation*}
+		the following inequality holds
+		\begin{equation*}
+			\varphi'(\sigma(u) - \sigma(\overline{u}))dist(0,\partial\sigma(u)) \geq 1,
+		\end{equation*}
+		where $dist(x,S) := \inf \left\lbrace \norm{y-x} : \; y \in S\right\rbrace$ denotes the distance from $x \in \rr^d$ to $S \subset \rr^d$.
+		\item If $\sigma$ satisfy the KL property at each point of $dom\;\sigma$ then $\sigma$ is called a \textit{KL function}.
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[Semi-algebraic sets and functions] 
+\begin{enumerate}[(i)]
+	\item A subset $S \subset \rr^d$ is a real semi-algebraic set if there exists a finite number of real polynomial functions $g_{ij}, h_{ij}: \rr^d \rightarrow \rr$ such that
+	\begin{equation*}
+		S = \bigcup\limits_{j=1}^{p} \bigcap\limits_{i=1}^{q} \left\lbrace u \in \rr^d : \; g_{ij}=0 \text{ and } h_{ij}(u)<0 \right\rbrace
+	\end{equation*}
+	\item A function $h:\rr^d \rightarrow (-\infty, +\infty]$ is called semi-algebraic if its graph
+	\begin{equation*}
+		\left\lbrace (u,t)\in\rr^{d+1} : \; h(u)=t \right\rbrace ,
+	\end{equation*}
+	is a semi-algebraic subset of $\rr^{d+1}$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem} \label{SA_is_KL}
+Let $\sigma:\rr^d \rightarrow (-\infty, +\infty]$ be a proper and lower semicontinuous function. If $\sigma$ is semi-algebraic then if satisfies the KL property at any point of dom $\sigma$.
+\end{theorem}
+The class of semi-algebraic functiods is very broad, it includes real polynomial functions; indicator functions of semi-algebraic sets; finite sums and products of semi-algebraic functions; composition of semi-algebraic functions, and many more.
+
+Attouch et al. \cite{AB2009, ABS2013} established convergence of the sequences generated by the proximal Gauss-Seidel scheme in the general nonconvex and nonsmooth settings, and similar result for the proximal-forward-backward algorithm applied to the nonconvex and nonsmooth minimization of the sum of a nonsmooth function with a smooth one. This approach assumes that the objective function to be minimized satisfies the Kurdyka-{\L}ojasiewicz (KL) property. The convergence results were further extended in the recent work by Bolte et al. \cite{BST2014}, where the objective function is a function of finite blocks of variables. Additional contribution of \cite{BST2014} is the general methodology to prove convergence of generic algorithm in the setting of nonconvex and nonsmooth optimization problems.
+
+Equipped with these definitions, we present the methodology that was used for PALM algorithm, and will be used several times throughout this work. Let $\Psi : \rr^d \rightarrow ( -\infty, +\infty ]$ be a proper and lower semicontinuous function which is bounded from below and consider the problem
+\begin{equation*}
+	(P) \quad \min \left\lbrace \Psi(z) : z \in \rr^d \right\rbrace .
+\end{equation*} 
+Suppose that we are given a generic algorithm $\mathcal{A}$ which generates a sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ via the following scheme:
+\begin{equation*}
+	z^0 \in \mathbb{R}^d, \: z^{k+1} \in \mathcal{A}\left(z^k\right), \quad k=0,1,\ldots.
+\end{equation*}
+
+The purpose of the proposed methodology is to assure the convergence of the whole sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ to a critical point of $\Psi$. The set of all limit points is denoted by $\omega\left(z^0\right)$, and defined by
+\begin{equation*}
+	\left\lbrace \overline{z} \in \rr^d : \exists \text{ an increasing sequence of integers } \left\lbrace k_l\right\rbrace_{l \in \nn} \text{ such that } z^{k_l} \rightarrow \overline{z} \text{ as } l \rightarrow \infty \right\rbrace .
+\end{equation*}
+
+\begin{definition}
+	Let $\sigma: \rr^d \rightarrow (-\infty, +\infty]$ be a proper and lsc function. A sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is called \textit{a gradient-like descent sequence} for $\sigma$ if for all $k \in \nn$ the following two conditions hold:
+	\begin{enumerate}[(C1)]
+		\item \textit{Sufficient decrease property:} There exists a positive scalar $\rho_1$ such that
+		\begin{equation*}
+			\rho_1 \norm{z^{k+1} - z^k}^2 \leq \sigma\left( z^k \right) - \sigma \left( z^{k+1} \right) .
+		\end{equation*}
+		\item \textit{A subgradient lower bound for the iterates gap:}
+		\begin{itemize}
+			\item[$-$] $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is bounded.
+			\item[$-$] There exists a positive scalar $\rho_2$ such that
+			\begin{equation*}
+				\norm{w^{k+1}} \leq \rho_2 \norm{z^{k+1} - z^k}, \; w^{k+1} \in \partial\sigma \left( z^{k+1}\right).
+			\end{equation*}
+		\end{itemize}
+	\end{enumerate}
+\end{definition}
+
+The two conditions (C1) and (C2) defining a gradient-like descent sequence for a given $\sigma$ are typical for any descent type algorithm, and provide the basic tools to prove that the limit of any convergent subsequence of $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a critical point of $\sigma$. More precisely, from \cite{BST2014} we have
+
+\begin{lemma}
+If $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a gradient-like descent sequence for a given function $\sigma$, which is lsc and proper on $\rr^d$, then $\omega\left(z^0\right)$ is a nonempty, compact and connected set, and we have
+\begin{equation*}
+	\lim_{k\rightarrow \infty} dist\left( z^k, \omega\left(z^0\right)\right) = 0.
+\end{equation*}
+\end{lemma}
+
+This result can thus be applied to any algorithm that produces a gradient-like descent to establish convergence in accumulation points. The main goal is to establish global convergence, i.e., that the whole sequence converges to a critical point of $\sigma$. This can be achieved by imposing an additional assumption on the class of functions $\sigma$: it must satisfy the Kurdyka-{L}ojasiewiez property.
+
+As proven in \cite{BST2014}, relying on a key uniformization of the KL property it is possible to establish global convergence of any gradient-like descent sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$, independently of the algorithm used. Verifying the KL property of a given function might often be a difficult task. However, thanks to a \Cref{SA_is_KL}, any proper and lsc function $\sigma$ which is semi-algebraic satisfies the KL property at any point in dom$\sigma$. We summarize the general methodology and convergence results of \cite{BST2014} in the following abstract convergence result.
+
+\begin{theorem}
+Let $\sigma:\rr^d \rightarrow (-\infty,\infty]$ be a proper, lsc and semi-algebraic function with $\inf \sigma > -\infty$, and assume that $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a gradient-like descent sequence for $\sigma$. If $\omega\left( z^0 \right) \subset crit\sigma$ then the sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ convergences to a critical point $z^{*}$ of $\sigma$.
+\end{theorem}
+
+\begin{remark}
+Under the premises of this theorem, it is also possible to derive a rate of convergence result for the sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ of the form $\norm{z^k - z^{*}} \leq Ck^{-\gamma}$, for some positive constant $C$ and where $\gamma>0$ is a so-called KL exponent.
+\end{remark}
+
+Finally, we present the proximal alternating linearized minimization (PALM) algorithm which solves the nonconvex and nonsmooth minimization problem of the following form
+\begin{center}
+(\textit{M})\quad minimize $\Psi(x,y):=f(x)+g(y)+H(x,y)$ over all $(x,y) \in \mathbb{R}^n \times \mathbb{R}^m$,
+\end{center}
+where $f:\mathbb{R}^n \rightarrow \left(-\infty,+\infty\right]$ and $g:\mathbb{R}^n \rightarrow \left(-\infty,+\infty\right]$ are proper and lower semicontinuous functions while $H:\mathbb{R}^n \times \mathbb{R}^m \rightarrow \mathbb{R}$ is a $C^1$ function. In addition, partial gradients of $H$ are Lipschitz continuous, namely, $H(\cdot, y) \in C^{1,1}_{L_1(y)}$ and $H(x,\cdot) \in C^{1,1}_{L_2(x)}$.
+
+As mentioned in \cite{BST2014} the PALM algorithm is nothing but alternating the classical proximal gradient (aka Proximal Forward-Backward) over the two blocks $(x,y)$. This leads towards the following approximations 
+\begin{equation*}
+	\widehat{\Psi}\left(x,y^k\right) = \left\langle x-x^k, \nabla_x H\left( x^k, y^k \right)\right\rangle + \frac{c_k}{2}\norm{x-x^k}^2 + f(x), \; (c_k>0),
+\end{equation*}
+and
+\begin{equation*}
+	\widetilde{\Psi}\left(x^{k+1},y\right) = \left\langle y-y^k, \nabla_y H\left( x^{k+1}, y^k \right)\right\rangle + \frac{d_k}{2}\norm{y-y^k}^2 + g(y), \; (d_k>0).
+\end{equation*}
+Thus, PALM can be summarized as follows
+\begin{center}
+$x^{k+1} \in \arg\!\min \left\lbrace \widehat{\Psi}(x,y^k) : \; x \in \rr^n \right\rbrace$ \quad and \quad $y^{k+1} \in \arg\!\min \left\lbrace \widetilde{\Psi}\left(x^{k+1},y\right) : \; y \in \rr^m \right\rbrace$.
+\end{center}
+Assuming $\Psi$ is KL function and the generated sequence by PALM, $\left\lbrace z^k:=\left( x^k, y^k\right)\right\rbrace_{k \in \nn}$, is bounded, Bolte et al. \cite{BST2014} proved that the sequence is a gradient-like descent sequence, and thus it converges to a critical point of $\Psi$. 

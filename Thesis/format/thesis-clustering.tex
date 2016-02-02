@@ -1,0 +1,174 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage{latexsym,amssymb,amsmath}
+\usepackage{mathdefs}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{enumerate}
+\usepackage[T1]{fontenc}
+%\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{rotating}
+\usepackage{multirow}
+%\usepackage{caption}
+
+\usepackage{cleveref}
+\usepackage{enumerate}
+\usepackage{framed}
+\usepackage{amsthm}
+\usepackage{makeidx}
+\usepackage{xfrac}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{epstopdf}
+\usepackage{booktabs}
+\usepackage{ltxtable} 
+
+
+%%%%%% Size %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% START OF DEFINITIONS
+%%%%%% Size %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\marginparwidth}{0in} \setlength{\marginparsep}{0in}
+\setlength{\oddsidemargin}{0in} \setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.in} \setlength{\topmargin}{0in}
+\setlength{\textheight}{9.in}
+
+%********************** General Definitions ******************************
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{remark}{Remark}[section]%
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{corollary}{Corollary}[section]
+\def\nr{\par \noindent}
+% END OF DEFINITIONS
+%******************* Counters etc ************************************* %
+\renewcommand{\baselinestretch}{1.2}
+
+%\renewcommand{\theequation}{\thesection.\arabic{equation}} % Equation numbering with subsections
+\newcommand{\sect}[1]{\setcounter{equation}{0}\section{#1}} %
+\def\theequation{\thesection.\arabic{equation}}
+
+
+%\newcommand{\qed}{\hfill $\Box$ \nr \medskip} %End of proof
+%\newcommand{\qed}{\hfill\BlackBox\\[2mm]} % End of proof.
+
+% Different font in captions
+\newcommand{\captionfonts}{\small}
+
+
+\makeatletter  % Allow the use of @ in command names
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{{\captionfonts #1: #2}}%
+  \ifdim \wd\@tempboxa >\hsize
+    {\captionfonts #1: #2\par}
+  \else
+    \hbox to\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+\makeatother   % Cancel the effect of \makeatletter
+
+
+\newcommand{\nn}{\mathbb{N}} %Nonnegative integers
+\newcommand{\rr}{\mathbb{R}} %Real numbers
+\newcommand{\norm}[1]{\left\Vert {#1} \right\Vert} %Norm
+\def\abs#1{\left\lvert#1\right\rvert}
+
+%*******************************************************
+
+% etc
+%
+
+\begin{document}
+
+%
+%--------- Title
+%
+\include{title}
+%
+%--------- Start numbering preface in roman
+%
+\pagenumbering{roman}
+%
+%--------- Preface
+%
+\include{preface}
+%
+\tableofcontents
+\newpage
+
+\listoftables
+\newpage
+
+\listoffigures
+\newpage
+
+%
+%--------- Start from Page 1
+%
+\pagenumbering{arabic}
+
+
+
+\include{chapter1}
+
+\include{chapter2}
+
+\include{chapter3}
+
+\include{chapter4}
+
+\include{chapter5}
+
+\include{chapter6}
+
+\newpage
+
+%------------REFERRENCES------------------------------------------
+
+\begin{thebibliography}{99}
+
+
+
+%\bibitem{bert-82} D. P. Bertsekas. \emph{Constrained Optimization and Lagrange Multiplier Methods}.
+%Academic Press, New York (1982).
+%
+%
+%
+%\bibitem{tebo-JMLR07} M. Teboulle. A unified continuous optimization framework
+%for center-based clustering methods. \emph{Journal of Machine Learning Research}, Vol. 8, pp. 65-102 (2007).
+
+
+\bibitem{AB2009} H. Attouch, J. Bolte. On the convergence of the proximal algorithm for nonsmooth functions involving analytic features. \emph{Math. Program.}, Vol. 116, pp. 5-16 (2009).
+
+
+\bibitem{ABS2013}  H. Attouch, J. Bolte, B.F. Svaiter. Convergence of descent methods for semi-algebraic and tame problems: proximal algorithms, forward-backward splitting, and regularized Gauss-Seidel methods. \emph{Math. Program.}, Vol. 137, 91-129 (2013).
+
+
+\bibitem{BS2015} A. Beck, S. Sabach. Weiszfeld's Method: Old and New Results. \emph{Journal of Optimization Theory and Applications}, Vol. 164, pp. 1-40 (2015).
+
+
+\bibitem{ATY1991} A. Ben-Tal, M. Teboulle, W.H. Yang. A least-squares-based method for a class of nonsmooth minimization problems with applications in plasticity.  \emph{Applied Mathematics and Optimization}, Vol. 24, pp. 273-288 (1991).
+
+
+\bibitem{BST2014} J. Bolte, S. Sabach, M. Teboulle. Proximal alternating linearized minimization for nonconvex and nonsmooth problems. \emph{Math. Program.}, Vol. 146, pp. 459-494 (2014).
+
+
+\bibitem{M2005} M. Meila. Comparing Clusterings - An Axiomatic View. \emph{In ICML '05: Proceedings of the 22nd international conference on Machine Learning ACM}, New York, pp. 577-584 (2005).
+
+
+\bibitem{SI1984} S.Z. Selim,  M.A. Ismail. K-Means-Type Algorithms. A Generalized Convergence Theorem and Characterization of Local Optimality. \emph{IEEE Transactions on Pattern Analysis and Machine Intelligence}, Vol. 6, pp. 81-87 (1984).
+
+
+\bibitem{T2007} M. Teboulle. A Unified Continuous Optimization Framework for Center-Based Clustering Methods. \emph{The Journal of Machine Learning Research}, Vol. 8, pp. 65-102 (2007).
+
+\end{thebibliography}
+
+\end{document}
