@@ -2,6 +2,10 @@
 
 \noindent \noindent \hrulefill
 
+This chapter presents the importance of the clustering problem and describes the usefulness of clustering in many applications. Moreover, we describe the existing types and approaches of clustering, and review the literature on the most popular clustering center-based algorithms. We discuss the contributions of this thesis, mainly in developing new algorithms and the use of a novel methodology to prove their convergence results.
+
+\noindent \noindent \hrulefill
+
 \section{Background and Motivation}
 
 The clustering problem is a task of grouping objects which are similar. It consists of partitioning a dataset into subsets, called clusters, such that the data points in each cluster are similar with respect to a specific criteria. \medskip
@@ -19,7 +23,7 @@ Finding the optimal partition of a fixed number of clusters for some given datas
 
 We introduce few notations for the upcoming discussion. Let $\mathcal{A}= \left\lbrace a^1, a^2, \ldots ,a^m \right\rbrace$ be a given set of points in $\mathbb{R}^n$, and let $1 < k < m$ be a fixed given number of clusters. The clustering problem consists of partitioning the dataset $\mathcal{A}$ into $k$ subsets $\left\lbrace C^1, C^2, \ldots ,C^k \right\rbrace$, called clusters. For each $l=1, 2, \ldots ,k$, the cluster $C^l$ is represented by its center $x^l \in \mathbb{R}^n$. We describe several well-known center-based clustering algorithms.
 \begin{enumerate}[(i)]
-	\item The k-means algorithm. This algorithm is probably the most famous within the clustering scope, and dates back to MacQueen (1967). The k-means algorithm partitions the data into $k$ sets. The solution is then a set of $k$ centers, each of which is located at the centroid of the data for which it is the closest center. The k-means algorithm performs hard clustering, and each point is labeled according to its closest center. This algorithm can be discribed as an optimization algorithm (see precise details below) which minimizes the following objective function
+	\item The k-means algorithm. This algorithm is probably the most famous within the clustering scope, and dates back to MacQueen from 1967 (see \cite{M1967}). The k-means algorithm partitions the data into $k$ sets. The solution is then a set of $k$ centers, each of which is located at the centroid of the data for which it is the closest center. The k-means algorithm performs hard clustering, and each point is labeled according to its closest center. This algorithm can be discribed as an optimization algorithm (see precise details below) which minimizes the following objective function
 	\begin{equation*}
 		f_{KM}(x) = \sum\limits_{i=1}^{m}\min\limits_{1 \le l \le k} \norm{a^i-x^l}^2.
 	\end{equation*}
@@ -53,19 +57,23 @@ The lack of smoothness in this model can be overcome, yet the nonconvex nature o
 \section{Outline and Contributions of The Thesis}
 
 Our main objectives and contributions in this thesis are as follows.
-
 \begin{itemize}
-  \item To reformulate the clustering problem starting from its usual discrete form into a continuous formulation, which enable to treat the problem with powerful continuous optimization tools.
-  \item To demonstrate the usefulness of KL theory and the general methodology developed in \cite{BST2014} to tackle the clustering problem.
-  \item To develop algorithms that address the clustering problem with two different distance-like functions and present numerical tests which demonstrate the effectiveness of proposed algorithms.
-  \item To prove the convergence of k-means to a critical point.
+%  \item To reformulate the clustering problem starting from its usual discrete form into a continuous formulation, which enable to treat the problem with powerful continuous optimization tools.
+	\item To develop algorithms that address the clustering problem for two different distance-like functions and present numerical tests which demonstrate the effectiveness of proposed algorithms.
+	
+	\item To demonstrate the usefulness of KL theory and the general methodology developed in \cite{BST2014} to tackle the clustering problem.
+  
+	\item To prove the convergence of k-means to a critical point.
 \end{itemize}
 
-We outline now the contents of this thesis. In Chapter 2 we transform the initial formulation  of the clustering problem into a smooth one. In addition, we introduce the KL theory and the general methodology, which was developed in \cite{BST2014}, that will be used in our analysis of the proposed algorithms. 
-
-Chapters 3 and 4 present the algorithms that tackle the clustering problem with squared Euclidean norm distance-like function and with the standard Euclidean norm distance function, respectively. For each algorithm, we prove the convergence of the sequences it produces to a critical points of the objective function.
-
-In section 5 we prove the convergence of k-means algorithm to a critical point and under additional assumption extend the convergence to a local minimum. Finally, in Section 6 we compare the performance of these algorithm according to some common criteria.
+We outline now the contents of this thesis.
+\begin{itemize}
+	\item In Chapter 2 we transform the initial formulation  of the clustering problem into a smooth one. In addition, we recall the KL theory and the general methodology, which was developed in \cite{BST2014}, that will be used in our analysis of the proposed algorithms.
+	\item In Chapter 3 we tackle the clustering problem with squared Euclidean norm distance-like function, which is the most common distance used in many other clustering algorithms. The proposed clustering algorithm is based on alternating minimization, and it is similar to k-means algorithm. In this case the objective function is smooth and we can to apply the general methodology, and prove the convergence of the generated sequence to a critical point.
+	\item In Chapter 4 we tackle the clustering problem with Euclidean norm distance-like function. Providing an approximation to the original objective function we overcome the lack of smoothness and then proceed with the general methodology and prove again the convergence of the generated sequence to a critical point of the approximating objective function.
+	\item In Chepter 5 we show that the k-means algorithm can be recovered from the proposed model of the clustering problem presented in Chapter 2. In addition, we prove that k-means algorithm convergence to a critical point, and under additional assumption, we extend the convergence to a local minimum.
+	\item In Chapter 6 we compare the performance of the proposed algorithms, and some existing center-based clustering algorithms, according to some common criteria.
+\end{itemize}
 
 \section{Notation and Terminology}
 
@@ -83,10 +91,13 @@ $\left\langle\cdot,\cdot\right\rangle$ & the standard dot product in Euclidean s
 $\norm{\cdot}$ & Euclidean norm $\norm{x}=\sqrt{\sum\limits_{l=1}^{d} {x_l}^2}$\\
 $\Delta$  & the simplex i.e., $\Delta = \left\lbrace u \in \mathbb{R}^d : \sum\limits_{l=1}^{d} u_l = 1, \: u \geq 0 \right\rbrace$\\
 $\delta_{S}(\cdot)$  & delta function of set $S \subset \rr^d$, which is defined to be $0$ in $S$ and $\infty$ otherwise\\
-dom $\sigma$ & domain of function $\sigma$, which is all vectors $v$ such that $\sigma(v) < \infty$\\
+dom$\sigma$ & domain of function $\sigma$, which is all vectors $v$ such that $\sigma(v) < \infty$\\
 $\partial\sigma$ & subdifferential of function $\sigma$ (see \Cref{subdiff_def})\\
-crit $\sigma$ & set of all critical points of function $\sigma$, that is all vectors $v$ such that $0 \in \partial\sigma(v)$\\
-dist$(u,S)$ & distance function, for any point $u \in \rr^d$ and set $S \in \rr^d$, dist$(u,S):=\inf\left\lbrace \norm{u-v} : v \in S \right\rbrace$\\ 
+crit$\sigma$ & set of all critical points of function $\sigma$, that is all vectors $v$ such that $0 \in \partial\sigma(v)$\\
+dist$(u,S)$ & distance function, for any point $u \in \rr^d$ and set $S \in \rr^d$, dist$(u,S):=\inf\left\lbrace \norm{u-v} : v \in S \right\rbrace$\\
+$H(w,x)$ & sum of distances of $x^l$ from each data point in $\mathcal{A}$, adjusted by the non-negative weights $w^i$, $H(w,x)=\sum\limits_{i=1}^m \sum\limits_{l=1}^k w^i_ld\left(x^l, a^i\right)$\\
+$G(w)$ & sum of delta functions which constrain each $w^i$ to be in the simplex, that is $G(w)=\sum\limits_{i=1}^{m} \delta_{\Delta}(w^i)$\\
+$\Psi$ & the objective function in the clustering problem, defined by $\Psi(w,x)=H(w,x)+G(w)$\\
 \hline
 \end{tabular}
 \end{center}
