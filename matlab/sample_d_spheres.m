@@ -1,10 +1,11 @@
-function [A,n,m,k,closeness] = sample_d_spheres(pnts_per_cltr, d)
+function [A,n,m,k,I_true,closeness] = sample_d_spheres(pnts_per_cltr, d)
     k = 2^d;
     n = d;
     m = k*pnts_per_cltr;
     A = zeros(d,m);
     cntrs = zeros(k,d);
     closeness = ones(1,m);
+    I_true = zeros(m,1);
     
     for l = 1:k
         cltr_cntr = 2*(de2bi(l-1,d) - 0.5*ones(1,d));
@@ -12,12 +13,13 @@ function [A,n,m,k,closeness] = sample_d_spheres(pnts_per_cltr, d)
     end
     
     for l = 1:k
+        I_true(((l-1)*pnts_per_cltr + 1):l*pnts_per_cltr) = l;
         cltr_cntr = cntrs(l);
         
         for i = 1:pnts_per_cltr
             inx = (l-1)*pnts_per_cltr + i;
             p = zeros(d,1);
-            r = rand;
+            r = rand*0.2 + 0.8;
             if (d>1)
                 angles = rand(d-1,1)*pi;
                 angles(d-1) = angles(d-1)*2;
