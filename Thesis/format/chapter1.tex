@@ -19,31 +19,44 @@ There are several categories of clustering methods, each has a direct impact on 
 	\item Complete versus partial clustering. In complete clustering all points in the dataset are assigned to clusters, whereas in partial clustering some points may be intentionally skipped and are not being assigned to a cluster.
 \end{enumerate}
 
-Finding the optimal partition of a fixed number of clusters for some given dataset is known to be an NP-hard problem, and hence cannot be solved efficiently. Most algorithms seek to minimize certain objective function, and usually achieve local rather than global minimum solution. In this work we focus on partitioning clustering, where the number of clusters in known in advance. Most partitioning clustering methods iteratively update the cluster centers, and hence they are often referred as center-based clustering methods. \medskip
+Finding the optimal partition of a fixed number of clusters for some given dataset is known to be an NP-hard problem (see \cite{GJ1979}), and hence cannot be solved efficiently. Most algorithms seek to minimize certain objective function, and usually achieve local rather than global minimum solution. In this work we focus on partitioning clustering, where the number of clusters in known in advance. Most partitioning clustering methods iteratively update the cluster centers, and hence they are often referred as center-based clustering methods. \medskip
 
 We introduce few notations for the upcoming discussion. Let $\mathcal{A}= \left\lbrace a^1, a^2, \ldots ,a^m \right\rbrace$ be a given set of points in $\mathbb{R}^n$, and let $1 < k < m$ be a fixed given number of clusters. The clustering problem consists of partitioning the dataset $\mathcal{A}$ into $k$ subsets $\left\lbrace C^1, C^2, \ldots ,C^k \right\rbrace$, called clusters. For each $l=1, 2, \ldots ,k$, the cluster $C^l$ is represented by its center $x^l \in \mathbb{R}^n$. We describe several well-known center-based clustering algorithms.
 \begin{enumerate}[(i)]
-	\item The k-means algorithm. This algorithm is probably the most famous within the clustering scope, and dates back to MacQueen from 1967 (see \cite{M1967}). The k-means algorithm partitions the data into $k$ sets. The solution is then a set of $k$ centers, each of which is located at the centroid of the data for which it is the closest center. The k-means algorithm performs hard clustering, and each point is labeled according to its closest center. This algorithm can be discribed as an optimization algorithm (see precise details below) which minimizes the following objective function
+	\item The k-means algorithm. This algorithm is probably the most famous within the clustering scope, and dates back to Steinhaus (1956), MacQueen (1967) and Lloyd (1982) (see \cite{S1956,M1967,L1982}). The k-means algorithm partitions the data into $k$ sets. The solution is then a set of $k$ centers, each of which is located at the centroid of the data for which it is the closest center. The k-means algorithm performs hard clustering, and each point is labeled according to its closest center. This algorithm can be discribed as an optimization algorithm (see precise details below) which minimizes the following objective function
 	\begin{equation*}
 		f_{KM}(x) = \sum\limits_{i=1}^{m}\min\limits_{1 \le l \le k} \norm{a^i-x^l}^2.
 	\end{equation*}
-	The simplicity of the algorithm both in the theoretical and implementation aspects made it very popular.
-	\item The fuzzy k-means (FKM) algorithm. The FKM algorithm is a soft clustering method. For each data point the result of the FKM algorithm is a distribution of membership over the clusters. The objective function that the FKM algorithm minimizes is
+	The simplicity of the algorithm both in the theoretical and implementation aspects made it very popular. There has been enormous improved techniques designed targeting a variety of applications (see \cite{JMF1999} for a review).
+	
+	\item The fuzzy k-means (FKM) algorithm. The FKM algorithm is a soft clustering method. For each data point the result of the FKM algorithm is a distribution of membership over the clusters (see \cite{B1981} the original paper by Bezdek on FKM). The objective function that the FKM algorithm minimizes is
 	\begin{equation*}
 		f_{FKM}(x) = \sum\limits_{i=1}^{m}\sum\limits_{l=1}^{k}(w^i_l)^\beta \norm{a^i-x^l}^2.
 	\end{equation*}
-	The parameter $w^i_l$ denotes the probability that data point $a^i$ is assigned to cluster $x^l$, thus it is under the constraints $\sum_{l=1}^{k} w^i_l = 1$ for all $1 \leq i \leq m$ and $w^i_l \geq 0$. The parameter $\beta > 1$ governs the "fuzzy partition". Setting $\beta = 1$ results in the standard k-means algorithm (see \Cref{State_Clustering_Reformulation} for more details).
-	\item The Expectation-Maximization (EM) algorithm. The EM algorithm is used extensively in statistical estimation problems for learning mixtures of distributions. It is a soft clustering algorithm. The objective function that EM maximizes is 
+	The parameter $w^i_l$ denotes the probability that data point $a^i$ is assigned to cluster $x^l$, thus it is under the constraints $\sum_{l=1}^{k} w^i_l = 1$ for all $1 \leq i \leq m$ and $w^i_l \geq 0$. The parameter $\beta > 1$ governs the "fuzzy partition". Setting $\beta = 1$ results in the standard k-means algorithm (see \Cref{State_Clustering_Reformulation} for more details). Applying the Gauss-Seidel algorithm with the objective $f_{FKM}$ yields the FKM algorithm (see \cite{DHS2001}, p. 528)
+	\item The Expectation-Maximization (EM) algorithm. The EM algorithm (Dempster et al. \cite{DLR1977}) is used extensively in statistical estimation problems for learning mixtures of distributions. It is a soft clustering algorithm. The objective function that EM maximizes is 
 	\begin{equation*}
 		f_{EM} = \sum\limits_{i=1}^{m} \log \left( \sum\limits_{l=1}^{k} p\left(a^i|x^l\right) p\left(x^l\right) \right),
 	\end{equation*}
-	where  $p\left(a^i|x^l\right)$ is the probability of $a^i$ given that it is generated by the Gaussian distribution with center $x^l$ and $p\left(x^l\right)$ is the prior probability of center $x^l$.
+	where  $p\left(a^i|x^l\right)$ is the probability of $a^i$ given that it is generated by the Gaussian distribution with center $x^l$ and $p\left(x^l\right)$ is the prior probability of center $x^l$. The algorithm is guaranteed to converge to a local maximum of the likelihood function (see \cite{W1983}).
 \end{enumerate}
-An interesting paper of Teboulle \cite{T2007} shows that these center-based clustering algorithms can be recovered from a certain proposed continuous optimization framework which will be used in this work (see more details below). Replacing the nonsmooth term $\min\limits_{1 \leq l \leq k} d\left(x^l,a^i\right)$ with a smooth one using the following property of the support function of the simplex
-\begin{equation*}
-	\min\limits_{1 \leq l \leq k} d\left(x^l,a^i\right) = -\sigma_{\Delta}\left(-d\left(x^1,a^i\right),\ldots,-d\left(x^k,a^i\right)\right) = 
-\end{equation*}
-The smoothing methodologies for the clustering problem are based on nonlinear means and on approximation of appropriate asymptotic functions. \medskip
+An interesting paper of Teboulle \cite{T2007} shows that these center-based clustering algorithms can be recovered from a certain proposed continuous optimization framework which will be used in this work (see more details below). The k-means objective function, $f_{KM}$, can be extended to a more general form,
+	\begin{equation}
+		F(x)=\sum\limits_{i=1}^m v_i \min\limits_{1\leq l \leq k} d\left(x^l,a^i\right), \label{clustering_objective}
+	\end{equation}
+	where $d(\cdot,\cdot)$ is some distance-like function and $v_i$ positive weights which satisfy $\sum_{i=1}^m v_i=1$. The smoothing methods in \cite{T2007} are based on replacing the nonsmooth term $\min_{1\leq l \leq k} d\left(x^l,a^i\right) = -\sigma_{\Delta}(-d(x))$ with an approximation of an asymptotic convex nonlinear mean function defined by
+	\begin{equation*}
+		G^{\infty}_h(z) = \lim\limits_{s\rightarrow 0^+} sh^{-1} \left(\sum\limits_{l=1}^k \pi_l h\left(\frac{z_l}{s} \right) \right),
+	\end{equation*}
+	where $\pi \in \Delta_+:=int\left(\Delta\right)$ and $h \in \mathcal{H}$ which is the class of function defined by
+	\begin{equation*}
+		\mathcal{H} = \left\lbrace h \in C^3(int(\text{dom}h)) : h'>0, \; h''>0, \text{ and } t\mapsto -\frac{h'(t)}{h''(t)} \text{ is convex}\right\rbrace.
+	\end{equation*}
+	 Therefore, the approximating smooth objective function of the original nonsmooth clustering problem function, defined in (\ref{clustering_objective}), takes the following form
+	\begin{equation*}
+		F_s(x) = -s\sum\limits_{i=1}^m v_i h^{-1} \left(\sum\limits_{l=1}^k \pi_l h\left(\frac{-d\left(x^l,a^i\right)}{s} \right) \right),
+	\end{equation*}
+	where $s>0$ serves as a smoothing parameter. The suggested center-based algorithm for soft clustering, the Smooth k-means (SKM) algorithm generates a sequence whose each limit point is a stationary point for $F_s$.\medskip
 
 Most of the existing clustering methods are sensitive to the starting point, namely choosing different starting point result in significant differences in the final clustering. There are plethora of heuristic initialization methods. One such initialization method is to choose $k$ random data points as staring centers, assuming uniform distribution or some other prior distribution on the data. Another popular method is k-means++, where the first center is chosen at random from the dataset, and for each $2 \leq l \leq k$, the center $x^l$ is the furthest data point from the data points chosen so far. \medskip
 
@@ -79,6 +92,7 @@ We outline now the contents of this thesis.
 	\item In Chapter 6 we compare the performance of the proposed algorithms, and some existing center-based clustering algorithms, according to some common criteria.
 \end{itemize}
 
+\clearpage
 \section{Notation and Terminology}
 
 The following notations will be used throughout this thesis

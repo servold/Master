@@ -4,10 +4,10 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Comparison of the objective values for different values of $\alpha $.\relax }}{41}
-\contentsline {figure}{\numberline {6.2}{\ignorespaces Comparison of objective function values for k-means, k-means++, KPALM and KPALM++.\relax }}{43}
-\contentsline {figure}{\numberline {6.3}{\ignorespaces Comparison of number of iterations needed to reach 1e-3 precision of $\Psi $.\relax }}{44}
-\contentsline {figure}{\numberline {6.4}{\ignorespaces Comparison of the objective values for different values of $\alpha $.\relax }}{45}
-\contentsline {figure}{\numberline {6.5}{\ignorespaces Two datasets, each 300 points.\relax }}{45}
-\contentsline {figure}{\numberline {6.6}{\ignorespaces Results of clustering algorithms for dense and sparse datasets.\relax }}{45}
-\contentsline {figure}{\numberline {6.7}{\ignorespaces Comparison of metrics between clusterings for dense and sparse datasets.\relax }}{46}
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Comparison of the objective values for different values of $\alpha $.\relax }}{42}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Comparison of objective function values for k-means, k-means++, KPALM and KPALM++.\relax }}{44}
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Comparison of number of iterations needed to reach 1e-3 precision of $\Psi $.\relax }}{45}
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Comparison of the objective values for different values of $\alpha $.\relax }}{46}
+\contentsline {figure}{\numberline {6.5}{\ignorespaces Two datasets, each 300 points.\relax }}{46}
+\contentsline {figure}{\numberline {6.6}{\ignorespaces Results of clustering algorithms for dense and sparse datasets.\relax }}{46}
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Comparison of metrics between clusterings for dense and sparse datasets.\relax }}{47}
