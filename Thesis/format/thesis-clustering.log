@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.29)  14 FEB 2016 19:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.29)  15 FEB 2016 23:20
 entering extended mode
 **thesis-clustering.tex
 (thesis-clustering.tex
@@ -694,12 +694,7 @@ Overfull \hbox (5.4782pt too wide) in paragraph at lines 143--143
 [] 
  []
 
-[18]
-Overfull \hbox (23.2345pt too wide) in paragraph at lines 180--180
-[] 
- []
-
-[19]) [20] (chapter4.tex
+[18] [19]) [20] (chapter4.tex
 Chapter 4.
 [21
 
@@ -1038,10 +1033,10 @@ converted-to.pdf> <./sparse_gaussians_metrics2-eps-converted-to.pdf>] [48
 (title.aux) (preface.aux) (chapter1.aux) (chapter2.aux) (chapter3.aux)
 (chapter4.aux) (chapter5.aux) (chapter6.aux)) ) 
 Here is how much of TeX's memory you used:
- 13941 strings out of 493636
- 262471 string characters out of 3141319
- 297898 words of memory out of 3000000
- 17085 multiletter control sequences out of 15000+200000
+ 13945 strings out of 493636
+ 262545 string characters out of 3141319
+ 297984 words of memory out of 3000000
+ 17089 multiletter control sequences out of 15000+200000
  25155 words of font info for 73 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  42i,14n,42p,10389b,496s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1067,7 +1062,7 @@ fb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/cm-super/sfbx2488.pfb>
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm1095.pfb><C:
 /Program Files (x86)/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm1200.pfb><C:/Pr
 ogram Files (x86)/MiKTeX 2.9/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on thesis-clustering.pdf (55 pages, 496267 bytes).
+Output written on thesis-clustering.pdf (55 pages, 496894 bytes).
 PDF statistics:
  330 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

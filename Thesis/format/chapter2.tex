@@ -2,7 +2,7 @@
 
 \noindent \noindent \hrulefill
 
-Transforming the initial discrete clustering problem given in (\ref{StateEq1}) into a continuous form is the first main objective of this chapter. The second objective is to present a sufficient mathematical background which leads to the general methodology, developed in \cite{BST2014}, which enables to address the nonconvex and nonsmooth optimization problem. 
+Transforming the initial discrete clustering problem given in (\ref{StateEq1}) into a smooth form is the first main objective of this chapter. The second objective is to present a sufficient mathematical background which leads to the general methodology, developed in \cite{BST2014}, that enables to analyze algorithms in the nonconvex and nonsmooth setting. 
 
 \noindent \noindent \hrulefill
 
@@ -10,20 +10,20 @@ Transforming the initial discrete clustering problem given in (\ref{StateEq1}) i
 
 We begin with a reformulation of the clustering problem which will be the basis for our developments in this work. The reformulation is based on the following fact:
 \begin{equation*}
-	\min\limits_{1 \leq l \leq k} u_l = \min \left\lbrace \langle u,v \rangle : v \in \Delta \right\rbrace ,
+	\min\limits_{1 \leq l \leq k} u_l = \min \left\lbrace \langle u,w \rangle : w \in \Delta \right\rbrace ,
 \end{equation*}
 where $\Delta$ denotes the well-known simplex defined by
 \begin{equation*}
-	\Delta = \left\lbrace u \in \mathbb{R}^k : \sum\limits_{l=1}^{k} u_l = 1, \: u \geq 0 \right\rbrace .
+	\Delta = \left\lbrace w \in \mathbb{R}^k : \sum\limits_{l=1}^{k} w_l = 1, \: w \geq 0 \right\rbrace .
 \end{equation*}
 Using this fact in Problem (\ref{StateEq1}) and introducing new variables $w^i \in \mathbb{R}^k$, $i=1,2, \ldots, m$, gives a smooth reformulation of the clustering problem
 \begin{equation}
 	\min\limits_{x \in \mathbb{R}^{nk}} \sum\limits_{i=1}^{m} \min\limits_{w^i \in \Delta} \langle w^i , d^i(x) \rangle , \label{StateEq2}
 \end{equation}
 where 
-\begin{equation*}
-d^{i}(x) = (d(x^1,a^i), d(x^2,a^i), \ldots , d(x^k,a^i)) \in \mathbb{R}^k, \quad i=1, 2, \ldots , m.
-\end{equation*}
+\begin{equation}
+d^{i}(x) = (d(x^1,a^i), d(x^2,a^i), \ldots , d(x^k,a^i)) \in \mathbb{R}^k, \quad i=1, 2, \ldots , m. \label{d^i_def}
+\end{equation}
 Replacing further the constraint $w^i \in \Delta$ by adding the indicator function $\delta_{\Delta}(\cdot)$, which is defined to be $0$ in $\Delta$ and $\infty$ otherwise, to the objective function, results in a equivalent formulation
 \begin{equation}
 	\min\limits_{x \in \mathbb{R}^{nk} , w \in \mathbb{R}^{km}} \left\lbrace \sum\limits_{i=1}^{m} \left( \langle w^i , d^i(x) \rangle + \delta_{\Delta}(w^i) \right) \right\rbrace , \label{StateEq3}
@@ -43,7 +43,7 @@ Replacing the terms in Problem (\ref{StateEq3}) with the functions defined above
 \section{Convergence Methodology} \label{State_PALM_Theory}
 
 In this subsection we give a brief review of the main developments established in \cite
-{BST2014}. These developments include on one hand the proximal alternating linearized minimization (PALM) algorithm and on the other hand, a general procedure for proving global convergence of generic algorithm which will play a central rule in this work. First, let us recall several definitions which are needed for the upcoming discussion.
+{BST2014}. These developments include on one hand the proximal alternating linearized minimization (PALM) algorithm and on the other hand, a general procedure for proving global convergence of generic algorithm which will play a central role in this work. First, let us recall several definitions which are needed for the upcoming discussion.
 
 \begin{definition}[Subdifferentials] \label{subdiff_def}
 	Let $\sigma : \rr^d \rightarrow (-\infty,+\infty]$ be a proper and lower semicontinuous function.
@@ -82,7 +82,7 @@ Now we present the Kurdyka-{\L}ojasiewicz property, which plays a central role i
 	\end{enumerate}
 \end{definition}
 
-As it can be seen from the definition above, verifying that a given function satisfies the KL property is quite involved. This can be overcome by using an important result of Bolte et al. from 2006 (see \cite{BDL2006}). Before presenting this result we will recall the definition of semi-algebraic function.
+As it can be seen from the definition above, verifying that a given function satisfies the KL property is quite involved. This can be overcome by using an important result of Bolte et al. (see \cite{BDL2006}). Before presenting this result we will recall the definition of semi-algebraic function.
 
 \begin{definition}[Semi-algebraic sets and functions] 
 \begin{enumerate}[(i)]
@@ -103,24 +103,24 @@ Let $\sigma:\rr^d \rightarrow (-\infty, +\infty]$ be a proper and lower semicont
 \end{theorem}
 The class of semi-algebraic functions is very broad, it includes real polynomial functions, indicator functions of semi-algebraic sets, finite sums and products of semi-algebraic functions, composition of semi-algebraic functions, and many more.\medskip
 
-Attouch et al. \cite{AB2009, ABS2013} established convergence of the sequences generated by the proximal Gauss-Seidel scheme in the general nonconvex and nonsmooth setting, and by the proximal-forward-backward (aka Proximal Gradient, more on this method see \cite{LM1979,T1991,CR1997}) algorithm applied to the nonconvex and nonsmooth minimization of the sum of a nonsmooth function with a smooth one. This approach assumes that the objective function to be minimized satisfies the Kurdyka-{\L}ojasiewicz (KL) property. The convergence results were further extended in the recent work by Bolte et al. \cite{BST2014}, to the PALM algorithm which is a novel algorithm that combines the two basic and old ideas of Alternating Minimization and Proximal Gradient (see more details below). Additional contribution of \cite{BST2014} is the general methodology to prove convergence of generic algorithm in the setting of nonconvex and nonsmooth optimization problems.
+Attouch et al. \cite{AB2009, ABS2013} established convergence of sequences generated by the proximal Gauss-Seidel scheme in the general nonconvex and nonsmooth setting, and by the proximal-forward-backward (aka Proximal Gradient, more on this method see \cite{LM1979,T1991,CR1997}) algorithm applied to the nonconvex and nonsmooth minimization of the sum of a nonsmooth function with a smooth one. This approach assumes that the objective function to be minimized satisfies the Kurdyka-{\L}ojasiewicz (KL) property. The convergence results were further extended in the recent work by Bolte et al. \cite{BST2014}, to the PALM algorithm which is a novel algorithm that combines the two basic and old ideas of Alternating Minimization and Proximal Gradient (see more details below). Additional contribution of \cite{BST2014} is the general methodology to prove convergence of a generic algorithm in the setting of nonconvex and nonsmooth optimization problems.\medskip
 
-Equipped with these definitions, we present the general methodology that will be used several times throughout this work. Let $\Psi : \rr^d \rightarrow ( -\infty, +\infty ]$ be a proper and lower semicontinuous function which is bounded from below and consider the problem
+Equipped with these definitions, we present the general methodology that will be used several times throughout this work. Let $\sigma : \rr^d \rightarrow ( -\infty, +\infty ]$ be a proper and lower semicontinuous function which is bounded from below and consider the problem
 \begin{equation*}
-	(P) \quad \min \left\lbrace \Psi(z) : z \in \rr^d \right\rbrace .
+	(P) \quad \min \left\lbrace \sigma(z) : z \in \rr^d \right\rbrace.
 \end{equation*} 
 Suppose that we are given a generic algorithm $\mathcal{A}$ which generates a sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ via the following scheme:
 \begin{equation*}
 	z^0 \in \mathbb{R}^d, \: z^{k+1} \in \mathcal{A}\left(z^k\right), \quad k=0,1,\ldots.
 \end{equation*}
 
-The purpose of the proposed methodology is to assure the convergence of the whole sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ to a critical point of $\Psi$. The set of all limit points is denoted by $\omega\left(z^0\right)$, and defined by
+The purpose of the proposed methodology is to assure the convergence of the whole sequence $\left\lbrace z^k \right\rbrace_{k \in \mathbb{N}}$ to a critical point of $\sigma$. The set of all limit points is denoted by $\omega\left(z^0\right)$, and defined by
 \begin{equation*}
 	\left\lbrace \overline{z} \in \rr^d : \exists \text{ an increasing sequence of integers } \left\lbrace k_l\right\rbrace_{l \in \nn} \text{ such that } z^{k_l} \rightarrow \overline{z} \text{ as } l \rightarrow \infty \right\rbrace .
 \end{equation*}
 
-\begin{definition}
-	Let $\sigma: \rr^d \rightarrow (-\infty, +\infty]$ be a proper and lsc function. A sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is called \textit{a gradient-like descent sequence} for $\sigma$ if for all $k \in \nn$ the following two conditions hold:
+\begin{definition} \label{gradient_like_seq_def}
+	Let $\sigma: \rr^d \rightarrow (-\infty, +\infty]$ be a proper and lower semicontinuous function. A sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is called \textit{a gradient-like descent sequence} for $\sigma$ if for all $k \in \nn$ the following two conditions hold:
 	\begin{enumerate}[(C1)]
 		\item \textit{Sufficient decrease property:} There exists a positive scalar $\rho_1$ such that
 		\begin{equation*}
@@ -151,7 +151,7 @@ This result can thus be applied to any algorithm that produces a gradient-like d
 As proven in \cite{BST2014}, relying on a key uniformization of the KL property it is possible to establish global convergence of any gradient-like descent sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$, independently of the algorithm used. Verifying the KL property of a given function might often be a difficult task. However, thanks to a \Cref{SA_is_KL}, any proper and lsc function $\sigma$ which is semi-algebraic satisfies the KL property at any point in dom$\sigma$. We summarize the general methodology and convergence results of \cite{BST2014} in the following abstract convergence result.
 
 \begin{theorem}
-Let $\sigma:\rr^d \rightarrow (-\infty,\infty]$ be a proper, lsc and semi-algebraic function with $\inf \sigma > -\infty$, and assume that $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a gradient-like descent sequence for $\sigma$. If $\omega\left( z^0 \right) \subset crit\sigma$ then the sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ convergences to a critical point $z^{*}$ of $\sigma$.
+Let $\sigma:\rr^d \rightarrow (-\infty,\infty]$ be a proper, lower semicontinuous and semi-algebraic function with $\inf \sigma > -\infty$, and assume that $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a gradient-like descent sequence for $\sigma$. If $\omega\left( z^0 \right) \subset crit\sigma$ then the sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ convergences to a critical point $z^{*}$ of $\sigma$.
 \end{theorem}
 
 \begin{remark}
@@ -160,20 +160,20 @@ Under the premises of this theorem, it is also possible to derive a rate of conv
 
 Finally, we present the proximal alternating linearized minimization (PALM) algorithm which solves the nonconvex and nonsmooth minimization problem of the following form
 \begin{center}
-(\textit{M})\quad minimize $\Psi(x,y):=f(x)+g(y)+H(x,y)$ over all $(x,y) \in \mathbb{R}^n \times \mathbb{R}^m$,
+(\textit{M})\quad minimize $\sigma(x,y):=f(x)+g(y)+H(x,y)$ over all $(x,y) \in \mathbb{R}^n \times \mathbb{R}^m$,
 \end{center}
 where $f:\mathbb{R}^n \rightarrow \left(-\infty,+\infty\right]$ and $g:\mathbb{R}^n \rightarrow \left(-\infty,+\infty\right]$ are proper and lower semicontinuous functions while $H:\mathbb{R}^n \times \mathbb{R}^m \rightarrow \mathbb{R}$ is a $C^1$ function. In addition, partial gradients of $H$ are Lipschitz continuous, namely, $H(\cdot, y) \in C^{1,1}_{L_1(y)}$ and $H(x,\cdot) \in C^{1,1}_{L_2(x)}$.\medskip
 
 As mentioned in \cite{BST2014} the PALM algorithm is nothing but alternating the classical proximal gradient over the two blocks $(x,y)$. This leads towards the following approximations 
 \begin{equation*}
-	\widehat{\Psi}\left(x,y^k\right) = \left\langle x-x^k, \nabla_x H\left( x^k, y^k \right)\right\rangle + \frac{c_k}{2}\norm{x-x^k}^2 + f(x), \; (c_k>0),
+	\widehat{\sigma}\left(x,y^k\right) = \left\langle x-x^k, \nabla_x H\left( x^k, y^k \right)\right\rangle + \frac{c_k}{2}\norm{x-x^k}^2 + f(x), \; (c_k>0),
 \end{equation*}
 and
 \begin{equation*}
-	\widetilde{\Psi}\left(x^{k+1},y\right) = \left\langle y-y^k, \nabla_y H\left( x^{k+1}, y^k \right)\right\rangle + \frac{d_k}{2}\norm{y-y^k}^2 + g(y), \; (d_k>0).
+	\widetilde{\sigma}\left(x^{k+1},y\right) = \left\langle y-y^k, \nabla_y H\left( x^{k+1}, y^k \right)\right\rangle + \frac{d_k}{2}\norm{y-y^k}^2 + g(y), \; (d_k>0).
 \end{equation*}
 Thus, PALM can be summarized as follows
 \begin{center}
-$x^{k+1} \in \arg\!\min \left\lbrace \widehat{\Psi}(x,y^k) : \; x \in \rr^n \right\rbrace$ \quad and \quad $y^{k+1} \in \arg\!\min \left\lbrace \widetilde{\Psi}\left(x^{k+1},y\right) : \; y \in \rr^m \right\rbrace$.
+$x^{k+1} \in \arg\!\min \left\lbrace \widehat{\sigma}(x,y^k) : \; x \in \rr^n \right\rbrace$ \quad and \quad $y^{k+1} \in \arg\!\min \left\lbrace \widetilde{\sigma}\left(x^{k+1},y\right) : \; y \in \rr^m \right\rbrace$.
 \end{center}
-Assuming $\Psi$ is KL function and the generated sequence by PALM, $\left\lbrace \left( x^k, y^k\right)\right\rbrace_{k \in \nn}$, is bounded, Bolte et al. \cite{BST2014} proved that the sequence is a gradient-like descent sequence, and thus it converges to a critical point of $\Psi$. 
+Assuming $\Psi$ is KL function and the generated sequence by PALM, $\left\lbrace \left( x^k, y^k\right)\right\rbrace_{k \in \nn}$, is bounded, Bolte et al. \cite{BST2014} proved that the sequence is a gradient-like descent sequence, and thus it converges to a critical point of $\sigma$. 
