@@ -9,12 +9,11 @@
 \contentsline {section}{\numberline {2.2}Convergence Methodology}{9}
 \contentsline {chapter}{\numberline {3}Clustering: The Squared Euclidean Norm Case}{14}
 \contentsline {section}{\numberline {3.1}Clustering with PALM}{14}
-\contentsline {chapter}{\numberline {4}Clustering: The Euclidean Norm Case}{21}
-\contentsline {section}{\numberline {4.1}A Smoothed Clustering Problem}{21}
-\contentsline {section}{\numberline {4.2}Different Approach Towards Solving \\ the Smoothed H$\varepsilon $}{31}
-\contentsline {chapter}{\numberline {5}Returning to k-means}{36}
-\contentsline {section}{\numberline {5.1}Similarity of KPALM to k-means}{36}
-\contentsline {section}{\numberline {5.2}k-means Local Minima Convergence Proof}{38}
-\contentsline {chapter}{\numberline {6}Numeric Results}{41}
-\contentsline {section}{\numberline {6.1}Iris Dataset}{41}
-\contentsline {section}{\numberline {6.2}Synthetic Dataset}{43}
+\contentsline {section}{\numberline {3.2}Convergence analysis of k-means}{21}
+\contentsline {section}{\numberline {3.3}Convergence to Local Minima of k-means}{23}
+\contentsline {chapter}{\numberline {4}Clustering: The Euclidean Norm Case}{25}
+\contentsline {section}{\numberline {4.1}A Smoothed Clustering Problem}{25}
+\contentsline {section}{\numberline {4.2}Different Approach Towards Solving \\ the Smoothed H$\varepsilon $}{35}
+\contentsline {chapter}{\numberline {5}Numeric Results}{41}
+\contentsline {section}{\numberline {5.1}Iris Dataset}{41}
+\contentsline {section}{\numberline {5.2}Synthetic Dataset}{43}
