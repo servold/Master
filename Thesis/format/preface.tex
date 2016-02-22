@@ -1,7 +1,11 @@
 \setcounter{page}{3}
 \chapter*{Abstract}
 
-The clustering problem is one of the fundamental problems in unsupervised machine learning, and arises in a wide scope of applications. The clustering problem is a nonconvex and nonsmooth optimization problem. We propose two clustering center-based algorithms, each tackles a different distance function. We prove the global convergence of these algorithm to a critical point via a new methodology which is based on the powerful Kurdyka-{\L}ojasiewicz property. As an illustration of the theoretical results, we present numerical tests which demonstrate the effectiveness of the proposed algorithms.
+The clustering problem is one of the fundamental problems in unsupervised machine learning, and arises in a wide scope of applications. The clustering problem is a nonconvex and nonsmooth optimization problem. 
+We propose two clustering center-based algorithms, each tackles a different distance function. The KPALM algorithm solves the clustering problem with the squared Euclidean distance, whereas the $\varepsilon$-KPALM algorithm solves the clustering problem with the standard Euclidean distance. 
+Both algorithms perform Alternating Minimization. For fixed centers each algorithm reassigns the data points, solving a minimization subproblem, whose objective is a linear function regularized with a proximal term. For fixed partition of the data points, both algorithms update the centers of the clusters. KPALM solves the subproblem via an exact minimization, whereas $\varepsilon$-KPALM solves approximated minimization subproblem performing a certain gradient step.
+We prove the global convergence of these algorithms to a critical point via a new methodology which is based on the powerful Kurdyka-{\L}ojasiewicz property. 
+As an illustration of the theoretical results, we present numerical tests which demonstrate the effectiveness of the proposed algorithms.
 
 
 \addcontentsline{toc}{chapter}{Abstract}

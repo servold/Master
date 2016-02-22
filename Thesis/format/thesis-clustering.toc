@@ -2,18 +2,18 @@
 \contentsline {chapter}{Acknowledgements}{iv}
 \contentsline {chapter}{\numberline {1}Introduction}{1}
 \contentsline {section}{\numberline {1.1}Background and Motivation}{1}
-\contentsline {section}{\numberline {1.2}Outline and Contributions of The Thesis}{5}
-\contentsline {section}{\numberline {1.3}Notation and Terminology}{7}
-\contentsline {chapter}{\numberline {2}Problem Reformulation and Mathematical Tools}{8}
-\contentsline {section}{\numberline {2.1}Reformulation of the Clustering Problem}{8}
-\contentsline {section}{\numberline {2.2}Convergence Methodology}{9}
-\contentsline {chapter}{\numberline {3}Clustering: The Squared Euclidean Norm Case}{14}
-\contentsline {section}{\numberline {3.1}Clustering with PALM}{14}
-\contentsline {section}{\numberline {3.2}Convergence analysis of k-means}{21}
-\contentsline {section}{\numberline {3.3}Convergence to Local Minima of k-means}{23}
+\contentsline {section}{\numberline {1.2}Outline and Contributions of The Thesis}{4}
+\contentsline {section}{\numberline {1.3}Notation and Terminology}{6}
+\contentsline {chapter}{\numberline {2}Problem Reformulation and Mathematical Tools}{7}
+\contentsline {section}{\numberline {2.1}Reformulation of the Clustering Problem}{7}
+\contentsline {section}{\numberline {2.2}Convergence Methodology}{8}
+\contentsline {chapter}{\numberline {3}Clustering: The Squared Euclidean Norm Case}{13}
+\contentsline {section}{\numberline {3.1}Clustering with PALM}{13}
+\contentsline {section}{\numberline {3.2}Convergence Analysis of k-means}{20}
+\contentsline {section}{\numberline {3.3}Convergence to Local Minima of k-means}{22}
 \contentsline {chapter}{\numberline {4}Clustering: The Euclidean Norm Case}{25}
 \contentsline {section}{\numberline {4.1}A Smoothed Clustering Problem}{25}
-\contentsline {section}{\numberline {4.2}Different Approach Towards Solving \\ the Smoothed H$\varepsilon $}{35}
-\contentsline {chapter}{\numberline {5}Numeric Results}{41}
-\contentsline {section}{\numberline {5.1}Iris Dataset}{41}
+\contentsline {section}{\numberline {4.2}Different Approach Towards Solving \\ the Smoothed $H_{\varepsilon }$}{35}
+\contentsline {chapter}{\numberline {5}Numerical Results}{41}
+\contentsline {section}{\numberline {5.1}Iris Dataset}{42}
 \contentsline {section}{\numberline {5.2}Synthetic Dataset}{43}

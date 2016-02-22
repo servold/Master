@@ -1,8 +1,12 @@
- \chapter{Numeric Results} \label{Chptr5}
+ \chapter{Numerical Results} \label{Chptr5}
 
 \noindent \noindent \hrulefill
 
-In this section we show the numeric results and compare the algorithms presented in this work with other algorithms that are commonly used to address the clustering problem.
+In this chapter we present the numerical results and compare the algorithms presented in this work with other center-based algorithms that are commonly used to address the clustering problem. We describe in detail the setting used in each comparison. We compare the commonly used parameters, such as function objective values and number of iterations until a certain precision is achieved. In addition to these parameters we use several different types of clustering metrics to compare the final clusterings obtained by the discussed algorithms. 
+
+\noindent \noindent \hrulefill
+
+Most of the existing clustering methods are sensitive to the starting point, namely choosing different starting point result in significant differences in the final clustering. There are plethora of heuristic initialization methods. One such initialization method is to choose $k$ random data points as staring centers, assuming uniform distribution or some other prior distribution on the data. Another popular initialization method is to label at random each data point, assuming uniform distribution over the labels for each point. \medskip
 
 The initialization points used within the implementation of the compared algorithms are as follows. k-means staring point is constructed by randomly choosing $k$ different points from the dataset. The same technique is employed in the cases of KPALM and $\varepsilon$-KPALM, for the $x(0)$ variable. Whereas for the $w(0)$ variable, it is chosen at random from $\Delta^m$. k-means++ takes also part in our comparison, and it is basically the same as k-means, with the exception of its starting point that is constructed in the following manner. The first center $x^1(0)$ is chosen randomly from the dataset $\mathcal{A}$. Suppose that $1 \leq l < k$ centers have already been chosen, set $x^{l+1}(0)$ to be the point in the dataset that is the furthest from its closest center.
 
@@ -52,7 +56,7 @@ In \Cref{fig:algs_psi_comp} we made a comparison between KPALM with dynamic rule
 %\end{figure}
 
 \Cref{fig:iters_comp} shows the number of iteration needed to reach precision of 1e-3 between consecutive objective function values.
-Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_psi_comp} we can see a comparison of the objective values of $\Psi_{\varepsilon}$ for different function values. The value of $\varepsilon$ is set to be 1e-5.
+Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_psi_comp} we can see a comparison of the objective values of $\sigma_{\varepsilon}$ for different function values. The value of $\varepsilon$ is set to be 1e-5.
 
 \begin{figure}
     \centering
@@ -73,7 +77,7 @@ Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_p
         \caption{Number of iterations of $\varepsilon$-KPALM with different updates of $\alpha(t)$.}
         \label{fig:iters_dyn_alpha_eps_kpalm_comp}
     \end{subfigure}
-    \caption{Comparison of number of iterations needed to reach 1e-3 precision of $\Psi$.}\label{fig:iters_comp}
+    \caption{Comparison of number of iterations needed to reach 1e-3 precision of $\sigma$.}\label{fig:iters_comp}
 \end{figure}
 
 \begin{figure}

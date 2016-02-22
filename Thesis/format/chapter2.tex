@@ -2,7 +2,7 @@
 
 \noindent \noindent \hrulefill
 
-Transforming the initial discrete clustering problem given in (\ref{clustering_objective}) into a smooth form is the first main objective of this chapter. The second objective is to present a sufficient mathematical background which leads to the general methodology, developed in \cite{BST2014}, that enables to analyze algorithms in the nonconvex and nonsmooth setting. 
+Transforming the initial discrete clustering problem given in (\ref{clustering_objective}) into a smooth form is the first main objective of this chapter. The second objective is to present a sufficient mathematical background including to the general methodology, developed in \cite{BST2014}, that enables to analyze algorithms in the nonconvex and nonsmooth setting. 
 
 \noindent \noindent \hrulefill
 
@@ -24,7 +24,7 @@ where
 \begin{equation}
 d^{i}(x) = (d(x^1,a^i), d(x^2,a^i), \ldots , d(x^k,a^i)) \in \mathbb{R}^k, \quad i=1, 2, \ldots , m. \label{d^i_def}
 \end{equation}
-Replacing further the constraint $w^i \in \Delta$ by adding the indicator function $\delta_{\Delta}(\cdot)$, which is defined to be $0$ in $\Delta$ and $\infty$ otherwise, to the objective function, results in a equivalent formulation
+Replacing further the constraint $w^i \in \Delta$ by adding the indicator function $\delta_{\Delta}(\cdot)$, which is defined to be $0$ in $\Delta$ and $\infty$ otherwise, to the objective function, results in an equivalent formulation
 \begin{equation}
 	\min\limits_{x \in \mathbb{R}^{nk} , w \in \mathbb{R}^{km}} \left\lbrace \sum\limits_{i=1}^{m} \left( \langle w^i , d^i(x) \rangle + \delta_{\Delta}(w^i) \right) \right\rbrace , \label{StateEq3}
 \end{equation}
@@ -37,7 +37,7 @@ $H(w,x) := \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , 
 Replacing the terms in Problem (\ref{StateEq3}) with the functions defined above gives a compact equivalent form of the original clustering problem
 
 \begin{equation}
-	\min \left\lbrace \Psi(z) := H(w,x) + G(w) \mid z := (w,x) \in \mathbb{R}^{km} \times \mathbb{R}^{nk} \right\rbrace . \label{StateEq4}
+	\min \left\lbrace \sigma(z) := H(w,x) + G(w) \mid z := (w,x) \in \mathbb{R}^{km} \times \mathbb{R}^{nk} \right\rbrace . \label{StateEq4}
 \end{equation}
 
 \section{Convergence Methodology} \label{State_PALM_Theory}
@@ -137,28 +137,28 @@ The purpose of the proposed methodology is to assure the convergence of the whol
 	\end{enumerate}
 \end{definition}
 
-The two conditions (C1) and (C2) defining a gradient-like descent sequence for a given $\sigma$ are typical for any descent type algorithm, and provide the basic tools to prove that the limit of any convergent subsequence of $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a critical point of $\sigma$. More precisely, from \cite[Lemma 5, p. 476]{BST2014} we have
+The two conditions (C1) and (C2) defining a gradient-like descent sequence for a given $\sigma$ are typical for any descent type algorithm, and provide the basic tools to prove that the limit of any convergent subsequence of $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a critical point of $\sigma$. More precisely, from \cite[Lemma 5, p. 476]{BST2014} we have the following result.
 
 \begin{lemma}
-If $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a gradient-like descent sequence for a given function $\sigma$, which is lsc and proper on $\rr^d$, then $\omega\left(z^0\right)$ is a nonempty, compact and connected set, and we have
+If $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a gradient-like descent sequence for a given function $\sigma$, which is lower semicontinuous and proper on $\rr^d$, then $\omega\left(z^0\right)$ is a nonempty, compact and connected set, and we have
 \begin{equation*}
 	\lim_{k\rightarrow \infty} dist\left( z^k, \omega\left(z^0\right)\right) = 0.
 \end{equation*}
 \end{lemma}
 
-This result can thus be applied to any algorithm that produces a gradient-like descent to establish convergence in accumulation points. The main goal is to establish global convergence, i.e., that the whole sequence converges to a critical point of $\sigma$. This can be achieved by imposing an additional assumption on the class of functions $\sigma$, it must satisfy the Kurdyka-{L}ojasiewiez property.\medskip
+This result can thus be applied to any algorithm that produces a gradient-like descent to establish convergence to accumulation points. The main goal is to establish global convergence, i.e., that the whole sequence converges to a critical point of $\sigma$. This can be achieved by imposing an additional assumption on the class of functions $\sigma$, it must satisfy the Kurdyka-{L}ojasiewiez property.\medskip
 
-As proven in \cite{BST2014}, relying on a key uniformization of the KL property it is possible to establish global convergence of any gradient-like descent sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$, independently of the algorithm used. Verifying the KL property of a given function might often be a difficult task. However, thanks to a \Cref{SA_is_KL}, any proper and lsc function $\sigma$ which is semi-algebraic satisfies the KL property at any point in dom$\sigma$. We summarize the general methodology and convergence results of \cite{BST2014} in the following abstract convergence result.
+As proven in \cite{BST2014}, relying on a key uniformization of the KL property it is possible to establish global convergence of any gradient-like descent sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$, independently of the algorithm used. Verifying the KL property of a given function might often be a difficult task. However, thanks to a \Cref{SA_is_KL}, any proper and lower semicontinuous function $\sigma$ which is semi-algebraic satisfies the KL property at any point in dom$\sigma$. We summarize the general methodology and convergence results of \cite{BST2014} in the following abstract convergence result.
 
 \begin{theorem} \label{SDP_SGP_conv_thrm}
 Let $\sigma:\rr^d \rightarrow (-\infty,\infty]$ be a proper, lower semicontinuous and semi-algebraic function with $\inf \sigma > -\infty$, and assume that $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a gradient-like descent sequence for $\sigma$. If $\omega\left( z^0 \right) \subset crit\sigma$ then the sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ convergences to a critical point $z^{*}$ of $\sigma$.
 \end{theorem}
 
 \begin{remark}
-Under the premises of this theorem, it is also possible to derive a rate of convergence result for the sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ of the form $\norm{z^k - z^{*}} \leq Ck^{-\gamma}$, for some positive constant $C$ and where $\gamma>0$ is a so-called KL exponent.
+Under the premises of this theorem, it is also possible to derive a rate of convergence result for the sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ of the form $\norm{z^k - z^{*}} \leq Ck^{-\gamma}$, for some positive constant $C$ and where $\gamma>0$ is the so-called KL exponent.
 \end{remark}
 
-Finally, we present the proximal alternating linearized minimization (PALM) algorithm which solves the nonconvex and nonsmooth minimization problem of the following form
+Finally, we present the Proximal Alternating Linearized Minimization (PALM) algorithm which solves the nonconvex and nonsmooth minimization problems of the following form
 \begin{center}
 (\textit{M})\quad minimize $\sigma(x,y):=f(x)+g(y)+H(x,y)$ over all $(x,y) \in \mathbb{R}^n \times \mathbb{R}^m$,
 \end{center}
@@ -176,4 +176,4 @@ Thus, PALM can be summarized as follows
 \begin{center}
 $x^{k+1} \in \arg\!\min \left\lbrace \widehat{\sigma}(x,y^k) : \; x \in \rr^n \right\rbrace$ \quad and \quad $y^{k+1} \in \arg\!\min \left\lbrace \widetilde{\sigma}\left(x^{k+1},y\right) : \; y \in \rr^m \right\rbrace$.
 \end{center}
-Assuming $\Psi$ is KL function and the generated sequence by PALM, $\left\lbrace \left( x^k, y^k\right)\right\rbrace_{k \in \nn}$, is bounded, Bolte et al. \cite{BST2014} proved that the sequence is a gradient-like descent sequence, and thus it converges to a critical point of $\sigma$. 
+Assuming $\sigma$ is KL function and the generated sequence by PALM, $\left\lbrace \left( x^k, y^k\right)\right\rbrace_{k \in \nn}$, is bounded, Bolte et al. \cite{BST2014} proved that the sequence is a gradient-like descent sequence, and thus it converges to a critical point of $\sigma$. 
