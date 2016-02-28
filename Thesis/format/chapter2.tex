@@ -2,7 +2,7 @@
 
 \noindent \noindent \hrulefill
 
-Transforming the initial discrete clustering problem given in (\ref{clustering_objective}) into a smooth form is the first main objective of this chapter. The second objective is to present a sufficient mathematical background including to the general methodology, developed in \cite{BST2014}, that enables to analyze algorithms in the nonconvex and nonsmooth setting. 
+Transforming the initial discrete clustering problem given in (\ref{clustering_objective}) into a smooth form is the first main objective of this chapter. The second objective is to present a sufficient mathematical background including the general methodology, developed in \cite{BST2014}, that enables to analyze algorithms in the nonconvex and nonsmooth setting. 
 
 \noindent \noindent \hrulefill
 
@@ -151,7 +151,7 @@ This result can thus be applied to any algorithm that produces a gradient-like d
 As proven in \cite{BST2014}, relying on a key uniformization of the KL property it is possible to establish global convergence of any gradient-like descent sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$, independently of the algorithm used. Verifying the KL property of a given function might often be a difficult task. However, thanks to a \Cref{SA_is_KL}, any proper and lower semicontinuous function $\sigma$ which is semi-algebraic satisfies the KL property at any point in dom$\sigma$. We summarize the general methodology and convergence results of \cite{BST2014} in the following abstract convergence result.
 
 \begin{theorem} \label{SDP_SGP_conv_thrm}
-Let $\sigma:\rr^d \rightarrow (-\infty,\infty]$ be a proper, lower semicontinuous and semi-algebraic function with $\inf \sigma > -\infty$, and assume that $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a gradient-like descent sequence for $\sigma$. If $\omega\left( z^0 \right) \subset crit\sigma$ then the sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ convergences to a critical point $z^{*}$ of $\sigma$.
+Let $\sigma:\rr^d \rightarrow (-\infty,\infty]$ be a proper, lower semicontinuous and semi-algebraic function with $\inf \sigma > -\infty$, and assume that $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a gradient-like descent sequence for $\sigma$. If $\omega\left( z^0 \right) \subset crit(\sigma)$ then the sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ convergences to a critical point $z^{*}$ of $\sigma$.
 \end{theorem}
 
 \begin{remark}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.29)  22 FEB 2016 20:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.29)  25 FEB 2016 15:14
 entering extended mode
 **thesis-clustering.tex
 (thesis-clustering.tex
@@ -691,19 +691,21 @@ Overfull \hbox (5.4782pt too wide) in paragraph at lines 143--143
 [] 
  []
 
-[17] [18] [19] [20] [21] [22] [23]) [24] (chapter4.tex
+[17] [18] [19] [20] [21] [22] [23] [24
+
+]) [25] (chapter4.tex
 Chapter 4.
-[25
+[26
 
 
 
-] [26]
+] [27]
 Overfull \hbox (25.87053pt too wide) detected at line 70
 \OML/cmm/m/it/12 x[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 t \OT1/cmr/m/n/12 + 1) = 
 []  [] [] \OML/cmm/m/it/12 ;
  []
 
-[27] [28]
+[28] [29]
 Overfull \hbox (8.88647pt too wide) detected at line 179
 \OML/cmm/m/it/12 L[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 w\OT1/cmr/m/n/12 (\OML/cm
 m/m/it/12 t \OT1/cmr/m/n/12 + 1)\OML/cmm/m/it/12 ; x\OT1/cmr/m/n/12 (\OML/cmm/m
@@ -711,7 +713,7 @@ m/m/it/12 t \OT1/cmr/m/n/12 + 1)\OML/cmm/m/it/12 ; x\OT1/cmr/m/n/12 (\OML/cmm/m
 
  []
 
-[29]
+[30]
 Overfull \hbox (0.34027pt too wide) in paragraph at lines 210--210
 [] 
  []
@@ -726,34 +728,45 @@ Overfull \hbox (10.12823pt too wide) detected at line 220
 [] [] \OT1/cmr/m/n/12 = [] \OML/cmm/m/it/12 ;
  []
 
-[30] [31]
+[31] [32]
 Overfull \hbox (6.3856pt too wide) in paragraph at lines 325--325
 [] 
  []
 
-[32] [33]
-Overfull \hbox (16.18535pt too wide) in paragraph at lines 382--382
+[33]
+Overfull \hbox (8.99156pt too wide) in paragraph at lines 343--343
 [] 
  []
 
-[34] [35] [36]
-Overfull \hbox (1.5059pt too wide) detected at line 504
+[34]
+Overfull \hbox (16.18535pt too wide) in paragraph at lines 387--387
+[] 
+ []
+
+[35] [36] [37] [38]
+Overfull \hbox (1.5059pt too wide) detected at line 509
 [] \OT1/cmr/m/n/12 + [] [][] \OMS/cmsy/m/n/12  [] \OML/cmm/m/it/12 :
  []
 
-[37] [38]
-Overfull \hbox (23.49103pt too wide) in paragraph at lines 573--573
+[39]
+Overfull \hbox (8.99156pt too wide) detected at line 554
+\OML/cmm/m/it/12 \OT1/cmr/m/n/12 (\OML/cmm/m/it/12 t\OT1/cmr/m/n/12 ) := [] \O
+ML/cmm/m/it/12 :
+ []
+
+[40]
+Overfull \hbox (23.49103pt too wide) in paragraph at lines 583--583
 [] 
  []
 
 
-Overfull \hbox (18.77257pt too wide) in paragraph at lines 582--582
+Overfull \hbox (18.77257pt too wide) in paragraph at lines 592--592
 [] 
  []
 
-[39]) [40] (chapter5.tex
+) [41] (chapter5.tex
 Chapter 5.
-[41
+[42
 
 
 
@@ -769,14 +782,14 @@ verted-to.pdf dynamic_alpha_kpalm.eps>
 (epstopdf)             \includegraphics on input line 20.
 Package epstopdf Info: Output file is already uptodate.
 
-<dynamic_alpha_kpalm-eps-converted-to.pdf, id=170, 420.57124pt x 316.18124pt>
+<dynamic_alpha_kpalm-eps-converted-to.pdf, id=173, 420.57124pt x 316.18124pt>
 File: dynamic_alpha_kpalm-eps-converted-to.pdf Graphic file (type pdf)
 
 <use dynamic_alpha_kpalm-eps-converted-to.pdf>
 Package pdftex.def Info: dynamic_alpha_kpalm-eps-converted-to.pdf used on input
  line 20.
 (pdftex.def)             Requested size: 346.89731pt x 260.79485pt.
- [42 <./dynamic_alpha_kpalm-eps-converted-to.pdf>]
+ [43 <./dynamic_alpha_kpalm-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <psi_algs_comparison2.eps>
 (epstopdf)                    date: 2015-10-17 19:30:39
 (epstopdf)                    size: 10893 bytes
@@ -789,7 +802,7 @@ nverted-to.pdf psi_algs_comparison2.eps>
 (epstopdf)             \includegraphics on input line 39.
 Package epstopdf Info: Output file is already uptodate.
 
-<psi_algs_comparison2-eps-converted-to.pdf, id=181, 420.57124pt x 316.18124pt>
+<psi_algs_comparison2-eps-converted-to.pdf, id=185, 420.57124pt x 316.18124pt>
 File: psi_algs_comparison2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use psi_algs_comparison2-eps-converted-to.pdf>
@@ -808,7 +821,7 @@ ps-converted-to.pdf psi_algs_comparison2_zoom.eps>
 (epstopdf)             \includegraphics on input line 44.
 Package epstopdf Info: Output file is already uptodate.
 
-<psi_algs_comparison2_zoom-eps-converted-to.pdf, id=182, 963.6pt x 683.55376pt>
+<psi_algs_comparison2_zoom-eps-converted-to.pdf, id=186, 963.6pt x 683.55376pt>
 File: psi_algs_comparison2_zoom-eps-converted-to.pdf Graphic file (type pdf)
 <use psi_algs_comparison2_zoom-eps-converted-to.pdf>
 Package pdftex.def Info: psi_algs_comparison2_zoom-eps-converted-to.pdf used on
@@ -826,7 +839,7 @@ eps-converted-to.pdf iterations_algs_comparison.eps>
 (epstopdf)             \includegraphics on input line 64.
 Package epstopdf Info: Output file is already uptodate.
 
-<iterations_algs_comparison-eps-converted-to.pdf, id=183, 529.98pt x 258.9675pt
+<iterations_algs_comparison-eps-converted-to.pdf, id=187, 529.98pt x 258.9675pt
 >
 File: iterations_algs_comparison-eps-converted-to.pdf Graphic file (type pdf)
  <use iterations_algs_comparison-eps-converted-to.pdf>
@@ -847,7 +860,7 @@ ps>
 (epstopdf)             \includegraphics on input line 71.
 Package epstopdf Info: Output file is already uptodate.
 
-<iterations_dynamic_alpha_kpalm_comparison-eps-converted-to.pdf, id=184, 529.98
+<iterations_dynamic_alpha_kpalm_comparison-eps-converted-to.pdf, id=188, 529.98
 pt x 252.945pt>
 File: iterations_dynamic_alpha_kpalm_comparison-eps-converted-to.pdf Graphic fi
 le (type pdf)
@@ -870,7 +883,7 @@ arison.eps>
 (epstopdf)             \includegraphics on input line 76.
 Package epstopdf Info: Output file is already uptodate.
 
-<iterations_dynamic_alpha_eps_kpalm_comparison-eps-converted-to.pdf, id=185, 52
+<iterations_dynamic_alpha_eps_kpalm_comparison-eps-converted-to.pdf, id=189, 52
 9.98pt x 252.945pt>
 File: iterations_dynamic_alpha_eps_kpalm_comparison-eps-converted-to.pdf Graphi
 c file (type pdf)
@@ -891,7 +904,7 @@ df>
 (epstopdf)             \includegraphics on input line 85.
 Package epstopdf Info: Output file is already uptodate.
 
-<dynamic_alpha_eps_kpalm-eps-converted-to.pdf, id=186, 513.92pt x 370.38374pt>
+<dynamic_alpha_eps_kpalm-eps-converted-to.pdf, id=190, 513.92pt x 370.38374pt>
 File: dynamic_alpha_eps_kpalm-eps-converted-to.pdf Graphic file (type pdf)
 
 <use dynamic_alpha_eps_kpalm-eps-converted-to.pdf>
@@ -909,7 +922,7 @@ ed-to.pdf dense_gaussians.eps>
 (epstopdf)             \includegraphics on input line 95.
 Package epstopdf Info: Output file is already uptodate.
 
-<dense_gaussians-eps-converted-to.pdf, id=187, 420.57124pt x 316.18124pt>
+<dense_gaussians-eps-converted-to.pdf, id=191, 420.57124pt x 316.18124pt>
 File: dense_gaussians-eps-converted-to.pdf Graphic file (type pdf)
 
 <use dense_gaussians-eps-converted-to.pdf>
@@ -927,7 +940,7 @@ ted-to.pdf sparse_gaussians.eps>
 (epstopdf)             \includegraphics on input line 101.
 Package epstopdf Info: Output file is already uptodate.
 
-<sparse_gaussians-eps-converted-to.pdf, id=188, 420.57124pt x 316.18124pt>
+<sparse_gaussians-eps-converted-to.pdf, id=192, 420.57124pt x 316.18124pt>
 File: sparse_gaussians-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sparse_gaussians-eps-converted-to.pdf>
@@ -946,7 +959,7 @@ eps-converted-to.pdf dense_gaussians_similarity.eps>
 (epstopdf)             \includegraphics on input line 112.
 Package epstopdf Info: Output file is already uptodate.
 
-<dense_gaussians_similarity-eps-converted-to.pdf, id=189, 963.6pt x 460.72125pt
+<dense_gaussians_similarity-eps-converted-to.pdf, id=193, 963.6pt x 460.72125pt
 >
 File: dense_gaussians_similarity-eps-converted-to.pdf Graphic file (type pdf)
  <use dense_gaussians_similarity-eps-converted-to.pdf>
@@ -965,7 +978,7 @@ to.pdf>
 (epstopdf)             \includegraphics on input line 118.
 Package epstopdf Info: Output file is already uptodate.
 
-<sparse_gaussians_similarity-eps-converted-to.pdf, id=190, 963.6pt x 442.65375p
+<sparse_gaussians_similarity-eps-converted-to.pdf, id=194, 963.6pt x 442.65375p
 t>
 File: sparse_gaussians_similarity-eps-converted-to.pdf Graphic file (type pdf)
  <use sparse_gaussians_similarity-eps-converted-to.pdf>
@@ -984,7 +997,7 @@ s-converted-to.pdf dense_gaussians_metrics2.eps>
 (epstopdf)             \includegraphics on input line 129.
 Package epstopdf Info: Output file is already uptodate.
 
-<dense_gaussians_metrics2-eps-converted-to.pdf, id=191, 963.6pt x 471.7625pt>
+<dense_gaussians_metrics2-eps-converted-to.pdf, id=195, 963.6pt x 471.7625pt>
 File: dense_gaussians_metrics2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use dense_gaussians_metrics2-eps-converted-to.pdf>
@@ -1003,26 +1016,26 @@ ps-converted-to.pdf sparse_gaussians_metrics2.eps>
 (epstopdf)             \includegraphics on input line 135.
 Package epstopdf Info: Output file is already uptodate.
 
-<sparse_gaussians_metrics2-eps-converted-to.pdf, id=192, 963.6pt x 471.7625pt>
+<sparse_gaussians_metrics2-eps-converted-to.pdf, id=196, 963.6pt x 471.7625pt>
 File: sparse_gaussians_metrics2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sparse_gaussians_metrics2-eps-converted-to.pdf>
 Package pdftex.def Info: sparse_gaussians_metrics2-eps-converted-to.pdf used on
  input line 135.
 (pdftex.def)             Requested size: 433.62pt x 212.29115pt.
-) [43] [44 <./psi_algs_comparison2-eps-converted-to.pdf> <./psi_algs_comparison
-2_zoom-eps-converted-to.pdf>] [45 <./iterations_algs_comparison-eps-converted-t
+) [44] [45 <./psi_algs_comparison2-eps-converted-to.pdf> <./psi_algs_comparison
+2_zoom-eps-converted-to.pdf>] [46 <./iterations_algs_comparison-eps-converted-t
 o.pdf> <./iterations_dynamic_alpha_kpalm_comparison-eps-converted-to.pdf> <./it
-erations_dynamic_alpha_eps_kpalm_comparison-eps-converted-to.pdf>] [46 <./dynam
+erations_dynamic_alpha_eps_kpalm_comparison-eps-converted-to.pdf>] [47 <./dynam
 ic_alpha_eps_kpalm-eps-converted-to.pdf> <./dense_gaussians-eps-converted-to.pd
 f> <./sparse_gaussians-eps-converted-to.pdf> <./dense_gaussians_similarity-eps-
-converted-to.pdf> <./sparse_gaussians_similarity-eps-converted-to.pdf>] [47 <./
+converted-to.pdf> <./sparse_gaussians_similarity-eps-converted-to.pdf>] [48 <./
 dense_gaussians_metrics2-eps-converted-to.pdf> <./sparse_gaussians_metrics2-eps
 -converted-to.pdf>]
-[48
+[49
 
 
-] [49] [50] (thesis-clustering.aux (title.aux) (preface.aux) (chapter1.aux)
+] [50] [51] (thesis-clustering.aux (title.aux) (preface.aux) (chapter1.aux)
 (chapter2.aux) (chapter3.aux) (chapter4.aux) (chapter5.aux)) ) 
 Here is how much of TeX's memory you used:
  13951 strings out of 493636
@@ -1056,9 +1069,9 @@ per/sfbx2488.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/cm-super
 /sfrm1095.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/cm-super/sf
 rm1200.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/cm-super/sfti1
 200.pfb>
-Output written on thesis-clustering.pdf (56 pages, 508732 bytes).
+Output written on thesis-clustering.pdf (57 pages, 510916 bytes).
 PDF statistics:
- 337 PDF objects out of 1000 (max. 8388607)
+ 340 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  66 words of extra memory for PDF output out of 10000 (max. 10000000)
 
