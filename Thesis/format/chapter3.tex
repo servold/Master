@@ -1,4 +1,4 @@
- \chapter{Clustering: The Squared Euclidean Norm Case} \label{Chptr3}
+ \chapter{Clustering with the Squared Euclidean Norm} \label{Chptr3}
 
 \noindent \noindent \hrulefill
 
@@ -82,7 +82,7 @@ The following assumption will be crucial for the coming analysis.
 		\end{equation}		 \label{StateMainAssum2}
 \end{enumerate}
 \end{assumption}
-It should be noted that Assumption \ref{StateMainAssum}(\ref{StateMainAssum1}) is very mild since the parameters $\alpha_i(t)$, for $1 \leq i \leq m$ and $t \in \mathbb{N}$, can be chosen arbitrarily by the user and therefore it can be controlled such that the boundedness property holds true. Assumption \ref{StateMainAssum}(\ref{StateMainAssum2}) is essential since if it is not true then $w^i_l(t)=0$ for all $1 \leq i \leq m$, which means that the center $x^l$ does not play any role in the solution process which is, of course, meaningless situation.
+It should be noted that Assumption \ref{StateMainAssum}(\ref{StateMainAssum1}) is very mild since the parameters $\alpha_i(t)$, for $1 \leq i \leq m$ and $t \in \mathbb{N}$, can be chosen arbitrarily by the user and therefore it can be controlled such that the boundedness property holds true. Assumption \ref{StateMainAssum}(\ref{StateMainAssum2}) is essential since if it is not true then $w^i_l(t)=0$ for all $1 \leq i \leq m$, which means that the center $x^l$ does not play any role in the solution process which is, of course, a meaningless situation.
 
 \begin{lemma}[Strong convexity of $H(w,x)$ in $x$] \label{StateEq14}
 The function $x \mapsto H(w,x)$ is strongly convex with parameter $\beta(w)$ which defined in (\ref{State_beta}), whenever $\beta(w) > 0$.
@@ -134,7 +134,7 @@ Denote $\underline{\alpha} = \min\limits_{1 \leq i \leq m} \underline{\alpha_i}$
 \end{align}
 where the first inequality follows from Assumption \ref{StateMainAssum}(\ref{StateMainAssum1}) and the definition of $\underline{\alpha}$.
 
-From Assumption \ref{StateMainAssum}(\ref{StateMainAssum2}) we have that $\beta(w(t)) \geq \underline{\beta}$, for all $t \in \nn$, and from \Cref{StateEq14} it follows that the function $x \mapsto H(w(t),x)$ is strongly convex with parameter $\beta(w(t))$. H using the strong convexity yields that
+From Assumption \ref{StateMainAssum}(\ref{StateMainAssum2}) we have that $\beta(w(t)) \geq \underline{\beta}$, for all $t \in \nn$, and from \Cref{StateEq14} it follows that the function $x \mapsto H(w(t),x)$ is strongly convex with parameter $\beta(w(t))$. Using the strong convexity of $H$ yields
 \begin{align}
 	H(w(t+1),x(t))  - H(w(t+1),x(t+1)) &\geq \left\langle \nabla_x H(w(t+1),x(t+1)) , x(t)-x(t+1) \right\rangle \nonumber \\
 	&\quad\quad\quad + \frac{\beta(w(t))}{2} \|x(t) - x(t+1)\|^2 \nonumber \\
@@ -154,18 +154,19 @@ Set $\rho_1 = \frac{1}{2}\min\left\lbrace \underline{\alpha} , \underline{\beta}
 where the last equality follows from the fact that $G(w(t)) = 0$, since $w(t) \in \Delta^m$ for all $t \in \mathbb{N}$, and therefore $H(z(t))=\sigma(z(t))$, $t \in \mathbb{N}$. This proves the desired result.
 \end{proof}
 
-Now, we are focusing on proving condition (C2) and we will need the following technical result.
+Now, we are focusing on proving condition (C2). For that purpose we first need the following technical result.
 
 \begin{lemma} \label{StateEq11}
-The function $d^i$ defined in (\ref{d^i_def}) is Lipschitz continuous in $S$ with constant $4M$, that is,
+Let $x,y \in \rr^{nk}$ such that $x^l,y^l \in Conv\left(\mathcal{A}\right)$ for all $l=1,2,\ldots,k$. Then, for each $i=1,2,\ldots,m$ the following inequality holds
 \begin{equation*}
-	\norm{d^i(x) - d^i(y)} \leq 4M \norm{x - y}, \quad \forall \: x,y \in S,
+	\norm{d^i(x) - d^i(y)} \leq 4M \norm{x - y},
 \end{equation*}
-where $M = \max\limits_{1 \leq i \leq m} \norm{a^i}$ and  $S=\left\lbrace x \in \rr^k : x^l \in Conv(\mathcal{A}), \; l=1,2,\ldots,k \right\rbrace$.
+where $d^i$ is the mapping defined in (\ref{d^i_def}) and $M = \max\limits_{1 \leq i \leq m} \norm{a^i}$.
 \end{lemma}
 
 \begin{proof}
-Fix any $x,y \in S$, since $d(u,v) = \| u-v \|^2$, we get that
+%Fix any $x,y \in S$, 
+Since $d(u,v) = \| u-v \|^2$, we get that
 \begin{align*} 
 	\norm{d^i(x)  - d^i(y)} 
 	&= \left[ \sum\limits_{l=1}^{k} \abs{ \norm{x^l - a^i}^2 - \norm{ y^l -a^i}^2 }^2 \right]^{\frac{1}{2}} \\
@@ -173,13 +174,13 @@ Fix any $x,y \in S$, since $d(u,v) = \| u-v \|^2$, we get that
 	&\leq \left[ \sum\limits_{l=1}^{k} \left( \abs{ \norm{x^l}^2 - \norm{y^l}^2 } + \abs{ 2\left\langle y^l - x^l , a^i \right\rangle } \right)^2 \right]^{\frac{1}{2}} \\ 
 	&\leq \left[ \sum\limits_{l=1}^{k} \left( \abs{ \norm{x^l} - \norm{y^l} } \cdot \abs{ \norm{x^l} + \norm{y^l} } + 2 \norm{y^l - x^l} \cdot \norm{a^i} \right)^2 \right]^{\frac{1}{2}} \\
 	&\leq \left[ \sum\limits_{l=1}^{k} \left( \norm{x^l - y^l} \cdot 2M + 2 \norm{x^l - y^l}\cdot M \right)^2 \right]^{\frac{1}{2}} \\
-	&= \left[ \sum\limits_{l=1}^{k} (4M)^2 \norm{x^l - y^l}^2 \right]^{\frac{1}{2}} \\
+	&= \left[ 16M^2 \sum\limits_{l=1}^{k} \norm{x^l - y^l}^2 \right]^{\frac{1}{2}} \\
 	&= 4M \norm{x - y} ,
 \end{align*}
 where the last inequality follows from the fact that $x^l,y^l \in Conv(\mathcal{A})$ and hence $\norm{x^l},\norm{y^l} \leq M$ for all $l=1,2,\ldots,k$. This proves the desired result.
 \end{proof}
 
-Now, using this result we can show that $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ satisfies condition (C2). It is important to note that in this case the boundedness of the generated sequence is obtained (see \Cref{boundedness_prop}(\ref{boundedness_prop_2})) and not need to be assumed.
+Now, using this result we can show that $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ satisfies condition (C2). It is important to note that in this case the boundedness of the generated sequence is obtained (see \Cref{boundedness_prop}(\ref{boundedness_prop_2})) and not needed to be assumed.
 
 \begin{proposition}[Subgradient lower bound for the iterates gap] \label{State_KPALM_SGP}
 Suppose that Assumption \ref{StateMainAssum} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM.
@@ -290,7 +291,8 @@ If $x(t+1)=x(t)$ for some $t \in \nn$ then the result is true since $w(t+1)=w(t)
 \begin{equation*}
 	r:=\min\limits_{1 \leq i <j \leq N} \norm{c^i - c^j},
 \end{equation*}
-and obviously $r \neq 0$. By the definition of step (\ref{StateEq12}) we have that $w^i(t)\in\Delta$ for all $i=1,2,\ldots,m$ and $t \in \nn$. Thus, it is clear that
+and obviously $r \neq 0$. By the definition of step (\ref{StateEq12})  and (\ref{optimal_min_component}) it follows that all except one components of $w^i(t)$ are $0$, and the remaining component equals $1$.
+Thus, it is clear that
 \begin{equation*}
 	\|w^i(t+1)-w^i(t)\| \leq \sqrt{2}.
 \end{equation*}
@@ -353,10 +355,6 @@ In this section we present a simple and direct proof that k-means converges to l
 		\begin{equation}
 			x^l(t+1) = \frac{1}{\left| C^l(t+1) \right|} \sum\limits_{a \in C^l(t+1)} a . \label{StateEq21}
 		\end{equation}
-%		\item Stopping criteria: halt if 
-%		\begin{equation}
-%			\forall 1 \leq l \leq k \quad C^l(t+1)=C^l(t) \label{StateEq22}
-%		\end{equation}
 	\end{enumerate}
 \end{enumerate}
 \end{framed}
@@ -372,7 +370,7 @@ Moreover, denote $R_{lj}(t) = \min\limits_{a \in C^l(t)} \left\lbrace \|a - x^j(
 Due to Assumption \ref{StateEq23} we have that $\overline{C^l}(x(\widetilde{t})) = \underline{C^l}(x(\widetilde{t})) = C^l(\widetilde{t}+1)$, for all $1 \leq l \leq k$, we also have that $r(\widetilde{t}) > 0$.
 
 \begin{proposition} \label{StateEq24}
-Let $(C(\widetilde{t}), x(\widetilde{t}))$ be the clusters and centers k-means returns. Denote by $U = B\left( x^1(\widetilde{t}),\frac{r(\widetilde{t})}{2}\right) \times  B\left( x^2(\widetilde{t}),\frac{r(\widetilde{t})}{2}\right) \times \cdots \times B\left( x^l(\widetilde{t}),\frac{r(\widetilde{t})}{2} \right)$ an open neighbourhood of $x(\widetilde{t})$, then for any $x \in U$ we have $C^l(\widetilde{t}) = \underline{C^l}(x)$ for all $1 \leq l \leq k$.
+Let $(C(\widetilde{t}), x(\widetilde{t}))$ be the clusters and centers k-means returns. Denote by $U = B\left( x^1(\widetilde{t}),\frac{r(\widetilde{t})}{2}\right) \times  B\left( x^2(\widetilde{t}),\frac{r(\widetilde{t})}{2}\right) \times \cdots \times B\left( x^l(\widetilde{t}),\frac{r(\widetilde{t})}{2} \right)$ an open neighbourhood of $x(\widetilde{t})$. Then for any $x \in U$ we have $C^l(\widetilde{t}) = \underline{C^l}(x)$ for all $1 \leq l \leq k$.
 \end{proposition}
 
 \begin{proof}
@@ -392,7 +390,7 @@ By the definition of $\underline{C^l}(x)$ we have for any $l \neq j$ that $\unde
 \end{proof}
 
 \begin{proposition}[k-means converges to local minimum]
-Let $\left(C(\widetilde{t}), x(\widetilde{t})\right)$ be the clusters and centers k-means returns, then $x(\widetilde{t})$ is local minimum of $F$ (see (\ref{clustering_objective})) on $U = B\left( x^1(\widetilde{t}),\frac{r(\widetilde{t})}{2}\right) \times  B\left( x^2(\widetilde{t}),\frac{r(\widetilde{t})}{2}\right) \times \cdots \times B\left( x^l(\widetilde{t}),\frac{r(\widetilde{t})}{2} \right) \subset \mathbb{R}^{nk}$.
+Let $\left(C(\widetilde{t}), x(\widetilde{t})\right)$ be the clusters and centers k-means returns. Then $x(\widetilde{t})$ is local minimum of $F$ (see (\ref{clustering_objective})) on $U = B\left( x^1(\widetilde{t}),\frac{r(\widetilde{t})}{2}\right) \times  B\left( x^2(\widetilde{t}),\frac{r(\widetilde{t})}{2}\right) \times \cdots \times B\left( x^l(\widetilde{t}),\frac{r(\widetilde{t})}{2} \right) \subset \mathbb{R}^{nk}$.
 \end{proposition}
 
 \begin{proof}

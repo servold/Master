@@ -2,7 +2,7 @@
 
 \noindent \noindent \hrulefill
 
-This chapter presents the importance of the clustering problem and describes the usefulness of clustering in many applications. Moreover, we describe existing types and approaches of clustering, and review the literature of the most popular clustering center-based algorithms. We discuss the contributions of this thesis, mainly in developing new algorithms and the use of a novel methodology to prove their convergence results.
+This chapter presents the importance of the clustering problem and describes the usefulness of clustering in many applications. Moreover, we describe existing types and approaches for clustering, and review the literature of the most popular clustering center-based algorithms. We outline the main contributions of the thesis which consists of: (i) the development of new algorithms, (ii) a novel methodology to prove global convergence of the proposed methods, (iii) numerical examples illustrating their performance in comparison with standard schemes.
 
 \noindent \noindent \hrulefill
 
@@ -19,11 +19,13 @@ There are several types of clustering approaches, each has a direct impact on th
 	\item Complete versus partial clustering. In complete clustering all points in the dataset are assigned to clusters, whereas in partial clustering some points may be intentionally skipped and are not being assigned to a cluster.
 \end{enumerate}
 
-Finding the optimal partition of a fixed number of clusters for some given dataset is known to be an NP-hard problem (see \cite{GJ1979}), and hence cannot be solved efficiently. Most algorithms seek to minimize certain objective function, and usually achieve local rather than global minimum solution. In this work we focus on partitioning clustering, where the number of clusters in known in advance. Most partitioning clustering methods iteratively update the cluster centers, and hence they are often referred as center-based clustering methods. \medskip
+Finding the optimal partition of a fixed number of clusters for some given dataset is known to be an NP-hard problem (see \cite{GJ1979}), and hence cannot be solved efficiently. Most algorithms seek to minimize certain objective function, and usually achieve local rather than global minimum solution. \medskip
+
+In this work we focus on partitioning clustering, where the number of clusters in known in advance. Most partitioning clustering methods iteratively update the cluster centers, and hence they are often referred as center-based clustering methods. \medskip
 
 We introduce few notations for the upcoming discussion. Let $\mathcal{A}= \left\lbrace a^1, a^2, \ldots ,a^m \right\rbrace$ be a given set of points in $\mathbb{R}^n$, and let $1 < k < m$ be a fixed given number of clusters. The clustering problem consists of partitioning the dataset $\mathcal{A}$ into $k$ subsets $\left\lbrace C^1, C^2, \ldots ,C^k \right\rbrace$, called clusters. For each $l=1, 2, \ldots ,k$, the cluster $C^l$ is represented by its center $x^l \in \mathbb{R}^n$. We describe few well-known center-based clustering algorithms.
 \begin{enumerate}[(i)]
-	\item The k-means algorithm. This algorithm is probably the most famous within the clustering scope, and dates back to Steinhaus (1956), MacQueen (1967) and Lloyd (1982) (see \cite{S1956,M1967,L1982}). The k-means algorithm partitions the data into $k$ sets. The solution is then a set of $k$ centers, each of which is located at the centroid of the data for which it is the closest center. The k-means algorithm performs hard clustering, and each point is labeled according to its closest center. This algorithm can be discribed as an optimization algorithm (see precise details below) which minimizes the following objective function
+	\item The k-means algorithm. This algorithm is probably the most famous within the clustering scope, and dates back to Steinhaus (1956), MacQueen (1967) and Lloyd (1982) (see \cite{S1956,M1967,L1982}). The k-means algorithm partitions the data into $k$ sets. The solution is then a set of $k$ centers, each of which is located at the centroid of the data for which it is the closest center. The k-means algorithm performs hard clustering, and each point is labeled according to its closest center. This algorithm can be described as an optimization algorithm (see precise details below) which minimizes the following objective function
 	\begin{equation*}
 		f_{KM}(x^1,x^2,\ldots,x^k) = \sum\limits_{i=1}^{m}\min\limits_{1 \le l \le k} \norm{a^i-x^l}^2.
 	\end{equation*}
@@ -66,9 +68,10 @@ We begin this work with the formulation of the clustering problem, used in \cite
 \end{equation}
 where $x=\left( x^1,x^2, \ldots, x^k \right) \in \rr^{nk}$ with $\textit{d}(\cdot ,\cdot)$ being a distance-like function. \medskip
 
-We focus on two cases of distance-like functions. The first is the squared Euclidean norm, which is the standard proximity measure used in the k-means algorithm. For this case, we use an equivalent smooth optimization problem for the clustering problem presented in (\ref{clustering_objective}) and suggest a simple and efficient first order method for tackling it. We prove convergence result for the suggested algorithm via the methodology which was recently developed in \cite{BST2014} and will be discussed in great details below. The second distance-like function that we study is the Euclidean norm. In this case we present an approximation model, in order to overcome the lack of smoothness in the problem. Then we propose an algorithm to solve the approximated model which combines ideas which were used in the squared Euclidean case with a classical smoothing ideas which was used in \cite{BS2015}. We present numerical experiments, that show the superiority of the Euclidean norm distance function for datasets in which the data points are spread relatively sparsely form their centers. \medskip
+We focus on two cases of distance-like functions. The first is the squared Euclidean norm, which is the standard proximity measure used in the k-means algorithm. For this case, we use an equivalent smooth optimization problem for the clustering problem presented in (\ref{clustering_objective}) and suggest a simple and efficient first order method for tackling it. We prove convergence result for the suggested algorithm via the methodology which was recently developed in \cite{BST2014} and will be discussed in great details below. 
+The second distance-like function that we study is the Euclidean norm. In this case we present an approximation model, in order to overcome the lack of smoothness in the problem, introduced by the norm. Then we propose an algorithm to solve the approximated model which combines ideas which were used in the squared Euclidean case with a classical smoothing idea which was used in \cite{BS2015}. We present numerical experiments, that show the superiority of the Euclidean norm distance function for datasets in which the data points are spread relatively sparsely form their centers. \medskip
 
-The lack of smoothness in the general model (see (\ref{clustering_objective})) can be overcome, yet the nonconvex nature of the clustering problem will accompany the discussions throughout this work. Significant amount of studies have been made on convex models, even though in many cases the original optimization problem is nonconvex. To overcome the lack of convexity, one of the common approaches is usually achieved by considering a convex relaxation of the original problem. In this thesis we take a different route and consider the problem in its original nonconvex form. Very recently this complicated route became more relevant and interesting thanks to few papers (see \cite{AB2009,ABS2013,BST2014} and the references therein) which pave the way for dealing with nonconvex problems using sophisticated mathematical tools as will be explained later in \Cref{State_PALM_Theory}.
+The lack of smoothness in the general model  (\ref{clustering_objective}) can be overcome, yet the nonconvex nature of the clustering problem remains a major difficulty. Significant amount of studies have been made on convex models, even though in many cases the original optimization problem is nonconvex. To overcome the lack of convexity, one of the common approaches is usually achieved by considering a convex relaxation of the original problem. In this thesis we take a different route and consider the problem in its original nonconvex form. Very recently this complicated route became more relevant and interesting thanks to few papers (see \cite{AB2009,ABS2013,BST2014} and the references therein) which pave the way for dealing with nonconvex problems using sophisticated mathematical tools as will be detailed later in \Cref{State_PALM_Theory}.
 
 
 \section{Outline and Contributions of The Thesis}
@@ -78,7 +81,7 @@ Our main objectives and contributions in this thesis are as follows.
 %  \item To reformulate the clustering problem starting from its usual discrete form into a continuous formulation, which enable to treat the problem with powerful continuous optimization tools.
 	\item To develop algorithms that address the clustering problem for two different distance-like functions and present numerical tests which demonstrate the effectiveness of the proposed algorithms.
 	
-	\item To demonstrate the usefulness of KL property and the general methodology developed in \cite{BST2014} to tackle the clustering problem. Specially, when the proximity function is taken to be the Euclidean norm the obtained optimization problem is completely nonsmooth (that is, all the involved functions are nonsmooth), thus in this thesis we first use this general methodology which combined with smoothing idea in the nonconvex setting.
+	\item To demonstrate the usefulness of the Kurdyka-{\L}ojasiewicz (KL) property and the general methodology developed in \cite{BST2014} to tackle the clustering problem. Specially, when the proximity function is taken to be the Euclidean norm the obtained optimization problem is completely nonsmooth (that is, all the involved functions are nonsmooth), thus in this thesis we first use this general methodology which combined with smoothing idea in the nonconvex setting.
   
 	\item To prove the convergence of k-means to a critical point, and extend the result to a local minima, assuming the closest center to each data point is unique.
 \end{itemize}
@@ -88,7 +91,7 @@ We outline now the contents of each chapter in this thesis.
 	\item In \Cref{Chptr2} we transform the initial discrete formulation  of the clustering problem (see (\ref{clustering_objective})) into a smooth model. In addition, we recall the KL theory and the general methodology, which was developed in \cite{BST2014}, that will be used in our analysis of the proposed algorithms.
 	\item In \Cref{Chptr3} we tackle the clustering problem with the squared Euclidean norm distance-like function, which is the most common distance used in many other clustering algorithms. The proposed clustering algorithm (KPALM) is based on the alternating minimization method, and it is similar to the k-means algorithm. In this case the objective function is smooth and we can apply the general methodology, and prove convergence of the generated sequence to a critical point of the corresponding objective function. We show that the k-means algorithm can be recovered from the proposed KPALM algorithm by choosing specific parameters. In addition, we prove that k-means algorithm convergence to a critical point, and under additional assumption, we extend the convergence to a local minimum.
 	\item In \Cref{Chptr4} we study the clustering problem with the Euclidean norm distance-like function and propose an iterative algorithm ($\varepsilon$-KPALM) to tackle a smoothed approximation model. We provide an approximation to the original objective function which overcome the lack of smoothness and then proceed with the general methodology and prove again convergence of the generated sequence to a critical point of the approximated smooth objective function.
-	\item In \Cref{Chptr5} we compare the performance of the proposed algorithms, and some existing center-based clustering algorithms, according to some common criteria.
+	\item In \Cref{Chptr5} we illustrate the performance of the proposed algorithms, and compare them with some existing center-based clustering algorithms.
 \end{itemize}
 
 \clearpage
@@ -105,15 +108,15 @@ $\mathcal{A}$ & dataset for clustering of size $m$\\
 $k$  & the number of clusters\\
 $x^l$ & center of cluster $l$, for each $l=1,2,\ldots,k$; $x=\left( x^1,x^2,\cdots,x^k \right)$\\
 $\left\langle\cdot,\cdot\right\rangle$ & the standard dot product in Euclidean space, that is $\left\langle u,v \right\rangle = \sum\limits_{i=1}^{d} u_l v_l$\\
-$\norm{\cdot}$ & Euclidean norm $\norm{x}=\sqrt{\sum\limits_{l=1}^{d} {x_l}^2}$\\
+$\norm{\cdot}$ & Euclidean norm $\norm{x}=\sqrt{\sum\limits_{l=1}^{d} {x_l}^2}$, for any $x \in \rr^d$\\
 $\Delta$  & the simplex i.e., $\Delta = \left\lbrace u \in \mathbb{R}^d : \sum\limits_{l=1}^{d} u_l = 1, \: u \geq 0 \right\rbrace$\\
-$\delta_{S}(\cdot)$  & delta function of set $S \subset \rr^d$, which is defined to be $0$ in $S$ and $\infty$ otherwise\\
-dom$\sigma$ & domain of function $\sigma$, which is all vectors $v$ such that $\sigma(v) < \infty$\\
-$\partial\sigma$ & subdifferential of function $\sigma$ (see \Cref{subdiff_def})\\
+$\delta_{S}(\cdot)$  & indicator function of a set $S \subset \rr^d$, which is defined to be $0$ in $S$ and $\infty$ otherwise\\
+dom$\sigma$ & effective domain of the function $\sigma$, i.e., dom$\sigma:=\left\lbrace v \in \rr^d : \sigma(v)<\infty \right\rbrace$\\
+$\partial\sigma$ & subdifferential of the function $\sigma$ (see \Cref{subdiff_def})\\
 crit$\sigma$ & set of all critical points of function $\sigma$, that is all vectors $v$ such that $0 \in \partial\sigma(v)$\\
 dist$(u,S)$ & distance function, for any point $u \in \rr^d$ and set $S \in \rr^d$, dist$(u,S):=\inf\left\lbrace \norm{u-v} : v \in S \right\rbrace$\\
-$H(w,x)$ & sum of distances of $x^l$ from each data point in $\mathcal{A}$, adjusted by the non-negative weights $w^i$, $H(w,x)=\sum\limits_{i=1}^m \sum\limits_{l=1}^k w^i_ld\left(x^l, a^i\right)$\\
-$G(w)$ & sum of delta functions which constrain each $w^i$ to be in the simplex, that is $G(w)=\sum\limits_{i=1}^{m} \delta_{\Delta}(w^i)$\\
+$H(w,x)$ & sum of distances of $x^l$ from each data point in $\mathcal{A}$, adjusted with the non-negative weights $w^i$, $H(w,x)=\sum\limits_{i=1}^m \sum\limits_{l=1}^k w^i_ld\left(x^l, a^i\right)$\\
+$G(w)$ & sum of indicator functions which constraints each $w^i$ to be in the simplex, that is $G(w)=\sum\limits_{i=1}^{m} \delta_{\Delta}(w^i)$\\
 $\sigma$ & the objective function in the clustering problem, defined by $\sigma(w,x)=H(w,x)+G(w)$\\
 \hline
 \end{tabular}
