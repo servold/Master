@@ -1,5 +1,5 @@
-\contentsline {chapter}{Abstract}{iii}
-\contentsline {chapter}{Acknowledgements}{iv}
+\contentsline {chapter}{Abstract}{ii}
+\contentsline {chapter}{Acknowledgements}{iii}
 \contentsline {chapter}{\numberline {1}Introduction}{1}
 \contentsline {section}{\numberline {1.1}Background and Motivation}{1}
 \contentsline {section}{\numberline {1.2}Outline and Contributions of The Thesis}{5}
@@ -17,3 +17,4 @@
 \contentsline {chapter}{\numberline {5}Numerical Results}{43}
 \contentsline {section}{\numberline {5.1}Iris Dataset}{44}
 \contentsline {section}{\numberline {5.2}Synthetic Dataset}{45}
+\contentsline {section}{\numberline {5.3}Summary of Results}{45}

@@ -157,11 +157,15 @@ where the last equality follows from the fact that $G(w(t)) = 0$, since $w(t) \i
 Now, we are focusing on proving condition (C2). For that purpose we first need the following technical result.
 
 \begin{lemma} \label{StateEq11}
-Let $x,y \in \rr^{nk}$ such that $x^l,y^l \in Conv\left(\mathcal{A}\right)$ for all $l=1,2,\ldots,k$. Then, for each $i=1,2,\ldots,m$ the following inequality holds
+Let $1 \leq i \leq m$, and let $d^i:\rr^{nk} \rightarrow \rr^k$ be the mapping given by 
+\begin{equation*}
+d^{i}(x) = (d(x^1,a^i), d(x^2,a^i), \ldots , d(x^k,a^i)).
+\end{equation*}
+Then for any $x,y \in \rr^{nk}$ such that $x^l,y^l \in Conv\left(\mathcal{A}\right)$ for all $l=1,2,\ldots,k$, the following inequality holds true
 \begin{equation*}
 	\norm{d^i(x) - d^i(y)} \leq 4M \norm{x - y},
 \end{equation*}
-where $d^i$ is the mapping defined in (\ref{d^i_def}) and $M = \max\limits_{1 \leq i \leq m} \norm{a^i}$.
+where $M = \max\limits_{1 \leq i \leq m} \norm{a^i}$.
 \end{lemma}
 
 \begin{proof}
@@ -291,7 +295,7 @@ If $x(t+1)=x(t)$ for some $t \in \nn$ then the result is true since $w(t+1)=w(t)
 \begin{equation*}
 	r:=\min\limits_{1 \leq i <j \leq N} \norm{c^i - c^j},
 \end{equation*}
-and obviously $r \neq 0$. By the definition of step (\ref{StateEq12})  and (\ref{optimal_min_component}) it follows that all except one components of $w^i(t)$ are $0$, and the remaining component equals $1$.
+and obviously $r \neq 0$. By the definition of step (\ref{StateEq12})  and (\ref{optimal_min_component}) it follows that for all $t \in \nn$ there is exactly one nonzero entry in $w^i(t)$ which equals $1$.
 Thus, it is clear that
 \begin{equation*}
 	\|w^i(t+1)-w^i(t)\| \leq \sqrt{2}.
