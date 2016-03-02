@@ -14,25 +14,23 @@ Since it is impractical to compare the function values achieved with the algorit
 
 \section{Iris Dataset}
 We used the famous Iris dataset to test the performance of the KPALM algorithm. It is important to note that choosing the parameter $\alpha$ is left to the user, and as presented below, has a significant effect on the convergence rate and the quality of the achieved clustering, namely the value of the objective function over the generated series. All the plots in this section are made by averaging over $100$ trials, each trial with random starting point.
-
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{dynamic_alpha_kpalm}
     \caption{Comparison of the objective values for different values of $\alpha$.}
     \label{fig:dynamic_alpha_psi_comp}
 \end{figure} 
-
 \Cref{fig:dynamic_alpha_psi_comp} shows that dynamic values of the parameter $\alpha$ which decreases fast, such as $\alpha_i(t)=
-\frac{diam(\mathcal{A})}{2^{t-1}}$, achieve smaller function values.
-In \Cref{fig:algs_psi_comp} we made a comparison between KPALM with dynamic rule for choosing the parameter $\alpha$, that is $\alpha_i(t)=\frac{diam(\mathcal{A})}{2^{t-1}}$, with k-means and k-means++. It demonstrates that KPALM can reach lower objective function values then k-means, and these are similar to the values achieved with KMEAN++. In addition, the KPALM++ are the objective function values achieved with KPALM when the $x$ variable is initialized as in k-means++. Unlike k-means, the objective function values KPALM converge to are more stable and less sensitive to its starting point.
+\frac{diam(\mathcal{A})}{2^{t-1}}$, achieve smaller function values. 
+Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_psi_comp} we can see a comparison of the objective values of $\sigma_{\varepsilon}$ for different function values. The value of $\varepsilon$ is set to be 1e-5.
 
-%\begin{figure}[t]
-%    \centering
-%    \includegraphics{psi_algs_comparison}
-%    \caption{Comparison of objective function values for KMEANS, KMEANS++ and KPALM.}
-%     \label{fig:algs_psi_comp}
-%\end{figure}
-
+\noindent In \Cref{fig:algs_psi_comp} we made a comparison between KPALM with dynamic rule for choosing the parameter $\alpha$, that is $\alpha_i(t)=\frac{diam(\mathcal{A})}{2^{t-1}}$, with k-means and k-means++. It demonstrates that KPALM can reach lower objective function values then k-means, and these are similar to the values achieved with KMEAN++. In addition, the KPALM++ are the objective function values achieved with KPALM when the $x$ variable is initialized as in k-means++. Unlike k-means, the objective function values KPALM converge to are more stable and less sensitive to its starting point.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\textwidth]{dynamic_alpha_eps_kpalm}
+    \caption{Comparison of the objective values for different values of $\alpha$.}
+    \label{fig:dynamic_alpha_eps_psi_comp}
+\end{figure}
 \begin{figure}[ht]
     \centering
     \begin{subfigure}[b]{0.8\textwidth}
@@ -47,17 +45,7 @@ In \Cref{fig:algs_psi_comp} we made a comparison between KPALM with dynamic rule
     \end{subfigure}
     \caption{Comparison of objective function values for k-means, k-means++, KPALM and KPALM++.} \label{fig:algs_psi_comp}
 \end{figure}
-
-%\begin{figure}[t]
-%    \centering
-%    \scalebox{.5}{\includegraphics{relative_delta_algs_comparison}}
-%    \caption{Comparison of $\frac{\|x(t+1)-x(t)\|}{\|x(t)\|}$ for KMEANS, KMEANS++ and KPALM.}
-%    \label{fig:dynamic_alpha_relative_delta_comp}
-%\end{figure}
-
 \Cref{fig:iters_comp} shows the number of iteration needed to reach precision of 1e-3 between consecutive objective function values.
-Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_psi_comp} we can see a comparison of the objective values of $\sigma_{\varepsilon}$ for different function values. The value of $\varepsilon$ is set to be 1e-5.
-
 \begin{figure}
     \centering
     \begin{subfigure}[b]{0.7\textwidth}
@@ -80,16 +68,13 @@ Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_p
     \caption{Comparison of number of iterations needed to reach 1e-3 precision of $\sigma$.}\label{fig:iters_comp}
 \end{figure}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.75\textwidth]{dynamic_alpha_eps_kpalm}
-    \caption{Comparison of the objective values for different values of $\alpha$.}
-    \label{fig:dynamic_alpha_eps_psi_comp}
-\end{figure}
-
-
-
-\begin{figure}
+\FloatBarrier
+\section{Synthetic Dataset}
+In this section we show that $\varepsilon$-KPALM is less sensitive to outliers in the data verses algorithms that suit the squared Euclidean norm (e.g., k-means, k-means++ and KPALM). We generated two synthetic datasets, each contains 300 points in the plane, by sampling three two-dimensional Gaussian, 100 samples each. In \Cref{fig:gaussians}(\ref{fig:dense_gaussians}) the clusters are denser than in \Cref{fig:gaussians}(\ref{fig:sparse_gaussians}).
+Then we run the clustering algorithms and compared their clustering results, namely, how many points were clustered correctly. From \Cref{fig:gaussians_similarity}(\ref{fig:dense_gaussians_similarity}) it is evident that k-means is superior to other algorithms in the dense case and $\varepsilon$-KPALM is quite sensitive. Whereas, in the sparse case in \Cref{fig:gaussians_similarity}(\ref{fig:sparse_gaussians_similarity}), $\varepsilon$-KPALM is superior, and less sensitive to outliers. 
+In \Cref{fig:gaussians_metrics} we compare the distance of clusterings achieved with different algorithms to the desired clustering, where kpalm1, kpalm2 and kpalm3 match using $\alpha(t)=diam(\mathcal{A})/2^{t-1}$, $\alpha(t)=diam(\mathcal{A})/t^2$ and $\alpha(t)=diam(\mathcal{A})$ respectively, and similarly for $\varepsilon$-kpalm$i$, $i \in \{1,2,3\}$. 
+In \Cref{fig:gaussians_metrics}(\ref{fig:dense_gaussians_metrics}) we witness that for dense dataset, the resulting clusterings of squared Euclidean algorithms, namely, k-means, k-means++ and KPALM, are superior to the clustering $\varepsilon$-KPALM, where KPALM with $\alpha(t)=diam(\mathcal{A})/2^{t-1}$ gives the best result, that is, the clustering in this setting is the closest to the desired clustering. Whereas in the sparse dataset, the clustering achieved with $\varepsilon$-KPALM with $\alpha(t)=diam(\mathcal{A})/t^2$ is the closest to the desired clustering, as reflected from \Cref{fig:gaussians_metrics}(\ref{fig:sparse_gaussians_metrics}).
+\begin{figure}[hb]
     \centering
     \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{dense_gaussians}
@@ -108,13 +93,13 @@ Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_p
 
 \begin{figure}
     \centering
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.8\textwidth}
         \includegraphics[width=\textwidth]{dense_gaussians_similarity}
         \caption{Dense Gaussians clustering.}
         \label{fig:dense_gaussians_similarity}
     \end{subfigure}
     \quad
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.8\textwidth}
         \includegraphics[width=\textwidth]{sparse_gaussians_similarity}
         \caption{Sparse Gaussians clustering.}
         \label{fig:sparse_gaussians_similarity}
@@ -122,7 +107,6 @@ Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_p
     \caption{Results of clustering algorithms for dense and sparse datasets.}
     \label{fig:gaussians_similarity}
 \end{figure}
-
 \begin{figure}
     \centering
     \begin{subfigure}[b]{1\textwidth}
@@ -139,22 +123,16 @@ Similarly to \Cref{fig:dynamic_alpha_psi_comp}, in \Cref{fig:dynamic_alpha_eps_p
     \caption{Comparison of metrics between clusterings for dense and sparse datasets.}
     \label{fig:gaussians_metrics}
 \end{figure}
+\clearpage
+\section{Summary of Numerical Results}
 
-\section{Synthetic Dataset}
-
-In this section we show that $\varepsilon$-KPALM is less sensitive to outliners in the data verses algorithms that suit the squared Euclidean norm (e.g., k-means, k-means++ and KPALM). We generated two synthetic datasets, each contains 300 points in the plane, by sampling three two-dimensional Gaussian, 100 samples each. In \Cref{fig:gaussians}(\ref{fig:dense_gaussians}) the clusters are denser than in \Cref{fig:gaussians}(\ref{fig:sparse_gaussians}).
-Then we run the clustering algorithms and compared their clustering results, namely, how many points were clustered correctly. From \Cref{fig:gaussians_similarity}(\ref{fig:dense_gaussians_similarity}) it is evident that k-means is superior to other algorithms in the dense case and $\varepsilon$-KPALM is quite sensitive. Whereas, in the sparse case in \Cref{fig:gaussians_similarity}(\ref{fig:sparse_gaussians_similarity}), $\varepsilon$-KPALM is superior, and less sensitive to outliners. 
-In \Cref{fig:gaussians_metrics} we compare the distance of clusterings achieved with different algorithms to the desired clustering, where kpalm1, kpalm2 and kpalm3 match using $\alpha(t)=diam(\mathcal{A})/2^{t-1}$, $\alpha(t)=diam(\mathcal{A})/t^2$ and $\alpha(t)=diam(\mathcal{A})$ respectively, and similarly for $\varepsilon$-kpalm$i$, $i \in \{1,2,3\}$. 
-In \Cref{fig:gaussians_metrics}(\ref{fig:dense_gaussians_metrics}) we witness that for dense dataset, the resulting clusterings of squared Euclidean algorithms, namely, k-means, k-means++ and KPALM, are superior to the clustering $\varepsilon$-KPALM, where KPALM with $\alpha(t)=diam(\mathcal{A})/2^{t-1}$ gives the best result, that is, the clustering in this setting is the closest to the desired clustering. Whereas in the sparse dataset, the clustering achieved with $\varepsilon$-KPALM with $\alpha(t)=diam(\mathcal{A})/t^2$ is the closest to the desired clustering, as reflected from \Cref{fig:gaussians_metrics}(\ref{fig:sparse_gaussians_metrics}).
-
-\section{Summary of Results}
-
-We outline the observations that arose from the conducted numerical experiments:
+From the conducted numerical experiments we deduce the following:
 \begin{itemize}
 	\item In the squared Euclidean setting, KPALM achieves lower objective function values than k-means. When using a more sophisticated initialization step, such as the one in k-means++, then k-means++ and KPALM++ achieve similar objective function values.
 	\item k-means needs less number of iterations then KPALM to reach a certain precision.
 	\item It is preferable to use dynamic update of $\alpha(t)$ parameter to achieve a faster convergence, both in KPALM and $\epsilon$-KPALM. Example for suitable choices can be $\alpha(t)= diam(\mathcal{A})/t$ and $\alpha(t)= diam(\mathcal{A})/2^t$.
 	\item When the convex hulls of the desired clusters are mutually exclusive, algorithms which solve the clustering problem with the squared Euclidean distance are preferable to $\varepsilon$-KPALM. 
 	This can be witnessed from the dense Gaussians example in \Cref{fig:gaussians}(\ref{fig:dense_gaussians}), and the comparison made in \Cref{fig:gaussians_metrics}(\ref{fig:dense_gaussians_metrics}), which shows that clusterings obtained with squared Euclidean algorithm are more similar to the desired clustering, and have lower distance in terms of clustering metrics, then the clustering obtained with $\varepsilon$-KPALM.
-	\item In datasets with outliners in some of the clusters, the clustering obtained with $\varepsilon$-KPALM is more similar to the desired clustering, in terms of clustering metrics, then the clusterings obtained via the squared Euclidean algorithms. This is witnessed from the sparse Gaussians example in \Cref{fig:gaussians}(\ref{fig:sparse_gaussians}), and the comparison made in \Cref{fig:gaussians_metrics}(\ref{fig:sparse_gaussians_metrics}).
+	\item In datasets with outliers, the clustering obtained with $\varepsilon$-KPALM is more similar to the desired clustering, in terms of clustering metrics, than the clusterings obtained via the squared Euclidean algorithms. This is witnessed from the sparse Gaussians example in \Cref{fig:gaussians}(\ref{fig:sparse_gaussians}), and the comparison made in \Cref{fig:gaussians_metrics}(\ref{fig:sparse_gaussians_metrics}). 
+	Therefore, as expected, for data  with outliers, the choice of a norm instead of the squared norm is a more natural choice, and the $\varepsilon$-KPALM algorithm appears to be a promising algorithm to handle such data.
 \end{itemize}

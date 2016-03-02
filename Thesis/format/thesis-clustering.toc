@@ -16,5 +16,5 @@
 \contentsline {section}{\numberline {4.2}A Different Approach Towards Solving \\ the Smoothed $H_{\varepsilon }$}{38}
 \contentsline {chapter}{\numberline {5}Numerical Results}{43}
 \contentsline {section}{\numberline {5.1}Iris Dataset}{44}
-\contentsline {section}{\numberline {5.2}Synthetic Dataset}{45}
-\contentsline {section}{\numberline {5.3}Summary of Results}{45}
+\contentsline {section}{\numberline {5.2}Synthetic Dataset}{48}
+\contentsline {section}{\numberline {5.3}Summary of Numerical Results}{51}
