@@ -281,7 +281,7 @@
 				\end{equation*}
 		the following inequality holds
 		\begin{equation*}
-			\varphi'(\sigma(u) - \sigma(\overline{u}))\dist(0,\partial\sigma(u)) \geq 1,
+			\varphi'(\sigma(u) - \sigma(\overline{u}))\;\dist(0,\partial\sigma(u)) \geq 1,
 		\end{equation*}
 		where $\dist(x,S) := \inf \left\lbrace \norm{y-x} : \; y \in S\right\rbrace$ denotes the distance from $x \in \rr^d$ to $S \subset \rr^d$.
 		\item If $\sigma$ satisfy the KL property at each point of $dom\;\sigma$ then $\sigma$ is called a \textit{KL function}.
@@ -298,9 +298,7 @@
 		\vspace{0.3in}
         \begin{definition}
             \begin{itemize}
-                \item[$\rm{(i)}$] A subset $S$ of $\rr^{n}$ is a real \textcolor{blue}{semi-
-                	algebraic set} if there exists a finite number of real polynomial 
-                	functions $g_{ij} , h_{ij} : \rr^{n} \rightarrow \rr$ such that
+                \item[$\rm{(i)}$] A subset $S$ of $\rr^{n}$ is a real \textcolor{blue}{semi-algebraic set} if there exists a finite number of real polynomial functions $g_{ij} , h_{ij} : \rr^{n} \rightarrow \rr$ such that
                     \begin{equation*}
                         S = \bigcup_{j = 1}^{p} \bigcap_{i = 1}^{q} \left\{ u \in \rr^{n} : 
                         \; g_{ij}\left(u\right) = 0 \, \text{and } \, h_{ij}\left(u\right) < 
@@ -324,18 +322,40 @@
             \item \textcolor{blue}{Finite sums and product} of semi-algebraic functions. 
             \item \textcolor{blue}{Composition} of semi-algebraic functions.
             \item \textcolor{blue}{Sup/Inf type function}, \eg $\sup \left\{ g\left(u , 
-            	v\right) : \; v \in C \right\}$ is semi-algebraic when $g$ is a semi-
-            	algebraic function and $C$ a semi-algebraic set.
+            	v\right) : \; v \in C \right\}$ is semi-algebraic when $g$ is a semi-algebraic function and $C$ a semi-algebraic set.
              \item The function $x \to \dist\left(x , S\right)^{2}$ is semi-algebraic 
              	whenever $S$ is a nonempty semi-algebraic subset of $\rr^{n}$.
              \item $\norm{\cdot}_{0}$ (counts the non-zero values) is semi-algebraic.
              \item $\norm{\cdot}_{p}$ is semi-algebraic whenever $p > 0$ is rational.
         \end{itemize}
         \gap
-
- 		Note that for distance-like functions $d(x,y)=\norm{x-y}^2$ and $d(x,y)=\norm{x-y}$ the resulting clustering function defined in (P) is semi-algebraic.
+	
+ 		In particular, for distance-like functions $d(x,y)=\norm{x-y}^2$ and $d(x,y)=\norm{x-y}$ the resulting clustering function defined in (P) is semi-algebraic.
     \end{frame}
-
+	
+	\begin{frame}{Gradient-Like Descent Sequence}
+		\begin{definition} \label{gradient_like_seq_def}
+			Let $\sigma: \rr^d \rightarrow (-\infty, +\infty]$ be a proper and lower semicontinuous function. A sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is called a {\dblue gradient-like descent sequence} for $\sigma$ if for all $k \in \nn$ the following two conditions hold:
+			\begin{enumerate}[(C1)]
+				\item {\dblue Sufficient decrease property}: There exists a positive scalar $\rho_1$ such that
+				\begin{equation*}
+					\rho_1 \norm{z^{k+1} - z^k}^2 \leq \sigma\left( z^k \right) - \sigma \left( z^{k+1} \right) .
+				\end{equation*}
+				\item {\dblue A subgradient lower bound for the iterates gap}:
+				\begin{itemize}
+					\item[$-$] $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is bounded.
+					\item[$-$] There exists a positive scalar $\rho_2$ such that
+					\begin{equation*}
+						\norm{w^{k+1}} \leq \rho_2 \norm{z^{k+1} - z^k}, \; w^{k+1} \in \partial\sigma \left( z^{k+1}\right).
+					\end{equation*}
+				\end{itemize}
+			\end{enumerate}
+		\end{definition}
+		
+		\begin{theorem}[Bolte-Shabach-Teboulle (2014)] \label{SDP_SGP_conv_thrm}
+			Let $\sigma:\rr^d \rightarrow (-\infty,\infty]$ be a proper, lower semicontinuous and semi-algebraic function with $\inf \sigma > -\infty$, and assume that $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a gradient-like descent sequence for $\sigma$. \\ If $\omega\left( z^0 \right) \subset crit(\sigma)$ then the sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ convergences to a critical point $z^{*}$ of $\sigma$.
+		\end{theorem}
+	\end{frame}
 
     \begin{frame}{The Optimization Model}
         \begin{equation*}
