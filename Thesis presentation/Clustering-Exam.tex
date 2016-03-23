@@ -10,6 +10,7 @@
 \setbeamercovered{invisible}
 \usepackage{adjustbox}
 \usepackage{cleveref}
+\usepackage{etex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter
@@ -158,6 +159,7 @@
 \newcommand{\imoins}{{\cal I}^{-}}
 \newcommand{\imoinsp}{{\cal I}^{+}}
 \newcommand{\dist}{\mathrm{dist}} %Distance between point and set
+\newcommand{\diam}{\mathrm{diam}} %Diameter of set
 \newcommand{\act}[1]{\left\langle {#1} \right\rangle} %The value of 1
 \newcommand{\seq}[2]{\left\{{#1}_{{#2}}\right\}_{{#2} \in \mathbb{N}}}
 \newcommand{\Seq}[2]{\left\{{#1}^{{#2}}\right\}_{{#2} \in \mathbb{N}}}
@@ -243,8 +245,22 @@
 		\end{itemize}
     \end{frame}
 
-	\begin{frame}{Convergence Methodology: Definitions}
-		
+	\begin{frame}{Convergence Methodology: Goal and Definitions}
+		{\bf Given:} Let $\Psi : \rr^{N} \rightarrow \overline{\rr}$ be a proper, lsc and 
+    	bounded from below function.
+        \begin{equation*}
+        	(P) \qquad \inf \left\{ \Psi\left(z\right) : \; z \in \rr^{N} \right\}.
+        \end{equation*}
+        Suppose $\mathcal{A}$ is a generic algorithm which generates a sequence $\Seq{z}{k}$ 
+        via:
+        \begin{equation*}
+            z^{0} \in \rr^{N},  z^{k+1} \in \mathcal{A}\left(z^{k}\right), \; k = 0 , 1 , 
+            \ldots.
+        \end{equation*}
+        \pause
+        {\bf Goal:} To prove that \textcolor{blue}{whole $\Seq{z}{k}$ converges to a critical 		point of $\Psi$.}
+        \pause
+        \vspace{0.1in}
 
      	\begin{definition}[Limiting Subdifferential $\partial \s\left(x\right)$]
      	Let $\s: \rr^{d} \rightarrow \left(-\infty , +\infty\right]$ be a proper and lower semicontinuous function.\\
@@ -367,9 +383,7 @@
         \begin{assumption} \label{AssumptionsA}
             \begin{itemize}
                 \item[$\rm{(i)}$] $f : \rr^{n} \rightarrow \overline{\rr}$ and $g : \rr^{m} 
-                	\rightarrow \overline{\rr}$ are proper and lsc functions. %\footnote{ We 
-                	%denote $\overline{\rr} = \left(-\infty , +\infty\right]$ and write lsc 
-                	%for lower semicontinuous}
+                	\rightarrow \overline{\rr}$ are proper and lsc functions.
                 \item[$\rm{(ii)}$] $H : \rr^{n} \times \rr^{m} \rightarrow \rr$ is a $C^{1}$ 
                 	function.
                 \item[$\rm{(iii)}$] Partial gradients of $H$ are Lipshitz continuous: 
@@ -380,50 +394,87 @@
         \pause
         \begin{itemize}[<+->]
             \item {\bf NO convexity} will be assumed in the objective or/and the constraints 
-            	(built-in through $f$ and $g$ extended valued). \medskip
-            \item The choice of two blocks of variables is ONLY for the sake of simplicity. 
-            	\medskip
-            \item The optimization model (M) covers many applications: signal/image 
-            	processing, machine learning, etc....
+            	(built-in through $f$ and $g$ extended valued).
         \end{itemize}
     \end{frame}
 
-	\begin{frame}{Building the Algorithm}
-		\begin{itemize}
-			\item Simplest Approach: Alternating Minimization (AM)
-				\begin{equation*}
-					x^{k + 1} \in \argmin_{x} \Psi\left(x , y^{k}\right); \qquad y^{k + 1} 
-					\in \argmin_{y} \Psi\left(x^{k + 1} , y\right).
-				\end{equation*}
-		\end{itemize}
-		\pause
+    \begin{frame}{The Algorithm: Proximal Altertnating Linearization Minimization (PALM)}
+		PALM algorithm is nothing but alternating the classical proximal gradient over the two blocks $(x,y)$. This leads towards the following approximations:
+        \pause
+        \begin{equation*}
+        	\widehat{\Psi}(x,y^k)= \left\langle x-x^k, \nabla_x H(x^k,y^k) \right\rangle + \frac{c_k}{2}\norm{x-x^k}^2 + f(x),
+        \end{equation*}
+        \begin{equation*}
+        	\widetilde{\Psi}(x^{k+1},y)= \left\langle y-y^k, \nabla_y H(x^{k+1},y^k) \right\rangle + \frac{d_k}{2}\norm{y-y^k}^2 + g(y).
+        \end{equation*}
+        \pause
         \begin{center}
-        	\shadowbox{\parbox{0.78\linewidth}{\center{However, this scheme does not converge, unless very restrictive assumptions are made, such as the uniqueness of the minimizer in each step }}}
-	    \end{center}
-		\begin{itemize}
-			\item<3-> To overcome the above difficulty: Regularization with ``prox"
-				\begin{align*}
-					x^{k+1} & \in \argmin_{x} \left\{ \Psi\left(x , y^{k}\right) + \frac{c_{k}}
-					{2}\norm{x - x^{k}}^{2} \right\}, \\
-					y^{k + 1} & \in \argmin_{y} \left\{ \Psi\left(x^{k + 1} , y\right) + 
-					\frac{d_{k}}{2}\norm{y - y^{k}}^{2} \right\}.
-				\end{align*}
-			\item<4-> However, the above scheme is only ``conceptual" in the sense that \medskip
-				\begin{enumerate}
-					\item<5-> It requires solving excatly two nonconvex difficult problems (does 
-						not exploit special structure/data info of $f , g$
-                        and $H$.) \medskip
-					\item<6-> Involves {\em Nested} optimization...Needs an optimal $x$ to 
-						proceed computation of $y$!
-				\end{enumerate}
-		\end{itemize}
-		\pause\pause\pause\pause\pause           
-		\begin{center}
-	        \shadowbox{\parbox{0.7\linewidth}{\center{To overcome all the above difficulties, 
-	        we take \textcolor{blue}{one further very simple step} which exploits the 
-	        \textcolor{blue}{data information on $H$}.}}}
+    		\fbox{\parbox{11.5cm}{
+            \begin{enumerate}
+                \item[1.] Initialization: start with any $\left(x^{0} , y^{0}\right) \in 
+                	\rr^{n} \times \rr^{m}$.
+                \item[2.] For each $k = 0 , 1 , \ldots$ generate a sequence $\left\{ 
+                	\left(x^{k} , y^{k}\right) \right\}_{k \in \nn}$:
+             		\begin{enumerate}
+                   		\item[2.1.] Take $\gamma_{1} > 1$, set $c_{k} = 
+                    		\gamma_{1}L_{1}\left(y^{k}\right)$ and compute
+                        	\begin{equation*}
+                            	x^{k + 1} \in \argmin \left\{ \widehat{\Psi}(x,y^k) : \; x \in \R^n \right\} = \prox_{c_{k}}^{f}\left(x^{k} - {c_{k}}^{-1} \nabla_{x} H\left(x^{k} , y^{k}\right)\right).
+	                        \end{equation*}
+                    	\item[2.2.] Take $\gamma_{2} > 1$, set $d_{k} = 
+                    		\gamma_{2}L_{2}\left(x^{k + 1}\right)$ and compute
+                       		\begin{equation*}
+                           		y^{k + 1} \in \argmin \left\{ \widetilde{\Psi}(x^{k+1},y) : \; y \in \R^m \right\} = \prox_{d_{k}}^{g}\left(y^{k} - {d_{k}}^{-1}\nabla_{y} H\left(x^{k + 1}, y^{k}\right)\right).
+    	                   \end{equation*}
+                \end{enumerate}
+            \end{enumerate}}}
+       	\end{center}
+        \pause
+        \begin{center}
+            \shadowbox{\parbox{0.8\linewidth}{\center{{\bf Main computational step:} 
+            Computing prox of a nonconvex function.}}}
         \end{center}
-	\end{frame}
+
+    \end{frame}
+
+
+%	\begin{frame}{Building the Algorithm}
+%		\begin{itemize}
+%			\item Simplest Approach: Alternating Minimization (AM)
+%				\begin{equation*}
+%					x^{k + 1} \in \argmin_{x} \Psi\left(x , y^{k}\right); \qquad y^{k + 1} 
+%					\in \argmin_{y} \Psi\left(x^{k + 1} , y\right).
+%				\end{equation*}
+%		\end{itemize}
+%		\pause
+%        \begin{center}
+%        	\shadowbox{\parbox{0.78\linewidth}{\center{However, this scheme does not converge, unless very restrictive assumptions are made, such as the uniqueness of the minimizer in each step }}}
+%	    \end{center}
+%		\begin{itemize}
+%			\item<3-> To overcome the above difficulty: Regularization with ``prox"
+%				\begin{align*}
+%					x^{k+1} & \in \argmin_{x} \left\{ \Psi\left(x , y^{k}\right) + \frac{c_{k}}
+%					{2}\norm{x - x^{k}}^{2} \right\}, \\
+%					y^{k + 1} & \in \argmin_{y} \left\{ \Psi\left(x^{k + 1} , y\right) + 
+%					\frac{d_{k}}{2}\norm{y - y^{k}}^{2} \right\}.
+%				\end{align*}
+%			\item<4-> However, the above scheme is only ``conceptual" in the sense that \medskip
+%				\begin{enumerate}
+%					\item<5-> It requires solving excatly two nonconvex difficult problems (does 
+%						not exploit special structure/data info of $f , g$
+%                        and $H$.) \medskip
+%					\item<6-> Involves {\em Nested} optimization...Needs an optimal $x$ to 
+%						proceed computation of $y$!
+%				\end{enumerate}
+%		\end{itemize}
+%		\pause\pause\pause\pause\pause           
+%		\begin{center}
+%	        \shadowbox{\parbox{0.7\linewidth}{\center{To overcome all the above difficulties, 
+%	        we take \textcolor{blue}{one further very simple step} which exploits the 
+%	        \textcolor{blue}{data information on $H$}.}}}
+%        \end{center}
+%	\end{frame}
+
 
 %    \begin{frame}{Basic Approach: Linearization and Alternating}
 %        Consider the simpler model:
@@ -468,308 +519,309 @@
 %    	\end{overprint}
 %    \end{frame}
 
-	\begin{frame}{The Proximal-Forward Backward Scheme/Proximal Gradient}
 
-		Suitable for the composite smooth + nonsmooth model:
- 		\begin{equation*}
- 			\min \left\{ h\left(u\right) + \s\left(u\right) : \; u \in \rr^{d} \right\}, 		
- 			\quad h \in C^{1,1}
- 		\end{equation*}
-    	\begin{equation*}
-    		u^{k + 1} \in \argmin_{u \in \rr^{d}} \left\{ \act{u - u^{k} , \nabla 
-    		h\left(u^{k}\right)} + \frac{t}{2}\norm{u - u^{k}}^{2} + \s\left(u\right) 
-    		\right\}.
-    	\end{equation*}
-		\begin{itemize}
-			\item Useful for smooth and ``simple" (i.e., easy prox) nonsmooth $\s(\cdot)$. 
-				Convex case well studied, convergence and complexity {\footnotesize\dblue 
-				[Lions-Mercier (79), Nesterov (07), Beck-Teboulle (09)]} \medskip \pause
-	    	\item Nonconvex case: Convergence of the whole sequence to a critical point! Very 
-		    	recent in {\footnotesize\dblue [Attouch-Bolte-Svaiter (11)].}
-    	\end{itemize}
-	    \pause
-    	\gap
-		\begin{center}
-    		\shadowbox{\parbox{0.82\linewidth}{\center{Can we preserve the qualities of both 
-    		building blocks: Simplicity of AM and Global Convergence of PFB to tackle our 
-    		general model (M)?}}}
-	    \end{center}
-	\end{frame}
+%	\begin{frame}{The Proximal-Forward Backward Scheme/Proximal Gradient}
+%
+%		Suitable for the composite smooth + nonsmooth model:
+% 		\begin{equation*}
+% 			\min \left\{ h\left(u\right) + \s\left(u\right) : \; u \in \rr^{d} \right\}, 		
+% 			\quad h \in C^{1,1}
+% 		\end{equation*}
+%    	\begin{equation*}
+%    		u^{k + 1} \in \argmin_{u \in \rr^{d}} \left\{ \act{u - u^{k} , \nabla 
+%    		h\left(u^{k}\right)} + \frac{t}{2}\norm{u - u^{k}}^{2} + \s\left(u\right) 
+%    		\right\}.
+%    	\end{equation*}
+%		\begin{itemize}
+%			\item Useful for smooth and ``simple" (i.e., easy prox) nonsmooth $\s(\cdot)$. 
+%				Convex case well studied, convergence and complexity {\footnotesize\dblue 
+%				[Lions-Mercier (79), Nesterov (07), Beck-Teboulle (09)]} \medskip \pause
+%	    	\item Nonconvex case: Convergence of the whole sequence to a critical point! Very 
+%		    	recent in {\footnotesize\dblue [Attouch-Bolte-Svaiter (11)].}
+%    	\end{itemize}
+%	    \pause
+%    	\gap
+%		\begin{center}
+%    		\shadowbox{\parbox{0.82\linewidth}{\center{Can we preserve the qualities of both 
+%    		building blocks: Simplicity of AM and Global Convergence of PFB to tackle our 
+%    		general model (M)?}}}
+%	    \end{center}
+%	\end{frame}
     
-    \begin{frame}{The Algorithm: Proximal Altertnating Linearization Minimization (PALM)}
-		Let $\sigma : \rr^{n} \rightarrow \overline{\rr}$ be a proper and lsc function. Given 
-		$x \in \rr^{n}$ and $t > 0$, the proximal map defined by:
-        \begin{equation*}
-            \prox_{t}^{\sigma}\left(x\right) := \argmin \left\{ \sigma\left(u\right) + 
-            \frac{t}{2}\norm{u - x}^{2} : \; u \in \rr^{n} \right\}.
-        \end{equation*}
-        \pause
-        Replacing $\Psi$ in AM scheme with its first-order approximation in each block, given by:
-        \begin{equation*}
-        	\widehat{\Psi}(x,y^k)= \left\langle x-x^k, \nabla_x H(x^k,y^k) \right\rangle + \frac{c_k}{2}\norm{x-x^k}^2 + f(x),
-        \end{equation*}
-        \begin{equation*}
-        	\widetilde{\Psi}(x^{k+1},y)= \left\langle y-y^k, \nabla_y H(x^{k+1},y^k) \right\rangle + \frac{d_k}{2}\norm{y-y^k}^2 + g(y).
-        \end{equation*}
-        \pause
-        \begin{center}
-    		\fbox{\parbox{11.5cm}{
-            \begin{enumerate}
-                \item[1.] Initialization: start with any $\left(x^{0} , y^{0}\right) \in 
-                	\rr^{n} \times \rr^{m}$.
-                \item[2.] For each $k = 0 , 1 , \ldots$ generate a sequence $\left\{ 
-                	\left(x^{k} , y^{k}\right) \right\}_{k \in \nn}$:
-             		\begin{enumerate}
-                   		\item[2.1.] Take $\gamma_{1} > 1$, set $c_{k} = 
-                    		\gamma_{1}L_{1}\left(y^{k}\right)$ and compute
-                        	\begin{equation*}
-                            	x^{k + 1} \in \argmin \left\{ \widehat{\Psi}(x,y^k) : \; x \in \R^n \right\} = \prox_{c_{k}}^{f}\left(x^{k} - {c_{k}}^{-1} \nabla_{x} H\left(x^{k} , y^{k}\right)\right).
-	                        \end{equation*}
-                    	\item[2.2.] Take $\gamma_{2} > 1$, set $d_{k} = 
-                    		\gamma_{2}L_{2}\left(x^{k + 1}\right)$ and compute
-                       		\begin{equation*}
-                           		y^{k + 1} \in \argmin \left\{ \widetilde{\Psi}(x^{k+1},y) : \; y \in \R^m \right\} = \prox_{d_{k}}^{g}\left(y^{k} - {d_{k}}^{-1}\nabla_{y} H\left(x^{k + 1}, y^{k}\right)\right).
-    	                   \end{equation*}
-                \end{enumerate}
-            \end{enumerate}}}
-       	\end{center}
-        \pause
-        \begin{center}
-            \shadowbox{\parbox{0.8\linewidth}{\center{{\bf Main computational step:} 
-            Computing prox of a nonconvex function.}}}
-        \end{center}
-
-    \end{frame}
-
-    \begin{frame}{Proximal Map for Nonconvex Functions}
-        Let $\sigma : \rr^{n} \rightarrow \overline{\rr}$ be a proper and lsc function. Given 
-        $x \in \rr^{n}$ and $t > 0$, the proximal map defined by:
-        \begin{equation*}
-            \prox_{t}^{\sigma}\left(x\right) := \argmin \left\{ \sigma\left(u\right) + 
-            \frac{t}{2}\norm{u - x}^{2} : \; u \in \rr^{n} \right\}.
-        \end{equation*}
-        \pause
-        \begin{proposition}[Rockafellar and Wets] \label{P:WellProximal}
-            If $\inf_{\rr^{n}} \sigma > -\infty$, then, for every $t \in \left(0 , 
-            \infty\right)$, the set $\prox_{1/t}^{\sigma}\left(x\right)$ is nonempty and 
-            compact.
-        \end{proposition}
+    
+%    \begin{frame}{The Algorithm: Proximal Altertnating Linearization Minimization (PALM)}
+%		Let $\sigma : \rr^{n} \rightarrow \overline{\rr}$ be a proper and lsc function. Given 
+%		$x \in \rr^{n}$ and $t > 0$, the proximal map defined by:
+%        \begin{equation*}
+%            \prox_{t}^{\sigma}\left(x\right) := \argmin \left\{ \sigma\left(u\right) + 
+%            \frac{t}{2}\norm{u - x}^{2} : \; u \in \rr^{n} \right\}.
+%        \end{equation*}
+%        \pause
+%        Replacing $\Psi$ in AM scheme with its first-order approximation in each block, given by:
+%        \begin{equation*}
+%        	\widehat{\Psi}(x,y^k)= \left\langle x-x^k, \nabla_x H(x^k,y^k) \right\rangle + \frac{c_k}{2}\norm{x-x^k}^2 + f(x),
+%        \end{equation*}
+%        \begin{equation*}
+%        	\widetilde{\Psi}(x^{k+1},y)= \left\langle y-y^k, \nabla_y H(x^{k+1},y^k) \right\rangle + \frac{d_k}{2}\norm{y-y^k}^2 + g(y).
+%        \end{equation*}
 %        \pause
 %        \begin{center}
-% 	       \shadowbox{\parbox{0.7\linewidth}{\center{The condition $\inf_{\rr^{n}} 
-%           \sigma > -\infty$ is sufficient bun not necessary. For example, $\s\left(x\right) 
-%           = -\norm{x}$.}}}
+%    		\fbox{\parbox{11.5cm}{
+%            \begin{enumerate}
+%                \item[1.] Initialization: start with any $\left(x^{0} , y^{0}\right) \in 
+%                	\rr^{n} \times \rr^{m}$.
+%                \item[2.] For each $k = 0 , 1 , \ldots$ generate a sequence $\left\{ 
+%                	\left(x^{k} , y^{k}\right) \right\}_{k \in \nn}$:
+%             		\begin{enumerate}
+%                   		\item[2.1.] Take $\gamma_{1} > 1$, set $c_{k} = 
+%                    		\gamma_{1}L_{1}\left(y^{k}\right)$ and compute
+%                        	\begin{equation*}
+%                            	x^{k + 1} \in \argmin \left\{ \widehat{\Psi}(x,y^k) : \; x \in \R^n \right\} = \prox_{c_{k}}^{f}\left(x^{k} - {c_{k}}^{-1} \nabla_{x} H\left(x^{k} , y^{k}\right)\right).
+%	                        \end{equation*}
+%                    	\item[2.2.] Take $\gamma_{2} > 1$, set $d_{k} = 
+%                    		\gamma_{2}L_{2}\left(x^{k + 1}\right)$ and compute
+%                       		\begin{equation*}
+%                           		y^{k + 1} \in \argmin \left\{ \widetilde{\Psi}(x^{k+1},y) : \; y \in \R^m \right\} = \prox_{d_{k}}^{g}\left(y^{k} - {d_{k}}^{-1}\nabla_{y} H\left(x^{k + 1}, y^{k}\right)\right).
+%    	                   \end{equation*}
+%                \end{enumerate}
+%            \end{enumerate}}}
+%       	\end{center}
+%        \pause
+%        \begin{center}
+%            \shadowbox{\parbox{0.8\linewidth}{\center{{\bf Main computational step:} 
+%            Computing prox of a nonconvex function.}}}
 %        \end{center}
-        \pause
-        \begin{itemize}[<+->]
-            \item Here $\prox_{t}^{\sigma}$ is a \textcolor{blue}{set-valued} map. \medskip
-            \item When $\sigma := \delta_{X}$, the indicator function of a nonempty and 
-            	closed set $X$, the proximal map reduces to the \textcolor{blue}{set-valued 
-            	projection} operator onto $X$.
-        \end{itemize}
-    \end{frame}
+%    \end{frame}
 
-	\begin{frame}{PALM is Well Defined}
-        Thanks to the prox properties, since PALM is defined by two proximal computations, 
-        all we need is:
-        \begin{equation*}
-            \text{Assume:} \quad \inf_{\rr^{n} \times \rr^{m}} \Psi > -\infty, \quad 
-            \inf_{\rr^{n}} f > -\infty \quad \text{and} \quad \inf_{\rr^{m}} g > -\infty.
-        \end{equation*}
-        \pause
-        \begin{center}
-            \shadowbox{\parbox{0.7\linewidth}{Thus Problem $(M)$ is inf-bounded and PALM is 
-            well defined!!!}}
-        \end{center}
-        \pause
-        {\bf\dblue Quick Recall on Nonsmooth Analysis -- [Rockafellar-Wets (98)]}
-		\medskip
-		
-        Let $\s: \rr^{d} \rightarrow \left(-\infty , +\infty\right]$ be a proper and lower 
-        semicontinuous function.
+%    \begin{frame}{Proximal Map for Nonconvex Functions}
+%        Let $\sigma : \rr^{n} \rightarrow \overline{\rr}$ be a proper and lsc function. Given 
+%        $x \in \rr^{n}$ and $t > 0$, the proximal map defined by:
+%        \begin{equation*}
+%            \prox_{t}^{\sigma}\left(x\right) := \argmin \left\{ \sigma\left(u\right) + 
+%            \frac{t}{2}\norm{u - x}^{2} : \; u \in \rr^{n} \right\}.
+%        \end{equation*}
+%        \pause
+%        \begin{proposition}[Rockafellar and Wets] \label{P:WellProximal}
+%            If $\inf_{\rr^{n}} \sigma > -\infty$, then, for every $t \in \left(0 , 
+%            \infty\right)$, the set $\prox_{1/t}^{\sigma}\left(x\right)$ is nonempty and 
+%            compact.
+%        \end{proposition}
+%%        \pause
+%%        \begin{center}
+%% 	       \shadowbox{\parbox{0.7\linewidth}{\center{The condition $\inf_{\rr^{n}} 
+%%           \sigma > -\infty$ is sufficient bun not necessary. For example, $\s\left(x\right) 
+%%           = -\norm{x}$.}}}
+%%        \end{center}
+%        \pause
+%        \begin{itemize}[<+->]
+%            \item Here $\prox_{t}^{\sigma}$ is a \textcolor{blue}{set-valued} map. \medskip
+%            \item When $\sigma := \delta_{X}$, the indicator function of a nonempty and 
+%            	closed set $X$, the proximal map reduces to the \textcolor{blue}{set-valued 
+%            	projection} operator onto $X$.
+%        \end{itemize}
+%    \end{frame}
 
-        \begin{itemize}
-            \item {\dblue (Limiting) Subdifferential} $\partial \s\left(x\right)$:
-	            \begin{eqnarray*}
-		             \quad u^* \in \partial \s (x)\; &\mbox{iff}& \;  (x_k,x_k^*) \to  
-		             (x,x^*)\;
-	    	         \mbox{s.t.}\;  \s(x_k) \to \s(x)\; \mbox{and}\\
-    	    	     \s (u) &\geq &\s (x_k) +  \langle x^*_k, u -x_k \rangle + o( \|u-x_k\|)
-        	     \end{eqnarray*}
-             \item $x \in \rr^{d}$ is a {\dblue critical} point  of $\s $ if $\partial \s(x) 
-            	 \ni 0$.
-			\item The set of critical points of $\s \equiv\mbox{crit} \;\s .$
-			\item $r\in \rr$ is a critical value if $\exists x \in \mbox{crit}\;\s : 
-				\s(x)=r$.
-        \end{itemize}
-	\end{frame}
+%	\begin{frame}{PALM is Well Defined}
+%        Thanks to the prox properties, since PALM is defined by two proximal computations, 
+%        all we need is:
+%        \begin{equation*}
+%            \text{Assume:} \quad \inf_{\rr^{n} \times \rr^{m}} \Psi > -\infty, \quad 
+%            \inf_{\rr^{n}} f > -\infty \quad \text{and} \quad \inf_{\rr^{m}} g > -\infty.
+%        \end{equation*}
+%        \pause
+%        \begin{center}
+%            \shadowbox{\parbox{0.7\linewidth}{Thus Problem $(M)$ is inf-bounded and PALM is 
+%            well defined!!!}}
+%        \end{center}
+%        \pause
+%        {\bf\dblue Quick Recall on Nonsmooth Analysis -- [Rockafellar-Wets (98)]}
+%		\medskip
+%		
+%        Let $\s: \rr^{d} \rightarrow \left(-\infty , +\infty\right]$ be a proper and lower 
+%        semicontinuous function.
+%
+%        \begin{itemize}
+%            \item {\dblue (Limiting) Subdifferential} $\partial \s\left(x\right)$:
+%	            \begin{eqnarray*}
+%		             \quad u^* \in \partial \s (x)\; &\mbox{iff}& \;  (x_k,x_k^*) \to  
+%		             (x,x^*)\;
+%	    	         \mbox{s.t.}\;  \s(x_k) \to \s(x)\; \mbox{and}\\
+%    	    	     \s (u) &\geq &\s (x_k) +  \langle x^*_k, u -x_k \rangle + o( \|u-x_k\|)
+%        	     \end{eqnarray*}
+%             \item $x \in \rr^{d}$ is a {\dblue critical} point  of $\s $ if $\partial \s(x) 
+%            	 \ni 0$.
+%			\item The set of critical points of $\s \equiv\mbox{crit} \;\s .$
+%			\item $r\in \rr$ is a critical value if $\exists x \in \mbox{crit}\;\s : 
+%				\s(x)=r$.
+%        \end{itemize}
+%	\end{frame}
 
-	\begin{frame}{An Informal General Convergence Proof Procedure}
+%	\begin{frame}{An Informal General Convergence Proof Procedure}
+%	
+%    	{\bf Given:} Let $\Psi : \rr^{N} \rightarrow \overline{\rr}$ be a proper, lsc and 
+%    	bounded from below function.
+%        \begin{equation*}
+%        	(P) \qquad \inf \left\{ \Psi\left(z\right) : \; z \in \rr^{N} \right\}.
+%        \end{equation*}
+%        Suppose $\mathcal{A}$ is a generic algorithm which generates a sequence $\Seq{z}{k}$ 
+%        via:
+%        \begin{equation*}
+%            z^{0} \in \rr^{N},  z^{k+1} \in \mathcal{A}\left(z^{k}\right), \; k = 0 , 1 , 
+%            \ldots.
+%        \end{equation*}
+%        \pause
+%        {\bf Goal:} To prove that \textcolor{blue}{whole $\Seq{z}{k}$ converges to a critical 		point of $\Psi$.}
+%        \pause
+%        \vspace{0.1in}
+%
+%        Basically, the methodology consists of three main steps.
+%        \begin{itemize}
+%            \item[$\rm{(i)}$] {\bf Sufficient decrease property:} Find a positive constant 
+%            	$\rho_{1}$ such that
+%                \begin{equation*}
+%                    \rho_{1}\norm{z^{k + 1} - z^{k}}^{2} \leq \Psi\left(z^{k}\right) - 
+%                    \Psi\left(z^{k + 1}\right), \quad \forall k = 0 , 1 , \ldots.
+%                \end{equation*}
+%                \pause
+%                \vspace{-0.1in}
+%            \item[$\rm{(ii)}$] {\bf A subgradient lower bound for the iterates gap:} Assume 
+%            	that \textcolor{blue}{$\Seq{z}{k}$ is bounded}. Find another positive 
+%            	constant $\rho_{2}$, such that
+%                \begin{equation*}
+%                    \norm{w^{k}} \leq \rho_{2}\norm{z^{k} - z^{k - 1}}, \quad w^{k} \in 
+%                    \partial \Psi\left(z^{k}\right), \quad \forall k = 0 , 1 , \ldots.
+%                \end{equation*}
+%		\end{itemize}
+%        \pause
+%        \begin{center}
+%            \shadowbox{\parbox{0.9\linewidth}{\center{These two steps are typical for 
+%            \textit{any descent} type algorithms but lead ONLY to \textit{convergence of 
+%            limit points}.}}}
+%        \end{center}
+%	\end{frame}
+
+%    \begin{frame}{PALM: First Convergence Properties}
+%     	From now on we assume that the \textcolor{blue}{generated sequence is bounded}.         
+%     	Let $\Seq{z}{k}$ ($z^{k} = \left(x^{k} , y^{k}\right)$) be a sequence generated by 
+%        PALM. 
+%        \pause
+%        \medskip
+%        
+%        \textcolor{blue}{The set of all limit points is denoted by 
+%        $\omega\left(z^{0}\right)$, where $z^{0}$ is the starting point.}
+%        \pause
+%        \vspace{0.2in}	
+%        
+%        \begin{lemma}[Properties of the limit point set $\omega\left(z^{0}\right)$]
+%        	Let $\Seq{z}{k}$ be a sequence generated by PALM. Then
+%            \begin{itemize}
+%                \item[$\rm{(i)}$] $\emptyset \neq \omega\left(z^{0}\right) \subset 
+%                	\crit{\Psi}$.
+%                \item[$\rm{(ii)}$] We have
+%                	\begin{equation*}
+%                    	\lim_{k \rightarrow \infty} \dist\left(z^{k} , 
+%                    	\omega\left(z^{0}\right)\right) = 0.
+%                   \end{equation*}
+%                \item[$\rm{(iii)}$] $\omega\left(z^{0}\right)$ is a nonempty, compact and 
+%                	connected set.
+%                \item[$\rm{(iv)}$] The objective function $\Psi$ is finite and constant on 
+%                	$\omega\left(z^{0}\right)$.
+%            \end{itemize}
+%        \end{lemma}
+%        \pause
+%        \vspace{0.1in}
+%        \begin{center}
+%            \shadowbox{\parbox{0.8\linewidth}{\center{Does the \textcolor{blue}{whole} 
+%            $\Seq{z}{k}$ converge to a critical point of Problem $(M)$?}}}
+%        \end{center}
+%	\end{frame}
+
+%    \begin{frame}{\large{YES! Using the Kur\-dy\-ka-{\L}o\-ja\-sie\-wicz Property (Third 
+%    Step)}}
+%    	\vspace{0.1in}
+%        \begin{itemize}
+%            \item[$\rm{(iii)}$] {\bf Using the KL property:} Assume that $\Psi$ is a 
+%            \textcolor{blue}{KL function} and show that the generated sequence $\Seq{z}{k}$ 
+%            is a {\em Cauchy sequence}.
+%        \end{itemize}
+%        \pause
+%        \vspace{0.08in}
+%
+%        If, \textcolor{blue}{$\Psi$ is a KL function}, we get:
+%        \pause
+%        \vspace{0.1in}
+%        \begin{theorem}[A finite length property]
+%            Let $\Seq{z}{k}$ be a sequence generated by PALM. The following assertions hold.
+%            \begin{itemize}
+%                \item[$\rm{(i)}$] The sequence $\Seq{z}{k}$ has finite length, that is,
+%                    \begin{equation*}
+%                        \sum_{k = 1}^{\infty} \norm{z^{k + 1} - z^{k}} < \infty.
+%                    \end{equation*}
+%                \pause
+%                \item[$\rm{(ii)}$] The sequence $\Seq{z}{k}$ converges to a critical point 
+%                	$z^{\ast} = \left(x^{\ast} , y^{\ast}\right)$.
+%            \end{itemize}
+%        \end{theorem}
+%    \end{frame}
+
+%	\begin{frame}{Proof of Theorem}
+%		For simplicity, assume $\Psi^{*} = 0$ and that $\Psi$ is smooth. From sufficient decease and subgradient bound for iterates gaps properties we have
+%		\begin{equation}
+%			\exists \rho_1>0 : \; \rho_1 \norm{z^{k+1} - z^k}^2 \leq \Psi\left(z^k\right) - \Psi\left(z^{k+1}\right) \label{sufficient_dec_property}
+%		\end{equation}
+%		\begin{equation}
+%			\exists \rho_2>0 : \; \rho_2\norm{\nabla \Psi\left(z^{k}\right)} \leq \norm{z^{k+1} - z^k} \label{iters_gap_property}
+%		\end{equation}
+%		Combining (\ref{sufficient_dec_property}) with (\ref{iters_gap_property}) yields
+%		\begin{equation}
+%			\rho_1 \rho_2 \norm{z^{k+1} - z^k} \cdot \norm{\nabla \Psi\left(z^{k}\right)} \leq \Psi\left(z^k\right) - \Psi\left(z^{k+1}\right). \label{combined_properies}
+%		\end{equation}
+%		Since $\Psi$ is a KL-function there exists a concave desingularizing function $\varphi$ such that
+%		\begin{equation}
+%			\varphi'\left(\Psi\left(z^k\right)\right) \norm{\nabla \Psi\left(z^k\right)} \geq 1 \label{KL_property}
+%		\end{equation}
+%		From the concavity of $\varphi$ it follows that
+%		\begin{equation*}
+%			\varphi(u) - \varphi(v) \leq (u-v) \varphi'(v)
+%		\end{equation*}
+%		Substituting $u=\Psi\left(z^{k+1}\right)$ and $v=\Psi\left(z^k\right)$ in the last equation yields
+%		\begin{equation}
+%			\left(\Psi\left(z^k\right) - \Psi\left(z^{k+1}\right)\right) \varphi'\left(\Psi\left(z^k\right)\right) \leq \varphi\left(\Psi\left(z^k\right)\right) - \varphi\left(\Psi\left(z^{k+1}\right)\right). \label{concavity_property}
+%		\end{equation}
+%		Combining (\ref{combined_properies}) with (\ref{concavity_property}) and applying (\ref{KL_property}) yields		
+%		\begin{equation*}
+%			\resizebox{\textwidth}{!}{
+%			$
+%			\rho_1 \rho_2 \norm{z^{k+1} - z^k} \leq \rho_1 \rho_2 \norm{z^{k+1} - z^k} \cdot \norm{\nabla \Psi\left(z^{k}\right)} \varphi'\left(\Psi\left(z^k\right)\right) \leq \varphi\left(\Psi\left(z^k\right)\right) - \varphi\left(\Psi\left(z^{k+1}\right)\right).
+%			$
+%			}
+%		\end{equation*} 
+%	\end{frame}
 	
-    	{\bf Given:} Let $\Psi : \rr^{N} \rightarrow \overline{\rr}$ be a proper, lsc and 
-    	bounded from below function.
-        \begin{equation*}
-        	(P) \qquad \inf \left\{ \Psi\left(z\right) : \; z \in \rr^{N} \right\}.
-        \end{equation*}
-        Suppose $\mathcal{A}$ is a generic algorithm which generates a sequence $\Seq{z}{k}$ 
-        via:
-        \begin{equation*}
-            z^{0} \in \rr^{N},  z^{k+1} \in \mathcal{A}\left(z^{k}\right), \; k = 0 , 1 , 
-            \ldots.
-        \end{equation*}
-        \pause
-        {\bf Goal:} To prove that \textcolor{blue}{whole $\Seq{z}{k}$ converges to a critical 		point of $\Psi$.}
-        \pause
-        \vspace{0.1in}
-
-        Basically, the methodology consists of three main steps.
-        \begin{itemize}
-            \item[$\rm{(i)}$] {\bf Sufficient decrease property:} Find a positive constant 
-            	$\rho_{1}$ such that
-                \begin{equation*}
-                    \rho_{1}\norm{z^{k + 1} - z^{k}}^{2} \leq \Psi\left(z^{k}\right) - 
-                    \Psi\left(z^{k + 1}\right), \quad \forall k = 0 , 1 , \ldots.
-                \end{equation*}
-                \pause
-                \vspace{-0.1in}
-            \item[$\rm{(ii)}$] {\bf A subgradient lower bound for the iterates gap:} Assume 
-            	that \textcolor{blue}{$\Seq{z}{k}$ is bounded}. Find another positive 
-            	constant $\rho_{2}$, such that
-                \begin{equation*}
-                    \norm{w^{k}} \leq \rho_{2}\norm{z^{k} - z^{k - 1}}, \quad w^{k} \in 
-                    \partial \Psi\left(z^{k}\right), \quad \forall k = 0 , 1 , \ldots.
-                \end{equation*}
-		\end{itemize}
-        \pause
-        \begin{center}
-            \shadowbox{\parbox{0.9\linewidth}{\center{These two steps are typical for 
-            \textit{any descent} type algorithms but lead ONLY to \textit{convergence of 
-            limit points}.}}}
-        \end{center}
-	\end{frame}
-
-    \begin{frame}{PALM: First Convergence Properties}
-     	From now on we assume that the \textcolor{blue}{generated sequence is bounded}.         
-     	Let $\Seq{z}{k}$ ($z^{k} = \left(x^{k} , y^{k}\right)$) be a sequence generated by 
-        PALM. 
-        \pause
-        \medskip
-        
-        \textcolor{blue}{The set of all limit points is denoted by 
-        $\omega\left(z^{0}\right)$, where $z^{0}$ is the starting point.}
-        \pause
-        \vspace{0.2in}	
-        
-        \begin{lemma}[Properties of the limit point set $\omega\left(z^{0}\right)$]
-        	Let $\Seq{z}{k}$ be a sequence generated by PALM. Then
-            \begin{itemize}
-                \item[$\rm{(i)}$] $\emptyset \neq \omega\left(z^{0}\right) \subset 
-                	\crit{\Psi}$.
-                \item[$\rm{(ii)}$] We have
-                	\begin{equation*}
-                    	\lim_{k \rightarrow \infty} \dist\left(z^{k} , 
-                    	\omega\left(z^{0}\right)\right) = 0.
-                   \end{equation*}
-                \item[$\rm{(iii)}$] $\omega\left(z^{0}\right)$ is a nonempty, compact and 
-                	connected set.
-                \item[$\rm{(iv)}$] The objective function $\Psi$ is finite and constant on 
-                	$\omega\left(z^{0}\right)$.
-            \end{itemize}
-        \end{lemma}
-        \pause
-        \vspace{0.1in}
-        \begin{center}
-            \shadowbox{\parbox{0.8\linewidth}{\center{Does the \textcolor{blue}{whole} 
-            $\Seq{z}{k}$ converge to a critical point of Problem $(M)$?}}}
-        \end{center}
-	\end{frame}
-
-    \begin{frame}{\large{YES! Using the Kur\-dy\-ka-{\L}o\-ja\-sie\-wicz Property (Third 
-    Step)}}
-    	\vspace{0.1in}
-        \begin{itemize}
-            \item[$\rm{(iii)}$] {\bf Using the KL property:} Assume that $\Psi$ is a 
-            \textcolor{blue}{KL function} and show that the generated sequence $\Seq{z}{k}$ 
-            is a {\em Cauchy sequence}.
-        \end{itemize}
-        \pause
-        \vspace{0.08in}
-
-        If, \textcolor{blue}{$\Psi$ is a KL function}, we get:
-        \pause
-        \vspace{0.1in}
-        \begin{theorem}[A finite length property]
-            Let $\Seq{z}{k}$ be a sequence generated by PALM. The following assertions hold.
-            \begin{itemize}
-                \item[$\rm{(i)}$] The sequence $\Seq{z}{k}$ has finite length, that is,
-                    \begin{equation*}
-                        \sum_{k = 1}^{\infty} \norm{z^{k + 1} - z^{k}} < \infty.
-                    \end{equation*}
-                \pause
-                \item[$\rm{(ii)}$] The sequence $\Seq{z}{k}$ converges to a critical point 
-                	$z^{\ast} = \left(x^{\ast} , y^{\ast}\right)$.
-            \end{itemize}
-        \end{theorem}
-    \end{frame}
-
-	\begin{frame}{Proof of Theorem}
-		For simplicity, assume $\Psi^{*} = 0$ and that $\Psi$ is smooth. From sufficient decease and subgradient bound for iterates gaps properties we have
-		\begin{equation}
-			\exists \rho_1>0 : \; \rho_1 \norm{z^{k+1} - z^k}^2 \leq \Psi\left(z^k\right) - \Psi\left(z^{k+1}\right) \label{sufficient_dec_property}
-		\end{equation}
-		\begin{equation}
-			\exists \rho_2>0 : \; \rho_2\norm{\nabla \Psi\left(z^{k}\right)} \leq \norm{z^{k+1} - z^k} \label{iters_gap_property}
-		\end{equation}
-		Combining (\ref{sufficient_dec_property}) with (\ref{iters_gap_property}) yields
-		\begin{equation}
-			\rho_1 \rho_2 \norm{z^{k+1} - z^k} \cdot \norm{\nabla \Psi\left(z^{k}\right)} \leq \Psi\left(z^k\right) - \Psi\left(z^{k+1}\right). \label{combined_properies}
-		\end{equation}
-		Since $\Psi$ is a KL-function there exists a concave desingularizing function $\varphi$ such that
-		\begin{equation}
-			\varphi'\left(\Psi\left(z^k\right)\right) \norm{\nabla \Psi\left(z^k\right)} \geq 1 \label{KL_property}
-		\end{equation}
-		From the concavity of $\varphi$ it follows that
-		\begin{equation*}
-			\varphi(u) - \varphi(v) \leq (u-v) \varphi'(v)
-		\end{equation*}
-		Substituting $u=\Psi\left(z^{k+1}\right)$ and $v=\Psi\left(z^k\right)$ in the last equation yields
-		\begin{equation}
-			\left(\Psi\left(z^k\right) - \Psi\left(z^{k+1}\right)\right) \varphi'\left(\Psi\left(z^k\right)\right) \leq \varphi\left(\Psi\left(z^k\right)\right) - \varphi\left(\Psi\left(z^{k+1}\right)\right). \label{concavity_property}
-		\end{equation}
-		Combining (\ref{combined_properies}) with (\ref{concavity_property}) and applying (\ref{KL_property}) yields		
-		\begin{equation*}
-			\resizebox{\textwidth}{!}{
-			$
-			\rho_1 \rho_2 \norm{z^{k+1} - z^k} \leq \rho_1 \rho_2 \norm{z^{k+1} - z^k} \cdot \norm{\nabla \Psi\left(z^{k}\right)} \varphi'\left(\Psi\left(z^k\right)\right) \leq \varphi\left(\Psi\left(z^k\right)\right) - \varphi\left(\Psi\left(z^{k+1}\right)\right).
-			$
-			}
-		\end{equation*} 
-	\end{frame}
-	
-	\begin{frame}{Proof of Theorem-Contd.}
-		Summing the last inequality over all $k \in \nn$ yields part (i).\\
-		Now, take $q > p > l$ we have
-		\begin{equation*}
-			z^q - z^p = \sum\limits_{k=p}^{q-1} \left( z^{k+1} - z^k \right)
-		\end{equation*}
-		hence
-		\begin{equation*}
-			\norm{z^q - z^p} = \norm{\sum\limits_{k=p}^{q-1} \left( z^{k+1} - z^k \right)} \leq \sum\limits_{k=p}^{q-1} \norm{ z^{k+1} - z^k} \leq \sum\limits_{k=l}^{\infty} \norm{ z^{k+1} - z^k} \xrightarrow[l \to \infty]{} 0,
-		\end{equation*}
-		implying that $\left\{z^k\right\}$ is a Cauchy sequence and hence a convergent sequence. The fact that $\emptyset \neq \omega\left(z^0\right) \subset crit\Psi$ yields part (ii).
-		\pause
-        \medskip
-        \begin{center}
-        	\shadowbox{\parbox{0.9\linewidth}{KL property ensures us that $\Seq{z}{k}$ is 
-            a Cauchy sequence! \textcolor{blue}{Thus converges!}}}
-        \end{center}
-        \vspace{0.05in}
-        \pause
-        \begin{center}
-            \shadowbox{\parbox{0.65\linewidth}{\center{The main question now is: 
-            \textcolor{blue}{Are there many KL functions?}}}}
-        \end{center}
-	\end{frame}
+%	\begin{frame}{Proof of Theorem-Contd.}
+%		Summing the last inequality over all $k \in \nn$ yields part (i).\\
+%		Now, take $q > p > l$ we have
+%		\begin{equation*}
+%			z^q - z^p = \sum\limits_{k=p}^{q-1} \left( z^{k+1} - z^k \right)
+%		\end{equation*}
+%		hence
+%		\begin{equation*}
+%			\norm{z^q - z^p} = \norm{\sum\limits_{k=p}^{q-1} \left( z^{k+1} - z^k \right)} \leq \sum\limits_{k=p}^{q-1} \norm{ z^{k+1} - z^k} \leq \sum\limits_{k=l}^{\infty} \norm{ z^{k+1} - z^k} \xrightarrow[l \to \infty]{} 0,
+%		\end{equation*}
+%		implying that $\left\{z^k\right\}$ is a Cauchy sequence and hence a convergent sequence. The fact that $\emptyset \neq \omega\left(z^0\right) \subset crit\Psi$ yields part (ii).
+%		\pause
+%        \medskip
+%        \begin{center}
+%        	\shadowbox{\parbox{0.9\linewidth}{KL property ensures us that $\Seq{z}{k}$ is 
+%            a Cauchy sequence! \textcolor{blue}{Thus converges!}}}
+%        \end{center}
+%        \vspace{0.05in}
+%        \pause
+%        \begin{center}
+%            \shadowbox{\parbox{0.65\linewidth}{\center{The main question now is: 
+%            \textcolor{blue}{Are there many KL functions?}}}}
+%        \end{center}
+%	\end{frame}
 
 
     
@@ -918,20 +970,64 @@
 		and the result follows with $\rho_2 = m \left( 4M + \overline{\alpha} \right)$.
 	\end{frame}
 	
-	\begin{frame}{Some Graphics}
-		Below is a comparison of the objective function values performed on the Iris data-set for KMEANS, KMEANS++, KPALM and KMEANS++ algorithms.
-		\begin{figure}[ht]
+	\begin{frame}{Numerical Results: The Squared Norm}
+		\begin{itemize}[<+->]
+            \item Initialization issues: randomly picking $k$ data points as starting centers vs. k-means++.
+        
+        	\item Comparison of the objective function values performed on the Iris dataset for squared norm algorithms
+		\begin{figure}
     		\centering
-        	\includegraphics[width=0.95 \textwidth]{psi_algs_comparison2_zoom}
+        	\includegraphics[width=0.75 \textwidth]{squared_norm_obj_comp}
 		\end{figure}
+
+	    	\item In the squared Euclidean setting, KPALM achieves lower objective function values than k-means. When using a more sophisticated initialization step, such as the one in k-means++, then k-means++ and KPALM++ achieve similar objective function values.
+			\item k-means needs less number of iterations then KPALM to reach a certain precision.
+		\end{itemize}
 	\end{frame}
 	
-	\begin{frame}{Some Graphics}
-		Below is a comparison of the objective function values performed on the Iris data-set for KPALM algorithm with different $\alpha$ parameter updates.
-		\begin{figure}[ht]
+	\begin{frame}{Numerical Results: The Squared Norm}
+		\begin{itemize}[<+->]
+            \item Comparison of the objective function values performed on the Iris dataset for KPALM algorithm with different $\alpha$ parameter updates.
+		\begin{figure}
     		\centering
-        	\includegraphics[width=0.9 \textwidth]{dynamic_alpha_kpalm}
+        	\includegraphics[width=0.8 \textwidth]{squared_norm_dyn_alpha_comp}
 		\end{figure}
+			\item It is preferable to use dynamic update of $\alpha(t)$ parameter to achieve a faster convergence, both in KPALM and $\epsilon$-KPALM. Example for suitable choices can be $\alpha(t)= \diam(\mathcal{A})/t$ and $\alpha(t)= \diam(\mathcal{A})/2^t$.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{Numerical Results: Squared Norm Algorithms vs. $\varepsilon$-KPALM}
+		\begin{itemize}[<+->]
+			\item Generated two synthetic datasets
+%			\begin{figure}
+%		    	\centering
+%			    \begin{subfigure}[b]{0.45\textwidth}
+%			        \includegraphics[width=\textwidth]{dense_gaussians}
+%			        \caption{Dense Gaussians.}
+%			    \end{subfigure}
+%			    \quad
+%			    \begin{subfigure}[b]{0.45\textwidth}
+%			        \includegraphics[width=\textwidth]{sparse_gaussians}
+%			        \caption{Sparse Gaussians.}
+%			    \end{subfigure}
+%			    \caption{Two datasets, each 300 points.}
+%			\end{figure}
+
+			\item When the convex hulls of the desired clusters are mutually exclusive, algorithms which solve the clustering problem with the squared Euclidean distance are preferable to $\varepsilon$-KPALM.
+			\item In datasets with outliers, the clustering obtained with $\varepsilon$-KPALM is more similar to the desired clustering, in terms of clustering metrics, than the clusterings obtained via the squared Euclidean algorithms. 
+				Therefore, as expected, for data  with outliers, the choice of a norm instead of the squared norm is a more natural choice, and the $\varepsilon$-KPALM algorithm appears to be a promising algorithm to handle such data.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{Summary of Numerical Results}
+		 \begin{itemize}[<+->]
+	    	\item In the squared Euclidean setting, KPALM achieves lower objective function values than k-means. When using a more sophisticated initialization step, such as the one in k-means++, then k-means++ and KPALM++ achieve similar objective function values.
+	\item k-means needs less number of iterations then KPALM to reach a certain precision.
+	\item It is preferable to use dynamic update of $\alpha(t)$ parameter to achieve a faster convergence, both in KPALM and $\epsilon$-KPALM. Example for suitable choices can be $\alpha(t)= \diam(\mathcal{A})/t$ and $\alpha(t)= \diam(\mathcal{A})/2^t$.
+	\item When the convex hulls of the desired clusters are mutually exclusive, algorithms which solve the clustering problem with the squared Euclidean distance are preferable to $\varepsilon$-KPALM.
+	\item In datasets with outliers, the clustering obtained with $\varepsilon$-KPALM is more similar to the desired clustering, in terms of clustering metrics, than the clusterings obtained via the squared Euclidean algorithms. 
+	Therefore, as expected, for data  with outliers, the choice of a norm instead of the squared norm is a more natural choice, and the $\varepsilon$-KPALM algorithm appears to be a promising algorithm to handle such data.	
+		\end{itemize}
 	\end{frame}
 	
 \end{document}
