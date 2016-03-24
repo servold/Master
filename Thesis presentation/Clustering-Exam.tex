@@ -11,6 +11,7 @@
 \usepackage{adjustbox}
 \usepackage{cleveref}
 \usepackage{etex}
+\usepackage{graphicx,subfigure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter
@@ -89,9 +90,6 @@
 \usepackage{amssymb}
 \usepackage{algorithmic,algorithm}
 \usepackage{comment}
-%\usepackage{graphicx}
-%\usepackage{epstopdf}
-%\usepackage{psfrag,color,subfigure,hyperref,multicol,multirow,array}
 
 \usepackage{fancybox,graphicx}
 \usepackage{epstopdf}
@@ -111,6 +109,8 @@
 \renewcommand{\thefootnote}{\arabic{footnote}}
 %\definecolor{gr}{rgb}{0.827451,0.827451,0.827451}
 \newcommand{\gap}{\vspace{0.1in}}
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{theorems}[ams style]
 
 \newrgbcolor{dorange}{1.00 0.65 0.00}
 %\newrgbcolor{lgreen}{0.40 1.00 0.40}
@@ -160,26 +160,27 @@
 \newcommand{\imoinsp}{{\cal I}^{+}}
 \newcommand{\dist}{\mathrm{dist}} %Distance between point and set
 \newcommand{\diam}{\mathrm{diam}} %Diameter of set
+\newcommand{\VI}{\mathrm{VI}} %variation of information
 \newcommand{\act}[1]{\left\langle {#1} \right\rangle} %The value of 1
 \newcommand{\seq}[2]{\left\{{#1}_{{#2}}\right\}_{{#2} \in \mathbb{N}}}
 \newcommand{\Seq}[2]{\left\{{#1}^{{#2}}\right\}_{{#2} \in \mathbb{N}}}
 \newcommand{\argmin}{\operatorname{argmin}}
 \newcommand{\limitinf}[2]{\liminf_{{#1} \rightarrow {#2}}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title[Globally Convergent Algorithms for Clustering]{A Novel Class of Globally Convergent Algorithms \\ \vspace{0.1in} For Clustering Problems}
-\author{Sergey Voldman}
-\institute[Tel-Aviv University]{\small Raymond and Beverly Sackler Faculty of Exact Sciences\\ \vspace{0.1in} Tel-Aviv University}
-\date{06.04.2016}
-\vspace{2cm}
+\author[Sergey Voldman]{Sergey Voldman}
 
 \begin{document}
+
+\title[Globally Convergent Algorithms for Clustering]{A Novel Class of Globally Convergent Algorithms \\ \vspace{0.1in} For Clustering Problems}
+\institute[Tel-Aviv University]{\small Raymond and Beverly Sackler Faculty of Exact Sciences\\ \vspace{0.1in} Tel-Aviv University}
+\date{06.04.2016}
 
 	\begin{frame}
 		\titlepage
 		\begin{center}
-			Under the supervision of \gap
-
-			Prof. Marc Teboulle (Tel Aviv University)\\ and Prof. Shoham Sabach (Technion)
+			Research conducted under the supervision of\\ \smallskip
+			Prof. Marc Teboulle (Tel Aviv University)\\ \smallskip
+			and Prof. Shoham Sabach (Technion)
 		\end{center}
 	\end{frame}
 
@@ -239,17 +240,17 @@
 				where $w = (w^1, w^2, \ldots , w^m) \in \R^{km}$.
 			\item The final version is given by
 				\begin{equation*}
-				\	(P) \qquad min \left\lbrace \Psi(z) := H(w,x) + G(w) \mid z := (w,x) \in \R^{km} \times \R^{nk} \right\rbrace, 
+					(P) \qquad min \left\lbrace \sigma(z) := H(w,x) + G(w) \mid z := (w,x) \in \R^{km} \times \R^{nk} \right\rbrace, 
 				\end{equation*}
-				with $H(w,x) = \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle$ and $G(w) = \sum\limits_{i=1}^{m} G^i(w^i) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i).$			
+				where $H(w,x) = \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle$ and $G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i).$			
 		\end{itemize}
     \end{frame}
 
 	\begin{frame}{Convergence Methodology: Goal and Definitions}
-		{\bf Given:} Let $\Psi : \rr^{N} \rightarrow \overline{\rr}$ be a proper, lsc and 
+		{\bf Given:} Let $\sigma : \rr^{N} \rightarrow \overline{\rr}$ be a proper, lsc and 
     	bounded from below function.
         \begin{equation*}
-        	(P) \qquad \inf \left\{ \Psi\left(z\right) : \; z \in \rr^{N} \right\}.
+        	(P) \qquad \inf \left\{ \sigma\left(z\right) : \; z \in \rr^{N} \right\}.
         \end{equation*}
         Suppose $\mathcal{A}$ is a generic algorithm which generates a sequence $\Seq{z}{k}$ 
         via:
@@ -258,7 +259,7 @@
             \ldots.
         \end{equation*}
         \pause
-        {\bf Goal:} To prove that \textcolor{blue}{whole $\Seq{z}{k}$ converges to a critical 		point of $\Psi$.}
+        {\bf Goal:} To prove that \textcolor{blue}{whole $\Seq{z}{k}$ converges to a critical point of $\sigma$.}
         \pause
         \vspace{0.1in}
 
@@ -271,8 +272,8 @@
     	    \s (u) &\geq &\s (x_k) +  \langle u^*_k, u -x_k \rangle + o( \|u-x_k\|)
         \end{eqnarray*}
         \end{definition}
-        	     
-        \begin{itemize}
+        \pause
+        \begin{itemize}[<+->]
              \item $x \in \rr^{d}$ is a {\dblue critical point}  of $\s $ if $\partial \s(x) 
             	 \ni 0$.
 			\item The set of critical points of $\s \equiv\mbox{crit} \;\s .$
@@ -312,6 +313,7 @@
             $\dom{\s}$.
         \end{theorem}
 		\vspace{0.3in}
+		\pause
         \begin{definition}
             \begin{itemize}
                 \item[$\rm{(i)}$] A subset $S$ of $\rr^{n}$ is a real \textcolor{blue}{semi-algebraic set} if there exists a finite number of real polynomial functions $g_{ij} , h_{ij} : \rr^{n} \rightarrow \rr$ such that
@@ -332,7 +334,7 @@
     \end{frame}
 
     \begin{frame}{The Wealth of Semi-Algebraic Functions}
-        \begin{itemize}
+        \begin{itemize}[<+->]
         	\item \textcolor{blue}{Real polynomial functions}.
             \item \textcolor{blue}{Indicator functions} of semi-algebraic sets.
             \item \textcolor{blue}{Finite sums and product} of semi-algebraic functions. 
@@ -345,7 +347,7 @@
              \item $\norm{\cdot}_{p}$ is semi-algebraic whenever $p > 0$ is rational.
         \end{itemize}
         \gap
-	
+		\pause
  		In particular, for distance-like functions $d(x,y)=\norm{x-y}^2$ and $d(x,y)=\norm{x-y}$ the resulting clustering function defined in (P) is semi-algebraic.
     \end{frame}
 	
@@ -367,46 +369,49 @@
 				\end{itemize}
 			\end{enumerate}
 		\end{definition}
-		
-		\begin{theorem}[Bolte-Shabach-Teboulle (2014)] \label{SDP_SGP_conv_thrm}
+		\pause
+		\begin{theorem}[Bolte-Sabach-Teboulle (2014)] \label{SDP_SGP_conv_thrm}
 			Let $\sigma:\rr^d \rightarrow (-\infty,\infty]$ be a proper, lower semicontinuous and semi-algebraic function with $\inf \sigma > -\infty$, and assume that $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a gradient-like descent sequence for $\sigma$. \\ If $\omega\left( z^0 \right) \subset crit(\sigma)$ then the sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ convergences to a critical point $z^{*}$ of $\sigma$.
 		\end{theorem}
 	\end{frame}
 
     \begin{frame}{The Optimization Model}
         \begin{equation*}
-            (M) \qquad \mbox{minimize}_{x , y} \Psi\left(x , y\right) := f\left(x\right) + 
-            g\left(y\right) + H\left(x , y\right)
+            (M) \qquad \mbox{minimize}_{x , y} \sigma\left(x , y\right) := f\left(x\right) + g\left(y\right) + H\left(x , y\right)
         \end{equation*}
         \pause
-        \vspace{-0.05in}
         \begin{assumption} \label{AssumptionsA}
             \begin{itemize}
-                \item[$\rm{(i)}$] $f : \rr^{n} \rightarrow \overline{\rr}$ and $g : \rr^{m} 
-                	\rightarrow \overline{\rr}$ are proper and lsc functions.
-                \item[$\rm{(ii)}$] $H : \rr^{n} \times \rr^{m} \rightarrow \rr$ is a $C^{1}$ 
-                	function.
-                \item[$\rm{(iii)}$] Partial gradients of $H$ are Lipshitz continuous: 
-                	$H\left(\cdot , y\right) \in C^{1,1}_{L(y)}$ and likewise $H\left(x , 
-                	\cdot\right) \in C^{1,1}_L(x)$.
+                \item[$\rm{(i)}$] $f : \rr^{n} \rightarrow \overline{\rr}$ and $g : \rr^{m} \rightarrow \overline{\rr}$ are proper and lsc functions.
+                \item[$\rm{(ii)}$] $H : \rr^{n} \times \rr^{m} \rightarrow \rr$ is a $C^{1}$ function.
+                \item[$\rm{(iii)}$] Partial gradients of $H$ are Lipshitz continuous: $H\left(\cdot , y\right) \in C^{1,1}_{L(y)}$ and likewise $H\left(x , \cdot\right) \in C^{1,1}_L(x)$.
             \end{itemize}
         \end{assumption}
         \pause
         \begin{itemize}[<+->]
-            \item {\bf NO convexity} will be assumed in the objective or/and the constraints 
-            	(built-in through $f$ and $g$ extended valued).
+            \item {\bf NO convexity} will be assumed in the objective or/and the constraints (built-in through $f$ and $g$ extended valued).
         \end{itemize}
+        \pause
+        Let $\sigma : \rr^{n} \rightarrow \overline{\rr}$ be a proper and lsc function. Given 
+		$x \in \rr^{n}$ and $t > 0$, the proximal map defined by:
+        \begin{equation*}
+            \prox_{t}^{\sigma}\left(x\right) := \argmin \left\{ \sigma\left(u\right) + 
+            \frac{t}{2}\norm{u - x}^{2} : \; u \in \rr^{n} \right\}.
+        \end{equation*}
     \end{frame}
 
     \begin{frame}{The Algorithm: Proximal Altertnating Linearization Minimization (PALM)}
-		PALM algorithm is nothing but alternating the classical proximal gradient over the two blocks $(x,y)$. This leads towards the following approximations:
-        \pause
+    	\begin{itemize}[<+->]
+			\item PALM blends alternating minimization with the classical proximal gradient over the two blocks $(x,y)$. 
+			\pause
+			This leads towards the following approximations:
         \begin{equation*}
-        	\widehat{\Psi}(x,y^k)= \left\langle x-x^k, \nabla_x H(x^k,y^k) \right\rangle + \frac{c_k}{2}\norm{x-x^k}^2 + f(x),
+        	\resizebox{.7\hsize}{!}{$\widehat{\sigma}(x,y^k)= \left\langle x-x^k, \nabla_x H(x^k,y^k) \right\rangle + \frac{c_k}{2}\norm{x-x^k}^2 + f(x),$}
         \end{equation*}
         \begin{equation*}
-        	\widetilde{\Psi}(x^{k+1},y)= \left\langle y-y^k, \nabla_y H(x^{k+1},y^k) \right\rangle + \frac{d_k}{2}\norm{y-y^k}^2 + g(y).
+        	\resizebox{.7\hsize}{!}{$\widetilde{\sigma}(x^{k+1},y)= \left\langle y-y^k, \nabla_y H(x^{k+1},y^k) \right\rangle + \frac{d_k}{2}\norm{y-y^k}^2 + g(y)$}.
         \end{equation*}
+        \end{itemize}
         \pause
         \begin{center}
     		\fbox{\parbox{11.5cm}{
@@ -419,12 +424,12 @@
                    		\item[2.1.] Take $\gamma_{1} > 1$, set $c_{k} = 
                     		\gamma_{1}L_{1}\left(y^{k}\right)$ and compute
                         	\begin{equation*}
-                            	x^{k + 1} \in \argmin \left\{ \widehat{\Psi}(x,y^k) : \; x \in \R^n \right\} = \prox_{c_{k}}^{f}\left(x^{k} - {c_{k}}^{-1} \nabla_{x} H\left(x^{k} , y^{k}\right)\right).
+                            	x^{k + 1} \in \argmin \left\{ \widehat{\sigma}(x,y^k) : \; x \in \R^n \right\} = \prox_{c_{k}}^{f}\left(x^{k} - {c_{k}}^{-1} \nabla_{x} H\left(x^{k} , y^{k}\right)\right).
 	                        \end{equation*}
                     	\item[2.2.] Take $\gamma_{2} > 1$, set $d_{k} = 
                     		\gamma_{2}L_{2}\left(x^{k + 1}\right)$ and compute
                        		\begin{equation*}
-                           		y^{k + 1} \in \argmin \left\{ \widetilde{\Psi}(x^{k+1},y) : \; y \in \R^m \right\} = \prox_{d_{k}}^{g}\left(y^{k} - {d_{k}}^{-1}\nabla_{y} H\left(x^{k + 1}, y^{k}\right)\right).
+                           		y^{k + 1} \in \argmin \left\{ \widetilde{\sigma}(x^{k+1},y) : \; y \in \R^m \right\} = \prox_{d_{k}}^{g}\left(y^{k} - {d_{k}}^{-1}\nabla_{y} H\left(x^{k + 1}, y^{k}\right)\right).
     	                   \end{equation*}
                 \end{enumerate}
             \end{enumerate}}}
@@ -827,8 +832,15 @@
     
     
 
-	\begin{frame}{KPALM Algorithm For The Squared Euclidean Norm}
-		We devise a PALM-like algorithm, exploiting the specific structure of $H$, namely
+	\begin{frame}{KPALM Algorithm for Clustering with the Squared Norm Distance}
+	Recalling the Clustering Problem for the squared norm distance:
+		\begin{equation*}
+				(P) \qquad min \left\lbrace \sigma(z) := H(w,x) + G(w) \mid z := (w,x) \in \R^{km} \times \R^{nk} \right\rbrace, 
+		\end{equation*}
+		\begin{center}
+		$H(w,x) = \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle = \sum\limits_{i=1}^m\sum\limits_{l=1}^k w^i_l \norm{x^l - a^i}^2$, $G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i)$.\\
+		\end{center}
+		Inspired by PALM, we devise the KPALM algorithm, exploiting the specific structure of the model, namely
 		\pause
 		\begin{itemize}[<+->]
 	    	\item The function $w \mapsto H(w,x)$, for fixed $x$, is linear and therefore there is no need to linearize it as suggested in PALM.
@@ -840,9 +852,13 @@
 				x(t+1) = \arg\!\min \left\lbrace H(w(t+1), x) \mid x \in \mathbb{R}^{nk} \right\rbrace. \label{X_update_step}
 			\end{equation*}
 	    \end{itemize}
-	    \pause
-	    \begin{center}
-    		\fbox{\parbox{10.5cm}{
+	\end{frame}
+	
+	\begin{frame}{KPALM Algorithm for Clustering with the Squared Norm Distance}
+		KPALM performs alternation between the cluster assignment and the center update steps. Solving the previously described minimization sub-problems yields the KPALM algorithm.
+		\pause
+		\begin{center}
+    		\fbox{\parbox{11cm}{
             	\begin{enumerate}[(1)]
 					\item Initialization: $z(0)=(w(0),x(0)) \in \Delta^m \times \mathbb{R}^{nk} .$
 					\item General step $\left( t=0,1, \ldots \right)$:
@@ -851,7 +867,7 @@
 							\begin{equation*}
 							w^i(t+1) = P_{\Delta} \left(w^i(t) - \frac{d^i(x(t))}{\alpha_i(t)}\right).
 							\end{equation*}
-						\item Centers update: for each $l=1, 2, \ldots ,k$ compute
+						\item Center update: for each $l=1, 2, \ldots ,k$ compute
 							\begin{equation*}
 							x^l(t+1) = \frac{\sum_{i=1}^{m} w^i_l(t+1) a^i}{\sum_{i=1}^{m} w^i_l(t+1)}.
 							\end{equation*}
@@ -859,18 +875,20 @@
 				\end{enumerate}
             }}
        	\end{center}
+       	\pause
+       	\begin{itemize}
+       		\item Setting $\alpha_i(t)=0$ yields the popular k-means algorithm.
+       	\end{itemize}
 	\end{frame}
 	
 	\begin{frame}{KPALM Analysis}
-		In order to prove the convergence of the sequence that is generated by KPALM, $\left\{ z(t):=(w(t),x(t)) \right\}_{n \in \nn}$, to a critical point, we need to show the properties required by PALM theory.
-		\pause
 		\begin{itemize}[<+->]
 			\item Boundedness: $w^i(t) \in \Delta$ and 
 				\begin{equation*}
 					x^l(t) = \frac{\sum_{i=1}^{m} w^i_l(t) a^i}{\sum_{i=1}^{m} w^i_l(t)} 
 					= \sum_{i=1}^{m} \left( \frac{ w^i_l(t)}{\sum_{j=1}^{m} w^j_l(t)} \right) a^i \in Conv(\mathcal{A}).
 				\end{equation*}
-			\item KL Property: $H$ is a weighted sum of squared Euclidean norms hence semi-algebraic, and $\Delta$ is semi-algebraic set, thus $\delta_{\Delta}(\cdot)$ is semi-algebraic, and in turn $\Psi$ since it is sum of these functions.
+			\item KL Property: $H$ is a weighted sum of squared Euclidean norms hence semi-algebraic, and $\Delta$ is semi-algebraic set, thus $\delta_{\Delta}(\cdot)$ is semi-algebraic, and in turn $\sigma$ since it is sum of these functions.
 		\end{itemize}
 		\pause
 		\begin{assumption} \label{AssumptionsB}
@@ -883,7 +901,7 @@
         Denote $\underline{\alpha}=\min\limits_{1 \leq i \leq m} \underline{\alpha_i}$ and $\overline{\alpha}=\max\limits_{1 \leq i \leq m} \overline{\alpha_i}$.
 	\end{frame}
 	
-	\begin{frame}{Sufficient Decrease Proof}
+	\begin{frame}{KPALM Sufficient Decrease Proof}
 		Since $x \mapsto H(w,x) = \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \norm{ x^l - a^i }^2$ is $C^2$, and it Hessian is given by
 		\begin{center}
 			$\nabla_{x^j} \nabla_{x^l} H(w,x) = 
@@ -891,6 +909,7 @@
 \\ 2\sum\limits_{i=1}^{m} w^i_l &\mbox{if } j = l, \quad 1 \leq j,l \leq k, \end{cases}$
 		\end{center}
 		then it is strongly convex with parameter $\beta(w)$, whenever $\beta(w) = 2\min\limits_{1 \leq l \leq k} \sum\limits_{i=1}^{m} w^i_l >0$.
+		\pause
 		\Cref{AssumptionsB}(ii) ensures that $x \mapsto H(w(t),x)$ is strongly convex with parameter $\beta(w(t))$, hence
 		\begin{align*}
 			H(w(t+1)&,x(t))  - H(w(t+1),x(t+1)) \geq \\
@@ -901,7 +920,7 @@
 		where the equality follows from $\nabla_{x} H(w(t+1), x(t+1)) = 0$.
 	\end{frame}
 	
-	\begin{frame}{Sufficient Decrease Proof-Contd.}
+	\begin{frame}{KPALM Sufficient Decrease Proof-Contd.}
 		From the $w$ update step we derive
 		\begin{align*}
 			H^i(w(t+1),x(t)) &+ \frac{\alpha_i(t)}{2} \|w^i(t+1) - w^i(t)\|^2 = \\
@@ -914,47 +933,44 @@
 			\frac{\underline{\alpha}}{2} \norm{w(t+1) - w(t)}^2 
 			\leq H(w(t),x(t)) - H(w(t+1),x(t))
 		\end{equation*}
+		\pause
 		Set $\rho_1 = \frac{1}{2}\min\left\lbrace \underline{\alpha} , \underline{\beta} \right\rbrace$, by combining the sufficient decrease in $x$ and $w$ variables we get
 		\begin{align*}
 			\rho_1 &\norm{z(t+1) - z(t)}^2 
 			= \rho_1 \left( \norm{w(t+1) - w(t)}^2 + \norm{x(t+1) - x(t)}^2  \right) \leq \\
 			&\leq \left[ H(w(t),x(t)) - H(w(t+1),x(t)) \right] + \left[ H(w(t+1),x(t)) - H(w(t+1),x(t+1)) \right] \\
-			&= H(z(t)) - H(z(t+1)) = \Psi(z(t)) - \Psi(z(t+1)).
+			&= H(z(t)) - H(z(t+1)) = \sigma(z(t)) - \sigma(z(t+1)).
 		\end{align*}
 	\end{frame}
 	
-	\begin{frame}{Subgradient Lower Bound The Iterates Gap Proof}
-		\begin{center}
-		\fbox{\parbox{11.5cm}{
-			\begin{equation*}
-				H(w,x) = \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle, \quad G(w) = \sum\limits_{i=1}^{m} G^i(w^i) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i)
-			\end{equation*}
-			\begin{equation}
-				w^i(t+1) = \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(x(t)) \rangle + \frac{\alpha_i(t)}{2} \|w^i - w^i(t)\|^2 \right\rbrace \label{W_update_step2}
-			\end{equation}
-	    	\begin{equation}
-				x(t+1) = \arg\!\min \left\lbrace H(w(t+1), x) \mid x \in \mathbb{R}^{nk} \right\rbrace \label{X_update_step2}
-			\end{equation}
-		}}
-		\end{center}
+	\begin{frame}{KPALM Subgradient Lower Bound The Iterates Gap Proof}
+		Recalling the steps of KPLAM algorithm:
+			\begin{align}
+				w^i(t+1) &= \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(x(t)) \rangle + \frac{\alpha_i(t)}{2} \|w^i - w^i(t)\|^2 \right\rbrace \label{W_update_step2} \\
+				x(t+1) &= \arg\!\min \left\lbrace H(w(t+1), x) \mid x \in \mathbb{R}^{nk} \right\rbrace \label{X_update_step2}
+			\end{align}
+		\pause
+		The subgradient of $\sigma$ is given by
 		\begin{equation*}
-			\partial \Psi = \nabla H + \partial G  
+			\partial \sigma = \nabla H + \partial G  
 			= \left( \left( \nabla_{w^i} H^i + \partial_{w^i} \delta_{\Delta} \right)_{i=1,2, \ldots ,m} , \nabla_x H \right).
 		\end{equation*}
+		\pause
 		Evaluating the last relation at $z(t+1)$ and using (\ref{X_update_step2})
 		\begin{align*}
-			\partial \Psi(z(t + 1)) &= \left( \left( d^i(x(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \right)_{i=1,2, \ldots ,m} , \nabla_x H(w(t+1),x(t+1)) \right) \\
+			\partial \sigma(z(t + 1)) &= \left( \left( d^i(x(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \right)_{i=1,2, \ldots ,m} , \nabla_x H(z(t+1)) \right) \\
 			& = \left( \left( d^i(x(t+1)) + \partial_{w^i} \delta_{\Delta}(w^i(t+1)) \right)_{i=1,2, \ldots ,m} , \mathbf{0} \right).
 		\end{align*}
+		\pause
 		The optimality condition of $w^i(t+1)$ (see (\ref{W_update_step2})), implies that there exists $u^i(t+1) \in \partial \delta_{\Delta}(w^i(t+1))$ such that
 		\begin{equation*}
 	d^i(x(t)) + \alpha_i(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) = \mathbf{0}.
 		\end{equation*}
-		Setting $\gamma(t+1) := \left( \left( d^i(x(t+1)) + u^i(t+1) \right)_{i=1,2, \ldots ,m}, \mathbf{0} \right)$
 	\end{frame}
 	
-	\begin{frame}{Subgradient Lower Bound The Iterates Gap Proof-Contd.}
-		Setting $\gamma(t+1) := \left( \left( d^i(x(t+1)) + u^i(t+1) \right)_{i=1,2, \ldots ,m}, \mathbf{0} \right) \in \partial \Psi(z(t+1)).$
+	\begin{frame}{KPALM Subgradient Lower Bound The Iterates Gap Proof-Contd.}
+		Setting $\gamma(t+1) := \left( \left( d^i(x(t+1)) + u^i(t+1) \right)_{i=1,2, \ldots ,m}, \mathbf{0} \right) \in \partial \sigma(z(t+1)).$
+		\pause
 		\begin{align*}
 			\norm{\gamma(t+1)}
 				& \leq \sum\limits_{i=1}^{m} \norm{ d^i(x(t+1)) - d^i(x(t)) - \alpha_i(t) \left( w^i(t+1) - w^i(t) \right) } \\
@@ -970,6 +986,310 @@
 		and the result follows with $\rho_2 = m \left( 4M + \overline{\alpha} \right)$.
 	\end{frame}
 	
+	\begin{frame}{$\varepsilon$-KPALM Algorithm for Clustering with the Norm Distance}
+		Recalling the Clustering Problem for the Euclidean norm distance:
+		\begin{equation*}
+				(P) \qquad min \left\lbrace \sigma(z) := H(w,x) + G(w) \mid z := (w,x) \in \R^{km} \times \R^{nk} \right\rbrace, 
+		\end{equation*}
+		\begin{center}
+		$H(w,x) = \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle = \sum\limits_{i=1}^m\sum\limits_{l=1}^k w^i_l \norm{x^l - a^i}$, $G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i)$.\\
+		\end{center}
+		\begin{itemize}[<+->]
+			\item $H$ is not smooth, hence PALM cannot be applied as is. Therefore approximating:
+			\begin{equation*}
+				\resizebox{.6\hsize}{!}{$H_{\varepsilon}(w,x) = \sum\limits_{l=1}^{k} H^l_{\varepsilon}(w,x)
+	= \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \left( \| x^l - a^i \|^2 + {\varepsilon}^2 \right)^{1/2},$}
+			\end{equation*}
+			\item This leads towards the following approximation of the Clustering Problem
+			\begin{equation*}
+				(P_{\varepsilon}) \qquad min \left\lbrace \sigma_{\varepsilon}(z) := H_{\varepsilon}(w,x) + G(w) \mid z := (w,x) \in \R^{km} \times \R^{nk} \right\rbrace.
+			\end{equation*}
+			\item Also $d^i_{\varepsilon}(x)$ is the smoothed version of $d^i(x)$, whose $1 \leq l \leq k$ coordinate is $\left( \|x^l - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}$.
+		\end{itemize}
+		\pause
+		\begin{lemma}[Closeness of smooth]
+			For any $(w,x) \in {\Delta}^m \times \mathbb{R}^{nk}$ and $\varepsilon > 0$ the following relations hold true
+			\begin{equation*}
+				H(w,x) \leq H_{\varepsilon}(w,x) \leq H(w,x) + m\varepsilon .
+			\end{equation*}
+		\end{lemma}
+	\end{frame}
+	
+	\begin{frame}{$\varepsilon$-KPALM Algorithm for Clustering with the Norm Distance}
+		\begin{itemize}[<+->]
+			\item With respect to $w$ we apply the same step as in KPALM:
+			\begin{equation*}
+				\resizebox{.7\hsize}{!}{$w^i(t+1) = \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \left\langle w^i, d^i_{\varepsilon}(x(t)) \right\rangle + \frac{\alpha_i(t)}{2} \|w^i -w^i(t)\|^2 \right\rbrace.$}		
+			\end{equation*}
+			\item With respect to $x$ we tackle the subproblem differently than in KPALM, linearizing the function $x \rightarrow H(w,\cdot)$, for fixed $w$, and adding a regularizing term
+			\begin{equation*}
+				\resizebox{.9\textwidth}{!}{$x^l(t+1) = \arg\!\min\limits_{x^l} \left\lbrace \left\langle x^l - x^l(t) , \nabla_{x^l}H_{\varepsilon}(w(t+1),x(t)) \right\rangle + \frac{L^l_{\varepsilon}(w(t+1),x(t))}{2} \|x^l - x^l(t)\|^2 \right\rbrace,$}
+			\end{equation*}
+			where
+			\begin{equation*}
+				\resizebox{.6\hsize}{!}{$L^l_{\varepsilon}(w(t+1),x(t)) := \sum\limits_{i=1}^{m} \frac{w^i_l(t+1)}{\left( \|x^l(t)-a^i\|^2 + {\varepsilon}^2 \right)^{1/2}}, \quad \forall \: l=1,2, \ldots, k.$}
+			\end{equation*}
+			\end{itemize}
+			\pause
+			\begin{center}
+    		\fbox{\parbox{11cm}{
+            	\begin{enumerate}[(1)]
+					\item Initialization: $z(0)=(w(0),x(0)) \in \Delta^m \times \mathbb{R}^{nk} .$
+					\item General step $\left( t=0,1, \ldots \right)$:
+					\begin{enumerate}[(2.1)]
+						\item Cluster assignment: choose certain $\alpha_i(t) > 0$, $i=1,2, \ldots, m$, and compute
+							\begin{equation*}
+							\resizebox{.4\hsize}{!}{$w^i(t+1) = P_{\Delta} \left(w^i(t) - \frac{d_{\varepsilon}^i(x(t))}{\alpha_i(t)}\right).$}
+							\end{equation*}
+						\item Center update: for each $l=1, 2, \ldots ,k$ compute
+							\begin{equation*}
+							x^l(t+1) = x^l(t) - \frac{1}{L^l_{\varepsilon}(w(t+1), x(t))}\nabla_{x^l} H_{\varepsilon}(w(t+1), x(t)).
+							\end{equation*}
+					\end{enumerate}
+				\end{enumerate}
+            }}
+       		\end{center}
+	\end{frame}
+	
+	\begin{frame}{$\varepsilon$-KPALM Analysis}
+		\begin{itemize}[<+->]
+			\item Boundedness: $w^i(t) \in \Delta$ and \\
+				\scalebox{.7}{\parbox{\linewidth}{%
+				\begin{align*}
+					x^l(t+1) &= x^l(t) - \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \nabla_{x^l} H_{\varepsilon}(w(t+1),x(t)) \\
+					&= x^l(t) - \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \sum\limits_{i=1}^{m} w^i_l(t+1) \cdot \frac{x^l(t) - a^i}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \\
+					&= \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \sum\limits_{i=1}^{m} \left( \frac{w^i_l(t+1)}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \right) a^i \in Conv(\mathcal{A}).
+				\end{align*}
+				}}
+			\item KL Property is straightforward from the Semi-Algebraicity of the involved functions.
+		\end{itemize}
+		\pause
+		\begin{displaybox}{11cm}
+			Motivated by the recent work on Weber problem {\dblue Beck-Sabach(2015)}, we develop several auxiliary results. We define the function $f_{\varepsilon}: \mathbb{R}^n \rightarrow \mathbb{R}$ by
+			\begin{equation*}
+				\resizebox{.3\hsize}{!}{$f_{\varepsilon}(x) = \sum\limits_{i=1}^{m} v_i \left( \|x - a^i\|^2 + {\varepsilon}^2 \right)^{1/2},$}
+			\end{equation*}
+			$v^i \in \rr_+$ fixed weights. We also need the following auxiliary function $h_{\varepsilon}: \mathbb{R}^n \times \mathbb{R}^n \rightarrow \mathbb{R}$ given by
+			\begin{equation*}
+				\resizebox{.3\hsize}{!}{$h_{\varepsilon}(x,y) = \sum\limits_{i=1}^m \frac{v_i \left( \|x-a^i\|^2 + {\varepsilon}^2 \right)}{\left( \|y-a^i\|^2 + {\varepsilon}^2 \right)^{1/2}}.$}
+			\end{equation*}
+			Finally we introduce the following modulus, $L_{\varepsilon}: \mathbb{R}^n \rightarrow \mathbb{R}$ defined by
+			\begin{equation*}
+				\resizebox{.3\hsize}{!}{$L_{\varepsilon}(x) = \sum\limits_{i=1}^{m}\frac{v_i}{\left( \|x - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}}.$}
+			\end{equation*}
+		\end{displaybox}
+	\end{frame}
+	
+	\begin{frame}{Properties of the Auxiliary Functions $h_{\varepsilon}$ and $f_{\varepsilon}$}
+		\begin{lemma} \label{State_h_prop}
+			The following properties of $h_{\varepsilon}$ hold.
+			\begin{enumerate}[(i)]
+				\item For any $y \in \mathbb{R}^n$,
+				\begin{equation*}
+					h_{\varepsilon}(y,y) = f_{\varepsilon}(y) .
+				\end{equation*}
+				\item For any $x,y \in \mathbb{R}^n$,
+				\begin{equation*}
+					h_{\varepsilon}(x,y) \geq 2f_{\varepsilon}(x) - f_{\varepsilon}(y) .
+				\end{equation*}
+				\item For any $x,y \in \mathbb{R}^n$,
+				\begin{equation*}
+					f_{\varepsilon}(x) \leq f_{\varepsilon}(y) + \left\langle \nabla f_{\varepsilon}(y), x-y \right\rangle + \frac{L_{\varepsilon}(y)}{2}\|x-y\|^2 .
+				\end{equation*}
+			\end{enumerate}
+		\end{lemma}
+		\pause
+		\begin{lemma} \label{f_eps_lipschitz_prop}
+			For all $y,z \in \mathbb{R}^n$ the following statement holds true
+			\begin{equation*}
+				\| \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z) \| \leq \frac{2L_{\varepsilon}(z)L_{\varepsilon}(y)}{L_{\varepsilon}(z)+L_{\varepsilon}(y)} \|z - y\|.
+			\end{equation*}
+		\end{lemma}
+	\end{frame}
+	
+	\begin{frame}{Preliminaries for Sufficient Decrease Proof}
+		\begin{proposition}[Bounds for $L^l_{\varepsilon}$] \label{State_L_bounds}
+			Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM.
+			\begin{enumerate}[(i)]
+				\item Denote $d_{\mathcal{A}} = \diam(Conv(\mathcal{A}))$. For all $t \in \mathbb{N}$ and $l=1,2, \ldots, k$ we have
+				\scalebox{.8}{\parbox{\linewidth}{%
+				\begin{equation*}
+					L^l_{\varepsilon}(w(t+1),x(t)) \geq \frac{\underline{\beta}}{\left( {d_{\mathcal{A}}}^2 + {\varepsilon}^2 \right)^{1/2}}.
+				\end{equation*}
+				}}
+				\item For all $t \in \mathbb{N}$ and $l=1,2, \ldots, k$ we have
+				\scalebox{.8}{\parbox{\linewidth}{%
+				\begin{equation*}
+					L^l_{\varepsilon}(w(t+1),x(t)) \leq \frac{m}{\varepsilon} .
+				\end{equation*}
+				}}
+			\end{enumerate}
+		\end{proposition}
+		\pause
+		\begin{proof}\renewcommand{\qedsymbol}{}
+			\begin{enumerate}[(i)]
+				\item Using $\underline{\beta}$ as in \Cref{AssumptionsB}(ii) and the fact that $x^l(t) \in Conv(\mathcal{A})$, we obtain
+				\scalebox{.8}{\parbox{\linewidth}{%
+				\begin{equation*}
+				L^l_{\varepsilon}(w(t+1),x(t)) = \sum\limits_{i=1}^{m} \frac{w^i_l(t+1)}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \geq \frac{\sum_{i=1}^{m}w^i_l(t+1)}{\left( {d_{\mathcal{A}}}^2 + {\varepsilon}^2 \right)^{1/2}} \geq \frac{\underline{\beta}}{\left( {d_{\mathcal{A}}}^2 + {\varepsilon}^2 \right)^{1/2}} ,
+				\end{equation*}
+				}}\\
+				where the first inequality follows from the fact that $\norm{x^l(t) - a^i} \leq d_{\mathcal{A}}$. 
+				\item Since $w(t+1) \in {\Delta}^m$ we have
+				\scalebox{.8}{\parbox{\linewidth}{%
+				\begin{equation*}
+				L^l_{\varepsilon}(w(t+1),x(t)) = \sum\limits_{i=1}^{m} \frac{w^i_l(t+1)}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \leq \sum\limits_{i=1}^{m} \frac{1}{\varepsilon} = \frac{m}{\varepsilon}.
+				\end{equation*}
+				}}
+			\end{enumerate}
+		\end{proof}
+	\end{frame}
+	
+	\begin{frame}{Preliminaries for Sufficient Decrease Proof}
+		\begin{proposition} \label{H_eps_SD_in_x_prop}
+			Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. Then, for all $t \in \mathbb{N}$, we have\\
+			\scalebox{.65}{\parbox{\linewidth}{%
+			\begin{align*}
+				H_{\varepsilon}(w(t+1),x(t+1)) 
+	\leq H_{\varepsilon}(w(t+1),x(t)) + \left\langle \nabla_x H_{\varepsilon}(w(t+1),x(t)), x(t+1)-x(t) \right\rangle 
+	+ \sum\limits_{l=1}^{k} \frac{L^l_{\varepsilon}(w(t+1),x(t))}{2} \|x^l(t+1)-x^l(t)\|^2 .
+			\end{align*}
+			}}
+		\end{proposition}
+		\pause
+		\begin{proof}\renewcommand{\qedsymbol}{}
+			By definition of $f_{\varepsilon}$, using the weights $v_i=w^i_l(t+1)$, we obtain\\
+			\scalebox{.8}{\parbox{\linewidth}{%
+			\begin{equation*}
+				H^l_{\varepsilon}(w(t+1),x(t)) = f_{\varepsilon}(x^l(t)).
+			\end{equation*}
+			}}\\
+			Therefore, by applying Lemma \ref{State_h_prop}(iii) with $x=x^l(t+1)$ and $y=x^l(t)$, we get\\
+			\scalebox{.65}{\parbox{\linewidth}{%
+			\begin{align*}
+				H^l_{\varepsilon}(w(t+1),x(t+1)) 
+				\leq H^l_{\varepsilon}(w(t+1),x(t)) + \left\langle \nabla_{x^l} H^l_{\varepsilon}(w(t+1),x(t)), x(t+1)-x(t) \right\rangle 
+				+ \frac{L^l_{\varepsilon}(w(t+1),x(t))}{2} \|x^l(t+1)-x^l(t)\|^2 .
+			\end{align*}
+			}}\\
+			Summing the last inequality over $l=1,2, \ldots, k$, yields\\
+			\scalebox{.6}{\parbox{\linewidth}{%
+			\begin{align*}
+				H_{\varepsilon}(w(t+1),x(t+1)) 
+				\leq H_{\varepsilon}(w(t+1),x(t)) + \sum\limits_{l=1}^{k} \frac{L^l_{\varepsilon}(w(t+1),x(t))}{2} \|x^l(t+1)-x^l(t)\|^2 
+				+ \sum\limits_{l=1}^{k} \left\langle \nabla_{x^l} H_{\varepsilon}(w(t+1),x(t)), x^l(t+1)-x^l(t) \right\rangle   .
+			\end{align*}
+			}}\\
+			The result follows by replacing the last term with the following compact form\\
+			\scalebox{.7}{\parbox{\linewidth}{%
+			\begin{equation*}
+				\sum\limits_{l=1}^{k} \left\langle \nabla_{x^l} H_{\varepsilon}(w(t+1),x(t)), x^l(t+1)-x^l(t) \right\rangle  = \left\langle \nabla_x H_{\varepsilon}(w(t+1),x(t)), x(t+1)-x(t) \right\rangle.
+			\end{equation*}
+			}}
+		\end{proof}
+	\end{frame}
+	
+	\begin{frame}{$\varepsilon$-KPALM Sufficient Decrease Proof}
+		\setcounter{equation}{0}		
+		With respect to $w$ $\varepsilon$-KPALM sufficient decrease is similar to that of KPALM, which yields
+		\begin{equation}
+			\frac{\underline{\alpha}}{2} \|w(t+1) - w(t)\|^2 \leq H_{\varepsilon}(w(t),x(t)) - H_{\varepsilon}(w(t+1),x(t)). \label{eps_kpalm_SD_in_w}
+		\end{equation}
+		Applying Proposition \ref{H_eps_SD_in_x_prop} with the center update step in $\varepsilon$-KPALM we get for all $t \in \mathbb{N}$ that\\
+		\scalebox{.8}{\parbox{\linewidth}{%
+		\begin{align}
+			H_{\varepsilon}(w(t+1),x(t)) - H_{\varepsilon}(w(t+1),x(t+1)) &\geq \sum\limits_{l=1}^{k} \frac{L^l_{\varepsilon}(w(t+1),x(t))}{2} \|x^l(t+1)-x^l(t)\|^2 \nonumber \\
+			&\geq \frac{\underline{\beta}}{\left( {d_{\mathcal{A}}}^2 + {\varepsilon}^2 \right)^{1/2}} \sum\limits _{l=1}^{k} \|x^l(t+1)-x^l(t)\|^2 \nonumber \\
+			&\geq \frac{\underline{\beta}}{\left( {d_{\mathcal{A}}}^2 + {\varepsilon}^2 \right)^{1/2}} \|x(t+1)-x(t)\|^2 , \label{eps_kpalm_SD_in_x}
+		\end{align}
+		}}\\
+		where the second inequality follows from Proposition \ref{State_L_bounds}(i).\\
+		\pause
+		Set \resizebox{.3\hsize}{!}{$\rho_1 = \frac{1}{2} \min \left\lbrace \underline{\alpha}, \underline{\beta}/ \left( d_{\mathcal{A}}^2 + {\varepsilon}^2 \right)^{1/2}  \right\rbrace$}. Summing (\ref{eps_kpalm_SD_in_w}) and (\ref{eps_kpalm_SD_in_x}) yields\\
+		\scalebox{.75}{\parbox{\linewidth}{%
+		\begin{align*}
+			\rho_1 \|z(t+1) - z(t)\|^2 &= \rho_1 \left( \|w(t+1) - w(t)\|^2 + \|x(t+1) - x(t)\|^2  \right) \\
+			&\leq \left[ H_{\varepsilon}(w(t),x(t)) - H_{\varepsilon}(w(t+1),x(t)) \right] + \left[ H_{\varepsilon}(w(t+1),x(t)) - H_{\varepsilon}(w(t+1),x(t+1)) \right] \\
+			&= H_{\varepsilon}(z(t)) - H_{\varepsilon}(z(t+1)) \\
+			&= \sigma_{\varepsilon}(z(t)) - \sigma_{\varepsilon}(z(t+1)).
+		\end{align*}
+		}}
+	\end{frame}
+	
+	\begin{frame}{$\varepsilon$-KPALM Subgradient Lower Bound The Iterates Gap Proof}
+		Repeating the steps of the proof in the case of KPALM yields that
+		\begin{equation}
+			\resizebox{.9\textwidth}{!}{$\gamma(t+1) := \left( \left( d_{\varepsilon}^i(x(t+1)) + u^i(t+1) \right)_{i=1, \ldots ,m}, \nabla_x H_{\varepsilon}(w(t+1),x(t+1)) \right) \in \partial \sigma_{\varepsilon}(z(t+1)), \label{gamma_def}$}
+		\end{equation}
+		where \resizebox{.4\hsize}{!}{$u^i(t+1) \in \partial \delta_{\Delta}(w^i(t+1)), \; i=1,2,\ldots,m$}.\\
+		\pause
+		Writing the optimality condition of the cluster assignment step yields \\
+		\scalebox{.8}{\parbox{\linewidth}{%
+		\begin{equation}
+			d_{\varepsilon}^i(x(t)) + \alpha_i(t) \left( w^i(t+1) - w^i(t) \right) + u^i(t+1) = \mathbf{0} . \label{opt_cond_w_step}
+		\end{equation}
+		}}\\
+		\pause
+		Plugging (\ref{opt_cond_w_step}) into (\ref{gamma_def}), and taking the norm yields \\
+		\scalebox{.7}{\parbox{\linewidth}{%
+		\begin{align*}
+			\| \gamma(t+1) \|
+			&\leq \sum\limits_{i=1}^{m} \| d_{\varepsilon}^i(x(t+1)) - d_{\varepsilon}^i(x(t)) - \alpha_i(t) \left( w^i(t+1) - w^i(t) \right) \|  + \| \nabla_x H_{\varepsilon}(w(t+1),x(t+1)) \| \\
+			&\leq \sum\limits_{i=1}^{m} \| d_{\varepsilon}^i(x(t+1)) - d_{\varepsilon}^i(x(t)) \| + \sum\limits_{i=1}^{m} \alpha_i(t) \| w^i(t+1) - w^i(t) \|  + \| \nabla_x H_{\varepsilon}(w(t+1),x(t+1)) \| \\
+			&\leq \frac{m d_{\mathcal{A}}}{\varepsilon} \|x(t+1) - x(t)\| + \overline{\alpha}\sqrt{m} \|w(t+1) - w(t)\|  + \| \nabla_x H_{\varepsilon}(w(t+1),x(t+1)) \|,
+		\end{align*}
+		}}\\
+		where the last inequality follows from the inequality\\
+		\scalebox{.8}{\parbox{\linewidth}{%
+		\begin{equation*}
+			\|d_{\varepsilon}^i(x) - d_{\varepsilon}^i(y)\| \leq \frac{ d_{\mathcal{A}}}{\varepsilon}\|x-y\|, \text{ whenever } x^l,y^l \in Conv(\mathcal{A}) \quad \forall \; 1 \leq l \leq k,
+		\end{equation*}
+		}}\\
+		and the fact that $\overline{\alpha} = \max\limits_{1 \leq i \leq m} \overline{\alpha_i}$.
+	\end{frame}
+	
+	\begin{frame}{$\varepsilon$-KPALM Subgradient Lower Bound The Iterates Gap Proof-Contd.}
+		It is sufficient to show that \resizebox{.4\hsize}{!}{$\| \nabla_x H_{\varepsilon}(w(t+1),x(t+1)) \| \leq c\|x(t+1) - x(t)\|$}, for some constant $c>0$.\\
+		First, note that for fixed $w \in \Delta^m$ and any $x\in \rr^{nk}$ the following relation holds\\
+		\scalebox{.8}{\parbox{\linewidth}{%
+		\begin{equation}
+			\nabla_{x^l} H_{\varepsilon}(w,x)=\nabla f_{\varepsilon}\left(x^l\right), \quad \forall \; l=1,2,\ldots,k. \label{H_eps_f_eps}
+		\end{equation}
+		}}\\
+		Now, for all $l=1,2, \ldots, k$, we have\\
+		\scalebox{.7}{\parbox{\linewidth}{%
+		\begin{align*}
+			\nabla_{x^l}H_{\varepsilon}(w(t+1),x(t+1)) &= \nabla_{x^l}H_{\varepsilon}(w(t+1),x(t+1)) - \nabla_{x^l}H_{\varepsilon}(w(t+1),x(t)) + \nabla_{x^l}H_{\varepsilon}(w(t+1),x(t)) \\
+			&= \nabla_{x^l}H_{\varepsilon}(w(t+1),x(t+1)) - \nabla_{x^l}H_{\varepsilon}(w(t+1),x(t)) + L^l_{\varepsilon}(w(t+1),x(t)) \left( x^l(t) - x^l(t+1) \right) ,
+		\end{align*}
+		}}\\
+		where the last equality follows from center update step. Therefore,\\
+		\scalebox{.68}{\parbox{\linewidth}{%
+		\begin{align*}
+			\| \nabla_x H_{\varepsilon}(w(t+1),x(t+1)) \| 
+			&\leq \sum\limits_{l=1}^{k} \| \nabla_{x^l} H_{\varepsilon}(w(t+1),x(t+1)) \| \nonumber \\
+			&\leq \sum\limits_{l=1}^{k} L^l_{\varepsilon}(w(t+1),x(t)) \|x^l(t+1) - x^l(t)\| + \sum\limits_{l=1}^{k} \| \nabla_{x^l} H_{\varepsilon}(w(t+1),x(t+1)) - \nabla_{x^l} H_{\varepsilon}(w(t+1),x(t))\| \nonumber \\
+			&\leq \frac{m}{\varepsilon} \sum\limits_{l=1}^{k} \|x^l(t+1)-x^l(t)\| + \sum\limits_{l=1}^{k} \gamma^l(t) \|x^l(t+1)-x^l(t)\| ,\quad (*) 
+		\end{align*}
+		}}\\
+		where the last inequality follows from Lemma \ref{State_L_bounds}(ii) and \Cref{f_eps_lipschitz_prop} combined with the (\ref{H_eps_f_eps}) observation using\\
+		\scalebox{.8}{\parbox{\linewidth}{%
+		\begin{equation*}
+			\gamma^l(t) = \frac{2 L^l_{\varepsilon}(w(t+1),x(t)) L^l_{\varepsilon}(w(t+1),x(t+1))}{L^l_{\varepsilon}(w(t+1),x(t)) + L^l_{\varepsilon}(w(t+1),x(t+1))} , \quad l=1,2, \ldots, k.
+		\end{equation*}
+		}}\\
+%From \Cref{State_L_bounds}(\ref{State_L_bounds2}) we obtain that
+%\begin{equation*}
+%	\gamma^l(t) = \frac{2}{\frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} + \frac{1}{L^l_{\varepsilon}(w(t+1),x(t+1))}} \leq \frac{2}{\frac{\varepsilon}{m} + \frac{\varepsilon}{m}} = \frac{m}{\varepsilon}.
+%\end{equation*}
+%Hence, from (\ref{StateEq47}), we have 
+%\begin{align}
+%	\| \nabla_x H_{\varepsilon}(w(t+1),x(t+1))\| &\leq \frac{2m}{\varepsilon} \sum\limits_{l=1}^{k} \|x^l(t+1)-x^l(t)\| \nonumber \\
+%	&\leq \frac{2m\sqrt{k}}{\varepsilon} \|x(t+1) - x(t)\|. \label{lipschitz_grad_x_H}
+%\end{align}
+%Therefore, setting $\rho_2 =  \frac{m d_{\mathcal{A}}}{\varepsilon} + \overline{\alpha}\sqrt{m} + \frac{2m\sqrt{k}}{\varepsilon}$, yields the result.
+	\end{frame}
+	
 	\begin{frame}{Numerical Results: The Squared Norm}
 		\begin{itemize}[<+->]
             \item Initialization issues: randomly picking $k$ data points as starting centers vs. k-means++.
@@ -983,7 +1303,7 @@
 	    	\item In the squared Euclidean setting, KPALM achieves lower objective function values than k-means. When using a more sophisticated initialization step, such as the one in k-means++, then k-means++ and KPALM++ achieve similar objective function values.
 			\item k-means needs less number of iterations then KPALM to reach a certain precision.
 		\end{itemize}
-	\end{frame}
+	\end{frame}	
 	
 	\begin{frame}{Numerical Results: The Squared Norm}
 		\begin{itemize}[<+->]
@@ -998,37 +1318,43 @@
 	
 	\begin{frame}{Numerical Results: Squared Norm Algorithms vs. $\varepsilon$-KPALM}
 		\begin{itemize}[<+->]
-			\item Generated two synthetic datasets
-%			\begin{figure}
-%		    	\centering
-%			    \begin{subfigure}[b]{0.45\textwidth}
-%			        \includegraphics[width=\textwidth]{dense_gaussians}
-%			        \caption{Dense Gaussians.}
-%			    \end{subfigure}
-%			    \quad
-%			    \begin{subfigure}[b]{0.45\textwidth}
-%			        \includegraphics[width=\textwidth]{sparse_gaussians}
-%			        \caption{Sparse Gaussians.}
-%			    \end{subfigure}
-%			    \caption{Two datasets, each 300 points.}
-%			\end{figure}
-
+			\item Generated two synthetic datasets, each 300 points
+			\begin{figure}
+		    	\centering
+		    	\subfigure[Dense Gaussians]{\includegraphics[width=0.45\textwidth]{dense_gaussians}}
+				\subfigure[Sparse Gaussians]{\includegraphics[width=0.45\textwidth]{sparse_gaussians}}
+			\end{figure}
+			\setcounter{subfigure}{0}
+			\item Compared the resulting clustering using metrics, such as {\dblue Variation of Information} defined by:
+				$VI(\mathcal{C}^1,\mathcal{C}^2):=-\sum\limits_{i,j} r_{i,j}\left[ \log \left( r_{i,j}/p_i \right) + \log \left( r_{i,j}/q_j \right) \right]$, where $\mathcal{C}^1=\left\lbrace C^1_1, C^1_2, \ldots C^1_k \right\rbrace$ and $\mathcal{C}^2=\left\lbrace C^2_1, C^2_2, \ldots C^2_l \right\rbrace$ are two clusterings of $\mathcal{A}$,\\ and $m=|\mathcal{A}|, \quad p_i=|C^1_i|/m,\quad q_j=|C^2_j|/m, \quad r_{i,j}= |C^1_i \cap C^2_j|/m$.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{Numerical Results: Squared Norm Algorithms vs. $\varepsilon$-KPALM}
+		\setcounter{subfigure}{0}
+		\begin{figure}
+		    \centering
+		    \subfigure[Dense Gaussians metrics comparison]{\includegraphics[width=0.45\textwidth]{dense_gaussians_metrics2}}
+			\subfigure[Sparse Gaussians metrics comparison]{\includegraphics[width=0.45\textwidth]{sparse_gaussians_metrics2}}
+		\end{figure}
+		\pause
+		\begin{itemize}[<+->]
 			\item When the convex hulls of the desired clusters are mutually exclusive, algorithms which solve the clustering problem with the squared Euclidean distance are preferable to $\varepsilon$-KPALM.
 			\item In datasets with outliers, the clustering obtained with $\varepsilon$-KPALM is more similar to the desired clustering, in terms of clustering metrics, than the clusterings obtained via the squared Euclidean algorithms. 
 				Therefore, as expected, for data  with outliers, the choice of a norm instead of the squared norm is a more natural choice, and the $\varepsilon$-KPALM algorithm appears to be a promising algorithm to handle such data.
 		\end{itemize}
-	\end{frame}
+	\end{frame}		
 	
-	\begin{frame}{Summary of Numerical Results}
-		 \begin{itemize}[<+->]
-	    	\item In the squared Euclidean setting, KPALM achieves lower objective function values than k-means. When using a more sophisticated initialization step, such as the one in k-means++, then k-means++ and KPALM++ achieve similar objective function values.
-	\item k-means needs less number of iterations then KPALM to reach a certain precision.
-	\item It is preferable to use dynamic update of $\alpha(t)$ parameter to achieve a faster convergence, both in KPALM and $\epsilon$-KPALM. Example for suitable choices can be $\alpha(t)= \diam(\mathcal{A})/t$ and $\alpha(t)= \diam(\mathcal{A})/2^t$.
-	\item When the convex hulls of the desired clusters are mutually exclusive, algorithms which solve the clustering problem with the squared Euclidean distance are preferable to $\varepsilon$-KPALM.
-	\item In datasets with outliers, the clustering obtained with $\varepsilon$-KPALM is more similar to the desired clustering, in terms of clustering metrics, than the clusterings obtained via the squared Euclidean algorithms. 
-	Therefore, as expected, for data  with outliers, the choice of a norm instead of the squared norm is a more natural choice, and the $\varepsilon$-KPALM algorithm appears to be a promising algorithm to handle such data.	
-		\end{itemize}
-	\end{frame}
+%	\begin{frame}{Summary of Numerical Results}
+%		 \begin{itemize}[<+->]
+%	    	\item In the squared Euclidean setting, KPALM achieves lower objective function values than k-means. When using a more sophisticated initialization step, such as the one in k-means++, then k-means++ and KPALM++ achieve similar objective function values.
+%	\item k-means needs less number of iterations then KPALM to reach a certain precision.
+%	\item It is preferable to use dynamic update of $\alpha(t)$ parameter to achieve a faster convergence, both in KPALM and $\epsilon$-KPALM. Example for suitable choices can be $\alpha(t)= \diam(\mathcal{A})/t$ and $\alpha(t)= \diam(\mathcal{A})/2^t$.
+%	\item When the convex hulls of the desired clusters are mutually exclusive, algorithms which solve the clustering problem with the squared Euclidean distance are preferable to $\varepsilon$-KPALM.
+%	\item In datasets with outliers, the clustering obtained with $\varepsilon$-KPALM is more similar to the desired clustering, in terms of clustering metrics, than the clusterings obtained via the squared Euclidean algorithms. 
+%	Therefore, as expected, for data  with outliers, the choice of a norm instead of the squared norm is a more natural choice, and the $\varepsilon$-KPALM algorithm appears to be a promising algorithm to handle such data.	
+%		\end{itemize}
+%	\end{frame}
 	
 \end{document}
 
