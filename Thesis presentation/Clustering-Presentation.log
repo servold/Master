@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/W32TeX) (preloaded format=pdflatex 2015.2.13)  25 MAR 2016 10:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/W32TeX) (preloaded format=pdflatex 2015.2.13)  25 MAR 2016 12:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**Clustering-Exam.tex
-(./Clustering-Exam.tex
+**Clustering-Presentation.tex
+(./Clustering-Presentation.tex
 LaTeX2e <2014/05/01>
 Babel <3.9l> and hyphenation patterns for 79 languages loaded.
 (c:/texlive/2014/texmf-dist/tex/latex/beamer/beamer.cls
@@ -1077,8 +1077,9 @@ Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
 )
 \c@assumption=\count207
 \c@proposition=\count208
- (./Clustering-Exam.aux)
-\openout1 = `Clustering-Exam.aux'.
+
+(./Clustering-Presentation.aux)
+\openout1 = `Clustering-Presentation.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 172.
 LaTeX Font Info:    ... okay on input line 172.
@@ -1162,9 +1163,9 @@ LaTeX Info: Redefining \ref on input line 172.
 LaTeX Info: Redefining \pageref on input line 172.
 LaTeX Info: Redefining \nameref on input line 172.
 
-(./Clustering-Exam.out) (./Clustering-Exam.out)
+(./Clustering-Presentation.out) (./Clustering-Presentation.out)
 \@outlinefile=\write8
-\openout8 = `Clustering-Exam.out'.
+\openout8 = `Clustering-Presentation.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 172.
@@ -1234,7 +1235,8 @@ m-dictionary/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
 LaTeX Info: Redefining \includegraphics on input line 172.
- (./Clustering-Exam.nav) [1
+
+(./Clustering-Presentation.nav) [1
 Non-PDF special ignored!
 Non-PDF special ignored!
 Non-PDF special ignored!
@@ -1413,6 +1415,11 @@ Overfull \hbox (168.85068pt too wide) in paragraph at lines 1282--1282
 [] 
  []
 
+
+Overfull \hbox (4.19212pt too wide) in paragraph at lines 1282--1282
+[][]  
+ []
+
 [27
 
 ] [28
@@ -1427,15 +1434,15 @@ Package epstopdf Info: Source file: <squared_norm_obj_comp.eps>
 (epstopdf)                    size: 7237 bytes
 (epstopdf)             Command: <repstopdf --outfile=squared_norm_obj_comp-eps-
 converted-to.pdf squared_norm_obj_comp.eps>
-(epstopdf)             \includegraphics on input line 1320.
+(epstopdf)             \includegraphics on input line 1322.
 Package epstopdf Info: Output file is already uptodate.
 
-<squared_norm_obj_comp-eps-converted-to.pdf, id=216, 963.6pt x 466.74374pt>
+<squared_norm_obj_comp-eps-converted-to.pdf, id=217, 963.6pt x 466.74374pt>
 File: squared_norm_obj_comp-eps-converted-to.pdf Graphic file (type pdf)
 
 <use squared_norm_obj_comp-eps-converted-to.pdf>
 Package pdftex.def Info: squared_norm_obj_comp-eps-converted-to.pdf used on inp
-ut line 1320.
+ut line 1322.
 (pdftex.def)             Requested size: 259.2716pt x 125.58093pt.
  [29
 
@@ -1449,14 +1456,14 @@ to.pdf>
 (epstopdf)                    size: 9344 bytes
 (epstopdf)             Command: <repstopdf --outfile=squared_norm_dyn_alpha_com
 p-eps-converted-to.pdf squared_norm_dyn_alpha_comp.eps>
-(epstopdf)             \includegraphics on input line 1331.
+(epstopdf)             \includegraphics on input line 1333.
 Package epstopdf Info: Output file is already uptodate.
 
-<squared_norm_dyn_alpha_comp-eps-converted-to.pdf, id=228, 963.6pt x 469.755pt>
+<squared_norm_dyn_alpha_comp-eps-converted-to.pdf, id=229, 963.6pt x 469.755pt>
 File: squared_norm_dyn_alpha_comp-eps-converted-to.pdf Graphic file (type pdf)
 <use squared_norm_dyn_alpha_comp-eps-converted-to.pdf>
 Package pdftex.def Info: squared_norm_dyn_alpha_comp-eps-converted-to.pdf used 
-on input line 1331.
+on input line 1333.
 (pdftex.def)             Requested size: 276.55743pt x 134.82056pt.
  [30
 
@@ -1469,15 +1476,15 @@ Package epstopdf Info: Source file: <dense_gaussians.eps>
 (epstopdf)                    size: 12050 bytes
 (epstopdf)             Command: <repstopdf --outfile=dense_gaussians-eps-conver
 ted-to.pdf dense_gaussians.eps>
-(epstopdf)             \includegraphics on input line 1345.
+(epstopdf)             \includegraphics on input line 1347.
 Package epstopdf Info: Output file is already uptodate.
 
-<dense_gaussians-eps-converted-to.pdf, id=244, 420.57124pt x 316.18124pt>
+<dense_gaussians-eps-converted-to.pdf, id=245, 420.57124pt x 316.18124pt>
 File: dense_gaussians-eps-converted-to.pdf Graphic file (type pdf)
 
 <use dense_gaussians-eps-converted-to.pdf>
 Package pdftex.def Info: dense_gaussians-eps-converted-to.pdf used on input lin
-e 1345.
+e 1347.
 (pdftex.def)             Requested size: 155.5619pt x 116.95145pt.
 Package epstopdf Info: Source file: <sparse_gaussians.eps>
 (epstopdf)                    date: 2015-11-27 19:02:12
@@ -1487,15 +1494,15 @@ Package epstopdf Info: Source file: <sparse_gaussians.eps>
 (epstopdf)                    size: 12165 bytes
 (epstopdf)             Command: <repstopdf --outfile=sparse_gaussians-eps-conve
 rted-to.pdf sparse_gaussians.eps>
-(epstopdf)             \includegraphics on input line 1345.
+(epstopdf)             \includegraphics on input line 1347.
 Package epstopdf Info: Output file is already uptodate.
 
-<sparse_gaussians-eps-converted-to.pdf, id=245, 420.57124pt x 316.18124pt>
+<sparse_gaussians-eps-converted-to.pdf, id=246, 420.57124pt x 316.18124pt>
 File: sparse_gaussians-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sparse_gaussians-eps-converted-to.pdf>
 Package pdftex.def Info: sparse_gaussians-eps-converted-to.pdf used on input li
-ne 1345.
+ne 1347.
 (pdftex.def)             Requested size: 155.5619pt x 116.95145pt.
  [31
 
@@ -1510,15 +1517,15 @@ pdf>
 (epstopdf)                    size: 7070 bytes
 (epstopdf)             Command: <repstopdf --outfile=dense_gaussians_metrics2-e
 ps-converted-to.pdf dense_gaussians_metrics2.eps>
-(epstopdf)             \includegraphics on input line 1360.
+(epstopdf)             \includegraphics on input line 1362.
 Package epstopdf Info: Output file is already uptodate.
 
-<dense_gaussians_metrics2-eps-converted-to.pdf, id=264, 963.6pt x 471.7625pt>
+<dense_gaussians_metrics2-eps-converted-to.pdf, id=265, 963.6pt x 471.7625pt>
 File: dense_gaussians_metrics2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use dense_gaussians_metrics2-eps-converted-to.pdf>
 Package pdftex.def Info: dense_gaussians_metrics2-eps-converted-to.pdf used on 
-input line 1360.
+input line 1362.
 (pdftex.def)             Requested size: 155.5619pt x 76.16019pt.
 Package epstopdf Info: Source file: <sparse_gaussians_metrics2.eps>
 (epstopdf)                    date: 2016-03-25 09:07:01
@@ -1529,47 +1536,48 @@ Package epstopdf Info: Source file: <sparse_gaussians_metrics2.eps>
 (epstopdf)                    size: 4584 bytes
 (epstopdf)             Command: <repstopdf --outfile=sparse_gaussians_metrics2-
 eps-converted-to.pdf sparse_gaussians_metrics2.eps>
-(epstopdf)             \includegraphics on input line 1360.
+(epstopdf)             \includegraphics on input line 1362.
 Package epstopdf Info: Output file is already uptodate.
 
-<sparse_gaussians_metrics2-eps-converted-to.pdf, id=265, 963.6pt x 471.7625pt>
+<sparse_gaussians_metrics2-eps-converted-to.pdf, id=266, 963.6pt x 471.7625pt>
 File: sparse_gaussians_metrics2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sparse_gaussians_metrics2-eps-converted-to.pdf>
 Package pdftex.def Info: sparse_gaussians_metrics2-eps-converted-to.pdf used on
- input line 1360.
+ input line 1362.
 (pdftex.def)             Requested size: 155.5619pt x 76.16019pt.
  [32
 
  <./dense_gaussians_metrics2-eps-converted-to.pdf> <./sparse_gaussians_metrics2
 -eps-converted-to.pdf>]
 \tf@nav=\write9
-\openout9 = `Clustering-Exam.nav'.
+\openout9 = `Clustering-Presentation.nav'.
 
 \tf@toc=\write10
-\openout10 = `Clustering-Exam.toc'.
+\openout10 = `Clustering-Presentation.toc'.
 
 \tf@snm=\write11
-\openout11 = `Clustering-Exam.snm'.
+\openout11 = `Clustering-Presentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1373.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1373.
-(./Clustering-Exam.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1373.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1373.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1375.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1375.
+(./Clustering-Presentation.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1375.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1375.
 
-Package rerunfilecheck Info: File `Clustering-Exam.out' has not changed.
+Package rerunfilecheck Info: File `Clustering-Presentation.out' has not changed
+.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1373.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1375.
  ) 
 Here is how much of TeX's memory you used:
  23032 strings out of 493109
- 422955 string characters out of 6138587
- 566594 words of memory out of 5000000
+ 423096 string characters out of 6138587
+ 566602 words of memory out of 5000000
  25789 multiletter control sequences out of 15000+600000
  85723 words of font info for 106 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 56i,16n,57p,570b,798s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 56i,16n,57p,578b,798s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2014/texm
 f-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2014/texmf-dis
 t/fonts/type1/public/amsfonts/cmextra/cmex9.pfb><c:/texlive/2014/texmf-dist/fon
@@ -1590,10 +1598,10 @@ e/2014/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb><c:/texlive/2014/texmf-di
 st/fonts/type1/urw/helvetic/uhvr8a.pfb><c:/texlive/2014/texmf-dist/fonts/type1/
 urw/helvetic/uhvro8a.pfb><c:/texlive/2014/texmf-dist/fonts/type1/urw/times/utmr
 8a.pfb>
-Output written on Clustering-Exam.pdf (32 pages, 280283 bytes).
+Output written on Clustering-Presentation.pdf (32 pages, 280400 bytes).
 PDF statistics:
- 368 PDF objects out of 1000 (max. 8388607)
- 284 compressed objects within 3 object streams
+ 369 PDF objects out of 1000 (max. 8388607)
+ 285 compressed objects within 3 object streams
  83 named destinations out of 1000 (max. 500000)
  91 words of extra memory for PDF output out of 10000 (max. 10000000)
 

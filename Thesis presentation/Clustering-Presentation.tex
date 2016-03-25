@@ -1081,7 +1081,7 @@
 	\end{frame}
 	
 	\begin{frame}{Properties of the Auxiliary Functions $h_{\varepsilon}$ and $f_{\varepsilon}$}
-		\begin{lemma} \label{State_h_prop}
+		\begin{lemma} \label{h_properties_lemma}
 			The following properties of $h_{\varepsilon}$ hold.
 			\begin{enumerate}[(i)]
 				\item For any $y \in \mathbb{R}^n$,
@@ -1099,7 +1099,7 @@
 			\end{enumerate}
 		\end{lemma}
 		\pause
-		\begin{lemma} \label{f_eps_lipschitz_prop}
+		\begin{lemma} \label{f_eps_lipschitz_lemma}
 			For all $y,z \in \mathbb{R}^n$ the following statement holds true
 			\begin{equation*}
 				\| \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z) \| \leq \frac{2L_{\varepsilon}(z)L_{\varepsilon}(y)}{L_{\varepsilon}(z)+L_{\varepsilon}(y)} \|z - y\|.
@@ -1164,7 +1164,7 @@
 				H^l_{\varepsilon}(w(t+1),x(t)) = f_{\varepsilon}(x^l(t)).
 			\end{equation*}
 			}}\\
-			Therefore, by applying Lemma \ref{State_h_prop}(iii) with $x=x^l(t+1)$ and $y=x^l(t)$, we get\\
+			Therefore, by applying Lemma \ref{h_properties_lemma}(iii) with $x=x^l(t+1)$ and $y=x^l(t)$, we get\\
 			\scalebox{.65}{\parbox{\linewidth}{%
 			\begin{align*}
 				H^l_{\varepsilon}(w(t+1),x(t+1)) 
@@ -1265,7 +1265,7 @@
 		\end{align*}
 		}}\\
 		where the last equality follows from center update step.\pause Therefore,\\
-		\scalebox{.65}{\parbox{\linewidth}{%
+		\scalebox{.68}{\parbox{\linewidth}{%
 		\begin{align}
 			\| \nabla_x H_{\varepsilon}(w(t+1),x(t+1)) \| 
 			&\leq \sum\limits_{l=1}^{k} \| \nabla_{x^l} H_{\varepsilon}(w(t+1),x(t+1)) \|  \\ \label{norm_grad_x_H_eps}
@@ -1273,7 +1273,7 @@
 			&\leq \frac{m}{\varepsilon} \sum\limits_{l=1}^{k} \|x^l(t+1)-x^l(t)\| + \sum\limits_{l=1}^{k} \kappa^l(t) \|x^l(t+1)-x^l(t)\| ,\nonumber
 		\end{align}
 		}}\\
-		where the last inequality follows from \Cref{L_bounds_prop}(ii) and \Cref{f_eps_lipschitz_prop} combined with the (\ref{H_eps_f_eps}) observation using\\
+		where the last inequality follows from \Cref{L_bounds_prop}(ii) and Lemma \ref{f_eps_lipschitz_lemma} combined with the (\ref{H_eps_f_eps}) observation using\\
 		\scalebox{.8}{\parbox{\linewidth}{%
 		\begin{equation*}
 			\kappa^l(t) = \frac{2 L^l_{\varepsilon}(w(t+1),x(t)) L^l_{\varepsilon}(w(t+1),x(t+1))}{L^l_{\varepsilon}(w(t+1),x(t)) + L^l_{\varepsilon}(w(t+1),x(t+1))} , \quad l=1,2, \ldots, k.
@@ -1288,6 +1288,7 @@
 			\kappa^l(t) = \frac{2}{\frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} + \frac{1}{L^l_{\varepsilon}(w(t+1),x(t+1))}} \leq \frac{2}{\frac{\varepsilon}{m} + \frac{\varepsilon}{m}} = \frac{m}{\varepsilon}.
 		\end{equation*}
 		}}\\
+		\pause
 		Hence, from (6), we have \\
 		\scalebox{.8}{\parbox{\linewidth}{%
 		\begin{align*}
@@ -1295,6 +1296,7 @@
 			&\leq \frac{2m\sqrt{k}}{\varepsilon} \|x(t+1) - x(t)\|.
 		\end{align*}
 		}}\\
+		\pause
 		Therefore, setting \resizebox{.35\hsize}{!}{$\rho_2 =  \frac{m d_{\mathcal{A}}}{\varepsilon} + \overline{\alpha}\sqrt{m} + \frac{2m\sqrt{k}}{\varepsilon}$}, yields the final result
 		\scalebox{.8}{\parbox{\linewidth}{%
 		\begin{equation*}

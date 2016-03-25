@@ -6,8 +6,8 @@
 \beamer@slide {AssumptionsB}{14}
 \beamer@slide {W_update_step2}{17}
 \beamer@slide {X_update_step2}{17}
-\beamer@slide {State_h_prop}{22}
-\beamer@slide {f_eps_lipschitz_prop}{22}
+\beamer@slide {h_properties_lemma}{22}
+\beamer@slide {f_eps_lipschitz_lemma}{22}
 \beamer@slide {L_bounds_prop}{23}
 \beamer@slide {H_eps_SD_in_x_prop}{24}
 \beamer@slide {eps_kpalm_SD_in_w}{25}
