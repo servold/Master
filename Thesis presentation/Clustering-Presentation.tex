@@ -122,6 +122,7 @@
 %%%%%%%%%%Start TeXmacs macros%%%%%%%%%%%%%%%%%%%
 \newtheorem{assumption}{Assumption}
 \newtheorem{proposition}{Proposition}
+\newtheorem*{proposition*}{Proposition}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\bmu}{{\mbox{\boldmath $\mu$}}}
 \newcommand{\bSigma}{{\mbox{\boldmath $\Sigma$}}}
@@ -173,7 +174,7 @@
 
 \title[Globally Convergent Algorithms for Clustering]{A Novel Class of Globally Convergent Algorithms \\ \vspace{0.1in} For Clustering Problems}
 \institute[Tel-Aviv University]{\small Raymond and Beverly Sackler Faculty of Exact Sciences\\ \vspace{0.1in} Tel-Aviv University}
-\date{06.04.2016}
+\date{April 4, 2016}
 
 	\begin{frame}
 		\titlepage
@@ -188,7 +189,7 @@
 
     	\begin{displaybox}{10cm}
     		\begin{center}
-				Develop and analyze two center-based clustering algorithms \\ each with different distance-like function.	        
+				Develop and analyze two globally convergent center-based clustering algorithms each with a different distance-like function.	        
         	\end{center}
         \end{displaybox}
 
@@ -197,7 +198,7 @@
         \center{\textcolor{blue}{\large{Outline}}}
         \begin{itemize}[<+->]
         	\item Introduction to the clustering problem. \vspace{0.15in}
-        	\item Introduction to the convergence methodology. \vspace{0.15in}
+        	\item Exploiting problem structure: Basic scheme and convergence methodology. \vspace{0.15in}
             \item Clustering with the squared Euclidean norm: KPALM algorithm and its analysis. \vspace{0.15in}
             \item Clustering with the Euclidean norm: $\varepsilon$-KPALM algorithm and its analysis. \vspace{0.15in}
             \item Numerical results of the proposed algorithms.
@@ -207,7 +208,7 @@
 \begin{frame}{The Clustering Problem}
     	\begin{itemize}[<+->]
     		\item Clustering is fundamental in fields such as machine learning, data mining, etc.
-    		\item The clustering problem focused a lot of research and there are many algorithms tackling it, such as k-means, Expectation-Maximization and others.
+    		\item The clustering problem has attracted a lot of research and there are many algorithms tackling it, such as k-means, Expectation-Maximization and others.
     		\item It has been shown that the clustering problem is NP-hard.
     		\item Let $\mathcal{A}=\left\{ a^1, a^2, \ldots, a^m \right\} \subset \R^n$ set of points, and $1<k<m$ a given number of clusters.
     		\item The goal is to partition the data $\mathcal{A}$ into $k$ subsets $\left\{ \mathcal{C}^1, \mathcal{C}^2, \ldots, \mathcal{C}^k \right\}$ called clusters.
@@ -217,7 +218,12 @@
     			\begin{equation*}
     				(P_0) \qquad \min\limits_{x \in \R^{nk}} \left\{ F(x) := \sum\limits_{i=1}^{m} \min\limits_{1 \le l \le k} d(x^l,a^i) \right\} ,
 				\end{equation*}
-				with $\textit{d}(\cdot ,\cdot)$ being a distance-like function, such as the squared Euclidean norm.
+				with $\textit{d}(\cdot ,\cdot)$ is a distance-like function.
+				Here we focus on:
+				\begin{itemize}[<+->]
+					\item $d(u,x) := \norm{u-v}^2$
+					\item $d(u,x) := \norm{u-v}$
+				\end{itemize}
 		\end{itemize}
 		
     \end{frame}
@@ -228,7 +234,7 @@
 				\begin{equation*}
 					\min\limits_{1 \leq l \leq k} u_l = \min \left\lbrace \langle u,v \rangle : v \in \Delta \right\rbrace ,
 				\end{equation*}
-				where $\Delta$ is the simplex in $\R^k$, problem $(P_0)$ can be transformed into
+				where $\Delta := \left\lbrace u \in \mathbb{R}^d : \sum\limits_{l=1}^{d} u_l = 1, \: u \geq 0 \right\rbrace$ is the simplex in $\R^k$, problem $(P_0)$ can be transformed into
 				\begin{equation*}
 					(P_1) \qquad \min\limits_{x \in \R^{nk}} \left\{ \sum\limits_{i=1}^{m} \min\limits_{w^i \in \Delta} \langle w^i , d^i(x) \rangle \right\},
 				\end{equation*}
@@ -242,138 +248,98 @@
 				\begin{equation*}
 					(P) \qquad min \left\lbrace \sigma(z) := H(w,x) + G(w) \mid z := (w,x) \in \R^{km} \times \R^{nk} \right\rbrace, 
 				\end{equation*}
-				where $H(w,x) = \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle$ and $G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i).$			
+				where $H(w,x) = \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle$ and $G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i).$
 		\end{itemize}
     \end{frame}
-
-	\begin{frame}{Convergence Methodology: Goal and Definitions}
-		{\bf Given:} Let $\sigma : \rr^{N} \rightarrow \overline{\rr}$ be a proper, lsc and 
-    	bounded from below function.
-        \begin{equation*}
-        	(P) \qquad \inf \left\{ \sigma\left(z\right) : \; z \in \rr^{N} \right\}.
-        \end{equation*}
-        Suppose $\mathcal{A}$ is a generic algorithm which generates a sequence $\Seq{z}{k}$ 
-        via:
-        \begin{equation*}
-            z^{0} \in \rr^{N},  z^{k+1} \in \mathcal{A}\left(z^{k}\right), \; k = 0 , 1 , 
-            \ldots.
-        \end{equation*}
-        \pause
-        {\bf Goal:} To prove that \textcolor{blue}{whole $\Seq{z}{k}$ converges to a critical point of $\sigma$.}
-        \pause
-        \vspace{0.1in}
-
-     	\begin{definition}[Limiting Subdifferential $\partial \s\left(x\right)$]
-     	Let $\s: \rr^{d} \rightarrow \left(-\infty , +\infty\right]$ be a proper and lower semicontinuous function.\\
-     	The {\dblue (Limiting) Subdifferential} $\partial \s\left(x\right)$ is defined via:
-	    \begin{eqnarray*}
-			\quad u^* \in \partial \s (x)\; &\mbox{iff}& \;  (x_k,u_k^*) \to (x,u^*)\;
-	    	\mbox{s.t.}\;  \s(x_k) \to \s(x)\; \mbox{and}\\
-    	    \s (u) &\geq &\s (x_k) +  \langle u^*_k, u -x_k \rangle + o( \|u-x_k\|)
-        \end{eqnarray*}
-        \end{definition}
-        \pause
-        \begin{itemize}[<+->]
-             \item $x \in \rr^{d}$ is a {\dblue critical point}  of $\s $ if $\partial \s(x) 
-            	 \ni 0$.
-			\item The set of critical points of $\s \equiv\mbox{crit} \;\s .$
-			\item $r\in \rr$ is a {\dblue critical value} if $\exists x \in \mbox{crit}\;\s : 
-				\s(x)=r$.
-        \end{itemize}
-        
-	\end{frame}
-
-	\begin{frame}{KL property}
-		Denote the following class of concave functions
-\begin{equation*}
-	\Phi_{\eta} = \left\lbrace \varphi \in C\left([0,\eta), \rr_+ \right)  : \; \varphi \in C^1\left((0,\eta)\right), \; \varphi'>0, \; \varphi(0)=0 \right\rbrace .
-\end{equation*}
-
-		\begin{definition}[Kurdyka-{\L}ojasiewicz property]
-	Let $\sigma: \rr^d \rightarrow (-\infty,+\infty]$ be proper and lower semicontinuous.
-			\begin{enumerate}[(i)]
-				\item $\sigma$ admits the KL property at $\overline{u} \in dom \; \partial\sigma :=  \left\lbrace u \in \rr^d : \; \partial\sigma \neq \emptyset \right\rbrace$ if there exist $\eta \in (0,+\infty]$, a neighborhood $U$ of $\overline{u}$ and a function $\varphi \in \Phi_{\eta}$, such that for all
-				\begin{equation*}
-					u \in U \cap \left\lbrace x \in \rr^d : \; \sigma(\overline{u}) < \sigma(x) < \sigma(\overline{u}) + \eta \right\rbrace,
-				\end{equation*}
-		the following inequality holds
-		\begin{equation*}
-			\varphi'(\sigma(u) - \sigma(\overline{u}))\;\dist(0,\partial\sigma(u)) \geq 1,
+    
+    \begin{frame}{Clustering: Problem Structure}
+    	\begin{equation*}
+			(P) \qquad min \left\lbrace \sigma(z) := H(w,x) + G(w) \mid z := (w,x) \in \R^{km} \times \R^{nk} \right\rbrace, 
 		\end{equation*}
-		where $\dist(x,S) := \inf \left\lbrace \norm{y-x} : \; y \in S\right\rbrace$ denotes the distance from $x \in \rr^d$ to $S \subset \rr^d$.
-		\item If $\sigma$ satisfy the KL property at each point of $dom\;\sigma$ then $\sigma$ is called a \textit{KL function}.
-	\end{enumerate}
-\end{definition}
-	\end{frame}
-
-	\begin{frame}{Semi-Algebraic Functions}
-        \begin{theorem}[Bolte-Daniilidis-Lewis (2006)]
-            Let $\s : \rr^{d} \rightarrow \overline{\rr}$ be a proper and lsc function. If 
-            $\s$ is semi-algebraic then it satisfy the KL property at any point of 
-            $\dom{\s}$.
-        \end{theorem}
-		\vspace{0.3in}
-		\pause
-        \begin{definition}
-            \begin{itemize}
-                \item[$\rm{(i)}$] A subset $S$ of $\rr^{n}$ is a real \textcolor{blue}{semi-algebraic set} if there exists a finite number of real polynomial functions $g_{ij} , h_{ij} : \rr^{n} \rightarrow \rr$ such that
-                    \begin{equation*}
-                        S = \bigcup_{j = 1}^{p} \bigcap_{i = 1}^{q} \left\{ u \in \rr^{n} : 
-                        \; g_{ij}\left(u\right) = 0 \, \text{and } \, h_{ij}\left(u\right) < 
-                        0 \right\}.
-                    \end{equation*}
-                \item[$\rm{(ii)}$] A function $\s : \rr^{n} \rightarrow \overline{\rr}$ is 
-                	called \textcolor{blue}{semi-algebraic} if its graph
-                    \begin{equation*}
-                        \left\{ \left(u , t\right) \in \rr^{n + 1} : \; \s\left(u\right) = t 
-                        \right\}
-                    \end{equation*}
-                    is a semi-algebraic subset of $\rr^{n + 1}$.
-            \end{itemize}
-        \end{definition}
+		\begin{center}
+			where $H(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle$ and $G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i).$
+		\end{center}
+		We are interested in two important cases for clustering:
+		\begin{enumerate}[(a)]
+			\item $d^i(x):= \norm{x-a^i}^2$ (the common squared Euclidean distance)  \label{case_a}
+			\item $d^i(x):= \norm{x-a^i}$ (relevant for problems with outliers) \label{case_b}
+		\end{enumerate}
+		\begin{itemize}[<+->]
+			\item In case \eqref{case_a} $H(w,x)$ is a \underline{smooth} function.
+			\item Whereas, in case \eqref{case_b} $H(w,x)$ is a \underline{nonsmooth}.
+			\item In both cases the problem is \underline{nonconvex}.
+			\item We want to expolit the special structure to devise \underline{simple} schemes.\\ Attractive approach is via {\dblue alternating minimization}.\\
+%		\end{itemize}
+    	Very simple idea (goes back to Gauss-Seidel),\\
+    	\begin{center}
+    		$w^{k+1} \in \arg\!\min_{w \in \Delta^m} \sigma\left(w, x^k\right)$,\quad $x^{k+1} \in \arg\!\min_{x \in \rr^{nk}} \sigma\left( w^{k+1},x\right)$
+    	\end{center}
+   % 	\begin{itemize}[<+->]
+			\item In fact this is the essence of \underline{k-means} (for smooth $H$) and of \underline{k-median} (for nonsmooth $H$) algorithms.
+			\item These algorithms are not known to globally converge to stationary (critical) point.
+			\item Here we follow the recent algorithm (PALM) of {\dblue (Bolte-Sabach-Teboulle (2014))} to tackle these issues and devise simple schemes.    	
+    	\end{itemize}
     \end{frame}
 
-    \begin{frame}{The Wealth of Semi-Algebraic Functions}
-        \begin{itemize}[<+->]
-        	\item \textcolor{blue}{Real polynomial functions}.
-            \item \textcolor{blue}{Indicator functions} of semi-algebraic sets.
-            \item \textcolor{blue}{Finite sums and product} of semi-algebraic functions. 
-            \item \textcolor{blue}{Composition} of semi-algebraic functions.
-            \item \textcolor{blue}{Sup/Inf type function}, \eg $\sup \left\{ g\left(u , 
-            	v\right) : \; v \in C \right\}$ is semi-algebraic when $g$ is a semi-algebraic function and $C$ a semi-algebraic set.
-             \item The function $x \to \dist\left(x , S\right)^{2}$ is semi-algebraic 
-             	whenever $S$ is a nonempty semi-algebraic subset of $\rr^{n}$.
-             \item $\norm{\cdot}_{0}$ (counts the non-zero values) is semi-algebraic.
-             \item $\norm{\cdot}_{p}$ is semi-algebraic whenever $p > 0$ is rational.
-        \end{itemize}
-        \gap
-		\pause
- 		In particular, for distance-like functions $d(x,y)=\norm{x-y}^2$ and $d(x,y)=\norm{x-y}$ the resulting clustering function defined in (P) is semi-algebraic.
-    \end{frame}
-	
-	\begin{frame}{Gradient-Like Descent Sequence}
-		\begin{definition} \label{gradient_like_seq_def}
-			Let $\sigma: \rr^d \rightarrow (-\infty, +\infty]$ be a proper and lower semicontinuous function. A sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is called a {\dblue gradient-like descent sequence} for $\sigma$ if for all $k \in \nn$ the following two conditions hold:
-			\begin{enumerate}[(C1)]
-				\item {\dblue Sufficient decrease property}: There exists a positive scalar $\rho_1$ such that
-				\begin{equation*}
-					\rho_1 \norm{z^{k+1} - z^k}^2 \leq \sigma\left( z^k \right) - \sigma \left( z^{k+1} \right) .
-				\end{equation*}
-				\item {\dblue A subgradient lower bound for the iterates gap}:
-				\begin{itemize}
-					\item[$-$] $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is bounded.
-					\item[$-$] There exists a positive scalar $\rho_2$ such that
-					\begin{equation*}
-						\norm{w^{k+1}} \leq \rho_2 \norm{z^{k+1} - z^k}, \; w^{k+1} \in \partial\sigma \left( z^{k+1}\right).
-					\end{equation*}
-				\end{itemize}
-			\end{enumerate}
-		\end{definition}
-		\pause
-		\begin{theorem}[Bolte-Sabach-Teboulle (2014)] \label{SDP_SGP_conv_thrm}
-			Let $\sigma:\rr^d \rightarrow (-\infty,\infty]$ be a proper, lower semicontinuous and semi-algebraic function with $\inf \sigma > -\infty$, and assume that $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a gradient-like descent sequence for $\sigma$. \\ If $\omega\left( z^0 \right) \subset crit(\sigma)$ then the sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ convergences to a critical point $z^{*}$ of $\sigma$.
-		\end{theorem}
-	\end{frame}
+%	\begin{frame}{Convergence Methodology: Goal and Definitions}
+%		{\bf Given:} Let $\sigma : \rr^{N} \rightarrow \overline{\rr}$ be a proper, lsc and 
+%    	bounded from below function.
+%        \begin{equation*}
+%        	(P) \qquad \inf \left\{ \sigma\left(z\right) : \; z \in \rr^{N} \right\}.
+%        \end{equation*}
+%        Suppose $\mathcal{A}$ is a generic algorithm which generates a sequence $\Seq{z}{k}$ 
+%        via:
+%        \begin{equation*}
+%            z^{0} \in \rr^{N},  z^{k+1} \in \mathcal{A}\left(z^{k}\right), \; k = 0 , 1 , 
+%            \ldots.
+%        \end{equation*}
+%        \pause
+%        {\bf Goal:} To prove that \textcolor{blue}{whole $\Seq{z}{k}$ converges to a critical point of $\sigma$.}
+%        \pause
+%        \vspace{0.1in}
+%
+%     	\begin{definition}[Limiting Subdifferential $\partial \s\left(x\right)$]
+%     	Let $\s: \rr^{d} \rightarrow \left(-\infty , +\infty\right]$ be a proper and lower semicontinuous function.\\
+%     	The {\dblue (Limiting) Subdifferential} $\partial \s\left(x\right)$ is defined via:
+%	    \begin{eqnarray*}
+%			\quad u^* \in \partial \s (x)\; &\mbox{iff}& \;  (x_k,u_k^*) \to (x,u^*)\;
+%	    	\mbox{s.t.}\;  \s(x_k) \to \s(x)\; \mbox{and}\\
+%    	    \s (u) &\geq &\s (x_k) +  \langle u^*_k, u -x_k \rangle + o( \|u-x_k\|)
+%        \end{eqnarray*}
+%        \end{definition}
+%        \pause
+%        \begin{itemize}[<+->]
+%             \item $x \in \rr^{d}$ is a {\dblue critical point}  of $\s $ if $\partial \s(x) 
+%            	 \ni 0$.
+%			\item The set of critical points of $\s \equiv\mbox{crit} \;\s .$
+%			\item $r\in \rr$ is a {\dblue critical value} if $\exists x \in \mbox{crit}\;\s : 
+%				\s(x)=r$.
+%        \end{itemize}
+%        
+%	\end{frame}
+
+%	\begin{frame}{KL property}
+%		Denote the following class of concave functions
+%\begin{equation*}
+%	\Phi_{\eta} = \left\lbrace \varphi \in C\left([0,\eta), \rr_+ \right)  : \; \varphi \in C^1\left((0,\eta)\right), \; \varphi'>0, \; \varphi(0)=0 \right\rbrace .
+%\end{equation*}
+%
+%		\begin{definition}[Kurdyka-{\L}ojasiewicz property]
+%	Let $\sigma: \rr^d \rightarrow (-\infty,+\infty]$ be proper and lower semicontinuous.
+%			\begin{enumerate}[(i)]
+%				\item $\sigma$ admits the KL property at $\overline{u} \in dom \; \partial\sigma :=  \left\lbrace u \in \rr^d : \; \partial\sigma \neq \emptyset \right\rbrace$ if there exist $\eta \in (0,+\infty]$, a neighborhood $U$ of $\overline{u}$ and a function $\varphi \in \Phi_{\eta}$, such that for all
+%				\begin{equation*}
+%					u \in U \cap \left\lbrace x \in \rr^d : \; \sigma(\overline{u}) < \sigma(x) < \sigma(\overline{u}) + \eta \right\rbrace,
+%				\end{equation*}
+%		the following inequality holds
+%		\begin{equation*}
+%			\varphi'(\sigma(u) - \sigma(\overline{u}))\;\dist(0,\partial\sigma(u)) \geq 1,
+%		\end{equation*}
+%		where $\dist(x,S) := \inf \left\lbrace \norm{y-x} : \; y \in S\right\rbrace$ denotes the distance from $x \in \rr^d$ to $S \subset \rr^d$.
+%		\item If $\sigma$ satisfy the KL property at each point of $dom\;\sigma$ then $\sigma$ is called a \textit{KL function}.
+%	\end{enumerate}
+%\end{definition}
+%	\end{frame}
 
     \begin{frame}{The Optimization Model}
         \begin{equation*}
@@ -434,11 +400,11 @@
                 \end{enumerate}
             \end{enumerate}}}
        	\end{center}
-        \pause
-        \begin{center}
-            \shadowbox{\parbox{0.8\linewidth}{\center{{\bf Main computational step:} 
-            Computing prox of a nonconvex function.}}}
-        \end{center}
+%        \pause
+%        \begin{center}
+%            \shadowbox{\parbox{0.8\linewidth}{\center{{\bf Main computational step:} 
+%            Computing prox of a nonconvex function.}}}
+%        \end{center}
 
     \end{frame}
 
@@ -840,6 +806,9 @@
 		\begin{center}
 		$H(w,x) = \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle = \sum\limits_{i=1}^m\sum\limits_{l=1}^k w^i_l \norm{x^l - a^i}^2$, $G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i)$.\\
 		\end{center}
+		\begin{itemize}[<+->]
+	    	\item Thus, here $H(w,x)$ is $C^1$ and fits the optimization model.
+    	\end{itemize}
 		Inspired by PALM, we devise the KPALM algorithm, exploiting the specific structure of the model, namely
 		\pause
 		\begin{itemize}[<+->]
@@ -847,7 +816,7 @@
 	    	\begin{equation*}
 				w^i(t+1) = \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , d^i(x(t)) \rangle + \frac{\alpha_i(t)}{2} \|w^i - w^i(t)\|^2 \right\rbrace. \label{W_update_step}
 			\end{equation*}
-	    	\item The function $x \mapsto H(w,x)$, for fixed $w$, is quadratic and convex. Hence, there is no need to add a proximal term as suggested in PALM.
+	    	\item The function $x \mapsto H(w,x)$, for fixed $w$, is quadratic and convex. Hence, \underline{there is no need} to add a proximal term as suggested in PALM.
 	    	\begin{equation*}
 				x(t+1) = \arg\!\min \left\lbrace H(w(t+1), x) \mid x \in \mathbb{R}^{nk} \right\rbrace. \label{X_update_step}
 			\end{equation*}
@@ -881,14 +850,92 @@
        	\end{itemize}
 	\end{frame}
 	
-	\begin{frame}{KPALM Analysis}
+	\begin{frame}{Convergence Analysis of KPALM}
+		We will use the methodology developed in {\dblue (Bolte-Sabach-Teboulle (2014))}.
+		\begin{definition} \label{gradient_like_seq_def}
+			Let $\sigma: \rr^d \rightarrow (-\infty, +\infty]$ be a proper and lower semicontinuous function. A sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is called a {\dblue gradient-like descent sequence} for $\sigma$ if for all $k \in \nn$ the following two conditions hold:
+			\begin{enumerate}[(C1)]
+				\item {\dblue Sufficient decrease property}: There exists a positive scalar $\rho_1$ such that
+				\begin{equation*}
+					\rho_1 \norm{z^{k+1} - z^k}^2 \leq \sigma\left( z^k \right) - \sigma \left( z^{k+1} \right) .
+				\end{equation*}
+				\item {\dblue A subgradient lower bound for the iterates gap}:
+				\begin{itemize}
+					\item[$-$] $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is bounded.
+					\item[$-$] There exists a positive scalar $\rho_2$ such that
+					\begin{equation*}
+						\norm{w^{k+1}} \leq \rho_2 \norm{z^{k+1} - z^k}, \; w^{k+1} \in \partial\sigma \left( z^{k+1}\right).
+					\end{equation*}
+				\end{itemize}
+			\end{enumerate}
+		\end{definition}
+		\pause
+		\begin{theorem}[Bolte-Sabach-Teboulle (2014)] \label{SDP_SGP_conv_thrm}
+			Let $\sigma:\rr^d \rightarrow (-\infty,\infty]$ be a proper, lower semicontinuous and semi-algebraic function with $\inf \sigma > -\infty$, and assume that $\left\lbrace z^k \right\rbrace_{k \in \nn}$ is a gradient-like descent sequence for $\sigma$. \\ If $\omega\left( z^0 \right) \subset crit(\sigma)$ then the sequence $\left\lbrace z^k \right\rbrace_{k \in \nn}$ convergences to a critical point $z^{*}$ of $\sigma$.
+		\end{theorem}
+	\end{frame}
+	
+	\begin{frame}{Semi-Algebraic Functions}
+%        \begin{theorem}[Bolte-Daniilidis-Lewis (2006)]
+%            Let $\s : \rr^{d} \rightarrow \overline{\rr}$ be a proper and lsc function. If 
+%            $\s$ is semi-algebraic then it satisfy the KL property at any point of 
+%            $\dom{\s}$.
+%        \end{theorem}
+%		\vspace{0.3in}
+%		\pause
+        \begin{definition}
+            \begin{itemize}
+                \item[$\rm{(i)}$] A subset $S$ of $\rr^{n}$ is a real \textcolor{blue}{semi-algebraic set} if there exists a finite number of real polynomial functions $g_{ij} , h_{ij} : \rr^{n} \rightarrow \rr$ such that
+                    \begin{equation*}
+                        S = \bigcup_{j = 1}^{p} \bigcap_{i = 1}^{q} \left\{ u \in \rr^{n} : 
+                        \; g_{ij}\left(u\right) = 0 \, \text{and } \, h_{ij}\left(u\right) < 
+                        0 \right\}.
+                    \end{equation*}
+                \item[$\rm{(ii)}$] A function $\s : \rr^{n} \rightarrow \overline{\rr}$ is 
+                	called \textcolor{blue}{semi-algebraic} if its graph
+                    \begin{equation*}
+                        \left\{ \left(u , t\right) \in \rr^{n + 1} : \; \s\left(u\right) = t 
+                        \right\}
+                    \end{equation*}
+                    is a semi-algebraic subset of $\rr^{n + 1}$.
+            \end{itemize}
+        \end{definition}
+        \pause
+        The wealth of semi-algebraic functions:
+        \begin{itemize}[<+->]
+        	\item \textcolor{blue}{Real polynomial functions}.
+            \item \textcolor{blue}{Indicator functions} of semi-algebraic sets.
+            \item \textcolor{blue}{Finite sums and product} of semi-algebraic functions. 
+            \item \textcolor{blue}{Composition} of semi-algebraic functions.
+        \end{itemize}
+    \end{frame}
+
+%    \begin{frame}{The Wealth of Semi-Algebraic Functions}
+%        \begin{itemize}[<+->]
+%        	\item \textcolor{blue}{Real polynomial functions}.
+%            \item \textcolor{blue}{Indicator functions} of semi-algebraic sets.
+%            \item \textcolor{blue}{Finite sums and product} of semi-algebraic functions. 
+%            \item \textcolor{blue}{Composition} of semi-algebraic functions.
+%            \item \textcolor{blue}{Sup/Inf type function}, \eg $\sup \left\{ g\left(u , 
+%            	v\right) : \; v \in C \right\}$ is semi-algebraic when $g$ is a semi-algebraic function and $C$ a semi-algebraic set.
+%             \item The function $x \to \dist\left(x , S\right)^{2}$ is semi-algebraic 
+%             	whenever $S$ is a nonempty semi-algebraic subset of $\rr^{n}$.
+%             \item $\norm{\cdot}_{0}$ (counts the non-zero values) is semi-algebraic.
+%             \item $\norm{\cdot}_{p}$ is semi-algebraic whenever $p > 0$ is rational.
+%        \end{itemize}
+%        \gap
+%		\pause
+% 		In particular, for distance-like functions $d(x,y)=\norm{x-y}^2$ and $d(x,y)=\norm{x-y}$ the resulting clustering function defined in (P) is semi-algebraic.
+%    \end{frame}
+	
+	\begin{frame}{KPALM Analysis - $H \in C^1$}
 		\begin{itemize}[<+->]
+			\item Semi-Algebraicity: $H$ is a weighted sum of squared Euclidean norms hence semi-algebraic, and $\Delta$ is semi-algebraic set, thus $\delta_{\Delta}(\cdot)$ is semi-algebraic, and in turn $\sigma$ since it is sum of these functions.
 			\item Boundedness: $w^i(t) \in \Delta$ and 
 				\begin{equation*}
 					x^l(t) = \frac{\sum_{i=1}^{m} w^i_l(t) a^i}{\sum_{i=1}^{m} w^i_l(t)} 
 					= \sum_{i=1}^{m} \left( \frac{ w^i_l(t)}{\sum_{j=1}^{m} w^j_l(t)} \right) a^i \in Conv(\mathcal{A}).
 				\end{equation*}
-			\item KL Property: $H$ is a weighted sum of squared Euclidean norms hence semi-algebraic, and $\Delta$ is semi-algebraic set, thus $\delta_{\Delta}(\cdot)$ is semi-algebraic, and in turn $\sigma$ since it is sum of these functions.
 		\end{itemize}
 		\pause
 		\begin{assumption} \label{AssumptionsB}
@@ -900,6 +947,271 @@
         \pause
         Denote $\underline{\alpha}=\min\limits_{1 \leq i \leq m} \underline{\alpha_i}$ and $\overline{\alpha}=\max\limits_{1 \leq i \leq m} \overline{\alpha_i}$.
 	\end{frame}
+	
+	\begin{frame}{Global Convergence of KPALM}
+		To apply the general methodology of {\dblue [BST]} we proved the following results:
+		\pause
+		\begin{proposition}[Sufficient decrease property]
+			Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \nn}$ be the sequence generated by KPALM. Then there exists $\rho_1 > 0$ such that 
+			\begin{equation*}
+				\rho_1 \|z(t+1) - z(t)\|^2 \leq \sigma(z(t)) - \sigma(z(t+1)), \quad \forall \: t \in \mathbb{N} .
+			\end{equation*}
+		\end{proposition}
+		\pause
+		\begin{proposition}[Subgradient lower bound for the iterates gap]
+			Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM.
+			For each $t \in \nn$ define 
+			\begin{equation*}
+				\gamma(t) := \left( \left( d^i(x(t)) - d^i(x(t-1)) - \alpha_i(t-1)(w^i(t) - w^i(t-1)) \right)_{i=1,2, \ldots, m}, \mathbf{0} \right).
+			\end{equation*}
+			Then $\gamma(t) \in \partial \sigma(z(t))$ and there exists $\rho_2 > 0$ such that 
+			\begin{equation*}
+				\| \gamma(t+1)\| \leq \rho_2 \|z(t+1) - z(t)\|, \quad \forall \: t \in \mathbb{N} .
+			\end{equation*}
+		\end{proposition}
+		\pause
+		\begin{theorem}
+			Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \nn}$ be the sequence generated by KPALM. Then, the sequence $\left\lbrace z(t) \right\rbrace_{t \in \nn}$ converges to a critical point of $\sigma$.
+		\end{theorem}
+	\end{frame}	
+	
+	\begin{frame}{$\varepsilon$-KPALM Algorithm for Clustering with the Norm Distance}
+		Recalling the Clustering Problem for the Euclidean norm distance:
+		\begin{equation*}
+				(P) \qquad min \left\lbrace \sigma(z) := H(w,x) + G(w) \mid z := (w,x) \in \R^{km} \times \R^{nk} \right\rbrace, 
+		\end{equation*}
+		\begin{center}
+		$H(w,x) = \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle = \sum\limits_{i=1}^m\sum\limits_{l=1}^k w^i_l \norm{x^l - a^i}$, $G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i)$.\\
+		\end{center}
+		\begin{itemize}[<+->]
+			\item \underline{$H$ is not smooth, hence PALM cannot be applied as is}. Therefore approximating:
+			\begin{equation*}
+				\resizebox{.6\hsize}{!}{$H_{\varepsilon}(w,x) = \sum\limits_{l=1}^{k} H^l_{\varepsilon}(w,x)
+	= \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \left( \| x^l - a^i \|^2 + {\varepsilon}^2 \right)^{1/2},$}
+			\end{equation*}
+			\item This leads towards the following approximation of the Clustering Problem
+			\begin{equation*}
+				(P_{\varepsilon}) \qquad min \left\lbrace \sigma_{\varepsilon}(z) := H_{\varepsilon}(w,x) + G(w) \mid z := (w,x) \in \R^{km} \times \R^{nk} \right\rbrace.
+			\end{equation*}
+			\item Also $d^i_{\varepsilon}(x)$ is the smoothed version of $d^i(x)$, whose $1 \leq l \leq k$ coordinate is $\left( \|x^l - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}$.
+		\end{itemize}
+		\pause
+		\begin{lemma}[Closeness of the smooth approximation]
+			For any $(w,x) \in {\Delta}^m \times \mathbb{R}^{nk}$ and $\varepsilon > 0$ the following relations hold true
+			\begin{equation*}
+				H(w,x) \leq H_{\varepsilon}(w,x) \leq H(w,x) + m\varepsilon .
+			\end{equation*}
+		\end{lemma}
+	\end{frame}	
+	
+	\begin{frame}{$\varepsilon$-KPALM Algorithm for Clustering with the Norm Distance}
+		\begin{itemize}[<+->]
+			\item With respect to $w$ we apply the same step as in KPALM:
+			\begin{equation*}
+				\resizebox{.7\hsize}{!}{$w^i(t+1) = \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \left\langle w^i, d^i_{\varepsilon}(x(t)) \right\rangle + \frac{\alpha_i(t)}{2} \|w^i -w^i(t)\|^2 \right\rbrace.$}		
+			\end{equation*}
+			\item With respect to $x$ we tackle the subproblem differently than in KPALM, linearizing the function $x \rightarrow H(w,\cdot)$, for fixed $w$, and adding a regularizing term
+			\begin{equation*}
+				\resizebox{.9\textwidth}{!}{$x^l(t+1) = \arg\!\min\limits_{x^l} \left\lbrace \left\langle x^l - x^l(t) , \nabla_{x^l}H_{\varepsilon}(w(t+1),x(t)) \right\rangle + \frac{L^l_{\varepsilon}(w(t+1),x(t))}{2} \|x^l - x^l(t)\|^2 \right\rbrace,$}
+			\end{equation*}
+			where
+			\begin{equation*}
+				\resizebox{.6\hsize}{!}{$L^l_{\varepsilon}(w(t+1),x(t)) := \sum\limits_{i=1}^{m} \frac{w^i_l(t+1)}{\left( \|x^l(t)-a^i\|^2 + {\varepsilon}^2 \right)^{1/2}}, \quad \forall \: l=1,2, \ldots, k.$}
+			\end{equation*}
+			\end{itemize}
+			\pause
+			\begin{center}
+    		\fbox{\parbox{11cm}{
+            	\begin{enumerate}[(1)]
+					\item Initialization: $z(0)=(w(0),x(0)) \in \Delta^m \times \mathbb{R}^{nk} .$
+					\item General step $\left( t=0,1, \ldots \right)$:
+					\begin{enumerate}[(2.1)]
+						\item Cluster assignment: choose certain $\alpha_i(t) > 0$, $i=1,2, \ldots, m$, and compute
+							\begin{equation*}
+							\resizebox{.4\hsize}{!}{$w^i(t+1) = P_{\Delta} \left(w^i(t) - \frac{d_{\varepsilon}^i(x(t))}{\alpha_i(t)}\right).$}
+							\end{equation*}
+						\item Center update: for each $l=1, 2, \ldots ,k$ compute
+							\begin{equation*}
+							x^l(t+1) = x^l(t) - \frac{1}{L^l_{\varepsilon}(w(t+1), x(t))}\nabla_{x^l} H_{\varepsilon}(w(t+1), x(t)).
+							\end{equation*}
+					\end{enumerate}
+				\end{enumerate}
+            }}
+       		\end{center}
+	\end{frame}
+	
+	\begin{frame}{$\varepsilon$-KPALM Analysis}
+		\begin{itemize}[<+->]
+			\item Boundedness: $w^i(t) \in \Delta$ and \\
+				\scalebox{.7}{\parbox{\linewidth}{%
+				\begin{align*}
+					x^l(t+1) &= x^l(t) - \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \nabla_{x^l} H_{\varepsilon}(w(t+1),x(t)) \\
+					&= x^l(t) - \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \sum\limits_{i=1}^{m} w^i_l(t+1) \cdot \frac{x^l(t) - a^i}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \\
+					&= \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \sum\limits_{i=1}^{m} \left( \frac{w^i_l(t+1)}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \right) a^i \in Conv(\mathcal{A}).
+				\end{align*}
+				}}
+			\item All of the involved functions are semi-algebraic.
+		\end{itemize}
+		\pause
+		\begin{displaybox}{11cm}
+			Motivated by the recent work on Weber problem {\dblue (Beck-Sabach(2015))}, we develop several auxiliary results. We define the function $f_{\varepsilon}: \mathbb{R}^n \rightarrow \mathbb{R}$ by
+			\begin{equation*}
+				\resizebox{.3\hsize}{!}{$f_{\varepsilon}(x) = \sum\limits_{i=1}^{m} v_i \left( \|x - a^i\|^2 + {\varepsilon}^2 \right)^{1/2},$}
+			\end{equation*}
+			$v^i \in \rr_+$ fixed weights. We also need the auxiliary function $h_{\varepsilon}: \mathbb{R}^n \times \mathbb{R}^n \rightarrow \mathbb{R}$ given by
+			\begin{equation*}
+				\resizebox{.3\hsize}{!}{$h_{\varepsilon}(x,y) = \sum\limits_{i=1}^m \frac{v_i \left( \|x-a^i\|^2 + {\varepsilon}^2 \right)}{\left( \|y-a^i\|^2 + {\varepsilon}^2 \right)^{1/2}}.$}
+			\end{equation*}
+			Finally we introduce the following modulus, $L_{\varepsilon}: \mathbb{R}^n \rightarrow \mathbb{R}$ defined by
+			\begin{equation*}
+				\resizebox{.3\hsize}{!}{$L_{\varepsilon}(x) = \sum\limits_{i=1}^{m}\frac{v_i}{\left( \|x - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}}.$}
+			\end{equation*}
+		\end{displaybox}
+	\end{frame}
+	
+	\begin{frame}{Properties of the Auxiliary Functions $h_{\varepsilon}$ and $f_{\varepsilon}$}
+		\begin{lemma} \label{h_properties_lemma}
+			The following properties of $h_{\varepsilon}$ hold.
+			\begin{enumerate}[(i)]
+				\item For any $y \in \mathbb{R}^n$,
+				\begin{equation*}
+					h_{\varepsilon}(y,y) = f_{\varepsilon}(y) .
+				\end{equation*}
+				\item For any $x,y \in \mathbb{R}^n$,
+				\begin{equation*}
+					h_{\varepsilon}(x,y) \geq 2f_{\varepsilon}(x) - f_{\varepsilon}(y) .
+				\end{equation*}
+				\item For any $x,y \in \mathbb{R}^n$,
+				\begin{equation*}
+					f_{\varepsilon}(x) \leq f_{\varepsilon}(y) + \left\langle \nabla f_{\varepsilon}(y), x-y \right\rangle + \frac{L_{\varepsilon}(y)}{2}\|x-y\|^2 .
+				\end{equation*}
+			\end{enumerate}
+		\end{lemma}
+		\pause
+		\begin{lemma} \label{f_eps_lipschitz_lemma}
+			For all $y,z \in \mathbb{R}^n$ the following statement holds true
+			\begin{equation*}
+				\| \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z) \| \leq \frac{2L_{\varepsilon}(z)L_{\varepsilon}(y)}{L_{\varepsilon}(z)+L_{\varepsilon}(y)} \|z - y\|.
+			\end{equation*}
+		\end{lemma}
+	\end{frame}
+	
+	\begin{frame}{Preliminaries for Sufficient Decrease Proof}
+		\begin{proposition}[Bounds for $L^l_{\varepsilon}$] \label{L_bounds_prop}
+			Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM.
+			\begin{enumerate}[(i)]
+				\item Denote $d_{\mathcal{A}} = \diam(Conv(\mathcal{A}))$. For all $t \in \mathbb{N}$ and $l=1,2, \ldots, k$ we have
+				\scalebox{.8}{\parbox{\linewidth}{%
+				\begin{equation*}
+					L^l_{\varepsilon}(w(t+1),x(t)) \geq \frac{\underline{\beta}}{\left( {d_{\mathcal{A}}}^2 + {\varepsilon}^2 \right)^{1/2}}.
+				\end{equation*}
+				}}
+				\item For all $t \in \mathbb{N}$ and $l=1,2, \ldots, k$ we have
+				\scalebox{.8}{\parbox{\linewidth}{%
+				\begin{equation*}
+					L^l_{\varepsilon}(w(t+1),x(t)) \leq \frac{m}{\varepsilon} .
+				\end{equation*}
+				}}
+			\end{enumerate}
+		\end{proposition}
+		\pause
+		\begin{proposition}[Sufficient Decrease w.r.t. $x$] \label{H_eps_SD_in_x_prop}
+			Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. Then, for all $t \in \mathbb{N}$, we have\\
+			\scalebox{.65}{\parbox{\linewidth}{%
+			\begin{align*}
+				H_{\varepsilon}(w(t+1),x(t+1)) 
+	\leq H_{\varepsilon}(w(t+1),x(t)) + \left\langle \nabla_x H_{\varepsilon}(w(t+1),x(t)), x(t+1)-x(t) \right\rangle 
+	+ \sum\limits_{l=1}^{k} \frac{L^l_{\varepsilon}(w(t+1),x(t))}{2} \|x^l(t+1)-x^l(t)\|^2 .
+			\end{align*}
+			}}
+		\end{proposition}
+
+	\end{frame}
+	
+	\begin{frame}{Global Convergence of $\varepsilon$-KPALM}
+		To apply the general methodology of {\dblue [BST]} we proved:
+		\pause
+		\begin{proposition}[Sufficient decrease property]
+		Suppose that \Cref{AssumptionsB} and let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. Then, there exists $\rho_1 > 0$ such that 
+		\begin{equation*}
+			\rho_1 \|z(t+1) - z(t)\|^2 \leq \sigma_{\varepsilon}(z(t)) - \sigma_{\varepsilon}(z(t+1)), \quad \forall \: t \in \mathbb{N} .
+		\end{equation*}
+		\end{proposition}
+		\pause
+		\begin{proposition}[Subgradient lower bound for the iterates gap]
+		Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. 
+		For each $t \in \nn$ define\\
+		\scalebox{.95}{\parbox{\linewidth}{%
+		\begin{align*}
+			\gamma(t) := \left( \left( d^i(x(t)) - d^i(x(t-1)) - \alpha_i(t-1)(w^i(t) - w^i(t-1)) \right)_{i=1,2, \ldots, m}, \nabla_x H_{\varepsilon}(z(t)) \right).
+		\end{align*}
+		}}\\
+		Then $\gamma(t) \in \partial \sigma_{\varepsilon}(z(t))$ and there exists $\rho_2 > 0$ such that 
+		\begin{equation*}
+			\| \gamma(t+1)\| \leq \rho_2 \|z(t+1) - z(t)\|, \quad \forall \: t \in \mathbb{N} .
+		\end{equation*}
+		\end{proposition}
+		\pause
+		\begin{theorem}
+		Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. Then, the sequence $\left\lbrace z(t) \right\rbrace_{t \in \nn}$ converges to a critical point of $\sigma_{\varepsilon}$.
+		\end{theorem}
+	\end{frame}	
+	
+	\begin{frame}{Numerical Results: The Squared Norm}
+		\begin{itemize}[<+->]
+            \item Initialization issues: randomly picking $k$ data points as starting centers vs. k-means++.
+        
+        	\item Comparison of the objective function values performed on the Iris dataset for squared norm algorithms
+		\begin{figure}
+    		\centering
+        	\includegraphics[width=0.75 \textwidth]{squared_norm_obj_comp}
+		\end{figure}
+
+	    	\item In the squared Euclidean setting, KPALM achieves lower objective function values than k-means. When using a more sophisticated initialization step, such as the one in k-means++, then k-means++ and KPALM++ achieve similar objective function values.
+			\item k-means needs less number of iterations then KPALM to reach a certain precision.
+		\end{itemize}
+	\end{frame}	
+	
+	\begin{frame}{Numerical Results: The Squared Norm}
+		\begin{itemize}[<+->]
+            \item Comparison of the objective function values performed on the Iris dataset for KPALM algorithm with different $\alpha$ parameter updates.
+		\begin{figure}
+    		\centering
+        	\includegraphics[width=0.8 \textwidth]{squared_norm_dyn_alpha_comp}
+		\end{figure}
+			\item It is preferable to use dynamic update of $\alpha(t)$ parameter to achieve a faster convergence, both in KPALM and $\epsilon$-KPALM. Example for suitable choices can be $\alpha(t)= \diam(\mathcal{A})/t$ and $\alpha(t)= \diam(\mathcal{A})/2^t$.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{Numerical Results: Squared Norm Algorithms vs. $\varepsilon$-KPALM}
+		\begin{itemize}[<+->]
+			\item Generated two synthetic datasets, each 300 points
+			\begin{figure}
+		    	\centering
+		    	\subfigure[Dense Gaussians]{\includegraphics[width=0.45\textwidth]{dense_gaussians}}
+				\subfigure[Sparse Gaussians]{\includegraphics[width=0.45\textwidth]{sparse_gaussians}}
+			\end{figure}
+			\setcounter{subfigure}{0}
+			\item Compared the resulting clustering using metrics, such as {\dblue Variation of Information} defined by:
+				$VI(\mathcal{C}^1,\mathcal{C}^2):=-\sum\limits_{i,j} r_{i,j}\left[ \log \left( r_{i,j}/p_i \right) + \log \left( r_{i,j}/q_j \right) \right]$, where $\mathcal{C}^1=\left\lbrace C^1_1, C^1_2, \ldots C^1_k \right\rbrace$ and $\mathcal{C}^2=\left\lbrace C^2_1, C^2_2, \ldots C^2_l \right\rbrace$ are two clusterings of $\mathcal{A}$,\\ and $m=|\mathcal{A}|, \quad p_i=|C^1_i|/m,\quad q_j=|C^2_j|/m, \quad r_{i,j}= |C^1_i \cap C^2_j|/m$.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{Numerical Results: Squared Norm Algorithms vs. $\varepsilon$-KPALM}
+		\setcounter{subfigure}{0}
+		\begin{figure}
+		    \centering
+		    \subfigure[Dense Gaussians metrics comparison]{\includegraphics[width=0.45\textwidth]{dense_gaussians_metrics2}}
+			\subfigure[Sparse Gaussians metrics comparison]{\includegraphics[width=0.45\textwidth]{sparse_gaussians_metrics2}}
+		\end{figure}
+		\pause
+		\begin{itemize}[<+->]
+			\item When the convex hulls of the desired clusters are mutually exclusive, algorithms which solve the clustering problem with the squared Euclidean distance are preferable to $\varepsilon$-KPALM.
+			\item In datasets with outliers, the clustering obtained with $\varepsilon$-KPALM is more similar to the desired clustering, in terms of clustering metrics, than the clusterings obtained via the squared Euclidean algorithms. 
+				Therefore, as expected, for data  with outliers, the choice of a norm instead of the squared norm is a more natural choice, and the $\varepsilon$-KPALM algorithm appears to be a promising algorithm to handle such data.
+		\end{itemize}
+	\end{frame}
+	
 	
 	\begin{frame}{KPALM Sufficient Decrease Proof}
 		Since $x \mapsto H(w,x) = \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \norm{ x^l - a^i }^2$ is $C^2$, and it Hessian is given by
@@ -984,131 +1296,10 @@
 		\end{equation*}
 		with $M = \max\limits_{1 \leq i \leq m} \|a^i\|$ 
 		and the result follows with $\rho_2 = m \left( 4M + \overline{\alpha} \right)$.
-	\end{frame}
-	
-	\begin{frame}{$\varepsilon$-KPALM Algorithm for Clustering with the Norm Distance}
-		Recalling the Clustering Problem for the Euclidean norm distance:
-		\begin{equation*}
-				(P) \qquad min \left\lbrace \sigma(z) := H(w,x) + G(w) \mid z := (w,x) \in \R^{km} \times \R^{nk} \right\rbrace, 
-		\end{equation*}
-		\begin{center}
-		$H(w,x) = \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle = \sum\limits_{i=1}^m\sum\limits_{l=1}^k w^i_l \norm{x^l - a^i}$, $G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i)$.\\
-		\end{center}
-		\begin{itemize}[<+->]
-			\item $H$ is not smooth, hence PALM cannot be applied as is. Therefore approximating:
-			\begin{equation*}
-				\resizebox{.6\hsize}{!}{$H_{\varepsilon}(w,x) = \sum\limits_{l=1}^{k} H^l_{\varepsilon}(w,x)
-	= \sum\limits_{l=1}^{k} \sum\limits_{i=1}^{m} w^i_l \left( \| x^l - a^i \|^2 + {\varepsilon}^2 \right)^{1/2},$}
-			\end{equation*}
-			\item This leads towards the following approximation of the Clustering Problem
-			\begin{equation*}
-				(P_{\varepsilon}) \qquad min \left\lbrace \sigma_{\varepsilon}(z) := H_{\varepsilon}(w,x) + G(w) \mid z := (w,x) \in \R^{km} \times \R^{nk} \right\rbrace.
-			\end{equation*}
-			\item Also $d^i_{\varepsilon}(x)$ is the smoothed version of $d^i(x)$, whose $1 \leq l \leq k$ coordinate is $\left( \|x^l - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}$.
-		\end{itemize}
-		\pause
-		\begin{lemma}[Closeness of smooth]
-			For any $(w,x) \in {\Delta}^m \times \mathbb{R}^{nk}$ and $\varepsilon > 0$ the following relations hold true
-			\begin{equation*}
-				H(w,x) \leq H_{\varepsilon}(w,x) \leq H(w,x) + m\varepsilon .
-			\end{equation*}
-		\end{lemma}
-	\end{frame}
-	
-	\begin{frame}{$\varepsilon$-KPALM Algorithm for Clustering with the Norm Distance}
-		\begin{itemize}[<+->]
-			\item With respect to $w$ we apply the same step as in KPALM:
-			\begin{equation*}
-				\resizebox{.7\hsize}{!}{$w^i(t+1) = \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \left\langle w^i, d^i_{\varepsilon}(x(t)) \right\rangle + \frac{\alpha_i(t)}{2} \|w^i -w^i(t)\|^2 \right\rbrace.$}		
-			\end{equation*}
-			\item With respect to $x$ we tackle the subproblem differently than in KPALM, linearizing the function $x \rightarrow H(w,\cdot)$, for fixed $w$, and adding a regularizing term
-			\begin{equation*}
-				\resizebox{.9\textwidth}{!}{$x^l(t+1) = \arg\!\min\limits_{x^l} \left\lbrace \left\langle x^l - x^l(t) , \nabla_{x^l}H_{\varepsilon}(w(t+1),x(t)) \right\rangle + \frac{L^l_{\varepsilon}(w(t+1),x(t))}{2} \|x^l - x^l(t)\|^2 \right\rbrace,$}
-			\end{equation*}
-			where
-			\begin{equation*}
-				\resizebox{.6\hsize}{!}{$L^l_{\varepsilon}(w(t+1),x(t)) := \sum\limits_{i=1}^{m} \frac{w^i_l(t+1)}{\left( \|x^l(t)-a^i\|^2 + {\varepsilon}^2 \right)^{1/2}}, \quad \forall \: l=1,2, \ldots, k.$}
-			\end{equation*}
-			\end{itemize}
-			\pause
-			\begin{center}
-    		\fbox{\parbox{11cm}{
-            	\begin{enumerate}[(1)]
-					\item Initialization: $z(0)=(w(0),x(0)) \in \Delta^m \times \mathbb{R}^{nk} .$
-					\item General step $\left( t=0,1, \ldots \right)$:
-					\begin{enumerate}[(2.1)]
-						\item Cluster assignment: choose certain $\alpha_i(t) > 0$, $i=1,2, \ldots, m$, and compute
-							\begin{equation*}
-							\resizebox{.4\hsize}{!}{$w^i(t+1) = P_{\Delta} \left(w^i(t) - \frac{d_{\varepsilon}^i(x(t))}{\alpha_i(t)}\right).$}
-							\end{equation*}
-						\item Center update: for each $l=1, 2, \ldots ,k$ compute
-							\begin{equation*}
-							x^l(t+1) = x^l(t) - \frac{1}{L^l_{\varepsilon}(w(t+1), x(t))}\nabla_{x^l} H_{\varepsilon}(w(t+1), x(t)).
-							\end{equation*}
-					\end{enumerate}
-				\end{enumerate}
-            }}
-       		\end{center}
-	\end{frame}
-	
-	\begin{frame}{$\varepsilon$-KPALM Analysis}
-		\begin{itemize}[<+->]
-			\item Boundedness: $w^i(t) \in \Delta$ and \\
-				\scalebox{.7}{\parbox{\linewidth}{%
-				\begin{align*}
-					x^l(t+1) &= x^l(t) - \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \nabla_{x^l} H_{\varepsilon}(w(t+1),x(t)) \\
-					&= x^l(t) - \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \sum\limits_{i=1}^{m} w^i_l(t+1) \cdot \frac{x^l(t) - a^i}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \\
-					&= \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \sum\limits_{i=1}^{m} \left( \frac{w^i_l(t+1)}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \right) a^i \in Conv(\mathcal{A}).
-				\end{align*}
-				}}
-			\item KL Property is straightforward from the Semi-Algebraicity of the involved functions.
-		\end{itemize}
-		\pause
-		\begin{displaybox}{11cm}
-			Motivated by the recent work on Weber problem {\dblue (Beck-Sabach(2015))}, we develop several auxiliary results. We define the function $f_{\varepsilon}: \mathbb{R}^n \rightarrow \mathbb{R}$ by
-			\begin{equation*}
-				\resizebox{.3\hsize}{!}{$f_{\varepsilon}(x) = \sum\limits_{i=1}^{m} v_i \left( \|x - a^i\|^2 + {\varepsilon}^2 \right)^{1/2},$}
-			\end{equation*}
-			$v^i \in \rr_+$ fixed weights. We also need the auxiliary function $h_{\varepsilon}: \mathbb{R}^n \times \mathbb{R}^n \rightarrow \mathbb{R}$ given by
-			\begin{equation*}
-				\resizebox{.3\hsize}{!}{$h_{\varepsilon}(x,y) = \sum\limits_{i=1}^m \frac{v_i \left( \|x-a^i\|^2 + {\varepsilon}^2 \right)}{\left( \|y-a^i\|^2 + {\varepsilon}^2 \right)^{1/2}}.$}
-			\end{equation*}
-			Finally we introduce the following modulus, $L_{\varepsilon}: \mathbb{R}^n \rightarrow \mathbb{R}$ defined by
-			\begin{equation*}
-				\resizebox{.3\hsize}{!}{$L_{\varepsilon}(x) = \sum\limits_{i=1}^{m}\frac{v_i}{\left( \|x - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}}.$}
-			\end{equation*}
-		\end{displaybox}
-	\end{frame}
-	
-	\begin{frame}{Properties of the Auxiliary Functions $h_{\varepsilon}$ and $f_{\varepsilon}$}
-		\begin{lemma} \label{h_properties_lemma}
-			The following properties of $h_{\varepsilon}$ hold.
-			\begin{enumerate}[(i)]
-				\item For any $y \in \mathbb{R}^n$,
-				\begin{equation*}
-					h_{\varepsilon}(y,y) = f_{\varepsilon}(y) .
-				\end{equation*}
-				\item For any $x,y \in \mathbb{R}^n$,
-				\begin{equation*}
-					h_{\varepsilon}(x,y) \geq 2f_{\varepsilon}(x) - f_{\varepsilon}(y) .
-				\end{equation*}
-				\item For any $x,y \in \mathbb{R}^n$,
-				\begin{equation*}
-					f_{\varepsilon}(x) \leq f_{\varepsilon}(y) + \left\langle \nabla f_{\varepsilon}(y), x-y \right\rangle + \frac{L_{\varepsilon}(y)}{2}\|x-y\|^2 .
-				\end{equation*}
-			\end{enumerate}
-		\end{lemma}
-		\pause
-		\begin{lemma} \label{f_eps_lipschitz_lemma}
-			For all $y,z \in \mathbb{R}^n$ the following statement holds true
-			\begin{equation*}
-				\| \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z) \| \leq \frac{2L_{\varepsilon}(z)L_{\varepsilon}(y)}{L_{\varepsilon}(z)+L_{\varepsilon}(y)} \|z - y\|.
-			\end{equation*}
-		\end{lemma}
-	\end{frame}
+	\end{frame}	
 	
 	\begin{frame}{Preliminaries for Sufficient Decrease Proof}
-		\begin{proposition}[Bounds for $L^l_{\varepsilon}$] \label{L_bounds_prop}
+		\begin{proposition*}[Bounds for $L^l_{\varepsilon}$]
 			Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM.
 			\begin{enumerate}[(i)]
 				\item Denote $d_{\mathcal{A}} = \diam(Conv(\mathcal{A}))$. For all $t \in \mathbb{N}$ and $l=1,2, \ldots, k$ we have
@@ -1124,7 +1315,7 @@
 				\end{equation*}
 				}}
 			\end{enumerate}
-		\end{proposition}
+		\end{proposition*}
 		\pause
 		\begin{proof}\renewcommand{\qedsymbol}{}
 			\begin{enumerate}[(i)]
@@ -1146,7 +1337,7 @@
 	\end{frame}
 	
 	\begin{frame}{Preliminaries for Sufficient Decrease Proof}
-		\begin{proposition} \label{H_eps_SD_in_x_prop}
+		\begin{proposition*}[Sufficient Decrease w.r.t. $x$]
 			Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. Then, for all $t \in \mathbb{N}$, we have\\
 			\scalebox{.65}{\parbox{\linewidth}{%
 			\begin{align*}
@@ -1155,7 +1346,7 @@
 	+ \sum\limits_{l=1}^{k} \frac{L^l_{\varepsilon}(w(t+1),x(t))}{2} \|x^l(t+1)-x^l(t)\|^2 .
 			\end{align*}
 			}}
-		\end{proposition}
+		\end{proposition*}
 		\pause
 		\begin{proof}\renewcommand{\qedsymbol}{}
 			By definition of $f_{\varepsilon}$, using the weights $v_i=w^i_l(t+1)$, we obtain\\
@@ -1303,73 +1494,7 @@
 		\end{equation*}
 		}}\\
 		\vspace{2cm}
-	\end{frame}
-	
-	\begin{frame}{Numerical Results: The Squared Norm}
-		\begin{itemize}[<+->]
-            \item Initialization issues: randomly picking $k$ data points as starting centers vs. k-means++.
-        
-        	\item Comparison of the objective function values performed on the Iris dataset for squared norm algorithms
-		\begin{figure}
-    		\centering
-        	\includegraphics[width=0.75 \textwidth]{squared_norm_obj_comp}
-		\end{figure}
-
-	    	\item In the squared Euclidean setting, KPALM achieves lower objective function values than k-means. When using a more sophisticated initialization step, such as the one in k-means++, then k-means++ and KPALM++ achieve similar objective function values.
-			\item k-means needs less number of iterations then KPALM to reach a certain precision.
-		\end{itemize}
 	\end{frame}	
-	
-	\begin{frame}{Numerical Results: The Squared Norm}
-		\begin{itemize}[<+->]
-            \item Comparison of the objective function values performed on the Iris dataset for KPALM algorithm with different $\alpha$ parameter updates.
-		\begin{figure}
-    		\centering
-        	\includegraphics[width=0.8 \textwidth]{squared_norm_dyn_alpha_comp}
-		\end{figure}
-			\item It is preferable to use dynamic update of $\alpha(t)$ parameter to achieve a faster convergence, both in KPALM and $\epsilon$-KPALM. Example for suitable choices can be $\alpha(t)= \diam(\mathcal{A})/t$ and $\alpha(t)= \diam(\mathcal{A})/2^t$.
-		\end{itemize}
-	\end{frame}
-	
-	\begin{frame}{Numerical Results: Squared Norm Algorithms vs. $\varepsilon$-KPALM}
-		\begin{itemize}[<+->]
-			\item Generated two synthetic datasets, each 300 points
-			\begin{figure}
-		    	\centering
-		    	\subfigure[Dense Gaussians]{\includegraphics[width=0.45\textwidth]{dense_gaussians}}
-				\subfigure[Sparse Gaussians]{\includegraphics[width=0.45\textwidth]{sparse_gaussians}}
-			\end{figure}
-			\setcounter{subfigure}{0}
-			\item Compared the resulting clustering using metrics, such as {\dblue Variation of Information} defined by:
-				$VI(\mathcal{C}^1,\mathcal{C}^2):=-\sum\limits_{i,j} r_{i,j}\left[ \log \left( r_{i,j}/p_i \right) + \log \left( r_{i,j}/q_j \right) \right]$, where $\mathcal{C}^1=\left\lbrace C^1_1, C^1_2, \ldots C^1_k \right\rbrace$ and $\mathcal{C}^2=\left\lbrace C^2_1, C^2_2, \ldots C^2_l \right\rbrace$ are two clusterings of $\mathcal{A}$,\\ and $m=|\mathcal{A}|, \quad p_i=|C^1_i|/m,\quad q_j=|C^2_j|/m, \quad r_{i,j}= |C^1_i \cap C^2_j|/m$.
-		\end{itemize}
-	\end{frame}
-	
-	\begin{frame}{Numerical Results: Squared Norm Algorithms vs. $\varepsilon$-KPALM}
-		\setcounter{subfigure}{0}
-		\begin{figure}
-		    \centering
-		    \subfigure[Dense Gaussians metrics comparison]{\includegraphics[width=0.45\textwidth]{dense_gaussians_metrics2}}
-			\subfigure[Sparse Gaussians metrics comparison]{\includegraphics[width=0.45\textwidth]{sparse_gaussians_metrics2}}
-		\end{figure}
-		\pause
-		\begin{itemize}[<+->]
-			\item When the convex hulls of the desired clusters are mutually exclusive, algorithms which solve the clustering problem with the squared Euclidean distance are preferable to $\varepsilon$-KPALM.
-			\item In datasets with outliers, the clustering obtained with $\varepsilon$-KPALM is more similar to the desired clustering, in terms of clustering metrics, than the clusterings obtained via the squared Euclidean algorithms. 
-				Therefore, as expected, for data  with outliers, the choice of a norm instead of the squared norm is a more natural choice, and the $\varepsilon$-KPALM algorithm appears to be a promising algorithm to handle such data.
-		\end{itemize}
-	\end{frame}		
-	
-%	\begin{frame}{Summary of Numerical Results}
-%		 \begin{itemize}[<+->]
-%	    	\item In the squared Euclidean setting, KPALM achieves lower objective function values than k-means. When using a more sophisticated initialization step, such as the one in k-means++, then k-means++ and KPALM++ achieve similar objective function values.
-%	\item k-means needs less number of iterations then KPALM to reach a certain precision.
-%	\item It is preferable to use dynamic update of $\alpha(t)$ parameter to achieve a faster convergence, both in KPALM and $\epsilon$-KPALM. Example for suitable choices can be $\alpha(t)= \diam(\mathcal{A})/t$ and $\alpha(t)= \diam(\mathcal{A})/2^t$.
-%	\item When the convex hulls of the desired clusters are mutually exclusive, algorithms which solve the clustering problem with the squared Euclidean distance are preferable to $\varepsilon$-KPALM.
-%	\item In datasets with outliers, the clustering obtained with $\varepsilon$-KPALM is more similar to the desired clustering, in terms of clustering metrics, than the clusterings obtained via the squared Euclidean algorithms. 
-%	Therefore, as expected, for data  with outliers, the choice of a norm instead of the squared norm is a more natural choice, and the $\varepsilon$-KPALM algorithm appears to be a promising algorithm to handle such data.	
-%		\end{itemize}
-%	\end{frame}
 	
 \end{document}
 
