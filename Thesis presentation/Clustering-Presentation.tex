@@ -1065,11 +1065,11 @@
 		\end{itemize}
 		\pause
 		\begin{displaybox}{11cm}
-			Motivated by the recent work on Weber problem {\dblue Beck-Sabach(2015)}, we develop several auxiliary results. We define the function $f_{\varepsilon}: \mathbb{R}^n \rightarrow \mathbb{R}$ by
+			Motivated by the recent work on Weber problem {\dblue (Beck-Sabach(2015))}, we develop several auxiliary results. We define the function $f_{\varepsilon}: \mathbb{R}^n \rightarrow \mathbb{R}$ by
 			\begin{equation*}
 				\resizebox{.3\hsize}{!}{$f_{\varepsilon}(x) = \sum\limits_{i=1}^{m} v_i \left( \|x - a^i\|^2 + {\varepsilon}^2 \right)^{1/2},$}
 			\end{equation*}
-			$v^i \in \rr_+$ fixed weights. We also need the following auxiliary function $h_{\varepsilon}: \mathbb{R}^n \times \mathbb{R}^n \rightarrow \mathbb{R}$ given by
+			$v^i \in \rr_+$ fixed weights. We also need the auxiliary function $h_{\varepsilon}: \mathbb{R}^n \times \mathbb{R}^n \rightarrow \mathbb{R}$ given by
 			\begin{equation*}
 				\resizebox{.3\hsize}{!}{$h_{\varepsilon}(x,y) = \sum\limits_{i=1}^m \frac{v_i \left( \|x-a^i\|^2 + {\varepsilon}^2 \right)}{\left( \|y-a^i\|^2 + {\varepsilon}^2 \right)^{1/2}}.$}
 			\end{equation*}
@@ -1176,8 +1176,7 @@
 			\scalebox{.6}{\parbox{\linewidth}{%
 			\begin{align*}
 				H_{\varepsilon}(w(t+1),x(t+1)) 
-				\leq H_{\varepsilon}(w(t+1),x(t)) + \sum\limits_{l=1}^{k} \frac{L^l_{\varepsilon}(w(t+1),x(t))}{2} \|x^l(t+1)-x^l(t)\|^2 
-				+ \sum\limits_{l=1}^{k} \left\langle \nabla_{x^l} H_{\varepsilon}(w(t+1),x(t)), x^l(t+1)-x^l(t) \right\rangle   .
+				\leq H_{\varepsilon}(w(t+1),x(t)) + \sum\limits_{l=1}^{k} \left\langle \nabla_{x^l} H_{\varepsilon}(w(t+1),x(t)), x^l(t+1)-x^l(t) \right\rangle + \sum\limits_{l=1}^{k} \frac{L^l_{\varepsilon}(w(t+1),x(t))}{2} \|x^l(t+1)-x^l(t)\|^2.
 			\end{align*}
 			}}\\
 			The result follows by replacing the last term with the following compact form\\
