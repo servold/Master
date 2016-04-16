@@ -1,5 +1,5 @@
-\documentclass[9pt,handout]{beamer} % THIS OPTION IS FOR PRINTING
-%\documentclass[9pt]{beamer}
+%\documentclass[9pt,handout]{beamer} % THIS OPTION IS FOR PRINTING
+\documentclass[9pt]{beamer}
 
 %\usetheme{Madrid}
 \usetheme{Boadilla}
@@ -174,13 +174,13 @@
 
 \title[Globally Convergent Algorithms for Clustering]{A Novel Class of Globally Convergent Algorithms \\ \vspace{0.1in} For Clustering Problems}
 \institute[Tel-Aviv University]{\small Raymond and Beverly Sackler Faculty of Exact Sciences\\ \vspace{0.1in} Tel-Aviv University}
-\date{April 4, 2016}
+\date{April 6, 2016}
 
 	\begin{frame}
 		\titlepage
 		\begin{center}
 			Research conducted under the supervision of\\ \smallskip
-			Prof. Marc Teboulle (Tel Aviv University)\\ \smallskip
+			Prof. Marc Teboulle (Tel-Aviv University)\\ \smallskip
 			and Prof. Shoham Sabach (Technion)
 		\end{center}
 	\end{frame}
@@ -209,7 +209,7 @@
     	\begin{itemize}[<+->]
     		\item Clustering is fundamental in fields such as machine learning, data mining, etc.
     		\item The clustering problem has attracted a lot of research and there are many algorithms tackling it, such as k-means, Expectation-Maximization and others.
-    		\item It has been shown that the clustering problem is NP-hard.
+    		\item The clustering problem is NP-hard.
     		\item Let $\mathcal{A}=\left\{ a^1, a^2, \ldots, a^m \right\} \subset \R^n$ set of points, and $1<k<m$ a given number of clusters.
     		\item The goal is to partition the data $\mathcal{A}$ into $k$ subsets $\left\{ \mathcal{C}^1, \mathcal{C}^2, \ldots, \mathcal{C}^k \right\}$ called clusters.
     		\item Each cluster $\mathcal{C}^l$ is represented by its center $x^l \in \R^n$.
@@ -264,19 +264,24 @@
 			\item $d^i(x):= \norm{x-a^i}^2$ (the common squared Euclidean distance)  \label{case_a}
 			\item $d^i(x):= \norm{x-a^i}$ (relevant for problems with outliers) \label{case_b}
 		\end{enumerate}
+		\pause
+		\vspace{0.03in}
 		\begin{itemize}[<+->]
-			\item In case \eqref{case_a} $H(w,x)$ is a \underline{smooth} function.
-			\item Whereas, in case \eqref{case_b} $H(w,x)$ is a \underline{nonsmooth}.
-			\item In both cases the problem is \underline{nonconvex}.
-			\item We want to expolit the special structure to devise \underline{simple} schemes.\\ Attractive approach is via {\dblue alternating minimization}.\\
-%		\end{itemize}
-    	Very simple idea (goes back to Gauss-Seidel),\\
+			\item In case \eqref{case_a} $H(w,x)$ is a \underline{smooth} function.\vspace{0.03in}
+			\item Whereas, in case \eqref{case_b} $H(w,x)$ is a \underline{nonsmooth}.\vspace{0.03in}
+			\item In both cases the problem is \underline{nonconvex}.\vspace{0.03in}
+			\item We want to exploit the special structure to devise \underline{simple} schemes.\\ Attractive approach is via {\dblue alternating minimization}.\\
+		\end{itemize}
+    \end{frame}
+    
+    \begin{frame}{Alternating Minimization}
+        Very simple idea (goes back to Gauss-Seidel),\\
     	\begin{center}
     		$w^{k+1} \in \arg\!\min_{w \in \Delta^m} \sigma\left(w, x^k\right)$,\quad $x^{k+1} \in \arg\!\min_{x \in \rr^{nk}} \sigma\left( w^{k+1},x\right)$
     	\end{center}
-   % 	\begin{itemize}[<+->]
-			\item In fact this is the essence of \underline{k-means} (for smooth $H$) and of \underline{k-median} (for nonsmooth $H$) algorithms.
-			\item These algorithms are not known to globally converge to stationary (critical) point.
+    	\begin{itemize}[<+->]
+			\item In fact this is the essence of \underline{k-means} (for smooth $H$) and of \underline{k-median} (for nonsmooth $H$) algorithms.\vspace{0.05in}
+			\item These algorithms are not known to globally converge to stationary (critical) point.\vspace{0.05in}
 			\item Here we follow the recent algorithm (PALM) of {\dblue (Bolte-Sabach-Teboulle (2014))} to tackle these issues and devise simple schemes.    	
     	\end{itemize}
     \end{frame}
@@ -804,10 +809,10 @@
 				(P) \qquad min \left\lbrace \sigma(z) := H(w,x) + G(w) \mid z := (w,x) \in \R^{km} \times \R^{nk} \right\rbrace, 
 		\end{equation*}
 		\begin{center}
-		$H(w,x) = \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle = \sum\limits_{i=1}^m\sum\limits_{l=1}^k w^i_l \norm{x^l - a^i}^2$, $G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i)$.\\
+		$H(w,x) = \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle = \sum\limits_{i=1}^m\sum\limits_{l=1}^k w^i_l \norm{x^l - a^i}^2$.\\
 		\end{center}
 		\begin{itemize}[<+->]
-	    	\item Thus, here $H(w,x)$ is $C^1$ and fits the optimization model.
+	    	\item Thus, here $H(w,x)$ is $C^{1,1}$ and fits the optimization model.
     	\end{itemize}
 		Inspired by PALM, we devise the KPALM algorithm, exploiting the specific structure of the model, namely
 		\pause
@@ -901,7 +906,7 @@
             \end{itemize}
         \end{definition}
         \pause
-        The wealth of semi-algebraic functions:
+        A wealth of semi-algebraic functions:
         \begin{itemize}[<+->]
         	\item \textcolor{blue}{Real polynomial functions}.
             \item \textcolor{blue}{Indicator functions} of semi-algebraic sets.
@@ -949,17 +954,19 @@
 	\end{frame}
 	
 	\begin{frame}{Global Convergence of KPALM}
+		Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \nn}$ be the sequence generated by KPALM.\\
 		To apply the general methodology of {\dblue [BST]} we proved the following results:
 		\pause
 		\begin{proposition}[Sufficient decrease property]
-			Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \nn}$ be the sequence generated by KPALM. Then there exists $\rho_1 > 0$ such that 
+%			Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \nn}$ be the sequence generated by KPALM. 
+			There exists $\rho_1 > 0$ such that 
 			\begin{equation*}
 				\rho_1 \|z(t+1) - z(t)\|^2 \leq \sigma(z(t)) - \sigma(z(t+1)), \quad \forall \: t \in \mathbb{N} .
 			\end{equation*}
 		\end{proposition}
 		\pause
 		\begin{proposition}[Subgradient lower bound for the iterates gap]
-			Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM.
+%			Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by KPALM.
 			For each $t \in \nn$ define 
 			\begin{equation*}
 				\gamma(t) := \left( \left( d^i(x(t)) - d^i(x(t-1)) - \alpha_i(t-1)(w^i(t) - w^i(t-1)) \right)_{i=1,2, \ldots, m}, \mathbf{0} \right).
@@ -970,8 +977,9 @@
 			\end{equation*}
 		\end{proposition}
 		\pause
-		\begin{theorem}
-			Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \nn}$ be the sequence generated by KPALM. Then, the sequence $\left\lbrace z(t) \right\rbrace_{t \in \nn}$ converges to a critical point of $\sigma$.
+		\begin{theorem}[KPALM convergence result]
+%			Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \nn}$ be the sequence generated by KPALM. 
+			The sequence $\left\lbrace z(t) \right\rbrace_{t \in \nn}$ converges to a critical point of $\sigma$.
 		\end{theorem}
 	\end{frame}	
 	
@@ -981,7 +989,7 @@
 				(P) \qquad min \left\lbrace \sigma(z) := H(w,x) + G(w) \mid z := (w,x) \in \R^{km} \times \R^{nk} \right\rbrace, 
 		\end{equation*}
 		\begin{center}
-		$H(w,x) = \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle = \sum\limits_{i=1}^m\sum\limits_{l=1}^k w^i_l \norm{x^l - a^i}$, $G(w) = \sum\limits_{i=1}^{m} \delta_{\Delta}(w^i)$.\\
+		$H(w,x) = \sum\limits_{i=1}^{m} H^i(w,x) = \sum\limits_{i=1}^{m} \langle w^i , d^i(x) \rangle = \sum\limits_{i=1}^m\sum\limits_{l=1}^k w^i_l \norm{x^l - a^i}$.\\
 		\end{center}
 		\begin{itemize}[<+->]
 			\item \underline{$H$ is not smooth, hence PALM cannot be applied as is}. Therefore approximating:
@@ -995,13 +1003,13 @@
 			\end{equation*}
 			\item Also $d^i_{\varepsilon}(x)$ is the smoothed version of $d^i(x)$, whose $1 \leq l \leq k$ coordinate is $\left( \|x^l - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}$.
 		\end{itemize}
-		\pause
-		\begin{lemma}[Closeness of the smooth approximation]
-			For any $(w,x) \in {\Delta}^m \times \mathbb{R}^{nk}$ and $\varepsilon > 0$ the following relations hold true
-			\begin{equation*}
-				H(w,x) \leq H_{\varepsilon}(w,x) \leq H(w,x) + m\varepsilon .
-			\end{equation*}
-		\end{lemma}
+%		\pause
+%		\begin{lemma}[Closeness of the smooth approximation]
+%			For any $(w,x) \in {\Delta}^m \times \mathbb{R}^{nk}$ and $\varepsilon > 0$ the following relations hold true
+%			\begin{equation*}
+%				H(w,x) \leq H_{\varepsilon}(w,x) \leq H(w,x) + m\varepsilon .
+%			\end{equation*}
+%		\end{lemma}
 	\end{frame}	
 	
 	\begin{frame}{$\varepsilon$-KPALM Algorithm for Clustering with the Norm Distance}
@@ -1040,17 +1048,22 @@
        		\end{center}
 	\end{frame}
 	
-	\begin{frame}{$\varepsilon$-KPALM Analysis}
+	\begin{frame}{$\varepsilon$-KPALM Analysis - Using an Auxiliary Function}
+%		\begin{itemize}[<+->]
+%			\item Boundedness: $w^i(t) \in \Delta$ and \\
+%				\scalebox{.7}{\parbox{\linewidth}{%
+%				\begin{align*}
+%					x^l(t+1) &= x^l(t) - \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \nabla_{x^l} H_{\varepsilon}(w(t+1),x(t)) \\
+%					&= x^l(t) - \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \sum\limits_{i=1}^{m} w^i_l(t+1) \cdot \frac{x^l(t) - a^i}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \\
+%					&= \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \sum\limits_{i=1}^{m} \left( \frac{w^i_l(t+1)}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \right) a^i \in Conv(\mathcal{A}).
+%				\end{align*}
+%				}}
+%			\item All of the involved functions are semi-algebraic.
+%		\end{itemize}
 		\begin{itemize}[<+->]
-			\item Boundedness: $w^i(t) \in \Delta$ and \\
-				\scalebox{.7}{\parbox{\linewidth}{%
-				\begin{align*}
-					x^l(t+1) &= x^l(t) - \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \nabla_{x^l} H_{\varepsilon}(w(t+1),x(t)) \\
-					&= x^l(t) - \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \sum\limits_{i=1}^{m} w^i_l(t+1) \cdot \frac{x^l(t) - a^i}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \\
-					&= \frac{1}{L^l_{\varepsilon}(w(t+1),x(t))} \sum\limits_{i=1}^{m} \left( \frac{w^i_l(t+1)}{\left( \|x^l(t) - a^i\|^2 + {\varepsilon}^2 \right)^{1/2}} \right) a^i \in Conv(\mathcal{A}).
-				\end{align*}
-				}}
-			\item All of the involved functions are semi-algebraic.
+			\item The situation is more difficult, since $H \in C^1$ but not in $C^{1,1}$ for fixed $x$ or $w$.\vspace{0.03in}
+			\item We cannot obtain directly the descent property.\vspace{0.03in}
+			\item We need to use an auxiliary function and as shown in the thesis we proposed two approaches.\vspace{0.03in}
 		\end{itemize}
 		\pause
 		\begin{displaybox}{11cm}
@@ -1069,36 +1082,46 @@
 		\end{displaybox}
 	\end{frame}
 	
-	\begin{frame}{Properties of the Auxiliary Functions $h_{\varepsilon}$ and $f_{\varepsilon}$}
-		\begin{lemma} \label{h_properties_lemma}
-			The following properties of $h_{\varepsilon}$ hold.
-			\begin{enumerate}[(i)]
-				\item For any $y \in \mathbb{R}^n$,
-				\begin{equation*}
-					h_{\varepsilon}(y,y) = f_{\varepsilon}(y) .
-				\end{equation*}
-				\item For any $x,y \in \mathbb{R}^n$,
-				\begin{equation*}
-					h_{\varepsilon}(x,y) \geq 2f_{\varepsilon}(x) - f_{\varepsilon}(y) .
-				\end{equation*}
-				\item For any $x,y \in \mathbb{R}^n$,
-				\begin{equation*}
-					f_{\varepsilon}(x) \leq f_{\varepsilon}(y) + \left\langle \nabla f_{\varepsilon}(y), x-y \right\rangle + \frac{L_{\varepsilon}(y)}{2}\|x-y\|^2 .
-				\end{equation*}
-			\end{enumerate}
-		\end{lemma}
-		\pause
-		\begin{lemma} \label{f_eps_lipschitz_lemma}
+%	\begin{frame}{Properties of the Auxiliary Functions $h_{\varepsilon}$ and $f_{\varepsilon}$}
+%		\begin{lemma} \label{h_properties_lemma}
+%			The following properties of $h_{\varepsilon}$ hold.
+%			\begin{enumerate}[(i)]
+%				\item For any $y \in \mathbb{R}^n$,
+%				\begin{equation*}
+%					h_{\varepsilon}(y,y) = f_{\varepsilon}(y) .
+%				\end{equation*}
+%				\item For any $x,y \in \mathbb{R}^n$,
+%				\begin{equation*}
+%					h_{\varepsilon}(x,y) \geq 2f_{\varepsilon}(x) - f_{\varepsilon}(y) .
+%				\end{equation*}
+%				\item For any $x,y \in \mathbb{R}^n$,
+%				\begin{equation*}
+%					f_{\varepsilon}(x) \leq f_{\varepsilon}(y) + \left\langle \nabla f_{\varepsilon}(y), x-y \right\rangle + \frac{L_{\varepsilon}(y)}{2}\|x-y\|^2 .
+%				\end{equation*}
+%			\end{enumerate}
+%		\end{lemma}
+%		\pause
+%		\begin{lemma} \label{f_eps_lipschitz_lemma}
+%			For all $y,z \in \mathbb{R}^n$ the following statement holds true
+%			\begin{equation*}
+%				\| \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z) \| \leq \frac{2L_{\varepsilon}(z)L_{\varepsilon}(y)}{L_{\varepsilon}(z)+L_{\varepsilon}(y)} \|z - y\|.
+%			\end{equation*}
+%		\end{lemma}
+%	\end{frame}
+	
+	\begin{frame}{Key Properties for Sufficient Decrease and Subgradient Bound Proofs}
+		\begin{lemma} 
 			For all $y,z \in \mathbb{R}^n$ the following statement holds true
+			\scalebox{.8}{\parbox{\linewidth}{%
 			\begin{equation*}
 				\| \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z) \| \leq \frac{2L_{\varepsilon}(z)L_{\varepsilon}(y)}{L_{\varepsilon}(z)+L_{\varepsilon}(y)} \|z - y\|.
 			\end{equation*}
+			}}
 		\end{lemma}
-	\end{frame}
-	
-	\begin{frame}{Preliminaries for Sufficient Decrease Proof}
+		\pause
+		Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM.
 		\begin{proposition}[Bounds for $L^l_{\varepsilon}$] \label{L_bounds_prop}
-			Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM.
+%			Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM.
 			\begin{enumerate}[(i)]
 				\item Denote $d_{\mathcal{A}} = \diam(Conv(\mathcal{A}))$. For all $t \in \mathbb{N}$ and $l=1,2, \ldots, k$ we have
 				\scalebox{.8}{\parbox{\linewidth}{%
@@ -1116,7 +1139,8 @@
 		\end{proposition}
 		\pause
 		\begin{proposition}[Sufficient Decrease w.r.t. $x$] \label{H_eps_SD_in_x_prop}
-			Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. Then, for all $t \in \mathbb{N}$, we have\\
+%			Let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. 
+			For all $t \in \mathbb{N}$, we have\\
 			\scalebox{.65}{\parbox{\linewidth}{%
 			\begin{align*}
 				H_{\varepsilon}(w(t+1),x(t+1)) 
@@ -1128,18 +1152,61 @@
 
 	\end{frame}
 	
+%	\begin{frame}{Different Approach Towards $H_{\varepsilon}$}
+%		Arithmetic-Geometric inequality leads to the following observation
+%		\begin{equation*}
+%			\frac{1}{2} \min\limits_{s \geq 0} \left\lbrace s\lambda + \frac{1}{\lambda} \right\rbrace \geq \min\limits_{s \geq 0} \left\lbrace \sqrt{s\lambda \cdot \frac{1}{s}} \right\rbrace = \sqrt{\lambda}, \quad \forall \: \lambda \geq 0; \text{ unique min } s^*=1/\sqrt{\lambda}.
+%		\end{equation*}
+%		\pause
+%		Therefore, instead of $H_\varepsilon$ use
+%		\scalebox{.95}{\parbox{\linewidth}{%
+%		\begin{equation*}
+%			B_{\varepsilon}(v,w,x) = \frac{1}{2}\sum\limits_{i=1}^{m} \sum\limits_{l=1}^{k} \left\lbrace v^i_lw^i_l \left( \norm{x^l-a^i}^2 +{\varepsilon}^2 \right) + \frac{w^i_l}{v^i_l} \right\rbrace .
+%		\end{equation*}
+%		}}
+%		\pause
+%		and solve
+%		\begin{equation*}
+%			(P_{\varepsilon}) \qquad \min_{x,v,w} \left\lbrace B_{\varepsilon}(v,w,x) + G(w) : \; v \geq 0 \right\rbrace.
+%		\end{equation*}
+%		\pause
+%		Now the situation is similar to that of KPALM, namely
+%		\begin{enumerate}[(1)]
+%			\item The function $w \mapsto B_{\varepsilon}(v,w,x)$, for fixed $v$ and $x$, is linear.
+%			\item The function $x \mapsto B_{\varepsilon}(v,w,x)$, for fixed $v$ and $w$, is quadratic and convex.
+%		\end{enumerate}
+%		\pause
+%		\begin{itemize}[<+->]
+%			\item With respect to $v$ we perform exact minimization
+%				\begin{equation*}
+%					v(t+1) = \arg\!\min \left\lbrace B_{\varepsilon}(v,w(t),x(t)) : \; v \geq 0\right\rbrace.
+%				\end{equation*}
+%			\item With respect to $w$, as in the KPALM case, for $i \in \left[m\right]$, we solve the subproblem
+%				\scalebox{.95}{\parbox{\linewidth}{%
+%				\begin{equation*}
+%					w^i(t+1) = \arg\!\min\limits_{w^i \in \Delta} \left\lbrace \langle w^i , b^i_{\varepsilon}(v(t+1),x(t)) \rangle + \frac{\alpha_i(t)}{2} \|w^i - w^i(t)\|^2 \right\rbrace.
+%				\end{equation*}
+%				}}
+%			\item With respect to $x$, again as in the KPALM case, we perform exact minimization
+%				\begin{equation*}
+%					x(t+1) = \arg\!\min_{x \in \rr^{nk}} B_{\varepsilon}(v(t+1), w(t+1), x).
+%				\end{equation*}
+%		\end{itemize}
+%		
+%	\end{frame}		
+	
 	\begin{frame}{Global Convergence of $\varepsilon$-KPALM}
-		To apply the general methodology of {\dblue [BST]} we proved:
-		\pause
+		Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM.
 		\begin{proposition}[Sufficient decrease property]
-		Suppose that \Cref{AssumptionsB} and let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. Then, there exists $\rho_1 > 0$ such that 
+%		Suppose that \Cref{AssumptionsB} holds true  and let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. 
+		There exists $\rho_1 > 0$ such that 
 		\begin{equation*}
 			\rho_1 \|z(t+1) - z(t)\|^2 \leq \sigma_{\varepsilon}(z(t)) - \sigma_{\varepsilon}(z(t+1)), \quad \forall \: t \in \mathbb{N} .
 		\end{equation*}
 		\end{proposition}
 		\pause
 		\begin{proposition}[Subgradient lower bound for the iterates gap]
-		Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. 
+%		Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM.
 		For each $t \in \nn$ define\\
 		\scalebox{.95}{\parbox{\linewidth}{%
 		\begin{align*}
@@ -1152,8 +1219,9 @@
 		\end{equation*}
 		\end{proposition}
 		\pause
-		\begin{theorem}
-		Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. Then, the sequence $\left\lbrace z(t) \right\rbrace_{t \in \nn}$ converges to a critical point of $\sigma_{\varepsilon}$.
+		\begin{theorem}[$\varepsilon$-KPALM convergence result]
+%		Suppose that \Cref{AssumptionsB} holds true and let $\left\lbrace z(t) \right\rbrace_{t \in \mathbb{N}}$ be the sequence generated by $\varepsilon$-KPALM. 
+		The sequence $\left\lbrace z(t) \right\rbrace_{t \in \nn}$ converges to a critical point of $\sigma_{\varepsilon}$.
 		\end{theorem}
 	\end{frame}	
 	
@@ -1211,6 +1279,12 @@
 				Therefore, as expected, for data  with outliers, the choice of a norm instead of the squared norm is a more natural choice, and the $\varepsilon$-KPALM algorithm appears to be a promising algorithm to handle such data.
 		\end{itemize}
 	\end{frame}
+	
+	\begin{frame}
+		\begin{center}
+			Thank you\\ for your attention!
+		\end{center}
+	\end{frame}		
 	
 	
 	\begin{frame}{KPALM Sufficient Decrease Proof}
@@ -1296,6 +1370,33 @@
 		\end{equation*}
 		with $M = \max\limits_{1 \leq i \leq m} \|a^i\|$ 
 		and the result follows with $\rho_2 = m \left( 4M + \overline{\alpha} \right)$.
+	\end{frame}	
+	
+	\begin{frame}{Properties of the Auxiliary Functions $h_{\varepsilon}$ and $f_{\varepsilon}$}
+		\begin{lemma} \label{h_properties_lemma}
+			The following properties of $h_{\varepsilon}$ hold.
+			\begin{enumerate}[(i)]
+				\item For any $y \in \mathbb{R}^n$,
+				\begin{equation*}
+					h_{\varepsilon}(y,y) = f_{\varepsilon}(y) .
+				\end{equation*}
+				\item For any $x,y \in \mathbb{R}^n$,
+				\begin{equation*}
+					h_{\varepsilon}(x,y) \geq 2f_{\varepsilon}(x) - f_{\varepsilon}(y) .
+				\end{equation*}
+				\item For any $x,y \in \mathbb{R}^n$,
+				\begin{equation*}
+					f_{\varepsilon}(x) \leq f_{\varepsilon}(y) + \left\langle \nabla f_{\varepsilon}(y), x-y \right\rangle + \frac{L_{\varepsilon}(y)}{2}\|x-y\|^2 .
+				\end{equation*}
+			\end{enumerate}
+		\end{lemma}
+		\pause
+		\begin{lemma} \label{f_eps_lipschitz_lemma}
+			For all $y,z \in \mathbb{R}^n$ the following statement holds true
+			\begin{equation*}
+				\| \nabla f_{\varepsilon}(y) - \nabla f_{\varepsilon}(z) \| \leq \frac{2L_{\varepsilon}(z)L_{\varepsilon}(y)}{L_{\varepsilon}(z)+L_{\varepsilon}(y)} \|z - y\|.
+			\end{equation*}
+		\end{lemma}
 	\end{frame}	
 	
 	\begin{frame}{Preliminaries for Sufficient Decrease Proof}
